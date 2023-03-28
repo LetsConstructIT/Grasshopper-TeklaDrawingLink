@@ -71,7 +71,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription CreatePartViewComponent = new GH_InstanceDescription
         {
-            Name = "New Part View",
+            Name = "Part View",
             NickName = "CreatePartView",
             Description = "Create part view with specified type",
             Category = VersionSpecificConstants.TabHeading,
