@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrasshopperTeklaDrawingLink", "GrasshopperTeklaDrawingLink\GrasshopperTeklaDrawingLink.csproj", "{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B3C8CC43-3166-4645-9D33-4BC975A83DE9}
+	EndGlobalSection
+EndGlobal
