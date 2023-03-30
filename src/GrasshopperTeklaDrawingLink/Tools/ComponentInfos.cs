@@ -214,11 +214,29 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.DrawingList
         };
 
-        public static readonly GH_InstanceDescription TransformPointComponent = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription TransformPointToViewCS = new GH_InstanceDescription
         {
-            Name = "Transform Point",
-            NickName = "TransformPoint",
+            Name = "Point to View",
+            NickName = "Point2View",
             Description = "Transform Point coordinates from global to view coordinate system",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription TransformPointToGlobalCS = new GH_InstanceDescription
+        {
+            Name = "Point to Global",
+            NickName = "Point2Global",
+            Description = "Transform Point coordinates from local to global coordinate system",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription TransformPointToLocalCS = new GH_InstanceDescription
+        {
+            Name = "Point to Local",
+            NickName = "Point2Local",
+            Description = "Transform Point coordinates from global to local coordinate system",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Geometry
         };

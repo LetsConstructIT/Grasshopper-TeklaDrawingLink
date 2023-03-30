@@ -117,8 +117,16 @@ namespace GTDrawingLink.Tools
                 "3FF64AFA-EE2F-4D3B-8ED2-CB0A02C859FC"
             },
             {
-                typeof(TransformPointComponent),
+                typeof(TransformPointToViewCSComponent),
                 "2AADAF3C-8CDF-4D06-8C76-8DCA2C6DF5B9"
+            },
+            {
+                typeof(TransformPointToGlobalCSComponent),
+                "8AC5C2D3-405A-47E5-9673-701AE26E92EB"
+            },
+            {
+                typeof(TransformPointToLocalCSComponent),
+                "449329DC-7F49-41E3-9FC0-B8E919DA39CF"
             },
             {
                 typeof(SelectDrawingObjectComponent),

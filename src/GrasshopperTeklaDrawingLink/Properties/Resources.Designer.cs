@@ -283,9 +283,29 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap TransformPoint {
+        internal static System.Drawing.Bitmap TransformPointToGlobal {
             get {
-                object obj = ResourceManager.GetObject("TransformPoint", resourceCulture);
+                object obj = ResourceManager.GetObject("TransformPointToGlobal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TransformPointToLocal {
+            get {
+                object obj = ResourceManager.GetObject("TransformPointToLocal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TransformPointToView {
+            get {
+                object obj = ResourceManager.GetObject("TransformPointToView", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
