@@ -112,7 +112,7 @@ namespace GTDrawingLink.Components
                     DrawingInteractor.CommitChanges();
                 }
 
-                DA.SetData(ParamInfos.View.Name, new TeklaDrawingViewBaseGoo(createdView));
+                DA.SetData(ParamInfos.View.Name, new TeklaDrawingViewGoo(createdView));
                 DA.SetData(ParamInfos.Mark.Name, createdMark);
             }
         }

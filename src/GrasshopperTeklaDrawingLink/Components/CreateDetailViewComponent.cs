@@ -98,7 +98,7 @@ namespace GTDrawingLink.Components
 
             if (createdView != null)
             {
-                DA.SetData(ParamInfos.View.Name, new TeklaDrawingViewBaseGoo(createdView));
+                DA.SetData(ParamInfos.View.Name, new TeklaDrawingViewGoo(createdView));
                 DA.SetData(ParamInfos.Mark.Name, createdMark);
             }
         }
