@@ -57,6 +57,12 @@ namespace GTDrawingLink.Types
 
         public override bool CastTo<Q>(ref Q target)
         {
+            if (target is TeklaDrawingObjectGoo)
+            {
+                target = (Q)(object)new TeklaDrawingObjectGoo(Value);
+                return true;
+            }
+
             return base.CastTo(ref target);
         }
 

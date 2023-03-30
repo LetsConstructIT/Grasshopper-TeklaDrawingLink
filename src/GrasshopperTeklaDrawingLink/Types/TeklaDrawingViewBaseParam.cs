@@ -6,7 +6,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class TeklaDrawingViewBaseParam : GH_Param<GH_Goo<ViewBase>>
+    public class TeklaDrawingViewBaseParam : GH_Param<TeklaDrawingViewBaseGoo>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -18,11 +18,6 @@ namespace GTDrawingLink.Types
         public TeklaDrawingViewBaseParam(IGH_InstanceDescription tag, GH_ParamAccess access)
             : base(tag, access)
         {
-        }
-
-        protected override GH_Goo<ViewBase> InstantiateT()
-        {
-            return new TeklaDrawingViewBaseGoo();
         }
     }
 }
