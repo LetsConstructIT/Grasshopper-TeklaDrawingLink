@@ -13,7 +13,7 @@
   
   <ItemGroup>
     <PackageReference Include="Grasshopper" Version="6.0.18016.23451" IncludeAssets="compile;build" />
-    <PackageReference Include="Tekla.Structures.Drawing" Version="2022.0.10715">
+    <PackageReference Include="Tekla.Structures.Drawing" Version="2022.0.*">
       <IncludeAssets>compile;build</IncludeAssets>
     </PackageReference>
   </ItemGroup>
