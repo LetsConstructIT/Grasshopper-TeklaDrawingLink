@@ -41,7 +41,9 @@ Grasshopper-Tekla Drawing Link is provided as-is under the MIT license. For more
   * ![Father View](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/GetViewFromDrawingObject.png) - returns view where provided drawing object resides
   * ![Select Object](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/SelectDrawingObject.png) - selects drawing object, used before running drawing macros
 * Geometry
-  * ![Transform Point](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/TransformPoint.png) - transforms point from global coordinate system to local view coordinate system
+  * ![Transform Point to View](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/TransformPointToView.png) - transforms point from global coordinate system to pointed view coordinate system
+  * ![Transform Point to Local](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/TransformPointToLocal.png) - transforms point from global coordinate system to local coordinate system
+  * ![Transform Point to Global](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/TransformPointToGlobal.png) - transforms point from local coordinate system to global coordinate system
 * Misc
   * ![Run Macro](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/RunMacro.png) - runs model or drawing macro already saved to file or created ad-hoc (right click to select mode)
   * ![Get COG](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/GetCOG.png) - return center of gravity of provided model or drawing part
