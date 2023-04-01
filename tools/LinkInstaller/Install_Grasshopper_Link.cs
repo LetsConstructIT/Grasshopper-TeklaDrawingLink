@@ -264,8 +264,18 @@ namespace LinkInstaller.Core
                 if (Directory.Exists(pathMatchingVersion))
                     return pathMatchingVersion;
 
-                var pathWithoutMinor = pathMatchingVersion.Substring(0, pathMatchingVersion.LastIndexOf(".0"));
-                return pathWithoutMinor;
+                if (pathMatchingVersion.Contains(".0"))
+                {
+                    var pathWithoutMinor = pathMatchingVersion.Substring(0, pathMatchingVersion.LastIndexOf(".0"));
+                    return pathWithoutMinor;
+                }
+                else if (pathMatchingVersion.Contains(".1"))
+                {
+                    var olderTeklasPath = pathMatchingVersion.Replace(".1", "i");
+                    return olderTeklasPath;
+                }
+				
+				return "";
             }
         }
         public string DestinationGhaPath
