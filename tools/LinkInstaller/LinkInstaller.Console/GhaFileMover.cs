@@ -14,8 +14,11 @@ namespace LinkInstaller
 
         public GhaFileMover(string sourceDir, string destDir)
         {
-            _sourceDir = sourceDir ?? throw new ArgumentNullException(nameof(sourceDir));
-            _destDir = destDir ?? throw new ArgumentNullException(nameof(destDir));
+            if (sourceDir == null) throw new ArgumentNullException("sourceDir");
+            if (destDir == null) throw new ArgumentNullException("destDir");
+
+            _sourceDir = sourceDir;
+            _destDir = destDir;
         }
 
         public void MoveFiles()
@@ -44,7 +47,7 @@ namespace LinkInstaller
             {
                 return Enumerable
                     .Range(Constants.MinTeklaVersion, Constants.MaxTeklaVersion - Constants.MinTeklaVersion + 1)
-                    .Select(ver => $"GrasshopperTeklaDrawingLink_{ver}.gha");
+                    .Select(ver => string.Format("GrasshopperTeklaDrawingLink_{0}.gha", ver));
             }
             else
                 return new string[] { fileName };

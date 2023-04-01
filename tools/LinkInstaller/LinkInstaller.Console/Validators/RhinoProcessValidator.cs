@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace LinkInstaller.Validators
 {
-    public class RhinoProcessValidator : ConsoleValidator
+    public class RhinoProcessValidator : MessageBoxValidator
     {
         public override bool IsValid()
         {

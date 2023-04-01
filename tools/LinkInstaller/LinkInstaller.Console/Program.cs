@@ -4,9 +4,9 @@ using System.IO;
 
 namespace LinkInstaller
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             if (!new ArgumentsValidator(args).IsValid())
                 return;

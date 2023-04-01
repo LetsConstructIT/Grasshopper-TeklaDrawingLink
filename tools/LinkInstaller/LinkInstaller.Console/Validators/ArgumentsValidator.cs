@@ -2,13 +2,15 @@
 
 namespace LinkInstaller.Validators
 {
-    public class ArgumentsValidator : ConsoleValidator
+    public class ArgumentsValidator : MessageBoxValidator
     {
         private string[] _arguments;
 
         public ArgumentsValidator(string[] arguments)
         {
-            _arguments = arguments ?? throw new ArgumentNullException(nameof(arguments));
+            if (arguments == null) throw new ArgumentNullException("arguments");
+
+            _arguments = arguments;
         }
 
         public override bool IsValid()

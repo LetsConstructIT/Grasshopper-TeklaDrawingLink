@@ -5,13 +5,15 @@ using System.Linq;
 
 namespace LinkInstaller.Validators
 {
-    public class DirectoriesValidator : ConsoleValidator
+    public class DirectoriesValidator : MessageBoxValidator
     {
         private Settings _settings;
 
         public DirectoriesValidator(Settings settings)
         {
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            if (settings == null) throw new ArgumentNullException("settings");
+
+            _settings = settings;
         }
 
         public override bool IsValid()
@@ -21,8 +23,8 @@ namespace LinkInstaller.Validators
             {
                 ShowErrorToUser(new string[]
                 {
-                    $"Subdirectory for Tekla version {_settings.TeklaVersion} was not found",
-                    $"in directory {_settings.SourceGhaPath}.",
+                    string.Format("Subdirectory for Tekla version {0} was not found",_settings.TeklaVersion),
+                    string.Format("in directory {0}.",_settings.SourceGhaPath),
                     "",
                     "Check its existence and modify startup Tekla macro."
                 });
@@ -33,7 +35,7 @@ namespace LinkInstaller.Validators
             {
                 ShowErrorToUser(new string[]
                 {
-                    $"Source directory {sourcePath} does not have .gha files.",
+                    string.Format("Source directory {0} does not have .gha files.",sourcePath),
                     "Nothing to copy."
                 });
                 return false;
@@ -45,7 +47,7 @@ namespace LinkInstaller.Validators
             {
                 ShowErrorToUser(new string[]
                 {
-                    $"More than one file in directory {sourcePath} is related to DrawingLink.",
+                    string.Format("More than one file in directory {0} is related to DrawingLink.",sourcePath),
                     "Only one version of drawing link can be loaded in Rhino at the time."
                 });
                 return false;
@@ -57,7 +59,7 @@ namespace LinkInstaller.Validators
             {
                 ShowErrorToUser(new string[]
                 {
-                    $"Destination directory does not exist {destinationPath}",
+                    string.Format("Destination directory does not exist {0}",destinationPath),
                 });
                 return false;
             }

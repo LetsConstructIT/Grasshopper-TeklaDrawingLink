@@ -6,9 +6,9 @@ namespace LinkInstaller.Core
     public class Settings
     {
         private string _destinationGhaPath;
-        public string TeklaVersion { get; }
-        public string SourceGhaPath { get; }
-        public string RhinoPath { get; }
+        public string TeklaVersion { get; private set; }
+        public string SourceGhaPath { get; private set; }
+        public string RhinoPath { get; private set; }
 
         public Settings(string teklaVersion, string sourceGhaPath, string destinationGhaPath, string rhinoPath)
         {
@@ -34,7 +34,13 @@ namespace LinkInstaller.Core
                 return pathWithoutMinor;
             }
         }
-        public string DestinationGhaPath => Environment.ExpandEnvironmentVariables(_destinationGhaPath);
+        public string DestinationGhaPath
+        {
+            get
+            {
+                return Environment.ExpandEnvironmentVariables(_destinationGhaPath);
+            }
+        }
 
         public static Settings FromArguments(string[] args)
         {
