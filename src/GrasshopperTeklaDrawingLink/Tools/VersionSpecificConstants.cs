@@ -159,6 +159,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetSelectedComponent),
                 "F7CA96CE-0274-4340-9048-EECF9AB6B87E"
+            },
+            {
+                typeof(CreateLevelMarkComponent),
+                "B197DF40-56B5-43EE-AFB9-141FE70BC4B9"
             }
         };
 

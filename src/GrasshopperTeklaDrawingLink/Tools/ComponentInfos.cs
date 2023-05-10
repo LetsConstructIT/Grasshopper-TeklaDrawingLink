@@ -14,6 +14,7 @@ namespace GTDrawingLink.Tools
             public static readonly string Attributes =    "   Attributes";
             public static readonly string Geometry      = "  Geometry";
             public static readonly string Misc =          " Misc";
+            public static readonly string Marks =         "Marks";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -68,6 +69,15 @@ namespace GTDrawingLink.Tools
             Description = "Get currently opened Drawing",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Drawing
+        };
+
+        public static readonly GH_InstanceDescription CreateLevelMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Level Mark",
+            NickName = "LevelMark",
+            Description = "Creates Level Mark at the specified point",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Marks
         };
 
         public static readonly GH_InstanceDescription CreatePartViewComponent = new GH_InstanceDescription
