@@ -143,7 +143,15 @@ namespace GTDrawingLink.Tools
             {
                 typeof(TeklaGravityObjectParam),
                 "B5725678-82C3-49CB-B3C6-BBF9062C168B"
-            }
+            },
+            {
+                typeof(LineTypeAttributesParam),
+                "D641C107-E2F9-42B4-92F0-4CFCAF8875E6"
+            },
+            {
+                typeof(LineTypeAttributesComponent),
+                "0DF6013A-F529-46C9-BC2A-B2585A8267F8"
+            },
         };
 
         public static string TabHeading

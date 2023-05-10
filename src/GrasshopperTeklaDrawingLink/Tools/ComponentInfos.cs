@@ -6,11 +6,12 @@ namespace GTDrawingLink.Tools
     {
         public static class PanelHeadings
         {
-            public static readonly string Params =        "       Params";
-            public static readonly string Drawing =       "      Drawing";
-            public static readonly string DrawingList =   "     Drawing List";
-            public static readonly string View =          "    View";
-            public static readonly string DrawingParts =  "   Parts";
+            public static readonly string Params =        "        Params";
+            public static readonly string Drawing =       "       Drawing";
+            public static readonly string DrawingList =   "      Drawing List";
+            public static readonly string View =          "     View";
+            public static readonly string DrawingParts =  "    Parts";
+            public static readonly string Attributes =    "   Attributes";
             public static readonly string Geometry      = "  Geometry";
             public static readonly string Misc =          " Misc";
         }
@@ -267,5 +268,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
+
+        public static readonly GH_InstanceDescription LineTypeAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Line Attributes",
+            NickName = "LineType",
+            Description = "Line type attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };        
     }
 }

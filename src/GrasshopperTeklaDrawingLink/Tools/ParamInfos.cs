@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Tools
 {
@@ -100,6 +101,27 @@ namespace GTDrawingLink.Tools
             Name = "Dynamic macro",
             NickName = "Dynamic",
             Description = "New macro's content, which will be saved and run"
+        };
+
+        public static readonly GH_InstanceDescription DrawingColor = new GH_InstanceDescription
+        {
+            Name = "Drawing Color",
+            NickName = "C",
+            Description = $"Drawing color:\n{EnumHelpers.EnumToString<DrawingColors>()}\nRight-click to set"
+        };
+
+        public static readonly GH_InstanceDescription LineType = new GH_InstanceDescription
+        {
+            Name = "Line Type",
+            NickName = "T",
+            Description = $"Line type:\n{EnumHelpers.EnumToString<LineTypesEnum>()}\nRight-click to set"
+        };
+
+        public static readonly GH_InstanceDescription LineTypeAttributes = new GH_InstanceDescription
+        {
+            Name = "Colored line",
+            NickName = "L",
+            Description = "Line type attributes"
         };
     }
 }
