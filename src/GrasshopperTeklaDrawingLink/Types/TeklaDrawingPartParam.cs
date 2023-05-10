@@ -13,5 +13,11 @@ namespace GTDrawingLink.Types
         public TeklaDrawingPartParam() : base(ComponentInfos.DrawingPartParam, typeof(Part))
         {
         }
+
+        public TeklaDrawingPartParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : base(tag, typeof(Part))
+        {
+            Access = access;
+        }
     }
 }

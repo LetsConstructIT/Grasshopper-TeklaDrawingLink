@@ -276,6 +276,15 @@ namespace GTDrawingLink.Tools
             Description = "Line type attributes",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
-        };        
+        };
+
+        public static readonly GH_InstanceDescription ModifyPartComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Part",
+            NickName = "MPart",
+            Description = "Modifies a drawing part in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
     }
 }

@@ -119,9 +119,37 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription LineTypeAttributes = new GH_InstanceDescription
         {
-            Name = "Colored line",
-            NickName = "L",
+            Name = "Line attributes",
+            NickName = "LAttr",
             Description = "Line type attributes"
+        };
+
+        public static readonly GH_InstanceDescription VisibileLineTypeAttributes = new GH_InstanceDescription
+        {
+            Name = "Visibile lines",
+            NickName = "Vis",
+            Description = "Part visibile lines attribute"
+        };
+
+        public static readonly GH_InstanceDescription HiddenLineTypeAttributes = new GH_InstanceDescription
+        {
+            Name = "Hidden lines",
+            NickName = "Hid",
+            Description = "Part hidden lines attribute"
+        };
+
+        public static readonly GH_InstanceDescription ReferenceLineTypeAttributes = new GH_InstanceDescription
+        {
+            Name = "Reference lines",
+            NickName = "Ref",
+            Description = "Part reference lines attribute"
+        };
+        
+        public static readonly GH_InstanceDescription TeklaDrawingPart = new GH_InstanceDescription
+        {
+            Name = "Part",
+            NickName = "P",
+            Description = "Tekla Drawing Part"
         };
     }
 }
