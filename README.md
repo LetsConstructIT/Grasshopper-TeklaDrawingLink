@@ -40,11 +40,17 @@ Grasshopper-Tekla Drawing Link is provided as-is under the MIT license. For more
   * ![Drawing to Model Object](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/ConvertDrawingToModelObject.png) - converts drawing part to its model counterpart (enables inter Drawing/Model workflows)
   * ![Father View](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/GetViewFromDrawingObject.png) - returns view where provided drawing object resides
   * ![Select Object](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/SelectDrawingObject.png) - selects drawing object, used before running drawing macros
+  * ![Selected Object](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/SelectedObjects.png) - get selected drawing objects
+  * ![Modify Part](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/ModifyPart.png) - modifies drawing part
 * Geometry
   * ![Transform Point to View](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/TransformPointToView.png) - transforms point from global coordinate system to pointed view coordinate system
   * ![Transform Point to Local](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/TransformPointToLocal.png) - transforms point from global coordinate system to local coordinate system
   * ![Transform Point to Global](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/TransformPointToGlobal.png) - transforms point from local coordinate system to global coordinate system
+* Attributes 
+  * ![Line Type Attributes](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/LineTypeAttributes.png) - setting line type and color
 * Misc
   * ![Run Macro](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/RunMacro.png) - runs model or drawing macro already saved to file or created ad-hoc (right click to select mode)
   * ![Get COG](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/GetCOG.png) - return center of gravity of provided model or drawing part
+* Mark
+  * ![Level Mark](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/src/GrasshopperTeklaDrawingLink/Icons/LevelMark.png) - inserts level mark
   
