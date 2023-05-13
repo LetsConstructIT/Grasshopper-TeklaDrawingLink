@@ -286,5 +286,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };
+
+        public static readonly GH_InstanceDescription GetSelectedComponent = new GH_InstanceDescription
+        {
+            Name = "Selected Objects",
+            NickName = "Selected",
+            Description = "Get selected objects",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
     }
 }
