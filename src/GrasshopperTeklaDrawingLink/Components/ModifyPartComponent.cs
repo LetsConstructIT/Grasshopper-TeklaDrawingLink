@@ -3,12 +3,9 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -27,9 +24,9 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new TeklaDrawingPartParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
-            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibileLineTypeAttributes, GH_ParamAccess.item));
-            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.HiddenLineTypeAttributes, GH_ParamAccess.item));
-            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.ReferenceLineTypeAttributes, GH_ParamAccess.item));
+            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibileLineTypeAttributes, GH_ParamAccess.list));
+            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.HiddenLineTypeAttributes, GH_ParamAccess.list));
+            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.ReferenceLineTypeAttributes, GH_ParamAccess.list));
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -43,29 +40,33 @@ namespace GTDrawingLink.Components
             if (drawingObjects == null || drawingObjects.Count == 0)
                 return;
 
-            var visibileLines = DA.GetGooValue<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
-            var hiddenLines = DA.GetGooValue<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
-            var referenceLines = DA.GetGooValue<LineTypeAttributes>(ParamInfos.ReferenceLineTypeAttributes);
+            var visibileLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
+            var hiddenLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
+            var referenceLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.ReferenceLineTypeAttributes);
 
-            if (visibileLines == null && hiddenLines == null && referenceLines == null)
+            if (!visibileLines.HasItems() && !hiddenLines.HasItems() && !referenceLines.HasItems())
                 return;
 
-            foreach (var item in drawingObjects)
+            for (int i = 0; i < drawingObjects.Count; i++)
             {
-                if (!(item is Part))
+                var drawingObject = drawingObjects[i];
+                if (!(drawingObject is Part))
                     continue;
 
-                var part = (Part)item;
+                var part = (Part)drawingObject;
                 part.Select();
 
-                if (visibileLines != null)
-                    part.Attributes.VisibleLines = visibileLines;
+                var visibileLine = GetNthLine(visibileLines, i);
+                if (visibileLine != null)
+                    part.Attributes.VisibleLines = visibileLine;
 
-                if (hiddenLines != null)
-                    part.Attributes.HiddenLines = hiddenLines;
+                var hiddenLine = GetNthLine(hiddenLines, i);
+                if (hiddenLine != null)
+                    part.Attributes.HiddenLines = hiddenLine;
 
-                if (referenceLines != null)
-                    part.Attributes.ReferenceLine = referenceLines;
+                var referenceLine = GetNthLine(referenceLines, i);
+                if (referenceLine != null)
+                    part.Attributes.ReferenceLine = referenceLine;
 
                 part.Modify();
             }
@@ -73,6 +74,17 @@ namespace GTDrawingLink.Components
             DrawingInteractor.CommitChanges();
 
             DA.SetDataList(ParamInfos.TeklaDrawingPart.Name, drawingObjects.Select(d => new TeklaDrawingObjectGoo(d)));
+        }
+
+        private LineTypeAttributes GetNthLine(List<LineTypeAttributes> lineTypeAttributes, int index)
+        {
+            if (!lineTypeAttributes.HasItems())
+                return null;
+
+            if (lineTypeAttributes.Count - 1 < index)
+                return lineTypeAttributes.Last();
+
+            return lineTypeAttributes[index];
         }
     }
 }
