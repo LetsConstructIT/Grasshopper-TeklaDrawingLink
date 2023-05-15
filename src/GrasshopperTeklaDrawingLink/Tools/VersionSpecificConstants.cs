@@ -163,6 +163,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateLevelMarkComponent),
                 "B197DF40-56B5-43EE-AFB9-141FE70BC4B9"
+            },
+            {
+                typeof(ModelObjectHatchAttributesParam),
+                "37856A90-5B50-432E-996C-998CF5674543"
+            },
+            {
+                typeof(ModelObjectHatchAttributesComponent),
+                "D1104F82-E3AA-4AF5-9E4C-49BD1B7EE7D5"
             }
         };
 

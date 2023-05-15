@@ -233,6 +233,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ModelObjectHatchAttributes {
+            get {
+                object obj = ResourceManager.GetObject("ModelObjectHatchAttributes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ModifyPart {
             get {
                 object obj = ResourceManager.GetObject("ModifyPart", resourceCulture);

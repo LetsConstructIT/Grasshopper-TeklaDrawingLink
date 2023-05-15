@@ -27,6 +27,8 @@ namespace GTDrawingLink.Components
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibileLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.HiddenLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.ReferenceLineTypeAttributes, GH_ParamAccess.list));
+            AddOptionalParameter(pManager, new ModelObjectHatchAttributesParam(ParamInfos.PartFacesHatchAttributes, GH_ParamAccess.list));
+            AddOptionalParameter(pManager, new ModelObjectHatchAttributesParam(ParamInfos.SectionHatchAttributes, GH_ParamAccess.list));
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -43,8 +45,11 @@ namespace GTDrawingLink.Components
             var visibileLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
             var hiddenLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
             var referenceLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.ReferenceLineTypeAttributes);
+            var faceHatches = DA.GetGooListValue<ModelObjectHatchAttributes>(ParamInfos.PartFacesHatchAttributes);
+            var sectionHatches = DA.GetGooListValue<ModelObjectHatchAttributes>(ParamInfos.SectionHatchAttributes);
 
-            if (!visibileLines.HasItems() && !hiddenLines.HasItems() && !referenceLines.HasItems())
+            if (!visibileLines.HasItems() && !hiddenLines.HasItems() && !referenceLines.HasItems()
+                 && !faceHatches.HasItems() && !sectionHatches.HasItems())
                 return;
 
             for (int i = 0; i < drawingObjects.Count; i++)
@@ -68,6 +73,14 @@ namespace GTDrawingLink.Components
                 if (referenceLine != null)
                     part.Attributes.ReferenceLine = referenceLine;
 
+                var faceHatch = GetNthLine(faceHatches, i);
+                if (faceHatch != null)
+                    part.Attributes.FaceHatch = faceHatch;
+
+                var sectionHatch = GetNthLine(sectionHatches, i);
+                if (sectionHatch != null)
+                    part.Attributes.SectionFaceHatch = sectionHatch;
+
                 part.Modify();
             }
 
@@ -76,10 +89,10 @@ namespace GTDrawingLink.Components
             DA.SetDataList(ParamInfos.TeklaDrawingPart.Name, drawingObjects.Select(d => new TeklaDrawingObjectGoo(d)));
         }
 
-        private LineTypeAttributes GetNthLine(List<LineTypeAttributes> lineTypeAttributes, int index)
+        private T GetNthLine<T>(List<T> lineTypeAttributes, int index)
         {
             if (!lineTypeAttributes.HasItems())
-                return null;
+                return default(T);
 
             if (lineTypeAttributes.Count - 1 < index)
                 return lineTypeAttributes.Last();

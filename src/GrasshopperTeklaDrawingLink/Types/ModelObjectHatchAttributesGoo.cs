@@ -4,19 +4,19 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class LineTypeAttributesGoo : GH_Goo<LineTypeAttributes>
+    public class ModelObjectHatchAttributesGoo : GH_Goo<ModelObjectHatchAttributes>
     {
         public override bool IsValid => true;
 
-        public override string TypeDescription => "Tekla line type attributes";
+        public override string TypeDescription => "Tekla model object hatch attributes";
 
-        public override string TypeName => typeof(LineTypeAttributes).ToShortString();
+        public override string TypeName => typeof(ModelObjectHatchAttributes).ToShortString();
 
-        public LineTypeAttributesGoo()
+        public ModelObjectHatchAttributesGoo()
         {
         }
 
-        public LineTypeAttributesGoo(LineTypeAttributes attr)
+        public ModelObjectHatchAttributesGoo(ModelObjectHatchAttributes attr)
             : base(attr)
         {
         }
@@ -27,9 +27,9 @@ namespace GTDrawingLink.Types
 
         public override bool CastFrom(object source)
         {
-            if (source is LineTypeAttributes)
+            if (source is ModelObjectHatchAttributes)
             {
-                Value = source as LineTypeAttributes;
+                Value = source as ModelObjectHatchAttributes;
                 return true;
             }
             return base.CastFrom(source);
@@ -40,7 +40,7 @@ namespace GTDrawingLink.Types
             if (Value == null)
                 return "No value";
 
-            return $"{Value.Type}: {Value.Color}";
+            return $"{Value.Name}: {Value.Color}";
         }
     }
 }

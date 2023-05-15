@@ -288,6 +288,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Attributes
         };
 
+        public static readonly GH_InstanceDescription ModelObjectHatchAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Hatch Attributes",
+            NickName = "HatchType",
+            Description = "Hatch type attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
         public static readonly GH_InstanceDescription ModifyPartComponent = new GH_InstanceDescription
         {
             Name = "Modify Part",

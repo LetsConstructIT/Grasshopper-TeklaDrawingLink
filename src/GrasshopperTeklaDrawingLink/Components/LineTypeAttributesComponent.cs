@@ -1,9 +1,7 @@
 ﻿using Grasshopper.Kernel;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 

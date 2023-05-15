@@ -110,6 +110,20 @@ namespace GTDrawingLink.Tools
             Description = $"Drawing color:\n{EnumHelpers.EnumToString<DrawingColors>()}\nRight-click to set"
         };
 
+        public static readonly GH_InstanceDescription DrawingHatchColor = new GH_InstanceDescription
+        {
+            Name = "Drawing Hatch Color",
+            NickName = "C",
+            Description = $"Drawing color:\n{EnumHelpers.EnumToString<DrawingHatchColors>()}\nRight-click to set"
+        };
+
+        public static readonly GH_InstanceDescription DrawingBackgroundHatchColor = new GH_InstanceDescription
+        {
+            Name = "Drawing Background Color",
+            NickName = "BC",
+            Description = $"Drawing color:\n{EnumHelpers.EnumToString<DrawingHatchColors>()}\nRight-click to set"
+        };
+
         public static readonly GH_InstanceDescription LineType = new GH_InstanceDescription
         {
             Name = "Line Type",
@@ -144,7 +158,30 @@ namespace GTDrawingLink.Tools
             NickName = "Ref",
             Description = "Part reference lines attribute"
         };
-        
+
+        public static readonly GH_InstanceDescription HatchAttributes = new GH_InstanceDescription
+        {
+            Name = "Hatch",
+            NickName = "H",
+            Description = "Hatch attribute"
+        };
+
+        public static readonly GH_InstanceDescription PartFacesHatchAttributes = new GH_InstanceDescription
+        {
+            Name = "Part faces hatch",
+            NickName = "H",
+            Description = "Part faces hatch attribute"
+        };
+
+        public static readonly GH_InstanceDescription SectionHatchAttributes = new GH_InstanceDescription
+        {
+            Name = "Section hatch",
+            NickName = "SH",
+            Description = "Section hatch attribute"
+        };
+
+
+
         public static readonly GH_InstanceDescription TeklaDrawingPart = new GH_InstanceDescription
         {
             Name = "Part",
