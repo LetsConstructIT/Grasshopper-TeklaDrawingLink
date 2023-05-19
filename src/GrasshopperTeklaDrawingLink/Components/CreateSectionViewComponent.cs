@@ -41,9 +41,8 @@ namespace GTDrawingLink.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            View view = null;
-            var parameterSet = DA.GetData(ParamInfos.View.Name, ref view);
-            if (!parameterSet)
+            var view = DA.GetGooValue<View>(ParamInfos.View);
+            if (view == null)
                 return;
 
             Rhino.Geometry.Point3d startPoint = new Rhino.Geometry.Point3d();
@@ -55,7 +54,7 @@ namespace GTDrawingLink.Components
                 return;
 
             Rhino.Geometry.Point3d insertionPoint = new Rhino.Geometry.Point3d();
-            parameterSet = DA.GetData("Insertion point", ref insertionPoint);
+            var parameterSet = DA.GetData("Insertion point", ref insertionPoint);
             if (!parameterSet)
                 return;
 
