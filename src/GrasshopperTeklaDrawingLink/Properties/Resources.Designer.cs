@@ -163,6 +163,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GetAllUDAs {
+            get {
+                object obj = ResourceManager.GetObject("GetAllUDAs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GetCOG {
             get {
                 object obj = ResourceManager.GetObject("GetCOG", resourceCulture);
@@ -196,6 +206,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap GetRelatedViews {
             get {
                 object obj = ResourceManager.GetObject("GetRelatedViews", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GetUDA {
+            get {
+                object obj = ResourceManager.GetObject("GetUDA", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -326,6 +346,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap SelectedObjects {
             get {
                 object obj = ResourceManager.GetObject("SelectedObjects", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SetUDA {
+            get {
+                object obj = ResourceManager.GetObject("SetUDA", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -22,7 +22,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.list));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.list));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -33,7 +33,7 @@ namespace GTDrawingLink.Components
             if (!trigger)
                 return;
 
-            var selected = new List<TeklaDrawingObjectGoo>();
+            var selected = new List<TeklaDatabaseObjectGoo>();
 
             var doe = DrawingInteractor.DrawingHandler
                 .GetDrawingObjectSelector()
@@ -41,7 +41,7 @@ namespace GTDrawingLink.Components
 
             while (doe.MoveNext())
             {
-                selected.Add(new TeklaDrawingObjectGoo(doe.Current));
+                selected.Add(new TeklaDatabaseObjectGoo(doe.Current));
             }
 
             DA.SetDataList(ComponentInfos.DrawingObjectParam.Name, selected);

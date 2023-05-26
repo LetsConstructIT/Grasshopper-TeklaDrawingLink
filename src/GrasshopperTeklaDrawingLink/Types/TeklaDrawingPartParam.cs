@@ -5,7 +5,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class TeklaDrawingPartParam : TeklaDrawingObjectFloatingParam
+    public class TeklaDrawingPartParam : TeklaDatabaseObjectFloatingParam
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.DrawingPart;

@@ -9,7 +9,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class TeklaDrawingObjectParam : TeklaParamBase<DrawingObject>
+    public class TeklaDatabaseObjectParam : TeklaParamBase<DatabaseObject>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.DrawingObject;
@@ -29,7 +29,7 @@ namespace GTDrawingLink.Types
             }
         }
 
-        public TeklaDrawingObjectParam(GH_InstanceDescription tag, params Type[] types)
+        public TeklaDatabaseObjectParam(GH_InstanceDescription tag, params Type[] types)
             : base(tag)
         {
             if (types.Any())
@@ -42,7 +42,7 @@ namespace GTDrawingLink.Types
             }
         }
 
-        public TeklaDrawingObjectParam(GH_InstanceDescription tag, GH_ParamAccess access, params Type[] types)
+        public TeklaDatabaseObjectParam(GH_InstanceDescription tag, GH_ParamAccess access, params Type[] types)
             : this(tag, types)
         {
             Access = access;
@@ -50,51 +50,54 @@ namespace GTDrawingLink.Types
 
         public override void CreateAttributes()
         {
-            m_attributes = new TeklaDrawingObjectParamAttributes(this);
+            m_attributes = new TeklaDatabaseObjectParamAttributes(this);
         }
 
-        protected override GH_Goo<DrawingObject> InstantiateT()
+        protected override GH_Goo<DatabaseObject> InstantiateT()
         {
-            return new TeklaDrawingObjectGoo();
+            return new TeklaDatabaseObjectGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<DrawingObject> value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<DatabaseObject> value)
         {
             var drawingObject = DrawingInteractor.PickObject();
 
             if (drawingObject == null)
                 return GH_GetterResult.cancel;
 
-            value = new TeklaDrawingObjectGoo(drawingObject);
+            value = new TeklaDatabaseObjectGoo(drawingObject);
             return GH_GetterResult.success;
         }
 
-        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<DrawingObject>> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<DatabaseObject>> values)
         {
             var drawingObjects = DrawingInteractor.PickObjects();
 
             if (drawingObjects == null)
                 return GH_GetterResult.cancel;
 
-            values = new List<GH_Goo<DrawingObject>>();
+            values = new List<GH_Goo<DatabaseObject>>();
             foreach (var drawingObject in drawingObjects)
-                values.Add(new TeklaDrawingObjectGoo(drawingObject));
+                values.Add(new TeklaDatabaseObjectGoo(drawingObject));
 
             return GH_GetterResult.success;
         }
         public void HighlightObjects()
         {
-            DrawingInteractor.Highlight(GetReferencedModelObjects());
+            DrawingInteractor.Highlight(
+                GetReferencedDatabaseObjects()
+                .Where(d => d is DrawingObject)
+                .Cast<DrawingObject>());
         }
 
         public void UnHighlightObjects()
         {
             DrawingInteractor.Highlight(null);
         }
-        public virtual IEnumerable<DrawingObject> GetReferencedModelObjects()
+        public virtual IEnumerable<DatabaseObject> GetReferencedDatabaseObjects()
         {
             return from d in base.VolatileData.AllData(skipNulls: true)
-                   select ((GH_Goo<DrawingObject>)d).Value;
+                   select ((GH_Goo<DatabaseObject>)d).Value;
         }
     }
 }

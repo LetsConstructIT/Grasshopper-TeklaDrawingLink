@@ -180,13 +180,19 @@ namespace GTDrawingLink.Tools
             Description = "Section hatch attribute"
         };
 
-
-
         public static readonly GH_InstanceDescription TeklaDrawingPart = new GH_InstanceDescription
         {
             Name = "Part",
             NickName = "P",
             Description = "Tekla Drawing Part"
         };
+
+        public static readonly GH_InstanceDescription TeklaDatabaseObject = new GH_InstanceDescription
+        {
+            Name = "Database Object",
+            NickName = "DO",
+            Description = "Tekla Structures Drawing Database Object"
+        };
+
     }
 }

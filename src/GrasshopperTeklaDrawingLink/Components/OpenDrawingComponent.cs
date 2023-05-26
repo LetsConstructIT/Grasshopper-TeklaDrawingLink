@@ -18,18 +18,18 @@ namespace GTDrawingLink.Components
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingParam(ParamInfos.Drawing, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
             pManager.AddBooleanParameter("Show", "Show", "Whether to open the drawing as visible or in the background (faster). Visible by default", GH_ParamAccess.item, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingParam(ParamInfos.Drawing, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var drawing = DA.GetGooValue<Drawing>(ParamInfos.Drawing);
+            var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
             if (drawing == null)
                 return;
 
@@ -38,7 +38,7 @@ namespace GTDrawingLink.Components
 
             DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, show);
 
-            DA.SetData(ParamInfos.Drawing.Name, new TeklaDrawingGoo(drawing));
+            DA.SetData(ParamInfos.Drawing.Name, new TeklaDatabaseObjectGoo(drawing));
         }
     }
 }

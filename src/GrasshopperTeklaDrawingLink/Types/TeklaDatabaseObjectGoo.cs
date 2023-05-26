@@ -3,7 +3,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class TeklaDrawingObjectGoo : GH_Goo<DrawingObject>
+    public class TeklaDatabaseObjectGoo : GH_Goo<DatabaseObject>
     {
         public override bool IsValid => true;
 
@@ -13,7 +13,7 @@ namespace GTDrawingLink.Types
             {
                 if (Value == null)
                 {
-                    return typeof(DrawingObject).ToString();
+                    return typeof(DatabaseObject).ToString();
                 }
                 return Value.GetType().ToString();
             }
@@ -25,17 +25,17 @@ namespace GTDrawingLink.Types
             {
                 if (Value == null)
                 {
-                    return typeof(DrawingObject).ToShortString();
+                    return typeof(DatabaseObject).ToShortString();
                 }
                 return Value.GetType().ToShortString();
             }
         }
 
-        public TeklaDrawingObjectGoo()
+        public TeklaDatabaseObjectGoo()
         {
         }
 
-        public TeklaDrawingObjectGoo(DrawingObject modelObject)
+        public TeklaDatabaseObjectGoo(DatabaseObject modelObject)
             : base(modelObject)
         {
             Value = modelObject;
@@ -48,9 +48,9 @@ namespace GTDrawingLink.Types
 
         public override bool CastFrom(object source)
         {
-            if (source is DrawingObject)
+            if (source is DatabaseObject)
             {
-                Value = source as DrawingObject;
+                Value = source as DatabaseObject;
                 return true;
             }
             return base.CastFrom(source);

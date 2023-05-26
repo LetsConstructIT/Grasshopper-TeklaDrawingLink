@@ -19,25 +19,25 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingParam(ParamInfos.Drawing, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.list));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.list));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var drawing = DA.GetGooValue<Drawing>(ParamInfos.Drawing);
+            var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
             if (drawing == null)
                 return;
 
-            var viewsAtDrawing = new List<TeklaDrawingViewGoo>();
+            var viewsAtDrawing = new List<TeklaDatabaseObjectGoo>();
 
             var viewEnumerator = drawing.GetSheet().GetViews();
             while (viewEnumerator.MoveNext())
-                viewsAtDrawing.Add(new TeklaDrawingViewGoo(viewEnumerator.Current as View));
+                viewsAtDrawing.Add(new TeklaDatabaseObjectGoo(viewEnumerator.Current as View));
 
             DA.SetDataList(ParamInfos.View.Name, viewsAtDrawing);
         }

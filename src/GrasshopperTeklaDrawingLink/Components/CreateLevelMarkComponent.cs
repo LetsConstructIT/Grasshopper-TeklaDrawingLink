@@ -18,7 +18,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
             pManager.AddPointParameter("Insertion point", "IP", "Insertion point of the Level Mark", GH_ParamAccess.item);
             pManager.AddPointParameter("Base point", "BP", "Base point of the Level Mark", GH_ParamAccess.item);
             pManager.AddTextParameter("Mark attributes", "MA", "Level mark attributes file name", GH_ParamAccess.item, "standard");
@@ -31,7 +31,7 @@ namespace GTDrawingLink.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var view = DA.GetGooValue<View>(ParamInfos.View);
+            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
 

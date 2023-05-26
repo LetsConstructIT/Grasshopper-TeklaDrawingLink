@@ -2,7 +2,6 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
@@ -19,21 +18,21 @@ namespace GTDrawingLink.Components
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             var detailsDescription = new GH_InstanceDescription("Details", "D", "Details related to view", "", "");
-            pManager.AddParameter(new TeklaDrawingViewParam(detailsDescription, GH_ParamAccess.list));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(detailsDescription, GH_ParamAccess.list));
 
             var sectionsDescription = new GH_InstanceDescription("Sections", "S", "Sections related to view", "", "");
-            pManager.AddParameter(new TeklaDrawingViewParam(sectionsDescription, GH_ParamAccess.list));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(sectionsDescription, GH_ParamAccess.list));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var view = DA.GetGooValue<View>(ParamInfos.View);
+            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
 
@@ -43,8 +42,8 @@ namespace GTDrawingLink.Components
             var details = relatedViews.details;
             var sections = relatedViews.sections;
 
-            DA.SetDataList("Details", details.Select(v => new TeklaDrawingViewGoo(v)));
-            DA.SetDataList("Sections", sections.Select(v => new TeklaDrawingViewGoo(v)));
+            DA.SetDataList("Details", details.Select(v => new TeklaDatabaseObjectGoo(v)));
+            DA.SetDataList("Sections", sections.Select(v => new TeklaDatabaseObjectGoo(v)));
         }
     }
 }

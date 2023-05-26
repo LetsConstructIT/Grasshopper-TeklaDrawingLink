@@ -18,23 +18,23 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.list, typeof(DrawingObject)));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.list, typeof(DrawingObject)));
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.list, typeof(DrawingObject)));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.list, typeof(DrawingObject)));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var drawingObjects = DA.GetGooListValue<DrawingObject>(ComponentInfos.DrawingObjectParam);
+            var drawingObjects = DA.GetGooListValue<DatabaseObject>(ComponentInfos.DrawingObjectParam).Cast<DrawingObject>();
             if (drawingObjects == null)
                 return;
 
-            DrawingInteractor.Highlight(drawingObjects);            
+            DrawingInteractor.Highlight(drawingObjects);
 
-            DA.SetDataList(ComponentInfos.DrawingObjectParam.Name, drawingObjects.Select(d => new TeklaDrawingObjectGoo(d)));
+            DA.SetDataList(ComponentInfos.DrawingObjectParam.Name, drawingObjects.Select(d => new TeklaDatabaseObjectGoo(d)));
         }
     }
 }

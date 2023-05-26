@@ -18,7 +18,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            var inputParam = new TeklaDrawingObjectParam(ComponentInfos.DrawingPartParam, typeof(DrawingObject));
+            var inputParam = new TeklaDatabaseObjectParam(ComponentInfos.DrawingPartParam, typeof(DrawingObject));
             pManager.AddParameter(inputParam);
         }
 
@@ -32,9 +32,9 @@ namespace GTDrawingLink.Components
             object input = null;
             DA.GetData(ComponentInfos.DrawingPartParam.Name, ref input);
 
-            if (input is TeklaDrawingObjectGoo)
+            if (input is TeklaDatabaseObjectGoo)
             {
-                var drawingObject = (input as TeklaDrawingObjectGoo).Value;
+                var drawingObject = (input as TeklaDatabaseObjectGoo).Value;
 
                 if (drawingObject is Part)
                 {

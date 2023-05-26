@@ -20,7 +20,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingParam(ParamInfos.Drawing, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -32,7 +32,7 @@ namespace GTDrawingLink.Components
             {
                 var drawing = DrawingInteractor.GetActiveDrawing();
 
-                DA.SetData(ParamInfos.Drawing.Name, new TeklaDrawingGoo(drawing));
+                DA.SetData(ParamInfos.Drawing.Name, new TeklaDatabaseObjectGoo(drawing));
             }
         }
     }

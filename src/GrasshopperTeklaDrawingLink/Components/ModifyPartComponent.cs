@@ -23,7 +23,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingPartParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibileLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.HiddenLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.ReferenceLineTypeAttributes, GH_ParamAccess.list));
@@ -33,12 +33,12 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingPartParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var drawingObjects = DA.GetGooListValue<DrawingObject>(ParamInfos.TeklaDrawingPart);
+            var drawingObjects = DA.GetGooListValue<DatabaseObject>(ParamInfos.TeklaDrawingPart).Cast<DrawingObject>().ToList();
             if (drawingObjects == null || drawingObjects.Count == 0)
                 return;
 
@@ -86,7 +86,7 @@ namespace GTDrawingLink.Components
 
             DrawingInteractor.CommitChanges();
 
-            DA.SetDataList(ParamInfos.TeklaDrawingPart.Name, drawingObjects.Select(d => new TeklaDrawingObjectGoo(d)));
+            DA.SetDataList(ParamInfos.TeklaDrawingPart.Name, drawingObjects.Select(d => new TeklaDatabaseObjectGoo(d)));
         }
 
         private T GetNthLine<T>(List<T> lineTypeAttributes, int index)

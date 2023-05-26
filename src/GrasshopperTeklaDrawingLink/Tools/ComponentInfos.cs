@@ -6,15 +6,16 @@ namespace GTDrawingLink.Tools
     {
         public static class PanelHeadings
         {
-            public static readonly string Params =        "        Params";
-            public static readonly string Drawing =       "       Drawing";
-            public static readonly string DrawingList =   "      Drawing List";
-            public static readonly string View =          "     View";
-            public static readonly string DrawingParts =  "    Parts";
-            public static readonly string Attributes =    "   Attributes";
-            public static readonly string Geometry      = "  Geometry";
-            public static readonly string Misc =          " Misc";
-            public static readonly string Marks =         "Marks";
+            public static readonly string Params =        "         Params";
+            public static readonly string Drawing =       "        Drawing";
+            public static readonly string DrawingList =   "       Drawing List";
+            public static readonly string View =          "      View";
+            public static readonly string DrawingParts =  "     Parts";
+            public static readonly string Attributes =    "    Attributes";
+            public static readonly string Geometry      = "   Geometry";
+            public static readonly string Misc =          "  Misc";
+            public static readonly string Marks =         " Marks";
+            public static readonly string Udas =          "UDAs";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -313,6 +314,33 @@ namespace GTDrawingLink.Tools
             Description = "Get selected objects",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
+        };
+
+        public static readonly GH_InstanceDescription SetDrawingUDAComponent = new GH_InstanceDescription
+        {
+            Name = "Set Drawing UDAs",
+            NickName = "USet",
+            Description = "Set User-defined attributes for any drawing object",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Udas
+        };
+
+        public static readonly GH_InstanceDescription GetDrawingUDAValueComponent = new GH_InstanceDescription
+        {
+            Name = "Get Drawing UDA Value",
+            NickName = "UGet",
+            Description = "Get the value of a User-defined attribute from any drawing object",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Udas
+        };
+
+        public static readonly GH_InstanceDescription GetDrawingAllUDAsComponent = new GH_InstanceDescription
+        {
+            Name = "Get All Drawing UDAs",
+            NickName = "UGet",
+            Description = "Get all User-defined attributes from any drawing object",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Udas
         };
     }
 }

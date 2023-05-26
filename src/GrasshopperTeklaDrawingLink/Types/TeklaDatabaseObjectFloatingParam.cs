@@ -5,15 +5,15 @@ using GTDrawingLink.Tools;
 
 namespace GTDrawingLink.Types
 {
-	public class TeklaDrawingObjectFloatingParam : TeklaDrawingObjectParam
+	public class TeklaDatabaseObjectFloatingParam : TeklaDatabaseObjectParam
 	{
 
-		public TeklaDrawingObjectFloatingParam()
+		public TeklaDatabaseObjectFloatingParam()
 			: this(ComponentInfos.DrawingObjectParam)
 		{
 		}
 
-		public TeklaDrawingObjectFloatingParam(GH_InstanceDescription tag, params Type[] types)
+		public TeklaDatabaseObjectFloatingParam(GH_InstanceDescription tag, params Type[] types)
 			: base(tag, types)
 		{
 			_isFloatingParam = true;

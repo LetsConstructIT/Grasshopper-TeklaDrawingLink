@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GTDrawingLink.Types
 {
-    public class TeklaDrawingObjectParamAttributes : GH_FloatingParamAttributes
+    public class TeklaDatabaseObjectParamAttributes : GH_FloatingParamAttributes
     {
         public override bool Selected
         {
@@ -19,7 +19,7 @@ namespace GTDrawingLink.Types
             {
                 if (value != Selected)
                 {
-                    TeklaDrawingObjectParam teklaModelObjectParam = base.Owner as TeklaDrawingObjectParam;
+                    TeklaDatabaseObjectParam teklaModelObjectParam = base.Owner as TeklaDatabaseObjectParam;
                     if (value)
                     {
                         teklaModelObjectParam.HighlightObjects();
@@ -33,7 +33,7 @@ namespace GTDrawingLink.Types
             }
         }
 
-        public TeklaDrawingObjectParamAttributes(TeklaDrawingObjectParam owner)
+        public TeklaDatabaseObjectParamAttributes(TeklaDatabaseObjectParam owner)
             : base(owner)
         {
 

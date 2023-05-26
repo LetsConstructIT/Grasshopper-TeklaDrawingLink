@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddPointParameter("Point", "P", "Point to transform", GH_ParamAccess.item);
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -36,7 +36,7 @@ namespace GTDrawingLink.Components
             if (!parameterSet)
                 return;
 
-            var view = DA.GetGooValue<View>(ParamInfos.View);
+            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
 

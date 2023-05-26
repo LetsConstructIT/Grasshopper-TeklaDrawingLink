@@ -19,7 +19,7 @@ namespace GTDrawingLink.Components
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
             pManager.AddPointParameter("Center point", "CP", "Center point of detail", GH_ParamAccess.item);
             pManager.AddPointParameter("Label point", "LP", "Label location", GH_ParamAccess.item);
             pManager.AddPointParameter("Insertion point", "IP", "Detail view insertion point", GH_ParamAccess.item);
@@ -33,13 +33,13 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
             AddGenericParameter(pManager, ParamInfos.Mark, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var view = DA.GetGooValue<View>(ParamInfos.View);
+            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
 
@@ -98,7 +98,7 @@ namespace GTDrawingLink.Components
 
             if (createdView != null)
             {
-                DA.SetData(ParamInfos.View.Name, new TeklaDrawingViewGoo(createdView));
+                DA.SetData(ParamInfos.View.Name, new TeklaDatabaseObjectGoo(createdView));
                 DA.SetData(ParamInfos.Mark.Name, createdMark);
             }
         }

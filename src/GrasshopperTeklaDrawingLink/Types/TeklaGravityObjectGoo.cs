@@ -45,9 +45,9 @@ namespace GTDrawingLink.Types
         public override bool CastFrom(object source)
         {
             var input = source;
-            if (source is TeklaDrawingObjectGoo)
+            if (source is TeklaDatabaseObjectGoo)
             {
-                source = (source as TeklaDrawingObjectGoo).Value;
+                source = (source as TeklaDatabaseObjectGoo).Value;
             }
 
             if (source is TSD.Part)

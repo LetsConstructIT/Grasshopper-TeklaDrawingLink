@@ -18,18 +18,18 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
             pManager.AddVectorParameter("Vector", "Movement Vector", "Vector of movement", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingViewParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var view = DA.GetGooValue<View>(ParamInfos.View);
+            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
 
@@ -45,7 +45,7 @@ namespace GTDrawingLink.Components
             view.Modify();
             DrawingInteractor.CommitChanges();
 
-            DA.SetData(ParamInfos.View.Name, new TeklaDrawingViewGoo(view));
+            DA.SetData(ParamInfos.View.Name, new TeklaDatabaseObjectGoo(view));
         }
     }
 }

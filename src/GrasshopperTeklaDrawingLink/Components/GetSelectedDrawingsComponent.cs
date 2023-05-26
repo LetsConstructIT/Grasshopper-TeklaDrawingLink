@@ -22,7 +22,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDrawingParam(ParamInfos.Drawing, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -32,11 +32,11 @@ namespace GTDrawingLink.Components
 
             if (trigger)
             {
-                var selectedDrawings = new List<TeklaDrawingGoo>();
+                var selectedDrawings = new List<TeklaDatabaseObjectGoo>();
 
                 var drawingEnumerator = DrawingInteractor.DrawingHandler.GetDrawingSelector().GetSelected();
                 while (drawingEnumerator.MoveNext())
-                    selectedDrawings.Add(new TeklaDrawingGoo(drawingEnumerator.Current));
+                    selectedDrawings.Add(new TeklaDatabaseObjectGoo(drawingEnumerator.Current));
 
                 DA.SetDataList(ParamInfos.Drawing.Name, selectedDrawings);
             }

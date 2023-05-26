@@ -13,11 +13,11 @@ namespace GTDrawingLink.Tools
         private static Dictionary<Type, string> _typeGuids = new Dictionary<Type, string>
         {
             {
-                typeof(TeklaDrawingObjectFloatingParam),
+                typeof(TeklaDatabaseObjectFloatingParam),
                 "8D457DE8-CBFF-452F-BB24-C0A7B58F7108"
             },
             {
-                typeof(TeklaDrawingObjectParam),
+                typeof(TeklaDatabaseObjectParam),
                 "966E988B-A021-49A7-813A-3AAC15D88348"
             },
             {
@@ -105,18 +105,6 @@ namespace GTDrawingLink.Tools
                 "F33C9387-8C89-468D-A7CC-E259A1FE695B"
             },
             {
-                typeof(TeklaDrawingViewBaseParam),
-                "5E08DC0B-4DFE-46CD-A3AF-95A0A9846E6C"
-            },
-            {
-                typeof(TeklaDrawingViewParam),
-                "45D3D55F-AED9-4DE6-8160-BDE0B8F6DA91"
-            },
-            {
-                typeof(TeklaDrawingParam),
-                "3FF64AFA-EE2F-4D3B-8ED2-CB0A02C859FC"
-            },
-            {
                 typeof(TransformPointToViewCSComponent),
                 "2AADAF3C-8CDF-4D06-8C76-8DCA2C6DF5B9"
             },
@@ -171,6 +159,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModelObjectHatchAttributesComponent),
                 "D1104F82-E3AA-4AF5-9E4C-49BD1B7EE7D5"
+            },
+            {
+                typeof(SetDrawingUDAComponent),
+                "D2D009DB-F89F-4A66-A7E5-7FD4C78AACCF"
+            },
+            {
+                typeof(GetDrawingUDAValueComponent),
+                "E59C9558-9764-4B6C-8131-73FABF8FECEC"
+            },
+            {
+                typeof(GetDrawingAllUDAsComponent),
+                "220E9AEC-EC8E-48EF-B072-A6425B1B868F"
             }
         };
 
