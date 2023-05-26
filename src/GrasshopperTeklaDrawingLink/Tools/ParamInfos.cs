@@ -189,9 +189,44 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription TeklaDatabaseObject = new GH_InstanceDescription
         {
-            Name = "Database Object",
+            Name = "Drawing Object",
             NickName = "DO",
             Description = "Tekla Structures Drawing Database Object"
+        };
+
+        public static readonly GH_InstanceDescription UDAInput = new GH_InstanceDescription
+        {
+            Name = "UDA",
+            NickName = "U",
+            Description = "User-defined attributes. Add each UDA for the part on its own line (as multiline data, NOT as a list) or separate them with a semicolon.\n\nSyntax example:\nMyStringUDA \"my user text\"\nMyIntegerUDA 3\nMyFloatUDA 12.5\n\nYou can also use the 'Construct UDA' component to create your attribute input.\n\n"
+        };
+
+        public static readonly GH_InstanceDescription UDAsOutput = new GH_InstanceDescription
+        {
+            Name = "UDA",
+            NickName = "U",
+            Description = "User-defined attributes. Use the Expand UDAs component to separate the UDAs."
+        };
+
+        public static readonly GH_InstanceDescription UDAName = new GH_InstanceDescription
+        {
+            Name = "Name",
+            NickName = "N",
+            Description = "Name of user-defined attribute"
+        };
+
+        public static readonly GH_InstanceDescription UDAType = new GH_InstanceDescription
+        {
+            Name = "Type",
+            NickName = "T",
+            Description = $"Type of user-defined attribute:\n{EnumHelpers.EnumToString<AttributesIO.AttributeTypeEnum>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription UDAValue = new GH_InstanceDescription
+        {
+            Name = "Value",
+            NickName = "V",
+            Description = "Value of user-defined attribute"
         };
 
     }
