@@ -24,7 +24,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Part", "P", "Tekla model part", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Model Object", "MO", "Tekla model object", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -34,16 +34,13 @@ namespace GTDrawingLink.Components
 
             if (input is TeklaDatabaseObjectGoo)
             {
-                var drawingObject = (input as TeklaDatabaseObjectGoo).Value;
-
-                if (drawingObject is Part)
+                var databaseObject = (input as TeklaDatabaseObjectGoo).Value;
+                if (databaseObject is ModelObject drawingObject)
                 {
-                    var part = drawingObject as Part;
-
                     var model = new TSM.Model();
-                    var modelObject = model.SelectModelObject(part.ModelIdentifier);
+                    var modelObject = model.SelectModelObject(drawingObject.ModelIdentifier);
 
-                    DA.SetData("Part", modelObject);
+                    DA.SetData("Model Object", modelObject);
                 }
             }
         }

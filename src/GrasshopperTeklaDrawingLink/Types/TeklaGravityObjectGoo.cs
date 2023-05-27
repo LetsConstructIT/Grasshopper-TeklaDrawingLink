@@ -50,20 +50,15 @@ namespace GTDrawingLink.Types
                 source = (source as TeklaDatabaseObjectGoo).Value;
             }
 
-            if (source is TSD.Part)
+            if (source is TSD.ModelObject)
             {
-                var drawingPart = source as TSD.Part;
+                var drawingPart = source as TSD.ModelObject;
                 input = ModelInteractor.GetModelObject(drawingPart.ModelIdentifier);
             }
 
-            if (input is Part)
+            if (input is ModelObject)
             {
-                Value = input as Part;
-                return true;
-            }
-            else if (input is Assembly)
-            {
-                Value = input as Assembly;
+                Value = input as ModelObject;
                 return true;
             }
 
