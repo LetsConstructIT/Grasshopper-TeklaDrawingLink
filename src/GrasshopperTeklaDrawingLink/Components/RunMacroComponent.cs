@@ -15,6 +15,7 @@ namespace GTDrawingLink.Components
 
         public RunMacroComponent() : base(ComponentInfos.RunMacroComponent)
         {
+            SetCustomMessage();
         }
 
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
