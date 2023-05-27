@@ -29,19 +29,41 @@ namespace GTDrawingLink.Components
         private void ModelMacroMenuItem_Clicked(object sender, EventArgs e)
         {
             _mode = MacroMode.Model;
+            SetCustomMessage();
             ExpireSolution(recompute: true);
         }
 
         private void DrawingMacroMenuItem_Clicked(object sender, EventArgs e)
         {
             _mode = MacroMode.Drawing;
+            SetCustomMessage();
             ExpireSolution(recompute: true);
         }
 
         private void DynamicMacroMenuItem_Clicked(object sender, EventArgs e)
         {
             _mode = MacroMode.Dynamic;
+            SetCustomMessage();
             ExpireSolution(recompute: true);
+        }
+
+        private void SetCustomMessage()
+        {
+            switch (_mode)
+            {
+                case MacroMode.Model:
+                    base.Message = "'modeling' directory";
+                    break;
+                case MacroMode.Drawing:
+                    base.Message = "'drawing' directory";
+                    break;
+                case MacroMode.Dynamic:
+                    base.Message = "on-fly macro";
+                    break;
+                default:
+                    base.Message = "";
+                    break;
+            }
         }
 
         public override bool Write(GH_IWriter writer)
