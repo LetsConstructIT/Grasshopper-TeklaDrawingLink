@@ -40,7 +40,7 @@ namespace GTDrawingLink.Components
                     var model = new TSM.Model();
                     var modelObject = model.SelectModelObject(drawingObject.ModelIdentifier);
 
-                    DA.SetData("Model Object", modelObject);
+                    DA.SetData(0, modelObject);
                 }
             }
         }
