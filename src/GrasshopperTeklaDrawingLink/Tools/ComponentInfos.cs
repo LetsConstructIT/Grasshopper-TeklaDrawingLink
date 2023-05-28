@@ -6,16 +6,17 @@ namespace GTDrawingLink.Tools
     {
         public static class PanelHeadings
         {
-            public static readonly string Params =        "         Params";
-            public static readonly string Drawing =       "        Drawing";
-            public static readonly string DrawingList =   "       Drawing List";
-            public static readonly string View =          "      View";
-            public static readonly string DrawingParts =  "     Parts";
-            public static readonly string Attributes =    "    Attributes";
-            public static readonly string Geometry      = "   Geometry";
-            public static readonly string Misc =          "  Misc";
-            public static readonly string Marks =         " Marks";
-            public static readonly string Udas =          "UDAs";
+            public static readonly string Params =        "          Params";
+            public static readonly string Drawing =       "         Drawing";
+            public static readonly string DrawingList =   "        Drawing List";
+            public static readonly string View =          "       View";
+            public static readonly string DrawingParts =  "      Parts";
+            public static readonly string Attributes =    "     Attributes";
+            public static readonly string Geometry      = "    Geometry";
+            public static readonly string Misc =          "   Misc";
+            public static readonly string Marks =         "  Marks";
+            public static readonly string Udas =          " UDAs";
+            public static readonly string Plugins  =       "Plugins";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -342,5 +343,34 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Udas
         };
+
+        public static readonly GH_InstanceDescription PickerInputTypeComponent = new GH_InstanceDescription
+        {
+            Name = "Input Type",
+            NickName = "IType",
+            Description = "Creates specific input types for Tekla drawing plugins. Right-click to choose type.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Plugins
+        };
+
+        public static readonly GH_InstanceDescription PickerInputComponent = new GH_InstanceDescription
+        {
+            Name = "Picker Input",
+            NickName = "Input",
+            Description = "Creates input for Tekla drawing plugins from multiple picker input types.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Plugins
+        };
+
+        public static readonly GH_InstanceDescription CreatePluginComponent = new GH_InstanceDescription
+        {
+            Name = "Plugin",
+            NickName = "Plugin",
+            Description = "Creates a drawing component in Tekla.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Plugins
+        };
+
+        
     }
 }

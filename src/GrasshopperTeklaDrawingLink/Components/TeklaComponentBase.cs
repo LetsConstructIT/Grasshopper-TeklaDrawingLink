@@ -20,6 +20,11 @@ namespace GTDrawingLink.Components
             SetLastParameterAsOptional(pManager, true);
         }
 
+        protected void AddGenericParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
         protected void AddBooleanParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);

@@ -229,5 +229,53 @@ namespace GTDrawingLink.Tools
             Description = "Value of user-defined attribute"
         };
 
+        public static readonly GH_InstanceDescription PickerInputValue = new GH_InstanceDescription
+        {
+            Name = "Input Values",
+            NickName = "IValues",
+            Description = "Tekla drawing objects or points/lines for plugin input."
+        };
+
+        public static readonly GH_InstanceDescription PickerInputInput = new GH_InstanceDescription
+        {
+            Name = "Input",
+            NickName = "I",
+            Description = "Tekla drawing objects or points/lines for plugin input."
+        };
+
+        public static readonly GH_InstanceDescription PickerInput = new GH_InstanceDescription
+        {
+            Name = "Picker Input",
+            NickName = "PI",
+            Description = "Tekla drawing component input for e.g. plugins that have non-standard input."
+        };
+
+        public static readonly GH_InstanceDescription Plugin = new GH_InstanceDescription
+        {
+            Name = "Plugin",
+            NickName = "P",
+            Description = "Drawing plugin"
+        };
+
+        public static readonly GH_InstanceDescription PluginName = new GH_InstanceDescription
+        {
+            Name = "Name",
+            NickName = "N",
+            Description = "Tekla drawing plugin name."
+        };
+
+        public static readonly GH_InstanceDescription PluginAttributes = new GH_InstanceDescription
+        {
+            Name = "Plugin Attributes",
+            NickName = "PAattr",
+            Description = "Drawing plugin attributes. Add each attribute for the plugin on its own line (as multiline data, NOT as a list) or separate them with a semicolon."
+        };
+
+        public static readonly GH_InstanceDescription ObjectsToSelect = new GH_InstanceDescription
+        {
+            Name = "Objects to select",
+            NickName = "O",
+            Description = "Tekla drawing objects which have to be selected before inserting the plugin."
+        };
     }
 }

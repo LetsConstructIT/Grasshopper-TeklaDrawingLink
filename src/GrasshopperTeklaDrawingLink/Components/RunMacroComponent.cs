@@ -78,6 +78,7 @@ namespace GTDrawingLink.Components
             var serializedInt = 0;
             reader.TryGetInt32(ParamInfos.ModelMacro.Name, ref serializedInt);
             _mode = (MacroMode)serializedInt;
+            SetCustomMessage();
             return base.Read(reader);
         }
 

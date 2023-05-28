@@ -171,6 +171,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetDrawingAllUDAsComponent),
                 "220E9AEC-EC8E-48EF-B072-A6425B1B868F"
+            },
+            {
+                typeof(PickerInputComponent),
+                "F652319A-8C77-4AAF-9BE8-45FA23E30A26"
+            },
+            {
+                typeof(PickerInputTypeComponent),
+                "782CBD7C-4844-4EAF-AFAB-6C2ADC33BE73"
+            },
+            {
+                typeof(CreatePluginComponent),
+                "81D25C54-4C0B-4724-B79D-02C836C16C60"
             }
         };
 

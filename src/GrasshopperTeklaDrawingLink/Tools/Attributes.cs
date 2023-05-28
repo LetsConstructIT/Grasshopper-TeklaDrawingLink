@@ -17,7 +17,17 @@ namespace GTDrawingLink.Tools
         {
             Attributes attributes = new Attributes();
             foreach (KeyValuePair<string, T> keyValuePair in attributeCollection)
+            {
+                var type = typeof(T);
+                if ((type == typeof(int) && keyValuePair.Value.ToString() == int.MinValue.ToString()) ||
+                    (type == typeof(double) && keyValuePair.Value.ToString() == (1.0 * int.MinValue).ToString()) ||
+                    (type == typeof(string) && string.IsNullOrEmpty(keyValuePair.Value.ToString())))
+                {
+                    continue;
+                }
+
                 attributes.Add(keyValuePair.Key, keyValuePair.Value);
+            }
 
             return attributes;
         }
@@ -36,7 +46,7 @@ namespace GTDrawingLink.Tools
                 string[] array = item.Split(new char[1] { ' ' }, 2);
                 if (array.Length < 2 || string.IsNullOrWhiteSpace(array[0]) || string.IsNullOrWhiteSpace(array[1]))
                     throw new FormatException("Incorrect entry '" + item.Trim() + "'. Use syntax 'USER_FIELD_1 \"mytext\"' or 'MyInt 1' or 'MyFloat 3.0'.");
-                
+
                 string text = array[0].Trim();
                 string text2 = array[1].Trim();
 
