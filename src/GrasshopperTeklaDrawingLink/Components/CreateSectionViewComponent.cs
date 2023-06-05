@@ -7,7 +7,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class CreateSectionViewComponent : TeklaComponentBase
+    public class CreateSectionViewComponent : CreateViewBaseComponent
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.SectionView;
@@ -104,6 +104,8 @@ namespace GTDrawingLink.Components
 
             if (createdView != null)
             {
+                LoadAttributesWithMacroIfNecessary(createdView, viewAttributesFileName);
+
                 if (!string.IsNullOrEmpty(viewName))
                 {
                     createdMark.Attributes.MarkName = viewName;

@@ -7,7 +7,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class CreateDetailViewComponent : TeklaComponentBase
+    public class CreateDetailViewComponent : CreateViewBaseComponent
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.DetailView;
@@ -98,6 +98,8 @@ namespace GTDrawingLink.Components
 
             if (createdView != null)
             {
+                LoadAttributesWithMacroIfNecessary(createdView, viewAttributesFileName);
+
                 DA.SetData(ParamInfos.View.Name, new TeklaDatabaseObjectGoo(createdView));
                 DA.SetData(ParamInfos.Mark.Name, createdMark);
             }

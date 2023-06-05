@@ -277,5 +277,12 @@ namespace GTDrawingLink.Tools
             NickName = "O",
             Description = "Tekla drawing objects which have to be selected before inserting the plugin."
         };
+
+        public static readonly GH_InstanceDescription ViewAttributesLoadedByMacro = new GH_InstanceDescription
+        {
+            Name = "Attributes by macro",
+            NickName = "M",
+            Description = "Load view attributes with macro"
+        };
     }
 }
