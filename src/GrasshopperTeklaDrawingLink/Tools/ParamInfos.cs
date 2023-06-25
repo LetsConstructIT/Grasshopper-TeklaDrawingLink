@@ -291,5 +291,12 @@ namespace GTDrawingLink.Tools
             NickName = "A",
             Description = "Dimension Line Attributes"
         };
+
+        public static readonly GH_InstanceDescription DimensionLineType = new GH_InstanceDescription
+        {
+            Name = "Type",
+            NickName = "T",
+            Description = $"Type of dimension line:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.DimensionTypes>()}\nYou can right-click to set."
+        };
     }
 }
