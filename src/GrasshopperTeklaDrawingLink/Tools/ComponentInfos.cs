@@ -6,17 +6,18 @@ namespace GTDrawingLink.Tools
     {
         public static class PanelHeadings
         {
-            public static readonly string Params =        "          Params";
-            public static readonly string Drawing =       "         Drawing";
-            public static readonly string DrawingList =   "        Drawing List";
-            public static readonly string View =          "       View";
-            public static readonly string DrawingParts =  "      Parts";
-            public static readonly string Attributes =    "     Attributes";
-            public static readonly string Geometry      = "    Geometry";
-            public static readonly string Misc =          "   Misc";
-            public static readonly string Marks =         "  Marks";
-            public static readonly string Udas =          " UDAs";
-            public static readonly string Plugins  =       "Plugins";
+            public static readonly string Params =        "           Params";
+            public static readonly string Drawing =       "          Drawing";
+            public static readonly string DrawingList =   "         Drawing List";
+            public static readonly string View =          "        View";
+            public static readonly string DrawingParts =  "       Parts";
+            public static readonly string Attributes =    "      Attributes";
+            public static readonly string Geometry      = "     Geometry";
+            public static readonly string Misc =          "    Misc";
+            public static readonly string Marks =         "   Marks";
+            public static readonly string Udas =          "  UDAs";
+            public static readonly string Plugins  =      " Plugins";
+            public static readonly string Dimensions =    "Dimensions";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -371,6 +372,13 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Plugins
         };
 
-        
+        public static readonly GH_InstanceDescription StraightDimensionSetAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Dimension Line Attributes",
+            NickName = "Attributes",
+            Description = "Creates a dimension line attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
     }
 }

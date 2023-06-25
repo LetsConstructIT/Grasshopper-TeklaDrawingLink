@@ -64,7 +64,7 @@ namespace GTDrawingLink.Types
 
             if (drawingObject == null)
                 return GH_GetterResult.cancel;
-
+            
             value = new TeklaDatabaseObjectGoo(drawingObject);
             return GH_GetterResult.success;
         }

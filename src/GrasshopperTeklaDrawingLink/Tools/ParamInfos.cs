@@ -284,5 +284,12 @@ namespace GTDrawingLink.Tools
             NickName = "M",
             Description = "Load view attributes with macro"
         };
+
+        public static readonly GH_InstanceDescription StraightDimensionSetAttributes = new GH_InstanceDescription
+        {
+            Name = "Dimension Line Attributes",
+            NickName = "A",
+            Description = "Dimension Line Attributes"
+        };
     }
 }
