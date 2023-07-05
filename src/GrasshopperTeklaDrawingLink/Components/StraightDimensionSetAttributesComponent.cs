@@ -41,6 +41,9 @@ namespace GTDrawingLink.Components
 
             if (attributes == null)
             {
+                if (string.IsNullOrEmpty(attributesFileName))
+                    attributesFileName = "standard";
+
                 attributes = new StraightDimensionSetAttributes(modelObject: null, attributesFileName);
             }
             else
