@@ -381,10 +381,10 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Dimensions
         };
 
-        public static readonly GH_InstanceDescription InquireDimensionSetComponent = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription DeconstructDimensionSetComponent = new GH_InstanceDescription
         {
-            Name = "Inquire Dimension Line",
-            NickName = "InqDim",
+            Name = "Deconstruct Dimension Line",
+            NickName = "DeconstructDim",
             Description = "Get data from Tekla dimension line.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions

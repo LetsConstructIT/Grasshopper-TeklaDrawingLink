@@ -193,7 +193,7 @@ namespace GTDrawingLink.Tools
                 "6A4DE637-B72D-4DF0-8D30-8A9418881033"
             },
             {
-                typeof(InquireDimensionSetComponent),
+                typeof(DeconstructDimensionSetComponent),
                 "9EE842B8-EA60-4B5F-A123-86640387E410"
             }
         };

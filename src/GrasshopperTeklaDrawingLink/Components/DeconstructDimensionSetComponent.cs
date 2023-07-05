@@ -8,11 +8,11 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class InquireDimensionSetComponent : TeklaComponentBase
+    public class DeconstructDimensionSetComponent : TeklaComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
 
-        public InquireDimensionSetComponent() : base(ComponentInfos.InquireDimensionSetComponent)
+        public DeconstructDimensionSetComponent() : base(ComponentInfos.DeconstructDimensionSetComponent)
         {
         }
 
