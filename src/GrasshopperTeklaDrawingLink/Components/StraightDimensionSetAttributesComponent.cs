@@ -1,6 +1,7 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -45,7 +46,8 @@ namespace GTDrawingLink.Components
             if (dimensionTypeInput != null)
             {
                 var dimensionType = EnumHelpers.ObjectToEnumValue<DimensionSetBaseAttributes.DimensionTypes>(dimensionTypeInput).Value;
-                attributes.DimensionType = dimensionType;
+                if (Enum.IsDefined(typeof(DimensionSetBaseAttributes.DimensionTypes), dimensionType))
+                    attributes.DimensionType = dimensionType;
             }
         }
     }
