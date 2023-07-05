@@ -15,7 +15,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.item);
+            pManager.AddTextParameter(ParamInfos.Attributes.Name, ParamInfos.Attributes.NickName, ParamInfos.Attributes.Description, GH_ParamAccess.item, "standard");
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.DimensionTypes>(ParamInfos.DimensionLineType, GH_ParamAccess.item, 0));
 
             for (int i = 1; i < pManager.ParamCount; i++)
@@ -32,7 +32,7 @@ namespace GTDrawingLink.Components
             var attributesFileName = string.Empty;
             DA.GetData(ParamInfos.Attributes.Name, ref attributesFileName);
 
-            var attributes = new StraightDimensionSet.StraightDimensionSetAttributes(attributesFileName);
+            var attributes = new StraightDimensionSet.StraightDimensionSetAttributes(modelObject: null, attributesFileName);
             SetDimensionType(DA, attributes);
 
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(attributes));
