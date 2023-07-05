@@ -26,7 +26,6 @@ namespace GTDrawingLink.Components
             pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
             pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.item);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
-            SetLastParameterAsOptional(pManager, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -49,6 +48,8 @@ namespace GTDrawingLink.Components
                 return;
 
             var attributes = DA.GetGooValue<StraightDimensionSet.StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
+            if (attributes == null)
+                return;
 
             var pointList = new PointList();
             foreach (var point in dimPoints)
@@ -56,11 +57,7 @@ namespace GTDrawingLink.Components
 
             (Vector vector, double distance) locationProperties = CalculateLocation(dimLocation, dimPoints.First());
 
-            StraightDimensionSet sds = null;
-            if (attributes == null)
-                sds = _sdsHandler.CreateDimensionSet(view, pointList, locationProperties.vector, locationProperties.distance);
-            else
-                sds = _sdsHandler.CreateDimensionSet(view, pointList, locationProperties.vector, locationProperties.distance, attributes);
+            StraightDimensionSet sds = _sdsHandler.CreateDimensionSet(view, pointList, locationProperties.vector, locationProperties.distance, attributes);
 
             DrawingInteractor.CommitChanges();
 
