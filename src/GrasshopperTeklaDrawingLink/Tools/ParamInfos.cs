@@ -319,5 +319,12 @@ namespace GTDrawingLink.Tools
             NickName = "L",
             Description = "Dimension Line Location"
         };
+
+        public static readonly GH_InstanceDescription DimensionLinePlacingType = new GH_InstanceDescription
+        {
+            Name = "Placing Type",
+            NickName = "PT",
+            Description = $"Placing type of dimension line:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.Placings>()}\nYou can right-click to set."
+        };
     }
 }
