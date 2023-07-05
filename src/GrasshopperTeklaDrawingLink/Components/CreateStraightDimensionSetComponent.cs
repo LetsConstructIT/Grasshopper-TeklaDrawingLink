@@ -24,7 +24,7 @@ namespace GTDrawingLink.Components
         {
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
             pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
-            pManager.AddPointParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.list);
+            pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.item);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
             SetLastParameterAsOptional(pManager, true);
         }
@@ -44,14 +44,9 @@ namespace GTDrawingLink.Components
             if (!DA.GetDataList(ParamInfos.DimensionPoints.Name, dimPoints))
                 return;
 
-            List<Point3d> dimLocation = new List<Point3d>();
-            if (!DA.GetDataList(ParamInfos.DimensionLocation.Name, dimLocation))
+            Rhino.Geometry.Line dimLocation = new Rhino.Geometry.Line();
+            if (!DA.GetData(ParamInfos.DimensionLocation.Name, ref dimLocation))
                 return;
-            if (dimLocation.Count < 2)
-            {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Dimension line location requires two points");
-                return;
-            }
 
             var attributes = DA.GetGooValue<StraightDimensionSet.StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
 
@@ -72,10 +67,11 @@ namespace GTDrawingLink.Components
             DA.SetData(ParamInfos.StraightDimensionSet.Name, new TeklaDatabaseObjectGoo(sds));
         }
 
-        private (Vector vector, double distance) CalculateLocation(List<Point3d> dimLineLocation, Point3d dimPoint)
+        private (Vector vector, double distance) CalculateLocation(Rhino.Geometry.Line dimLineLocation, Point3d dimPoint)
         {
-            var line = new Tekla.Structures.Geometry3d.Line(dimLineLocation.First().ToTeklaPoint(), dimLineLocation.Last().ToTeklaPoint());
+            var line = new Tekla.Structures.Geometry3d.Line(dimLineLocation.From.ToTeklaPoint(), dimLineLocation.To.ToTeklaPoint());
             var teklaPoint = dimPoint.ToTeklaPoint();
+            teklaPoint.Z = 0;
             var projected = Projection.PointToLine(teklaPoint, line);
 
             var upVector = new Vector(projected - teklaPoint).GetNormal();
