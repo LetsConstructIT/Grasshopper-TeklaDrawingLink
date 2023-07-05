@@ -56,7 +56,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription Attributes = new GH_InstanceDescription
         {
-            Name = "Attributes",
+            Name = "Attributes Name",
             NickName = "A",
             Description = "Attribute filename"
         };
