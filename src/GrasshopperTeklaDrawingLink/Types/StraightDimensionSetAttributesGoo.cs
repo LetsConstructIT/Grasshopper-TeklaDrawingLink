@@ -41,7 +41,7 @@ namespace GTDrawingLink.Types
             if (Value == null)
                 return "No value";
 
-            return $"{Value.DimensionType}";
+            return $"{Value.DimensionType} : {Value.Placing.Placing}";
         }
     }
 }
