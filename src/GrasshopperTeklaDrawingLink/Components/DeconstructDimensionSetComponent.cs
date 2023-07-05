@@ -26,7 +26,7 @@ namespace GTDrawingLink.Components
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
-            pManager.AddPointParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.list);
+            pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.item);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
         }
 
@@ -41,11 +41,11 @@ namespace GTDrawingLink.Components
                 .GetValue(sds) as TSD.PointList).ToArray();
 
             DA.SetDataList(ParamInfos.DimensionPoints.Name, dimensionPoints.Select(p => p.ToRhinoPoint()));
-            DA.SetDataList(ParamInfos.DimensionLocation.Name, GetDimensionLocation(sds, dimensionPoints).Select(p => p.ToRhinoPoint()));
+            DA.SetData(ParamInfos.DimensionLocation.Name, GetDimensionLocation(sds, dimensionPoints));
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(sds.Attributes));
         }
 
-        private List<Point> GetDimensionLocation(TSD.StraightDimensionSet sds, Point[] dimPoints)
+        private Rhino.Geometry.Line GetDimensionLocation(TSD.StraightDimensionSet sds, Point[] dimPoints)
         {
             var upDirection = (typeof(TSD.StraightDimensionSet).GetProperty("UpDirection", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(sds) as Vector);
@@ -66,7 +66,7 @@ namespace GTDrawingLink.Components
 
             firstPt.Z = 0;
             lastPt.Z = 0;
-            return new List<Point>() { firstPt, lastPt };
+            return new Rhino.Geometry.Line(firstPt.ToRhinoPoint(), lastPt.ToRhinoPoint());
         }
     }
 }
