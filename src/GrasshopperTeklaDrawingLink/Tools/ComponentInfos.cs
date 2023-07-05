@@ -380,5 +380,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
+
+        public static readonly GH_InstanceDescription InquireDimensionSetComponent = new GH_InstanceDescription
+        {
+            Name = "Inquire Dimension Line",
+            NickName = "InqDim",
+            Description = "Get data from Tekla dimension line.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
     }
 }
