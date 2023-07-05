@@ -2,9 +2,11 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Tekla.Structures.Drawing;
+using TSD = Tekla.Structures.Drawing;
+using Tekla.Structures.Geometry3d;
 
 namespace GTDrawingLink.Components
 {
@@ -24,23 +26,47 @@ namespace GTDrawingLink.Components
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
+            pManager.AddPointParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.list);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            if (!(DA.GetGooValue<DatabaseObject>(ParamInfos.StraightDimensionSet) is StraightDimensionSet sds))
+            if (!(DA.GetGooValue<TSD.DatabaseObject>(ParamInfos.StraightDimensionSet) is TSD.StraightDimensionSet sds))
                 return;
 
             sds.Select();
 
-            var dimensionPoints = typeof(StraightDimensionSet).GetProperty("DimensionPoints", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(sds) as PointList;
-            var rhinoPoints = dimensionPoints.ToArray()
-                .Select(p => p.ToRhinoPoint());
+            var dimensionPoints = (typeof(TSD.StraightDimensionSet).GetProperty("DimensionPoints", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(sds) as TSD.PointList).ToArray();
 
-            DA.SetDataList(ParamInfos.DimensionPoints.Name, rhinoPoints);
+            DA.SetDataList(ParamInfos.DimensionPoints.Name, dimensionPoints.Select(p => p.ToRhinoPoint()));
+            DA.SetDataList(ParamInfos.DimensionLocation.Name, GetDimensionLocation(sds, dimensionPoints).Select(p => p.ToRhinoPoint()));
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(sds.Attributes));
+        }
+
+        private List<Point> GetDimensionLocation(TSD.StraightDimensionSet sds, Point[] dimPoints)
+        {
+            var upDirection = (typeof(TSD.StraightDimensionSet).GetProperty("UpDirection", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(sds) as Vector);
+            var dimLineDirection = upDirection.Cross(new Vector(0, 0, 1));
+
+            var initialPoint = dimPoints.First() + sds.Distance * upDirection;
+            var dimLineCoordSystem = new CoordinateSystem(initialPoint, dimLineDirection, upDirection);
+
+            var toDimLocationCs = MatrixFactory.ToCoordinateSystem(dimLineCoordSystem);
+
+            var dimLine = new Line(initialPoint, dimLineDirection);
+            var projectedPoints = dimPoints.Select(p => Projection.PointToLine(p, dimLine)).ToList();
+            var localPoints = projectedPoints.Select(p => toDimLocationCs.Transform(p)).ToList();
+            var orderedPoints = localPoints.OrderBy(p => p.X);
+
+            var firstPt = projectedPoints[localPoints.IndexOf(orderedPoints.First())];
+            var lastPt = projectedPoints[localPoints.IndexOf(orderedPoints.Last())];
+
+            firstPt.Z = 0;
+            lastPt.Z = 0;
+            return new List<Point>() { firstPt, lastPt };
         }
     }
 }

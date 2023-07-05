@@ -312,5 +312,12 @@ namespace GTDrawingLink.Tools
             NickName = "P",
             Description = "Dimension Points"
         };
+
+        public static readonly GH_InstanceDescription DimensionLocation = new GH_InstanceDescription
+        {
+            Name = "Location",
+            NickName = "L",
+            Description = "Dimension Line Location"
+        };
     }
 }
