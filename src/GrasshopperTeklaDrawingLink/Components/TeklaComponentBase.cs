@@ -53,7 +53,7 @@ namespace GTDrawingLink.Components
             pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        private void SetLastParameterAsOptional(GH_InputParamManager pManager, bool optional = true)
+        protected void SetLastParameterAsOptional(GH_InputParamManager pManager, bool optional = true)
         {
             if (optional)
                 pManager[pManager.ParamCount - 1].Optional = true;

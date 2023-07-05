@@ -389,5 +389,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
+
+        public static readonly GH_InstanceDescription CreateStraightDimensionSetComponent = new GH_InstanceDescription
+        {
+            Name = "Create Dimension Line",
+            NickName = "DimLine",
+            Description = "Create Tekla dimension line.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };        
     }
 }
