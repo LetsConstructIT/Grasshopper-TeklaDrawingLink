@@ -11,7 +11,7 @@ using Grasshopper.Kernel.Types;
 
 namespace GTDrawingLink.Components
 {
-    public class DeconstructDimensionSetComponent : TeklaComponentBase
+    public class DeconstructDimensionSetComponent : DeconstructDatabaseObjectComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
 
@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.StraightDimensionSet, GH_ParamAccess.item));
+            RegisterDatabaseObjectInputParam(pManager, ParamInfos.StraightDimensionSet);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
