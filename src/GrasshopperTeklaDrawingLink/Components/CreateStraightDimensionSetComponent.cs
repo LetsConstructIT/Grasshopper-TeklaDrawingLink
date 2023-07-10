@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -24,7 +25,7 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
-            pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
+            pManager.AddCurveParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.item);
             pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.item);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
         }
@@ -46,9 +47,17 @@ namespace GTDrawingLink.Components
             if (view == null)
                 return;
 
-            List<Point3d> dimPoints = new List<Point3d>();
-            if (!DA.GetDataList(ParamInfos.DimensionPoints.Name, dimPoints))
+            GH_Curve dimCurve = null;
+            if (!DA.GetData(ParamInfos.DimensionPoints.Name, ref dimCurve))
                 return;
+
+            var dimPolylineCurve = dimCurve.Value as PolylineCurve;
+            if (dimPolylineCurve == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Curve has to be a polyline");
+                return;
+            }
+            var dimPolyLine = dimPolylineCurve.ToPolyline();
 
             Rhino.Geometry.Line dimLocation = new Rhino.Geometry.Line();
             if (!DA.GetData(ParamInfos.DimensionLocation.Name, ref dimLocation))
@@ -59,10 +68,10 @@ namespace GTDrawingLink.Components
                 return;
 
             var pointList = new PointList();
-            foreach (var point in dimPoints)
+            foreach (var point in dimPolyLine)
                 pointList.Add(point.ToTeklaPoint());
 
-            (Vector vector, double distance) locationProperties = CalculateLocation(dimLocation, dimPoints.First());
+            (Vector vector, double distance) locationProperties = CalculateLocation(dimLocation, dimPolyLine.First());
 
             StraightDimensionSet sds = _sdsHandler.CreateDimensionSet(view, pointList, locationProperties.vector, locationProperties.distance, attributes);
             _insertedObjects.Add(sds);

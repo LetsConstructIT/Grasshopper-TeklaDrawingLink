@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using TSD = Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
+using Grasshopper.Kernel.Types;
 
 namespace GTDrawingLink.Components
 {
@@ -25,7 +26,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
+            pManager.AddCurveParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.item);
             pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.item);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
         }
@@ -40,7 +41,7 @@ namespace GTDrawingLink.Components
             var dimensionPoints = (typeof(TSD.StraightDimensionSet).GetProperty("DimensionPoints", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(sds) as TSD.PointList).ToArray();
 
-            DA.SetDataList(ParamInfos.DimensionPoints.Name, dimensionPoints.Select(p => p.ToRhinoPoint()));
+            DA.SetData(ParamInfos.DimensionPoints.Name, new GH_Curve(new Rhino.Geometry.Polyline(dimensionPoints.Select(p => p.ToRhinoPoint())).ToPolylineCurve()));
             DA.SetData(ParamInfos.DimensionLocation.Name, GetDimensionLocation(sds, dimensionPoints));
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(sds.Attributes));
         }
