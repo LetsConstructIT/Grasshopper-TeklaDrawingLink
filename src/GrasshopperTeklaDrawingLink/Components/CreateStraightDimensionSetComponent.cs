@@ -3,7 +3,6 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Rhino.Geometry;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
@@ -15,6 +14,8 @@ namespace GTDrawingLink.Components
     {
         private StraightDimensionSetHandler _sdsHandler = new StraightDimensionSetHandler();
         public override GH_Exposure Exposure => GH_Exposure.primary;
+
+        private List<DatabaseObject> _insertedObjects = new List<DatabaseObject>();
 
         public CreateStraightDimensionSetComponent() : base(ComponentInfos.CreateStraightDimensionSetComponent)
         {
@@ -35,6 +36,12 @@ namespace GTDrawingLink.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            foreach (var item in _insertedObjects)
+            {
+                item.Delete();
+            }
+            _insertedObjects.Clear();
+
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
@@ -58,7 +65,7 @@ namespace GTDrawingLink.Components
             (Vector vector, double distance) locationProperties = CalculateLocation(dimLocation, dimPoints.First());
 
             StraightDimensionSet sds = _sdsHandler.CreateDimensionSet(view, pointList, locationProperties.vector, locationProperties.distance, attributes);
-
+            _insertedObjects.Add(sds);
             DrawingInteractor.CommitChanges();
 
             DA.SetData(ParamInfos.StraightDimensionSet.Name, new TeklaDatabaseObjectGoo(sds));
