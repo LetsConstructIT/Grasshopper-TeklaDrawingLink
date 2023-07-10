@@ -92,7 +92,7 @@ namespace GTDrawingLink.Types
 
         public void UnHighlightObjects()
         {
-            DrawingInteractor.Highlight(null);
+            DrawingInteractor.UnHighlight();
         }
         public virtual IEnumerable<DatabaseObject> GetReferencedDatabaseObjects()
         {

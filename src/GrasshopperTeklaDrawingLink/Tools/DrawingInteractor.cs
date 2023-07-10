@@ -119,5 +119,11 @@ namespace GTDrawingLink.Tools
             else
                 dos.SelectObjects(objects, false);
         }
+
+        public static void UnHighlight()
+        {
+            var dos = DrawingHandler.GetDrawingObjectSelector();
+            dos.UnselectAllObjects();
+        }
     }
 }
