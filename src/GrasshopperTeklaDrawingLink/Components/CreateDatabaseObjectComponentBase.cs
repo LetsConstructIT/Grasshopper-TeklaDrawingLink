@@ -19,8 +19,8 @@ namespace GTDrawingLink.Components
         {
             m_attributes = new CreateDatabaseObjectComponentAttributes(this);
         }
-        
-        protected void AddInsertedObjects(List<DatabaseObject> databaseObjects)
+
+        protected void AddInsertedObjects(IEnumerable<DatabaseObject> databaseObjects)
         {
             _insertedObjects.AddRange(databaseObjects);
         }
