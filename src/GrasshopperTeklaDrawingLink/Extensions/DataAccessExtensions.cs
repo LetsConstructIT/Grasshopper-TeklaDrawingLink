@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace GTDrawingLink.Extensions
 
             return objectGoo.Value;
         }
+
         public static List<T> GetGooListValue<T>(this IGH_DataAccess DA, GH_InstanceDescription instanceDescription)
         {
             List<GH_Goo<T>> viewGoo = new List<GH_Goo<T>>();
@@ -29,5 +31,13 @@ namespace GTDrawingLink.Extensions
                 .ToList();
         }
 
+        public static List<List<T>> GetGooDataTreeValue<T>(this IGH_DataAccess DA, GH_InstanceDescription instanceDescription) where T : IGH_Goo
+        {
+            var parameterSet = DA.GetDataTree(instanceDescription.Name, out GH_Structure<T> tree);
+            if (!parameterSet)
+                return null;
+
+            return tree.Branches.Select(b => b).ToList();
+        }
     }
 }
