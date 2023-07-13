@@ -2,7 +2,6 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System;
 using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.StraightDimensionSet;
 
@@ -24,6 +23,7 @@ namespace GTDrawingLink.Components
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.Placings>(ParamInfos.DimensionLinePlacingType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.ShortDimensionTypes>(ParamInfos.ShortDimensionType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.ExtensionLineTypes>(ParamInfos.ExtensionLineType, GH_ParamAccess.item));
+            pManager.AddTextParameter(ParamInfos.ExcludePartsAccordingToFilter.Name, ParamInfos.ExcludePartsAccordingToFilter.NickName, ParamInfos.ExcludePartsAccordingToFilter.Description, GH_ParamAccess.item);
 
             for (int i = 0; i < pManager.ParamCount; i++)
                 pManager[i].Optional = true;
@@ -58,6 +58,7 @@ namespace GTDrawingLink.Components
             SetPlacingType(DA, attributes);
             SetShortDimensionType(DA, attributes);
             SetExtensionLineType(DA, attributes);
+            SetExcludeFilter(DA, attributes);
 
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(attributes));
         }
@@ -88,6 +89,13 @@ namespace GTDrawingLink.Components
             var enumValue = DA.GetEnum<DimensionSetBaseAttributes.ExtensionLineTypes>(ParamInfos.ExtensionLineType);
             if (enumValue.HasValue)
                 attributes.ExtensionLine = enumValue.Value;
+        }
+
+        private void SetExcludeFilter(IGH_DataAccess DA, StraightDimensionSetAttributes attributes)
+        {
+            var excludeFilter = string.Empty;
+            if (DA.GetData(ParamInfos.ExcludePartsAccordingToFilter.Name, ref excludeFilter) && !string.IsNullOrEmpty(excludeFilter))
+                attributes.ExcludePartsAccordingToFilter = excludeFilter;
         }
     }
 }

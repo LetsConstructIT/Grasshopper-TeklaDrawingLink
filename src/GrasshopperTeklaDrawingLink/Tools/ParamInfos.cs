@@ -294,7 +294,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription DimensionLineType = new GH_InstanceDescription
         {
-            Name = "Type",
+            Name = "Dim Type",
             NickName = "T",
             Description = $"Type of dimension line:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.DimensionTypes>()}\nYou can right-click to set."
         };
@@ -341,6 +341,12 @@ namespace GTDrawingLink.Tools
             Description = $"The extension line type:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.ExtensionLineTypes>()}\nYou can right-click to set."
         };
 
+        public static readonly GH_InstanceDescription ExcludePartsAccordingToFilter = new GH_InstanceDescription
+        {
+            Name = "Exclude Filter",
+            NickName = "EF",
+            Description = "Filter name used for excluding parts in dimension line tags"
+        };
         
     }
 }
