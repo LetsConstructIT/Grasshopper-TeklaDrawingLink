@@ -27,5 +27,13 @@ namespace GTDrawingLink.Extensions
         {
             return new Rhino.Geometry.Vector3d(point.X, point.Y, point.Z);
         }
+
+        public static Rhino.Geometry.Plane ToRhinoPlane(this Tekla.Structures.Geometry3d.CoordinateSystem coordSystem)
+        {
+            return new Rhino.Geometry.Plane(
+                coordSystem.Origin.ToRhinoPoint(),
+                coordSystem.AxisX.ToRhinoVector(),
+                coordSystem.AxisY.ToRhinoVector());
+        }
     }
 }
