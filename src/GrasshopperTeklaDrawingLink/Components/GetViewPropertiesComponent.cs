@@ -1,7 +1,9 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
@@ -24,6 +26,7 @@ namespace GTDrawingLink.Components
         {
             AddTextParameter(pManager, ParamInfos.ViewType, GH_ParamAccess.item);
             pManager.AddTextParameter("Name", "N", "Name of the provided view", GH_ParamAccess.item);
+            AddPlaneParameter(pManager, ParamInfos.ViewPlane, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -31,9 +34,22 @@ namespace GTDrawingLink.Components
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
-
+            
             DA.SetData(ParamInfos.ViewType.Name, view.ViewType.ToString());
             DA.SetData("Name", view.Name);
+            DA.SetData(ParamInfos.ViewPlane.Name, GetPlane(view));
+        }
+
+        private GH_Plane GetPlane(View view)
+        {
+            var coordSystem = view.DisplayCoordinateSystem;
+
+            var geoPlane = new Rhino.Geometry.Plane(
+                coordSystem.Origin.ToRhinoPoint(),
+                coordSystem.AxisX.ToRhinoVector(),
+                coordSystem.AxisY.ToRhinoVector());
+
+            return new GH_Plane(geoPlane);
         }
     }
 }

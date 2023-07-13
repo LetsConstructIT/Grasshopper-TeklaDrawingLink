@@ -347,6 +347,13 @@ namespace GTDrawingLink.Tools
             NickName = "EF",
             Description = "Filter name used for excluding parts in dimension line tags"
         };
-        
+
+        public static readonly GH_InstanceDescription ViewPlane = new GH_InstanceDescription
+        {
+            Name = "Plane",
+            NickName = "P",
+            Description = "View plane"
+        };
+
     }
 }
