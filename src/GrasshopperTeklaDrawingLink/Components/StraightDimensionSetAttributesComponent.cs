@@ -23,6 +23,7 @@ namespace GTDrawingLink.Components
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.DimensionTypes>(ParamInfos.DimensionLineType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.Placings>(ParamInfos.DimensionLinePlacingType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.ShortDimensionTypes>(ParamInfos.ShortDimensionType, GH_ParamAccess.item));
+            pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.ExtensionLineTypes>(ParamInfos.ExtensionLineType, GH_ParamAccess.item));
 
             for (int i = 0; i < pManager.ParamCount; i++)
                 pManager[i].Optional = true;
@@ -56,6 +57,7 @@ namespace GTDrawingLink.Components
             SetDimensionType(DA, attributes);
             SetPlacingType(DA, attributes);
             SetShortDimensionType(DA, attributes);
+            SetExtensionLineType(DA, attributes);
 
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(attributes));
         }
@@ -79,6 +81,13 @@ namespace GTDrawingLink.Components
             var enumValue = DA.GetEnum<DimensionSetBaseAttributes.ShortDimensionTypes>(ParamInfos.ShortDimensionType);
             if (enumValue.HasValue)
                 attributes.ShortDimension = enumValue.Value;
+        }
+
+        private void SetExtensionLineType(IGH_DataAccess DA, StraightDimensionSetAttributes attributes)
+        {
+            var enumValue = DA.GetEnum<DimensionSetBaseAttributes.ExtensionLineTypes>(ParamInfos.ExtensionLineType);
+            if (enumValue.HasValue)
+                attributes.ExtensionLine = enumValue.Value;
         }
     }
 }

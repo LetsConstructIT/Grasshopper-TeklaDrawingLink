@@ -333,5 +333,14 @@ namespace GTDrawingLink.Tools
             NickName = "ST",
             Description = $"Position of the short dimension value:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.ShortDimensionTypes>()}\nYou can right-click to set."
         };
+
+        public static readonly GH_InstanceDescription ExtensionLineType = new GH_InstanceDescription
+        {
+            Name = "Extension Line Type",
+            NickName = "ET",
+            Description = $"The extension line type:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.ExtensionLineTypes>()}\nYou can right-click to set."
+        };
+
+        
     }
 }
