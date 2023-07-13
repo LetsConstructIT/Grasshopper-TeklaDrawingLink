@@ -326,5 +326,12 @@ namespace GTDrawingLink.Tools
             NickName = "PT",
             Description = $"Placing type of dimension line:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.Placings>()}\nYou can right-click to set."
         };
+
+        public static readonly GH_InstanceDescription ShortDimensionType = new GH_InstanceDescription
+        {
+            Name = "Short Dimension Type",
+            NickName = "ST",
+            Description = $"Position of the short dimension value:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.ShortDimensionTypes>()}\nYou can right-click to set."
+        };
     }
 }

@@ -22,6 +22,7 @@ namespace GTDrawingLink.Components
             pManager.AddTextParameter(ParamInfos.Attributes.Name, ParamInfos.Attributes.NickName, ParamInfos.Attributes.Description, GH_ParamAccess.item);
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.DimensionTypes>(ParamInfos.DimensionLineType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.Placings>(ParamInfos.DimensionLinePlacingType, GH_ParamAccess.item));
+            pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.ShortDimensionTypes>(ParamInfos.ShortDimensionType, GH_ParamAccess.item));
 
             for (int i = 0; i < pManager.ParamCount; i++)
                 pManager[i].Optional = true;
@@ -54,32 +55,30 @@ namespace GTDrawingLink.Components
 
             SetDimensionType(DA, attributes);
             SetPlacingType(DA, attributes);
+            SetShortDimensionType(DA, attributes);
 
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(attributes));
         }
 
-        private void SetDimensionType(IGH_DataAccess DA, StraightDimensionSet.StraightDimensionSetAttributes attributes)
+        private void SetDimensionType(IGH_DataAccess DA, StraightDimensionSetAttributes attributes)
         {
-            object dimensionTypeInput = null;
-            DA.GetData(ParamInfos.DimensionLineType.Name, ref dimensionTypeInput);
-            if (dimensionTypeInput == null)
-                return;
-
-            var dimensionType = EnumHelpers.ObjectToEnumValue<DimensionSetBaseAttributes.DimensionTypes>(dimensionTypeInput).Value;
-            if (Enum.IsDefined(typeof(DimensionSetBaseAttributes.DimensionTypes), dimensionType))
-                attributes.DimensionType = dimensionType;
+            var enumValue = DA.GetEnum<DimensionSetBaseAttributes.DimensionTypes>(ParamInfos.DimensionLineType);
+            if (enumValue.HasValue)
+                attributes.DimensionType = enumValue.Value;
         }
 
-        private void SetPlacingType(IGH_DataAccess DA, StraightDimensionSet.StraightDimensionSetAttributes attributes)
+        private void SetPlacingType(IGH_DataAccess DA, StraightDimensionSetAttributes attributes)
         {
-            object placingTypeInput = null;
-            DA.GetData(ParamInfos.DimensionLinePlacingType.Name, ref placingTypeInput);
-            if (placingTypeInput == null)
-                return;
+            var enumValue = DA.GetEnum<DimensionSetBaseAttributes.Placings>(ParamInfos.DimensionLinePlacingType);
+            if (enumValue.HasValue)
+                attributes.Placing.Placing = enumValue.Value;
+        }
 
-            var placingType = EnumHelpers.ObjectToEnumValue<DimensionSetBaseAttributes.Placings>(placingTypeInput).Value;
-            if (Enum.IsDefined(typeof(DimensionSetBaseAttributes.Placings), placingType))
-                attributes.Placing.Placing = placingType;
+        private void SetShortDimensionType(IGH_DataAccess DA, StraightDimensionSetAttributes attributes)
+        {
+            var enumValue = DA.GetEnum<DimensionSetBaseAttributes.ShortDimensionTypes>(ParamInfos.ShortDimensionType);
+            if (enumValue.HasValue)
+                attributes.ShortDimension = enumValue.Value;
         }
     }
 }
