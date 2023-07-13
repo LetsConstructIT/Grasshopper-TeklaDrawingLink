@@ -35,5 +35,12 @@ namespace GTDrawingLink.Extensions
                 coordSystem.AxisX.ToRhinoVector(),
                 coordSystem.AxisY.ToRhinoVector());
         }
+
+        public static Rhino.Geometry.BoundingBox ToRhinoBoundingBox(this Tekla.Structures.Geometry3d.AABB aabb)
+        {
+            return new Rhino.Geometry.BoundingBox(
+                aabb.MinPoint.ToRhinoPoint(),
+                aabb.MaxPoint.ToRhinoPoint());
+        }
     }
 }

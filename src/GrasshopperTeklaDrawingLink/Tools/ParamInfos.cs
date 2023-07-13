@@ -355,5 +355,11 @@ namespace GTDrawingLink.Tools
             Description = "View plane"
         };
 
+        public static readonly GH_InstanceDescription ViewRestrictionBox = new GH_InstanceDescription
+        {
+            Name = "Restriction Box",
+            NickName = "RB",
+            Description = "View restriction box"
+        };
     }
 }

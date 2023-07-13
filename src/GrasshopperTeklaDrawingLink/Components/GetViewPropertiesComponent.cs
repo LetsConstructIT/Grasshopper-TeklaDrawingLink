@@ -27,6 +27,7 @@ namespace GTDrawingLink.Components
             AddTextParameter(pManager, ParamInfos.ViewType, GH_ParamAccess.item);
             pManager.AddTextParameter("Name", "N", "Name of the provided view", GH_ParamAccess.item);
             AddPlaneParameter(pManager, ParamInfos.ViewPlane, GH_ParamAccess.item);
+            AddBoxParameter(pManager, ParamInfos.ViewRestrictionBox, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -34,22 +35,26 @@ namespace GTDrawingLink.Components
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return;
-            
+            view.Select();
+
             DA.SetData(ParamInfos.ViewType.Name, view.ViewType.ToString());
             DA.SetData("Name", view.Name);
             DA.SetData(ParamInfos.ViewPlane.Name, GetPlane(view));
+            DA.SetData(ParamInfos.ViewRestrictionBox.Name, GetRestrictionBox(view));
         }
-
         private GH_Plane GetPlane(View view)
         {
             var coordSystem = view.DisplayCoordinateSystem;
+            return new GH_Plane(coordSystem.ToRhinoPlane());
+        }
 
-            var geoPlane = new Rhino.Geometry.Plane(
-                coordSystem.Origin.ToRhinoPoint(),
-                coordSystem.AxisX.ToRhinoVector(),
-                coordSystem.AxisY.ToRhinoVector());
+        private GH_Box GetRestrictionBox(View view)
+        {
+            var box = new Rhino.Geometry.Box(
+                view.ViewCoordinateSystem.ToRhinoPlane(),
+                view.RestrictionBox.ToRhinoBoundingBox());
 
-            return new GH_Plane(geoPlane);
+            return new GH_Box(box);
         }
     }
 }
