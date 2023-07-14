@@ -12,11 +12,11 @@ namespace GTDrawingLink.Tools
             Description = "Drawing"
         };
 
-        public static readonly GH_InstanceDescription BooleanTrigger = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription BooleanToogle = new GH_InstanceDescription
         {
-            Name = "Boolean Trigger",
-            NickName = "B",
-            Description = "Boolean flag"
+            Name = "Toggle",
+            NickName = "T",
+            Description = "Boolean toogle for launching component"
         };
 
         public static readonly GH_InstanceDescription ViewBase = new GH_InstanceDescription
