@@ -54,7 +54,10 @@ namespace GTDrawingLink.Components
 
         private bool AreParallel(StraightDimensionSet straightDimensionSet1, StraightDimensionSet straightDimensionSet2)
         {
-            var angle= straightDimensionSet1.Vect
+            var angle = (180 / Math.PI) * straightDimensionSet1.GetUpDirection().GetAngleBetween(straightDimensionSet2.GetUpDirection());
+
+            var tol = 0.5;
+            return angle < tol || angle > 180 - tol;
         }
     }
 }

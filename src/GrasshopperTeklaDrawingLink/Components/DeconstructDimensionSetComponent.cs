@@ -48,8 +48,7 @@ namespace GTDrawingLink.Components
 
         private Rhino.Geometry.Line GetDimensionLocation(TSD.StraightDimensionSet sds, Point[] dimPoints)
         {
-            var upDirection = (typeof(TSD.StraightDimensionSet).GetProperty("UpDirection", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(sds) as Vector);
+            var upDirection = sds.GetUpDirection();
             var dimLineDirection = upDirection.Cross(new Vector(0, 0, 1));
 
             var initialPoint = dimPoints.First() + sds.Distance * upDirection;
