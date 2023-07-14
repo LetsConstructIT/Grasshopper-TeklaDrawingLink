@@ -123,9 +123,49 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CreateDimensionLink {
+            get {
+                object obj = ResourceManager.GetObject("CreateDimensionLink", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CreateStraightDimensionSet {
+            get {
+                object obj = ResourceManager.GetObject("CreateStraightDimensionSet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DeconstructDimensionSet {
+            get {
+                object obj = ResourceManager.GetObject("DeconstructDimensionSet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DetailView {
             get {
                 object obj = ResourceManager.GetObject("DetailView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DimensionLineAttributes {
+            get {
+                object obj = ResourceManager.GetObject("DimensionLineAttributes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

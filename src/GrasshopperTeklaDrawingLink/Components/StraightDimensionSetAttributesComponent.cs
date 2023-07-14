@@ -2,6 +2,7 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System.Drawing;
 using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.StraightDimensionSet;
 
@@ -9,7 +10,8 @@ namespace GTDrawingLink.Components
 {
     public class StraightDimensionSetAttributesComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        protected override Bitmap Icon => Properties.Resources.DimensionLineAttributes;
 
         public StraightDimensionSetAttributesComponent() : base(ComponentInfos.StraightDimensionSetAttributesComponent)
         {

@@ -8,6 +8,7 @@ using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
@@ -18,6 +19,7 @@ namespace GTDrawingLink.Components
     {
         private StraightDimensionSetHandler _sdsHandler = new StraightDimensionSetHandler();
         public override GH_Exposure Exposure => GH_Exposure.primary;
+        protected override Bitmap Icon => Properties.Resources.CreateStraightDimensionSet;
 
         public CreateStraightDimensionSetComponent() : base(ComponentInfos.CreateStraightDimensionSetComponent)
         {

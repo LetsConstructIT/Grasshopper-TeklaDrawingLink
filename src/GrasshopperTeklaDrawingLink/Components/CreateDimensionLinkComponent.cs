@@ -3,6 +3,7 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System;
+using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
@@ -11,6 +12,7 @@ namespace GTDrawingLink.Components
     public class CreateDimensionLinkComponent : TeklaComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
+        protected override Bitmap Icon => Properties.Resources.CreateDimensionLink;
 
         public CreateDimensionLinkComponent() : base(ComponentInfos.CreateDimensionLinkComponent)
         {

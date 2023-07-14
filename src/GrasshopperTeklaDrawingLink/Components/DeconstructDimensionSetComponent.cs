@@ -2,7 +2,6 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TSD = Tekla.Structures.Drawing;
@@ -13,7 +12,8 @@ namespace GTDrawingLink.Components
 {
     public class DeconstructDimensionSetComponent : DeconstructDatabaseObjectComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.DeconstructDimensionSet;
 
         public DeconstructDimensionSetComponent() : base(ComponentInfos.DeconstructDimensionSetComponent)
         {
