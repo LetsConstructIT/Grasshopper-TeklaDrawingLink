@@ -123,20 +123,23 @@ namespace GTDrawingLink.Components
 
                     if (element.Value is LineCurve lineCurve)
                     {
-                        var polylineFromLine = new Rhino.Geometry.Polyline();
-                        polylineFromLine.Add(lineCurve.PointAtStart);
-                        polylineFromLine.Add(lineCurve.PointAtEnd);
+                        var polylineFromLine = new Rhino.Geometry.Polyline
+                        {
+                            lineCurve.PointAtStart,
+                            lineCurve.PointAtEnd
+                        };
                         outputList.Add(polylineFromLine);
                         continue;
                     }
 
-                    if (!(element.Value is PolylineCurve polylineCurve))
+                    if (element.Value is PolylineCurve polylineCurve)
                     {
-                        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Curve has to be a polyline");
-                        return null;
+                        outputList.Add(polylineCurve.ToPolyline());
+                        continue;
                     }
 
-                    outputList.Add(polylineCurve.ToPolyline());
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Curve has to be a polyline");
+                    return null;
                 }
             }
 
