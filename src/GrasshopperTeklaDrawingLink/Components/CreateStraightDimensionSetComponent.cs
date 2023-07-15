@@ -38,22 +38,21 @@ namespace GTDrawingLink.Components
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.StraightDimensionSet, GH_ParamAccess.tree));
         }
 
-        protected override void SolveInstance(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            RemoveInsertedObjects();
             var views = DA.GetGooListValue<DatabaseObject>(ParamInfos.View).Cast<View>().ToList();
             if (views == null)
-                return;
+                return null;
 
             var dimCurveTree = DA.GetGooDataTreeValue<GH_Curve>(ParamInfos.DimensionPoints);
             var dimPolylineTree = CastToPolylines(dimCurveTree);
             if (dimPolylineTree == null)
-                return;
+                return null;
 
             var dimLinesTree = DA.GetGooDataTreeValue<GH_Line>(ParamInfos.DimensionLocation);
             var dimLocationTree = CastToLines(dimLinesTree);
             if (dimLocationTree == null)
-                return;
+                return null;
 
             var dimAttributesTree = DA.GetGooDataTreeValue<GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>>(ParamInfos.StraightDimensionSetAttributes);
             var attributesTree = CastToAttributes(dimAttributesTree);
@@ -61,7 +60,7 @@ namespace GTDrawingLink.Components
             if (!CheckInputLength(views, dimPolylineTree, dimLocationTree, attributesTree))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Input arguments must have equal length");
-                return;
+                return null;
             }
 
             var insertedDimensions = new List<List<StraightDimensionSet>>();
@@ -82,7 +81,7 @@ namespace GTDrawingLink.Components
             int paramIndex = base.Params.IndexOfOutputParam(ParamInfos.StraightDimensionSet.Name);
             DA.SetDataTree(paramIndex, outputDataTree);
 
-            AddInsertedObjects(insertedDimensions.SelectMany(d => d));
+            return insertedDimensions.SelectMany(d => d);
         }
 
         private List<StraightDimensionSet> InsertDimensionLines(View view, List<Rhino.Geometry.Polyline> polylines, List<Rhino.Geometry.Line> locations, List<StraightDimensionSet.StraightDimensionSetAttributes> dimAttributes)

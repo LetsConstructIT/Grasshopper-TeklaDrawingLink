@@ -1,6 +1,8 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -20,10 +22,17 @@ namespace GTDrawingLink.Components
             m_attributes = new CreateDatabaseObjectComponentAttributes(this);
         }
 
-        protected void AddInsertedObjects(IEnumerable<DatabaseObject> databaseObjects)
+        protected override void SolveInstance(IGH_DataAccess DA)
         {
-            _insertedObjects.AddRange(databaseObjects);
+            RemoveInsertedObjects();
+
+            var insertedObjects = InsertObjects(DA);
+
+            if (insertedObjects != null)
+                AddInsertedObjects(insertedObjects);
         }
+
+        protected abstract IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess dA);
 
         protected void RemoveInsertedObjects()
         {
@@ -32,6 +41,11 @@ namespace GTDrawingLink.Components
                 item.Delete();
             }
             _insertedObjects.Clear();
+        }
+
+        protected void AddInsertedObjects(IEnumerable<DatabaseObject> databaseObjects)
+        {
+            _insertedObjects.AddRange(databaseObjects);
         }
 
         private IEnumerable<DrawingObject> GetDrawingObjects()
