@@ -51,6 +51,8 @@ namespace GTDrawingLink.Components
             _insertedObjects.Clear();
         }
 
+        public List<DatabaseObject> GetObjects() => _insertedObjects;
+
         public void DeleteObjects()
         {
             if (_insertedObjects.Any())

@@ -389,5 +389,19 @@ namespace GTDrawingLink.Tools
             NickName = "Bake",
             Description = "Create an independent copy of all the generated model objects in Tekla Structures"
         };
+
+        public static readonly GH_InstanceDescription DeleteAllTeklaObjects = new GH_InstanceDescription
+        {
+            Name = "Delete All Objects In Tekla",
+            NickName = "Delete",
+            Description = "Delete all objects that are currently being generated in Tekla Structures"
+        };
+
+        public static readonly GH_InstanceDescription SelectAllTeklaObjects = new GH_InstanceDescription
+        {
+            Name = "Select All Objects In Tekla",
+            NickName = "Select",
+            Description = "Select all objects that are currently being generated in Tekla Structures"
+        };
     }
 }

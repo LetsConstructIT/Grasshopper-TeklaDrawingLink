@@ -34,12 +34,45 @@ namespace GTDrawingLink
         private ToolStripItem GetTeklaMenu()
         {
             var teklaMenu = new ToolStripMenuItem("Drawing Link");
-            teklaMenu.DropDownItems.Add(
-            new ToolStripMenuItem(ParamInfos.BakeAllToTekla.Name, null, BakeMenuItem_Clicked)
+            teklaMenu.DropDownItems.AddRange(new ToolStripMenuItem[]
             {
-                ToolTipText = ParamInfos.BakeAllToTekla.Description
+                new ToolStripMenuItem(ParamInfos.SelectAllTeklaObjects.Name, null, SelectObjectsMenuItem_Clicked)
+                {
+                    ToolTipText = ParamInfos.SelectAllTeklaObjects.Description
+                },
+                new ToolStripMenuItem(ParamInfos.DeleteAllTeklaObjects.Name, null, DeleteObjectsMenuItem_Clicked)
+                {
+                    ToolTipText = ParamInfos.DeleteAllTeklaObjects.Description
+                },
+                new ToolStripMenuItem(ParamInfos.BakeAllToTekla.Name, null, BakeMenuItem_Clicked)
+                {
+                    ToolTipText = ParamInfos.BakeAllToTekla.Description
+                }
             });
             return teklaMenu;
+        }
+
+        private void SelectObjectsMenuItem_Clicked(object sender, EventArgs e)
+        {
+            var drawingObjects = new List<Tekla.Structures.Drawing.DrawingObject>();
+            foreach (var component in GetAllComponentsOfType<CreateDatabaseObjectComponentBase>())
+            {
+                component.GetObjects().ForEach(o =>
+                {
+                    if (o is Tekla.Structures.Drawing.DrawingObject drawingObject)
+                        drawingObjects.Add(drawingObject);
+                });
+            }
+
+            DrawingInteractor.Highlight(drawingObjects);
+        }
+
+        private void DeleteObjectsMenuItem_Clicked(object sender, EventArgs e)
+        {
+            foreach (var component in GetAllComponentsOfType<CreateDatabaseObjectComponentBase>())
+            {
+                component.DeleteObjects();
+            }
         }
 
         private void BakeMenuItem_Clicked(object sender, EventArgs e)
