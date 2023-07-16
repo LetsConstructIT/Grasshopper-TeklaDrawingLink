@@ -29,6 +29,8 @@ namespace GTDrawingLink.Components
             pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.tree);
             pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.list);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.list));
+
+            SetLastParameterAsOptional(pManager, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -41,7 +43,7 @@ namespace GTDrawingLink.Components
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
                 return null;
-            
+
             var dimGhPointTree = DA.GetGooDataTree<GH_Point>(ParamInfos.DimensionPoints);
             var dimPointsTree = CastToPoints(dimGhPointTree);
             if (dimPointsTree == null)
@@ -52,6 +54,13 @@ namespace GTDrawingLink.Components
                 return null;
 
             var attributes = DA.GetGooListValue<StraightDimensionSet.StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
+            if (attributes == null)
+            {
+                attributes = new List<StraightDimensionSet.StraightDimensionSetAttributes>
+                {
+                    new StraightDimensionSet.StraightDimensionSetAttributes(modelObject:null, "standard")
+                };
+            }
 
             if (dimPointsTree.Count != dimLocations.Count)
             {
