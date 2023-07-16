@@ -20,18 +20,18 @@ namespace GTDrawingLink.Extensions
 
         public static List<T> GetGooListValue<T>(this IGH_DataAccess DA, GH_InstanceDescription instanceDescription)
         {
-            List<GH_Goo<T>> viewGoo = new List<GH_Goo<T>>();
-            var parameterSet = DA.GetDataList(instanceDescription.Name, viewGoo);
+            List<GH_Goo<T>> objectGoo = new List<GH_Goo<T>>();
+            var parameterSet = DA.GetDataList(instanceDescription.Name, objectGoo);
             if (!parameterSet)
                 return null;
 
-            return viewGoo
+            return objectGoo
                 .Where(goo => goo != null && goo.Value != null)
                 .Select(goo => goo.Value)
                 .ToList();
         }
 
-        public static List<List<T>> GetGooDataTreeValue<T>(this IGH_DataAccess DA, GH_InstanceDescription instanceDescription) where T : IGH_Goo
+        public static List<List<T>> GetGooDataTree<T>(this IGH_DataAccess DA, GH_InstanceDescription instanceDescription) where T : IGH_Goo
         {
             var parameterSet = DA.GetDataTree(instanceDescription.Name, out GH_Structure<T> tree);
             if (!parameterSet)
