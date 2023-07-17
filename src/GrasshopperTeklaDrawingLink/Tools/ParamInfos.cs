@@ -403,5 +403,26 @@ namespace GTDrawingLink.Tools
             NickName = "Select",
             Description = "Select all objects that are currently being generated in Tekla Structures"
         };
+
+        public static readonly GH_InstanceDescription Points = new GH_InstanceDescription
+        {
+            Name = "Points",
+            NickName = "P",
+            Description = "Points"
+        };
+
+        public static readonly GH_InstanceDescription HorizontalExtremes = new GH_InstanceDescription
+        {
+            Name = "Horizontal Extremes",
+            NickName = "H",
+            Description = "Two extreme points along X"
+        };
+
+        public static readonly GH_InstanceDescription VerticalExtremes = new GH_InstanceDescription
+        {
+            Name = "Vertical Extremes",
+            NickName = "V",
+            Description = "Two extreme points along Y"
+        };
     }
 }

@@ -63,6 +63,11 @@ namespace GTDrawingLink.Components
             pManager.AddBoxParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
+        protected void AddPointParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            pManager.AddPointParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
         protected void SetLastParameterAsOptional(GH_InputParamManager pManager, bool optional = true)
         {
             if (optional)

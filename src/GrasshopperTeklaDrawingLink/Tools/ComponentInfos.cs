@@ -407,5 +407,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
+
+        public static readonly GH_InstanceDescription GetExtremePointsComponent = new GH_InstanceDescription
+        {
+            Name = "Get Extremes",
+            NickName = "Extremes",
+            Description = "Get planar extreme points",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
     }
 }

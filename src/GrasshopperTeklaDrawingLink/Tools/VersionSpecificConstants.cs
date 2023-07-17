@@ -207,6 +207,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateDimensionLinkComponent),
                 "9184C91C-AB99-418F-B8C0-DE8792A43037"
+            },
+            {
+                typeof(GetExtremePointsComponent),
+                "C899D93F-3390-4325-9A5D-5884A6387B16"
             }
         };
 
