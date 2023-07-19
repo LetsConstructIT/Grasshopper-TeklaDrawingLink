@@ -2,7 +2,10 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -19,47 +22,81 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
-            AddTextParameter(pManager, ParamInfos.ViewType, GH_ParamAccess.item);
-            pManager.AddPointParameter("Point", "P", "View insertion point", GH_ParamAccess.item);
+            AddTextParameter(pManager, ParamInfos.ViewType, GH_ParamAccess.list);
+            pManager.AddPointParameter("Point", "P", "View insertion point", GH_ParamAccess.list);
 
-            AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.item, true);
-            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.item, true);
-            AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.item, true);
+            AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.list, true);
+            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
+            AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.list, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.list));
         }
 
-        protected override void SolveInstance(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
             if (drawing == null)
-                return;
+                return null;
 
-            var viewType = string.Empty;
-            var parameterSet = DA.GetData(ParamInfos.ViewType.Name, ref viewType);
+            var viewTypes = new List<string>();
+            var parameterSet = DA.GetDataList(ParamInfos.ViewType.Name, viewTypes);
             if (!parameterSet)
-                return;
+                return null;
 
-            Rhino.Geometry.Point3d insertionPoint = new Rhino.Geometry.Point3d();
-            parameterSet = DA.GetData("Point", ref insertionPoint);
+            var insertionPoints = new List<Rhino.Geometry.Point3d>();
+            parameterSet = DA.GetDataList("Point", insertionPoints);
             if (!parameterSet)
-                return;
+                return null;
 
-            var attributesFileName = string.Empty;
-            DA.GetData(ParamInfos.Attributes.Name, ref attributesFileName);
+            var attributesFileNames = new List<string>();
+            DA.GetDataList(ParamInfos.Attributes.Name, attributesFileNames);
+
+            var scales = new List<int>();
+            DA.GetDataList(ParamInfos.Scale.Name, scales);
+
+            var viewNames = new List<string>();
+            DA.GetDataList(ParamInfos.Name.Name, viewNames);
+
+            var viewsNumber = new int[] { viewTypes.Count, insertionPoints.Count, attributesFileNames.Count, scales.Count }.Max();
+            var createdViews = new View[viewsNumber];
+            for (int i = 0; i < viewsNumber; i++)
+            {
+                var createdView = InsertView(
+                    drawing,
+                    viewTypes.ElementAtOrLast(i),
+                    insertionPoints.ElementAtOrLast(i),
+                    attributesFileNames.Count > 0 ? attributesFileNames.ElementAtOrLast(i) : null,
+                    scales.Count > 0 ? scales.ElementAtOrLast(i) : new int?(),
+                    viewNames.Count > 0 ? viewNames.ElementAtOrLast(i) : null);
+
+                createdViews[i] = createdView;
+            }
+
+            DrawingInteractor.CommitChanges();
+            DA.SetDataList(ParamInfos.View.Name, createdViews.Select(v => new TeklaDatabaseObjectGoo(v)));
+
+            return createdViews;
+        }
+
+        private View InsertView(
+            Drawing drawing,
+            string viewType,
+            Rhino.Geometry.Point3d insertionPoint,
+            string attributesFileNames,
+            Nullable<int> scale,
+            string viewName)
+        {
+            var attributes = new View.ViewAttributes();
+            if (!string.IsNullOrEmpty(attributesFileNames))
+                attributes.LoadAttributes(attributesFileNames);
+
+            if (scale.HasValue)
+                attributes.Scale = scale.Value;
 
             var teklaPoint = insertionPoint.ToTeklaPoint();
-            var attributes = new View.ViewAttributes();
-            if (!string.IsNullOrEmpty(attributesFileName))
-                attributes.LoadAttributes(attributesFileName);
-
-            var scale = 0;
-            DA.GetData(ParamInfos.Scale.Name, ref scale);
-            if (scale != 0)
-                attributes.Scale = scale;
 
             View createdView = null;
             switch (viewType.ToUpper())
@@ -84,21 +121,18 @@ namespace GTDrawingLink.Components
                     break;
             }
 
-            if (createdView != null)
+            if (createdView == null)
+                return null;
+
+            LoadAttributesWithMacroIfNecessary(createdView, attributesFileNames);
+
+            if (!string.IsNullOrEmpty(viewName))
             {
-                LoadAttributesWithMacroIfNecessary(createdView, attributesFileName);
-
-                var viewName = string.Empty;
-                DA.GetData(ParamInfos.Name.Name, ref viewName);
-                if (!string.IsNullOrEmpty(viewName))
-                {
-                    createdView.Name = viewName;
-                    createdView.Modify();
-                    DrawingInteractor.CommitChanges();
-                }
-
-                DA.SetData(ParamInfos.View.Name, new TeklaDatabaseObjectGoo(createdView));
+                createdView.Name = viewName;
+                createdView.Modify();
             }
+
+            return createdView;
         }
     }
 }
