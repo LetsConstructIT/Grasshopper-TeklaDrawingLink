@@ -211,6 +211,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetExtremePointsComponent),
                 "C899D93F-3390-4325-9A5D-5884A6387B16"
+            },
+            {
+                typeof(GetPartLinesComponent),
+                "ACDB464C-ABBF-4113-A4A3-77DBF4E66DBF"
             }
         };
 

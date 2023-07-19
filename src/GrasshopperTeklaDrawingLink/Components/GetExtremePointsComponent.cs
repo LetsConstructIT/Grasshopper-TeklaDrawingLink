@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class GetExtremePointsComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         public GetExtremePointsComponent() : base(ComponentInfos.GetExtremePointsComponent)
         {
         }

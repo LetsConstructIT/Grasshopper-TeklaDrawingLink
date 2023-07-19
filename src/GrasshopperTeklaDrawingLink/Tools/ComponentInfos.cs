@@ -277,7 +277,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Get COG",
             NickName = "COG",
-            Description = "Gets center of gravity of model or drawing object in current coordinate system",
+            Description = "Gets center of gravity of model or drawing object in global coordinate system",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
@@ -414,7 +414,16 @@ namespace GTDrawingLink.Tools
             NickName = "Extremes",
             Description = "Get planar extreme points",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Dimensions
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription GetPartLinesComponent = new GH_InstanceDescription
+        {
+            Name = "Get Part Lines",
+            NickName = "PartLines",
+            Description = "Get Part lines",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
         };
     }
 }

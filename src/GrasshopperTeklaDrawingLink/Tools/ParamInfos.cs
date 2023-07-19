@@ -424,5 +424,19 @@ namespace GTDrawingLink.Tools
             NickName = "V",
             Description = "Two extreme points along Y"
         };
+
+        public static readonly GH_InstanceDescription PartReferenceLine = new GH_InstanceDescription
+        {
+            Name = "Ref Line",
+            NickName = "Ref",
+            Description = "Part reference line"
+        };
+
+        public static readonly GH_InstanceDescription PartCenterLine = new GH_InstanceDescription
+        {
+            Name = "Center Line",
+            NickName = "Cen",
+            Description = "Part center line"
+        };
     }
 }

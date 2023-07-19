@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace GTDrawingLink
@@ -22,6 +24,15 @@ namespace GTDrawingLink
                 name = $"Tekla {name}";
 
             return Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
+        }
+
+        public static List<Tekla.Structures.Geometry3d.Point> ToTeklaPoints(this ArrayList arrayList)
+        {
+            var points = new List<Tekla.Structures.Geometry3d.Point>();
+            foreach (Tekla.Structures.Geometry3d.Point point in arrayList)
+                points.Add(point);
+
+            return points;
         }
     }
 }
