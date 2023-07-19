@@ -410,8 +410,8 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetExtremePointsComponent = new GH_InstanceDescription
         {
-            Name = "Get Extremes",
-            NickName = "Extremes",
+            Name = "Extreme Points",
+            NickName = "ExtPts",
             Description = "Get planar extreme points",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
@@ -419,7 +419,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetPartLinesComponent = new GH_InstanceDescription
         {
-            Name = "Get Part Lines",
+            Name = "Part Lines",
             NickName = "PartLines",
             Description = "Get Part lines",
             Category = VersionSpecificConstants.TabHeading,
