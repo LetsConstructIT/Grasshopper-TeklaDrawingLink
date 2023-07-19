@@ -62,16 +62,17 @@ namespace GTDrawingLink.Components
                 };
             }
 
-            if (dimPointsTree.Count != dimLocations.Count)
+            var dimensionNumber = new int[] { dimPointsTree.Count, dimLocations.Count }.Max();
+            var insertedDimensions = new StraightDimensionSet[dimensionNumber];
+            for (int i = 0; i < dimensionNumber; i++)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Input points must have equal length as locations");
-                return null;
-            }
+                var dimension = InsertDimensionLine(
+                    view,
+                    dimPointsTree.ElementAtOrLast(i),
+                    dimLocations.ElementAtOrLast(i),
+                    attributes.ElementAtOrLast(i));
 
-            var insertedDimensions = new List<StraightDimensionSet>();
-            for (int i = 0; i < dimPointsTree.Count; i++)
-            {
-                insertedDimensions.Add(InsertDimensionLine(view, dimPointsTree[i], dimLocations[i], attributes.ElementAtOrLast(i)));
+                insertedDimensions[i] = dimension;
             }
 
             DrawingInteractor.CommitChanges();
