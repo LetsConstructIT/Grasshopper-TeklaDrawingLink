@@ -247,4 +247,10 @@
   <data name="DimensionLineAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\DimensionLineAttributes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GetExtremes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\GetExtremes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GetPartLines" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\GetPartLines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

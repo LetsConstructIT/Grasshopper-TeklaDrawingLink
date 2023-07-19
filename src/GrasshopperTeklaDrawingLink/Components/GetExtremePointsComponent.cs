@@ -2,6 +2,7 @@
 using GTDrawingLink.Tools;
 using Rhino.Geometry;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace GTDrawingLink.Components
@@ -9,6 +10,8 @@ namespace GTDrawingLink.Components
     public class GetExtremePointsComponent : TeklaComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        protected override Bitmap Icon => Properties.Resources.GetExtremes;
+
         public GetExtremePointsComponent() : base(ComponentInfos.GetExtremePointsComponent)
         {
         }

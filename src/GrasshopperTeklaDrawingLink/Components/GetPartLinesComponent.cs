@@ -2,6 +2,7 @@
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Model;
 
@@ -10,6 +11,7 @@ namespace GTDrawingLink.Components
     public class GetPartLinesComponent : TeklaComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        protected override Bitmap Icon => Properties.Resources.GetPartLines;
 
         public GetPartLinesComponent() : base(ComponentInfos.GetPartLinesComponent)
         {
