@@ -2,7 +2,9 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -20,71 +22,123 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
-            pManager.AddPointParameter("Center point", "CP", "Center point of detail", GH_ParamAccess.item);
-            pManager.AddPointParameter("Label point", "LP", "Label location", GH_ParamAccess.item);
-            pManager.AddPointParameter("Insertion point", "IP", "Detail view insertion point", GH_ParamAccess.item);
+            pManager.AddPointParameter("Center point", "CP", "Center point of detail", GH_ParamAccess.list);
+            pManager.AddPointParameter("Label point", "LP", "Label location", GH_ParamAccess.list);
+            pManager.AddPointParameter("Insertion point", "IP", "Detail view insertion point", GH_ParamAccess.list);
 
-            pManager.AddIntegerParameter("Radius", "R", "Detail range", GH_ParamAccess.item, _defaultRadius);
-            pManager.AddTextParameter("View attributes", "VA", "View attributes file name", GH_ParamAccess.item, "standard");
-            pManager.AddTextParameter("Mark attributes", "MA", "Detail mark attributes file name", GH_ParamAccess.item, "standard");
-            AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.item, true);
-            AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.item, true);
+            pManager.AddIntegerParameter("Radius", "R", "Detail range", GH_ParamAccess.list, _defaultRadius);
+            pManager.AddTextParameter("View attributes", "VA", "View attributes file name", GH_ParamAccess.list, "standard");
+            pManager.AddTextParameter("Mark attributes", "MA", "Detail mark attributes file name", GH_ParamAccess.list, "standard");
+            AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.list, true);
+            AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.list, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
-            AddGenericParameter(pManager, ParamInfos.Mark, GH_ParamAccess.item);
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.list));
+            AddGenericParameter(pManager, ParamInfos.Mark, GH_ParamAccess.list);
         }
 
-        protected override void SolveInstance(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
-                return;
+                return null;
 
-            Rhino.Geometry.Point3d centerPoint = new Rhino.Geometry.Point3d();
-            if (!DA.GetData("Center point", ref centerPoint))
-                return;
+            var centerPoints = new List<Rhino.Geometry.Point3d>();
+            if (!DA.GetDataList("Center point", centerPoints))
+                return null;
 
-            var radius = 0;
-            if (!DA.GetData("Radius", ref radius) || radius == 0)
-                return;
+            var radiuses = new List<int>();
+            if (!DA.GetDataList("Radius", radiuses) || radiuses.Any(r => r == 0))
+                return null;
 
-            Rhino.Geometry.Point3d labelPoint = new Rhino.Geometry.Point3d();
-            if (!DA.GetData("Label point", ref labelPoint))
-                return;
+            var labelPoints = new List<Rhino.Geometry.Point3d>();
+            if (!DA.GetDataList("Label point", labelPoints))
+                return null;
 
-            Rhino.Geometry.Point3d insertionPoint = new Rhino.Geometry.Point3d();
-            if (!DA.GetData("Insertion point", ref insertionPoint))
-                return;
+            var insertionPoints = new List<Rhino.Geometry.Point3d>();
+            if (!DA.GetDataList("Insertion point", insertionPoints))
+                return null;
 
-            var viewAttributesFileName = string.Empty;
-            DA.GetData("View attributes", ref viewAttributesFileName);
-            var viewAttributes = new View.ViewAttributes();
-            if (!string.IsNullOrEmpty(viewAttributesFileName))
-                viewAttributes.LoadAttributes(viewAttributesFileName);
+            var viewAttributesFileNames = new List<string>();
+            DA.GetDataList("View attributes", viewAttributesFileNames);
 
-            var scale = 0;
-            DA.GetData(ParamInfos.Scale.Name, ref scale);
-            if (scale != 0)
-                viewAttributes.Scale = scale;
+            var scales = new List<int>();
+            DA.GetDataList(ParamInfos.Scale.Name, scales);
 
-            var markAttributesFileName = string.Empty;
-            DA.GetData("Mark attributes", ref markAttributesFileName);
+            var markAttributesFileNames = new List<string>();
+            DA.GetDataList("Mark attributes", markAttributesFileNames);
+
+            var viewNames = new List<string>();
+            DA.GetDataList(ParamInfos.Name.Name, viewNames);
+
+            var viewsNumber = new int[]
+            {
+                centerPoints.Count,
+                radiuses.Count,
+                labelPoints.Count,
+                insertionPoints.Count,
+                viewAttributesFileNames.Count,
+                scales.Count,
+                markAttributesFileNames.Count,
+                viewNames.Count
+            }.Max();
+
+            var createdViews = new (View view, DetailMark mark)[viewsNumber];
+            for (int i = 0; i < viewsNumber; i++)
+            {
+                var viewWithMark = InsertView(
+                    view,
+                    centerPoints.ElementAtOrLast(i),
+                    radiuses.ElementAtOrLast(i),
+                    labelPoints.ElementAtOrLast(i),
+                    insertionPoints.ElementAtOrLast(i),
+                    viewAttributesFileNames.Count > 0 ? viewAttributesFileNames.ElementAtOrLast(i) : null,
+                    scales.Count > 0 ? scales.ElementAtOrLast(i) : new int?(),
+                    markAttributesFileNames.Count > 0 ? markAttributesFileNames.ElementAtOrLast(i) : null,
+                    viewNames.Count > 0 ? viewNames.ElementAtOrLast(i) : null);
+
+                createdViews[i] = viewWithMark;
+            }
+
+            var views = createdViews.Select(v => v.view);
+            var marks = createdViews.Select(v => v.mark);
+            DA.SetDataList(ParamInfos.View.Name, views.Select(v => new TeklaDatabaseObjectGoo(v)));
+            DA.SetDataList(ParamInfos.Mark.Name, marks.Select(m => new TeklaDatabaseObjectGoo(m)));
+
+            var viewsWithMarks = new List<DatabaseObject>();
+            viewsWithMarks.AddRange(views);
+            viewsWithMarks.AddRange(marks);
+            return viewsWithMarks;
+        }
+
+        private (View view, DetailMark mark) InsertView(
+            View view,
+            Rhino.Geometry.Point3d centerPoint,
+            int radius,
+            Rhino.Geometry.Point3d labelPoint,
+            Rhino.Geometry.Point3d insertionPoint,
+            string viewAttributesFileName,
+            int? scale,
+            string markAttributesFileName,
+            string viewName)
+        {
             var markAttributes = new DetailMark.DetailMarkAttributes();
             if (!string.IsNullOrEmpty(markAttributesFileName))
                 markAttributes.LoadAttributes(markAttributesFileName);
 
-            var viewName = string.Empty;
-            DA.GetData(ParamInfos.Name.Name, ref viewName);
             if (!string.IsNullOrEmpty(viewName))
                 markAttributes.MarkName = viewName;
 
-            var boundaryPoint = centerPoint + new Rhino.Geometry.Point3d(radius, 0, 0);
 
-            View createdView = null;
-            DetailMark createdMark = null;
+            var viewAttributes = new View.ViewAttributes();
+            if (!string.IsNullOrEmpty(viewAttributesFileName))
+                viewAttributes.LoadAttributes(viewAttributesFileName);
+            if (scale.HasValue)
+                viewAttributes.Scale = scale.Value;
+
+            var boundaryPoint = centerPoint + new Rhino.Geometry.Point3d(radius, 0, 0);
             View.CreateDetailView(
                 view,
                 centerPoint.ToTeklaPoint(),
@@ -93,16 +147,12 @@ namespace GTDrawingLink.Components
                 insertionPoint.ToTeklaPoint(),
                 viewAttributes,
                 markAttributes,
-                out createdView,
-                out createdMark);
+                out View createdView,
+                out DetailMark createdMark);
 
-            if (createdView != null)
-            {
-                LoadAttributesWithMacroIfNecessary(createdView, viewAttributesFileName);
+            LoadAttributesWithMacroIfNecessary(createdView, viewAttributesFileName);
 
-                DA.SetData(ParamInfos.View.Name, new TeklaDatabaseObjectGoo(createdView));
-                DA.SetData(ParamInfos.Mark.Name, createdMark);
-            }
+            return (createdView, createdMark);
         }
     }
 }

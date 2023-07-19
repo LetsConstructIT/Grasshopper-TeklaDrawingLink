@@ -86,7 +86,7 @@ namespace GTDrawingLink.Components
             string viewType,
             Rhino.Geometry.Point3d insertionPoint,
             string attributesFileNames,
-            Nullable<int> scale,
+            int? scale,
             string viewName)
         {
             var attributes = new View.ViewAttributes();
