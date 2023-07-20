@@ -107,6 +107,8 @@ namespace GTDrawingLink.Components
             DA.SetDataList(ParamInfos.View.Name, views.Select(v => new TeklaDatabaseObjectGoo(v)));
             DA.SetDataList(ParamInfos.Mark.Name, marks.Select(m => new TeklaDatabaseObjectGoo(m)));
 
+            DrawingInteractor.CommitChanges();
+
             var viewsWithMarks = new List<DatabaseObject>();
             viewsWithMarks.AddRange(views);
             viewsWithMarks.AddRange(marks);
@@ -130,7 +132,6 @@ namespace GTDrawingLink.Components
 
             if (!string.IsNullOrEmpty(viewName))
                 markAttributes.MarkName = viewName;
-
 
             var viewAttributes = new View.ViewAttributes();
             if (!string.IsNullOrEmpty(viewAttributesFileName))
