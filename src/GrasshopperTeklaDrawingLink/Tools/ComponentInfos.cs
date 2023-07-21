@@ -425,5 +425,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
+
+        public static readonly GH_InstanceDescription GetCustomPartPointsComponent = new GH_InstanceDescription
+        {
+            Name = "Custom Part Points",
+            NickName = "CmPrtPts",
+            Description = "Get Custom Part Points",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
     }
 }

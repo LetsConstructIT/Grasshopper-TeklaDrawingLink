@@ -445,5 +445,19 @@ namespace GTDrawingLink.Tools
             NickName = "Cen",
             Description = "Part center line"
         };
+
+        public static readonly GH_InstanceDescription StartPoint = new GH_InstanceDescription
+        {
+            Name = "Start Point",
+            NickName = "S",
+            Description = "Part start point"
+        };
+
+        public static readonly GH_InstanceDescription EndPoint = new GH_InstanceDescription
+        {
+            Name = "End Point",
+            NickName = "E",
+            Description = "Part end point"
+        };
     }
 }

@@ -215,6 +215,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetPartLinesComponent),
                 "ACDB464C-ABBF-4113-A4A3-77DBF4E66DBF"
+            },
+            {
+                typeof(GetCustomPartPointsComponent),
+                "4471F91D-084A-4571-85D2-BFDB5CB4965B"
             }
         };
 
