@@ -19,7 +19,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Model Object", "MO", "Tekla model object", GH_ParamAccess.item);
+            AddGenericParameter(pManager, ParamInfos.ModelObject, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -31,20 +31,10 @@ namespace GTDrawingLink.Components
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             dynamic inputObject = null;
-            if (!DA.GetData("Model Object", ref inputObject))
+            if (!DA.GetData(ParamInfos.ModelObject.Name, ref inputObject))
                 return;
 
-            Part part = null;
-
-            if (inputObject.Value is Part)
-            {
-                part = inputObject.Value as Part;
-            }
-            else if (inputObject.Value is Assembly assembly)
-            {
-                part = assembly.GetMainPart() as Part;
-            }
-
+            Part part = GetPartFromInput(inputObject.Value);
             if (part == null)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Part not found");
@@ -62,6 +52,19 @@ namespace GTDrawingLink.Components
             DA.SetData(
                 ParamInfos.PartCenterLine.Name,
                 new GH_Curve(new Rhino.Geometry.PolylineCurve(centerPoints.Select(p => p.ToRhinoPoint()))));
+        }
+
+        private Part GetPartFromInput(ModelObject modelObject)
+        {
+            switch (modelObject)
+            {
+                case Part inputPart:
+                    return inputPart;
+                case Assembly assembly:
+                    return assembly.GetMainPart() as Part;
+                default:
+                    return null;
+            }
         }
     }
 }

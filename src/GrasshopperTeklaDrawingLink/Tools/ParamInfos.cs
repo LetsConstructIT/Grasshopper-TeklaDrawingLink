@@ -425,6 +425,13 @@ namespace GTDrawingLink.Tools
             Description = "Two extreme points along Y"
         };
 
+        public static readonly GH_InstanceDescription ModelObject = new GH_InstanceDescription
+        {
+            Name = "Model Object",
+            NickName = "MO",
+            Description = "Tekla model object"
+        };
+
         public static readonly GH_InstanceDescription PartReferenceLine = new GH_InstanceDescription
         {
             Name = "Ref Line",
