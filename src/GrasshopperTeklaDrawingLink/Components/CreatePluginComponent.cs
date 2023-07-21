@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -6,11 +7,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class CreatePluginComponent : TeklaComponentBase
+    public class CreatePluginComponent : CreateDatabaseObjectComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.Plugin;
@@ -23,63 +25,107 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             AddTextParameter(pManager, ParamInfos.PluginName, GH_ParamAccess.item);
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
-            pManager.AddParameter(new PluginPickerInputParam(ParamInfos.PickerInput, GH_ParamAccess.item));
-            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.item, true);
-            AddTextParameter(pManager, ParamInfos.PluginAttributes, GH_ParamAccess.item, true);
-            AddOptionalParameter(pManager, new TeklaDatabaseObjectParam(ParamInfos.ObjectsToSelect, GH_ParamAccess.list));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.list));
+            pManager.AddParameter(new PluginPickerInputParam(ParamInfos.PickerInput, GH_ParamAccess.list));
+            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
+            AddTextParameter(pManager, ParamInfos.PluginAttributes, GH_ParamAccess.list, true);
+            AddOptionalParameter(pManager, new TeklaDatabaseObjectParam(ParamInfos.ObjectsToSelect, GH_ParamAccess.tree));
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Plugin, GH_ParamAccess.item));
+            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Plugin, GH_ParamAccess.list));
         }
 
-        protected override void SolveInstance(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             string pluginName = null;
             if (!DA.GetData(ParamInfos.PluginName.Name, ref pluginName))
-                return;
+                return null;
 
-            var viewInput = DA.GetGooValue<DatabaseObject>(ParamInfos.View);
-            if (viewInput == null)
-                return;
+            var viewInputs = DA.GetGooListValue<DatabaseObject>(ParamInfos.View);
+            if (viewInputs == null)
+                return null;
 
-            var pickerInput = DA.GetGooValue<PluginPickerInput>(ParamInfos.PickerInput);
-            if (pickerInput == null)
-                return;
+            var viewBases = new List<ViewBase>();
+            foreach (var viewInput in viewInputs)
+            {
+                if (viewInput is ViewBase viewBase)
+                {
+                    viewBases.Add(viewBase);
+                }
+                else if (viewInput is Drawing drawing)
+                {
+                    viewBases.Add(drawing.GetSheet());
+                }
+                else
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unrecognized View input");
+                    return null;
+                }
+            }
 
-            string attributeFileNames = null;
-            DA.GetData(ParamInfos.Attributes.Name, ref attributeFileNames);
+            var pickerInputs = DA.GetGooListValue<PluginPickerInput>(ParamInfos.PickerInput);
+            if (pickerInputs == null)
+                return null;
 
-            Attributes attributes = null;
-            string inputAttributes = null;
-            if (DA.GetData(ParamInfos.PluginAttributes.Name, ref inputAttributes))
+            var attributeFileNames = new List<string>();
+            DA.GetDataList(ParamInfos.Attributes.Name, attributeFileNames);
+
+            var attributes = new List<Attributes>();
+            var inputAttributes = new List<string>();
+            if (DA.GetDataList(ParamInfos.PluginAttributes.Name, inputAttributes))
             {
                 try
                 {
-                    attributes = Tools.Attributes.Parse(inputAttributes);
+                    foreach (var inputAttribute in inputAttributes)
+                    {
+                        attributes.Add(Tools.Attributes.Parse(inputAttribute));
+                    }
                 }
                 catch (Exception ex)
                 {
                     AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Attributes parsing error: " + ex.Message);
-                    return;
+                    return null;
                 }
             }
 
-            var objectsToSelect = DA.GetGooListValue<DatabaseObject>(ParamInfos.ObjectsToSelect);
+            var objectsToSelect = DA.GetGooDataTree<GH_Goo<DatabaseObject>>(ParamInfos.ObjectsToSelect);
 
-            ViewBase viewBase = null;
-            if (viewInput is ViewBase)
-                viewBase = viewInput as ViewBase;
-            else if (viewInput is Drawing drawing)
-                viewBase = drawing.GetSheet();
-            else
+            var pluginsToInsert = new int[]
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unrecognized View input");
-                return;
+                viewBases.Count,
+                pickerInputs.Count,
+                attributeFileNames.Count,
+                attributes.Count,
+                objectsToSelect.Count
+            }.Max();
+
+            var insertedPlugins = new Plugin[pluginsToInsert];
+            for (int i = 0; i < pluginsToInsert; i++)
+            {
+                var plugin = InsertPlugin(
+                    pluginName,
+                    viewBases.ElementAtOrLast(i),
+                    pickerInputs.ElementAtOrLast(i),
+                    attributeFileNames.Count > 0 ? attributeFileNames.ElementAtOrLast(i) : null,
+                    attributes.Count > 0 ? attributes.ElementAtOrLast(i) : null,
+                    objectsToSelect.Count > 0 ? objectsToSelect.ElementAtOrLast(i) : null);
+
+                insertedPlugins[i] = plugin;
             }
 
+            DA.SetDataList(ParamInfos.Plugin.Name, insertedPlugins.Select(p => new TeklaDatabaseObjectGoo(p)));
+            return insertedPlugins;
+        }
+
+        private Plugin InsertPlugin(string pluginName,
+                                    ViewBase viewBase,
+                                    PluginPickerInput pickerInput,
+                                    string attributeFileNames,
+                                    Attributes attributes,
+                                    List<GH_Goo<DatabaseObject>> objectsToSelect)
+        {
             var plugin = new Plugin(viewBase, pluginName);
             plugin.SetPickerInput(pickerInput);
 
@@ -92,10 +138,10 @@ namespace GTDrawingLink.Components
             if (objectsToSelect.HasItems())
             {
                 var drawingObjects = new ArrayList();
-                foreach (DrawingObject drawingObject in objectsToSelect)
+                foreach (var drawingObject in objectsToSelect)
                 {
-                    if (drawingObject != null)
-                        drawingObjects.Add(drawingObject);
+                    if (drawingObject.IsValid)
+                        drawingObjects.Add(drawingObject.Value);
                 }
 
                 DrawingInteractor.Highlight(drawingObjects);
@@ -103,7 +149,7 @@ namespace GTDrawingLink.Components
 
             plugin.Insert();
 
-            DA.SetData(ParamInfos.Plugin.Name, new TeklaDatabaseObjectGoo(plugin));
+            return plugin;
         }
 
         private void ApplyAttributes(Plugin plugin, Attributes attributes)
