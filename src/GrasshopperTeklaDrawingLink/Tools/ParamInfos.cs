@@ -459,5 +459,40 @@ namespace GTDrawingLink.Tools
             NickName = "E",
             Description = "Part end point"
         };
+
+        public static readonly GH_InstanceDescription AngleDimensionOriginPoint = new GH_InstanceDescription
+        {
+            Name = "Origin",
+            NickName = "O",
+            Description = "Angle dimension origin"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionPoint1 = new GH_InstanceDescription
+        {
+            Name = "Point 1",
+            NickName = "P1",
+            Description = "First point to be used"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionPoint2 = new GH_InstanceDescription
+        {
+            Name = "Point 2",
+            NickName = "P2",
+            Description = "Second point to be used"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionDistance = new GH_InstanceDescription
+        {
+            Name = "Distance",
+            NickName = "D",
+            Description = "Distance of the angle sign from the origin to the first point."
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionAttributes = new GH_InstanceDescription
+        {
+            Name = "Attributes",
+            NickName = "A",
+            Description = "Angle Dimension Attributes"
+        };
     }
 }

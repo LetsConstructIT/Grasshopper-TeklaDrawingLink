@@ -219,6 +219,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetCustomPartPointsComponent),
                 "4471F91D-084A-4571-85D2-BFDB5CB4965B"
+            },
+            {
+                typeof(CreateAngleDimensionComponent),
+                "52322B95-A7CA-4B4E-96B2-4E1B6D239CBA"
             }
         };
 

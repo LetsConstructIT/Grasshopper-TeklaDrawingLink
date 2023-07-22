@@ -430,9 +430,18 @@ namespace GTDrawingLink.Tools
         {
             Name = "Custom Part Points",
             NickName = "CmPrtPts",
-            Description = "Get Custom Part Points",
+            Description = "Get Custom Part points",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription CreateAngleDimensionComponent = new GH_InstanceDescription
+        {
+            Name = "Angle Dimension",
+            NickName = "AngDim",
+            Description = "Create Tekla angle dimension.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
         };
     }
 }
