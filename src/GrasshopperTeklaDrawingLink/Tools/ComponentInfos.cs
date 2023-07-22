@@ -392,7 +392,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription CreateStraightDimensionSetComponent = new GH_InstanceDescription
         {
-            Name = "Create Dimension Line",
+            Name = "Dimension Line",
             NickName = "DimLine",
             Description = "Create Tekla dimension line.",
             Category = VersionSpecificConstants.TabHeading,
@@ -401,7 +401,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription CreateDimensionLinkComponent = new GH_InstanceDescription
         {
-            Name = "Create Dimension Link",
+            Name = "Dimension Link",
             NickName = "DimLink",
             Description = "Create Tekla dimension link.",
             Category = VersionSpecificConstants.TabHeading,
