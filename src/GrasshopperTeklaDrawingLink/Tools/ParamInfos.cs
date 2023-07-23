@@ -494,5 +494,19 @@ namespace GTDrawingLink.Tools
             NickName = "A",
             Description = "Angle Dimension Attributes"
         };
+
+        public static readonly GH_InstanceDescription ObjectMatch = new GH_InstanceDescription
+        {
+            Name = "Match",
+            NickName = "M",
+            Description = "Result of matching model object to filter"
+        };
+
+        public static readonly GH_InstanceDescription ObjectFilter = new GH_InstanceDescription
+        {
+            Name = "Filter",
+            NickName = "F",
+            Description = "Tekla Object Selection Filter"
+        };
     }
 }

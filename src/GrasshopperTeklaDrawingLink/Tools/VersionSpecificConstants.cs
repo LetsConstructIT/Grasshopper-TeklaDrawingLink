@@ -223,6 +223,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateAngleDimensionComponent),
                 "52322B95-A7CA-4B4E-96B2-4E1B6D239CBA"
+            },
+            {
+                typeof(ObjectMatchesToFilterComponent),
+                "37BF7499-39CD-4124-81D4-64BE134418F6"
             }
         };
 

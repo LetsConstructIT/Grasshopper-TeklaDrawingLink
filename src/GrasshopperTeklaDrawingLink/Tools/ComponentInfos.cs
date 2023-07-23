@@ -443,5 +443,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
+
+        public static readonly GH_InstanceDescription ObjectMatchesToFilterComponent = new GH_InstanceDescription
+        {
+            Name = "Object Match",
+            NickName = "Match",
+            Description = "Checks whether the Tekla model object matches to the criteria in the given filter.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };        
     }
 }

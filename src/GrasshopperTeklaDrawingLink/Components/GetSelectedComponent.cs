@@ -32,7 +32,7 @@ namespace GTDrawingLink.Components
 
             if (!trigger)
                 return;
-
+            
             var selected = new List<TeklaDatabaseObjectGoo>();
 
             var doe = DrawingInteractor.DrawingHandler

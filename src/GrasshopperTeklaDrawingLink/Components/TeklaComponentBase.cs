@@ -85,6 +85,11 @@ namespace GTDrawingLink.Components
             pManager.AddCurveParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
+        protected void AddBooleanParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
         protected void SetLastParameterAsOptional(GH_InputParamManager pManager, bool optional = true)
         {
             if (optional)
