@@ -72,7 +72,7 @@ namespace GTDrawingLink.Components
                 attributes.DimensionType = enumValue.Value;
         }
 
-        private void SetPlacingType(IGH_DataAccess DA, StraightDimensionSetAttributes attributes)
+        private void SetPlacingType(IGH_DataAccess DA, DimensionSetBaseAttributes attributes)
         {
             var enumValue = DA.GetEnum<DimensionSetBaseAttributes.Placings>(ParamInfos.DimensionLinePlacingType);
             if (enumValue.HasValue)
