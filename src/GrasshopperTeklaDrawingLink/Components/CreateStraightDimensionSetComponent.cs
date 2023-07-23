@@ -1,4 +1,5 @@
-﻿using Grasshopper.Kernel;
+﻿using GH_IO.Serialization;
+using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
@@ -15,12 +16,67 @@ namespace GTDrawingLink.Components
 {
     public class CreateStraightDimensionSetComponent : CreateDatabaseObjectComponentBase
     {
+        private InsertionMode _mode = InsertionMode.Always;
         private StraightDimensionSetHandler _sdsHandler = new StraightDimensionSetHandler();
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.CreateStraightDimensionSet;
 
         public CreateStraightDimensionSetComponent() : base(ComponentInfos.CreateStraightDimensionSetComponent)
         {
+            SetCustomMessage();
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.DimensionLineAlwaysMode.Name, AlwaysModeMenuItem_Clicked, true, _mode == InsertionMode.Always).ToolTipText = ParamInfos.DimensionLineAlwaysMode.Description;
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.DimensionLineMoreThan2PointsMode.Name, ProjectionLimitModeMenuItem_Clicked, true, _mode == InsertionMode.WhenMoreThan2Points).ToolTipText = ParamInfos.DimensionLineMoreThan2PointsMode.Description;
+            GH_DocumentObject.Menu_AppendSeparator(menu);
+        }
+
+        private void AlwaysModeMenuItem_Clicked(object sender, EventArgs e)
+        {
+            _mode = InsertionMode.Always;
+            SetCustomMessage();
+            ExpireSolution(recompute: true);
+        }
+
+        private void ProjectionLimitModeMenuItem_Clicked(object sender, EventArgs e)
+        {
+            _mode = InsertionMode.WhenMoreThan2Points;
+            SetCustomMessage();
+            ExpireSolution(recompute: true);
+        }
+
+        private void SetCustomMessage()
+        {
+            switch (_mode)
+            {
+                case InsertionMode.Always:
+                    base.Message = "";
+                    break;
+                case InsertionMode.WhenMoreThan2Points:
+                    base.Message = "Only when more than 2 projected points";
+                    break;
+                default:
+                    base.Message = "";
+                    break;
+            }
+        }
+
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32(ParamInfos.DimensionLineAlwaysMode.Name, (int)_mode);
+            return base.Write(writer);
+        }
+
+        public override bool Read(GH_IReader reader)
+        {
+            var serializedInt = 0;
+            reader.TryGetInt32(ParamInfos.DimensionLineAlwaysMode.Name, ref serializedInt);
+            _mode = (InsertionMode)serializedInt;
+            SetCustomMessage();
+            return base.Read(reader);
         }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
@@ -92,11 +148,31 @@ namespace GTDrawingLink.Components
                 pointList.Add(teklaPoint);
             }
 
-            var teklaLocation = location.ToTekla();
+            var dimLocation = location.ToTekla();
 
-            (Vector vector, double distance) = CalculateLocation(teklaLocation, pointList[0]);
+            if (_mode == InsertionMode.WhenMoreThan2Points && GetUniqueDimensionPoints(pointList, dimLocation).Count == 2)
+                return null;
+
+            (Vector vector, double distance) = CalculateLocation(dimLocation, pointList[0]);
 
             return _sdsHandler.CreateDimensionSet(view, pointList, vector, distance, attributes);
+        }
+
+        private List<Tekla.Structures.Geometry3d.Point> GetUniqueDimensionPoints(PointList pointList, Tekla.Structures.Geometry3d.Line dimLocation)
+        {
+            var uniquePoints = new List<Tekla.Structures.Geometry3d.Point>();
+
+            foreach (Tekla.Structures.Geometry3d.Point point in pointList)
+            {
+                var projectedPoint = Projection.PointToLine(point, dimLocation);
+                if (uniquePoints.All(p => !Tekla.Structures.Geometry3d.Point.AreEqual(p, projectedPoint)))
+                {
+                    uniquePoints.Add(projectedPoint);
+                }
+            }
+
+
+            return uniquePoints;
         }
 
         private List<List<Point3d>> CastToPoints(List<List<GH_Point>> inputTree)
@@ -151,6 +227,12 @@ namespace GTDrawingLink.Components
                 upVector = line.Direction.Cross(new Vector(0, 0, 1));
             }
             return (upVector, distance);
+        }
+
+        enum InsertionMode
+        {
+            Always,
+            WhenMoreThan2Points
         }
     }
 }

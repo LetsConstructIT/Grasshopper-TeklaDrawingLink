@@ -508,5 +508,19 @@ namespace GTDrawingLink.Tools
             NickName = "F",
             Description = "Tekla Object Selection Filter"
         };
+
+        public static readonly GH_InstanceDescription DimensionLineAlwaysMode = new GH_InstanceDescription
+        {
+            Name = "Insert always",
+            NickName = "Always",
+            Description = "Dimension line will be created despite of projection result"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLineMoreThan2PointsMode = new GH_InstanceDescription
+        {
+            Name = "More than 2 projected points",
+            NickName = "ProjectionLimit",
+            Description = "Dimension line will be created only when more than 2 projected points"
+        };
     }
 }
