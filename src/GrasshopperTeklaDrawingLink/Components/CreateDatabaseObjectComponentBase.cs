@@ -85,7 +85,8 @@ namespace GTDrawingLink.Components
         {
             foreach (var item in _insertedObjects)
             {
-                item.Delete();
+                if (item != null)
+                    item.Delete();
             }
             _insertedObjects.Clear();
         }

@@ -86,12 +86,15 @@ namespace GTDrawingLink.Components
         {
             var pointList = new PointList();
             foreach (var point in points)
-                pointList.Add(point.ToTekla());
+            {
+                var teklaPoint = point.ToTekla();
+                teklaPoint.Z = 0;
+                pointList.Add(teklaPoint);
+            }
 
-            
+            var teklaLocation = location.ToTekla();
 
-
-            (Vector vector, double distance) = CalculateLocation(location, points.First());
+            (Vector vector, double distance) = CalculateLocation(teklaLocation, pointList[0]);
 
             return _sdsHandler.CreateDimensionSet(view, pointList, vector, distance, attributes);
         }
@@ -136,11 +139,8 @@ namespace GTDrawingLink.Components
             return outputList;
         }
 
-        private (Vector vector, double distance) CalculateLocation(Rhino.Geometry.Line dimLineLocation, Point3d dimPoint)
+        private (Vector vector, double distance) CalculateLocation(Tekla.Structures.Geometry3d.Line line, Tekla.Structures.Geometry3d.Point teklaPoint)
         {
-            var line = new Tekla.Structures.Geometry3d.Line(dimLineLocation.From.ToTekla(), dimLineLocation.To.ToTekla());
-            var teklaPoint = dimPoint.ToTekla();
-            teklaPoint.Z = 0;
             var projected = Projection.PointToLine(teklaPoint, line);
 
             var upVector = new Vector(projected - teklaPoint).GetNormal();

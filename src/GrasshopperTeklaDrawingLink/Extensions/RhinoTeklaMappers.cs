@@ -36,5 +36,10 @@
                 aabb.MinPoint.ToRhino(),
                 aabb.MaxPoint.ToRhino());
         }
+
+        public static Tekla.Structures.Geometry3d.Line ToTekla(this Rhino.Geometry.Line line)
+        {
+            return new Tekla.Structures.Geometry3d.Line(line.From.ToTekla(), line.To.ToTekla());
+        }
     }
 }
