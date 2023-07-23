@@ -451,6 +451,15 @@ namespace GTDrawingLink.Tools
             Description = "Checks whether the Tekla model object matches to the criteria in the given filter.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription GroupObjectsComponent = new GH_InstanceDescription
+        {
+            Name = "Group Objects",
+            NickName = "G",
+            Description = "Group Tekla model objects by specified criteria (right-click to choose)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
         };        
     }
 }

@@ -227,6 +227,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ObjectMatchesToFilterComponent),
                 "37BF7499-39CD-4124-81D4-64BE134418F6"
+            },
+            {
+                typeof(GroupObjectsComponent),
+                "CF46774B-064B-485C-A95D-E862768B0161"
             }
         };
 

@@ -522,5 +522,61 @@ namespace GTDrawingLink.Tools
             NickName = "ProjectionLimit",
             Description = "Dimension line will be created only when more than 2 projected points"
         };
+
+        public static readonly GH_InstanceDescription PropertyName = new GH_InstanceDescription
+        {
+            Name = "Property",
+            NickName = "P",
+            Description = "Property name used for grouping (for UDA or Report mode)"
+        };
+
+        public static readonly GH_InstanceDescription GroupingIndices = new GH_InstanceDescription
+        {
+            Name = "Indices",
+            NickName = "I",
+            Description = "Grouping Indices"
+        };
+
+        public static readonly GH_InstanceDescription GroupingKeys = new GH_InstanceDescription
+        {
+            Name = "Keys",
+            NickName = "K",
+            Description = "Grouping Keys"
+        };
+
+        public static readonly GH_InstanceDescription GroupByPosition = new GH_InstanceDescription
+        {
+            Name = "Group by Assembly Position",
+            NickName = "Pos",
+            Description = "Group by Assembly Position"
+        };
+
+        public static readonly GH_InstanceDescription GroupByName = new GH_InstanceDescription
+        {
+            Name = "Group by Name",
+            NickName = "N",
+            Description = "Group by Name"
+        };
+
+        public static readonly GH_InstanceDescription GroupByClass = new GH_InstanceDescription
+        {
+            Name = "Group by Class",
+            NickName = "C",
+            Description = "Group by Class"
+        };
+
+        public static readonly GH_InstanceDescription GroupByUDA = new GH_InstanceDescription
+        {
+            Name = "Group by UDA",
+            NickName = "U",
+            Description = "Group by UDA"
+        };
+
+        public static readonly GH_InstanceDescription GroupByReport = new GH_InstanceDescription
+        {
+            Name = "Group by Report",
+            NickName = "R",
+            Description = "Group by Report"
+        };
     }
 }
