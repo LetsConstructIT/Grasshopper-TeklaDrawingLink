@@ -142,10 +142,10 @@ namespace GTDrawingLink.Components
             var boundaryPoint = centerPoint + new Rhino.Geometry.Point3d(radius, 0, 0);
             View.CreateDetailView(
                 view,
-                centerPoint.ToTeklaPoint(),
-                boundaryPoint.ToTeklaPoint(),
-                labelPoint.ToTeklaPoint(),
-                insertionPoint.ToTeklaPoint(),
+                centerPoint.ToTekla(),
+                boundaryPoint.ToTekla(),
+                labelPoint.ToTekla(),
+                insertionPoint.ToTekla(),
                 viewAttributes,
                 markAttributes,
                 out View createdView,

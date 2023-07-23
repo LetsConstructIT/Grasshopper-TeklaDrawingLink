@@ -188,7 +188,7 @@ namespace GTDrawingLink.Components
             else if (@object is Tekla.Structures.Geometry3d.Point)
                 return @object as Tekla.Structures.Geometry3d.Point;
             else if (@object is GH_Point ghPoint)
-                return ghPoint.Value.ToTeklaPoint();
+                return ghPoint.Value.ToTekla();
 
             return null;
         }

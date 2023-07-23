@@ -48,11 +48,11 @@ namespace GTDrawingLink.Components
 
             DA.SetData(
                 ParamInfos.StartPoint.Name,
-                new GH_Point(startPoint.ToRhinoPoint()));
+                new GH_Point(startPoint.ToRhino()));
 
             DA.SetData(
                 ParamInfos.EndPoint.Name,
-                new GH_Point(endPoint.ToRhinoPoint()));
+                new GH_Point(endPoint.ToRhino()));
         }
 
         private CustomPart GetCustomPartFromInput(ModelObject modelObject)

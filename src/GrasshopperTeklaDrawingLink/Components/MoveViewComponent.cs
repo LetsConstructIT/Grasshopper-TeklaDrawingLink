@@ -38,7 +38,7 @@ namespace GTDrawingLink.Components
             if (!parameterSet)
                 return;
 
-            var teklaVector = vector.ToTeklaVector();
+            var teklaVector = vector.ToTekla();
 
             view.Select();
             view.Origin += teklaVector;

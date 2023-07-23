@@ -95,9 +95,9 @@ namespace GTDrawingLink.Components
 
             var dimension = new AngleDimension(
                 view,
-                origin.ToTeklaPoint(),
-                point1.ToTeklaPoint(),
-                point2.ToTeklaPoint(),
+                origin.ToTekla(),
+                point1.ToTekla(),
+                point2.ToTekla(),
                 (double)distance,
                 attributes);
 

@@ -41,7 +41,7 @@ namespace GTDrawingLink.Components
             var dimensionPoints = (typeof(TSD.StraightDimensionSet).GetProperty("DimensionPoints", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(sds) as TSD.PointList).ToArray();
 
-            DA.SetData(ParamInfos.DimensionPoints.Name, new GH_Curve(new Rhino.Geometry.Polyline(dimensionPoints.Select(p => p.ToRhinoPoint())).ToPolylineCurve()));
+            DA.SetData(ParamInfos.DimensionPoints.Name, new GH_Curve(new Rhino.Geometry.Polyline(dimensionPoints.Select(p => p.ToRhino())).ToPolylineCurve()));
             DA.SetData(ParamInfos.DimensionLocation.Name, GetDimensionLocation(sds, dimensionPoints));
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(sds.Attributes));
         }
@@ -66,7 +66,7 @@ namespace GTDrawingLink.Components
 
             firstPt.Z = 0;
             lastPt.Z = 0;
-            return new Rhino.Geometry.Line(firstPt.ToRhinoPoint(), lastPt.ToRhinoPoint());
+            return new Rhino.Geometry.Line(firstPt.ToRhino(), lastPt.ToRhino());
         }
     }
 }

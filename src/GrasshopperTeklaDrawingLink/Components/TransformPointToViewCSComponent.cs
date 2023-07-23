@@ -45,7 +45,7 @@ namespace GTDrawingLink.Components
             view.Select();
 
             var matrix = T3D.MatrixFactory.ToCoordinateSystem(view.DisplayCoordinateSystem);
-            DA.SetDataList("Point", points.Select(p => matrix.Transform(p.ToTeklaPoint()).ToRhinoPoint()));
+            DA.SetDataList("Point", points.Select(p => matrix.Transform(p.ToTekla()).ToRhino()));
         }
     }
 }

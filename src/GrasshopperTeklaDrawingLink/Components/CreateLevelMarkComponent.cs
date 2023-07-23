@@ -81,8 +81,8 @@ namespace GTDrawingLink.Components
 
             var levelMark = new LevelMark(
                 view,
-                insertionPoint.ToTeklaPoint(),
-                basePoint.ToTeklaPoint(),
+                insertionPoint.ToTekla(),
+                basePoint.ToTekla(),
                 levelMarkAttributes);
 
             levelMark.Insert();

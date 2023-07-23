@@ -45,14 +45,14 @@ namespace GTDrawingLink.Components
         private GH_Plane GetPlane(View view)
         {
             var coordSystem = view.DisplayCoordinateSystem;
-            return new GH_Plane(coordSystem.ToRhinoPlane());
+            return new GH_Plane(coordSystem.ToRhino());
         }
 
         private GH_Box GetRestrictionBox(View view)
         {
             var box = new Rhino.Geometry.Box(
-                view.ViewCoordinateSystem.ToRhinoPlane(),
-                view.RestrictionBox.ToRhinoBoundingBox());
+                view.ViewCoordinateSystem.ToRhino(),
+                view.RestrictionBox.ToRhino());
 
             return new GH_Box(box);
         }

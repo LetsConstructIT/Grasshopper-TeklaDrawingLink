@@ -152,9 +152,9 @@ namespace GTDrawingLink.Components
 
             View.CreateSectionView(
                 view,
-                startPoint.ToTeklaPoint(),
-                endPoint.ToTeklaPoint(),
-                insertionPoint.ToTeklaPoint(),
+                startPoint.ToTekla(),
+                endPoint.ToTekla(),
+                insertionPoint.ToTekla(),
                 depthUp,
                 depthDown,
                 viewAttributes,

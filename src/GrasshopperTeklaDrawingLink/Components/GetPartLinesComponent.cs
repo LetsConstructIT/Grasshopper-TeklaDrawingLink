@@ -47,11 +47,11 @@ namespace GTDrawingLink.Components
 
             DA.SetData(
                 ParamInfos.PartReferenceLine.Name,
-                new GH_Curve(new Rhino.Geometry.PolylineCurve(refPoints.Select(p => p.ToRhinoPoint()))));
+                new GH_Curve(new Rhino.Geometry.PolylineCurve(refPoints.Select(p => p.ToRhino()))));
 
             DA.SetData(
                 ParamInfos.PartCenterLine.Name,
-                new GH_Curve(new Rhino.Geometry.PolylineCurve(centerPoints.Select(p => p.ToRhinoPoint()))));
+                new GH_Curve(new Rhino.Geometry.PolylineCurve(centerPoints.Select(p => p.ToRhino()))));
         }
 
         private Part GetPartFromInput(ModelObject modelObject)

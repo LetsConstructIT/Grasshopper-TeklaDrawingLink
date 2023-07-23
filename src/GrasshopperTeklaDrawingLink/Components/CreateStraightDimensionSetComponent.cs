@@ -82,11 +82,14 @@ namespace GTDrawingLink.Components
             return insertedDimensions;
         }
 
-        private StraightDimensionSet InsertDimensionLine(View view, List<Rhino.Geometry.Point3d> points, Rhino.Geometry.Line location, StraightDimensionSet.StraightDimensionSetAttributes attributes)
+        private StraightDimensionSet InsertDimensionLine(View view, List<Point3d> points, Rhino.Geometry.Line location, StraightDimensionSet.StraightDimensionSetAttributes attributes)
         {
             var pointList = new PointList();
             foreach (var point in points)
-                pointList.Add(point.ToTeklaPoint());
+                pointList.Add(point.ToTekla());
+
+            
+
 
             (Vector vector, double distance) = CalculateLocation(location, points.First());
 
@@ -135,8 +138,8 @@ namespace GTDrawingLink.Components
 
         private (Vector vector, double distance) CalculateLocation(Rhino.Geometry.Line dimLineLocation, Point3d dimPoint)
         {
-            var line = new Tekla.Structures.Geometry3d.Line(dimLineLocation.From.ToTeklaPoint(), dimLineLocation.To.ToTeklaPoint());
-            var teklaPoint = dimPoint.ToTeklaPoint();
+            var line = new Tekla.Structures.Geometry3d.Line(dimLineLocation.From.ToTekla(), dimLineLocation.To.ToTekla());
+            var teklaPoint = dimPoint.ToTekla();
             teklaPoint.Z = 0;
             var projected = Projection.PointToLine(teklaPoint, line);
 

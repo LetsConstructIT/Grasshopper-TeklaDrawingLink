@@ -96,7 +96,7 @@ namespace GTDrawingLink.Components
             if (scale.HasValue)
                 attributes.Scale = scale.Value;
 
-            var teklaPoint = insertionPoint.ToTeklaPoint();
+            var teklaPoint = insertionPoint.ToTekla();
 
             View createdView = null;
             switch (viewType.ToUpper())
