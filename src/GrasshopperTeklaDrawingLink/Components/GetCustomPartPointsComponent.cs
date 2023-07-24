@@ -36,7 +36,7 @@ namespace GTDrawingLink.Components
             CustomPart customPart = GetCustomPartFromInput(inputObject.Value);
             if (customPart == null)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Custom part not found");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Custom part not found");
                 return;
             }
 

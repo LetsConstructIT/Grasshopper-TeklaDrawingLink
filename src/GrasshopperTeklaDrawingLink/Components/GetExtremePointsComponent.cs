@@ -30,7 +30,7 @@ namespace GTDrawingLink.Components
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var points = new List<Point3d>();
-            if (!DA.GetDataList(ParamInfos.Points.Name, points))
+            if (!DA.GetDataList(ParamInfos.Points.Name, points) || !points.Any())
                 return;
 
             var (horizontalExtremes, verticalExtremes) = GetExtremes(points);
