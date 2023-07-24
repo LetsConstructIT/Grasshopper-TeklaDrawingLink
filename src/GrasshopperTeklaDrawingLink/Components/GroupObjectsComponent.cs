@@ -256,13 +256,14 @@ namespace GTDrawingLink.Components
             return output;
         }
 
+        [Flags]
         enum GroupingMode
         {
-            ByAssemblyPosition,
-            ByName,
-            ByClass,
-            ByUDA,
-            ByReport
+            ByAssemblyPosition = 0,
+            ByName = 1,
+            ByClass = 2,
+            ByUDA = 4,
+            ByReport = 8
         }
     }
 }
