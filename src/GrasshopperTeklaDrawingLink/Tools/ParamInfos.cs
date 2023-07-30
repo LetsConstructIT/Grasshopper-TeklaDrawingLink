@@ -578,5 +578,68 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Group by Report"
         };
+        public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription {
+            Name="Leader line",
+            NickName="L",
+            Description="Add text with leader line"
+        };
+
+        public static readonly GH_InstanceDescription Text = new GH_InstanceDescription {
+            Name="Text",
+            NickName="T",
+            Description="Add text"
+        };
+
+        public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription {
+            Name="BoundingBox",
+            NickName="BB",
+            Description="Represents the 2D bounding box of the object."
+        };
+        public static readonly GH_InstanceDescription MarkInsertionPoint = new GH_InstanceDescription {
+            Name="Insertion Point",
+            NickName="IP",
+            Description="The insertion point of the mark."
+        };
+        public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription {
+            Name="Leader line end point",
+            NickName="LLSP",
+            Description="The point where the leader line ends."
+        };
+
+        public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription {
+            Name="Font family",
+            NickName="FF",
+            Description="The font family used (Default Arial Narrow)."
+        };
+        public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription {
+            Name="Font size",
+            NickName="FS",
+            Description="The font size used (Default 2.5)."
+        };
+        public static readonly GH_InstanceDescription Frame = new GH_InstanceDescription {
+            Name="Frame",
+            NickName="FR",
+            Description="The frame of the text."
+        };
+        public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription {
+            Name="Text attributes",
+            NickName="TATR",
+            Description="The attributes of the text."
+        };
+        public static readonly GH_InstanceDescription FontAttributes = new GH_InstanceDescription {
+            Name="Font attributes",
+            NickName="FATR",
+            Description="The attributes of the font used."
+        };
+        public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription {
+            Name="Font weight",
+            NickName="FW",
+            Description="The weight of the font, Bold or not (default: non-Bold)"
+        };
+        public static readonly GH_InstanceDescription FontItalic = new GH_InstanceDescription {
+            Name="Font italic",
+            NickName="FI",
+            Description="The italic style of the font, Italic or not (default: non-Italic)"
+        };
     }
 }
