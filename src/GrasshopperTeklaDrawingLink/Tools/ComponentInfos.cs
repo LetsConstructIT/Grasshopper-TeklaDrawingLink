@@ -460,6 +460,15 @@ namespace GTDrawingLink.Tools
             Description = "Group Tekla model objects by specified criteria (right-click to choose)",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
-        };        
+        };
+
+        public static readonly GH_InstanceDescription DeleteDrawingObjectsComponent = new GH_InstanceDescription
+        {
+            Name = "Delete Objects",
+            NickName = "D",
+            Description = "Delete Tekla drawing objects",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
     }
 }

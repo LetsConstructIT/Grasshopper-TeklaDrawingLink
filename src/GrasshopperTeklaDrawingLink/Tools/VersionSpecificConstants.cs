@@ -231,6 +231,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GroupObjectsComponent),
                 "CF46774B-064B-485C-A95D-E862768B0161"
+            },
+            {
+                typeof(DeleteDrawingObjectsComponent),
+                "0F3832E1-2D16-4C56-96E1-2F63C1C5FFAC"
             }
         };
 
