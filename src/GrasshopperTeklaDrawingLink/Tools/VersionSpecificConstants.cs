@@ -239,6 +239,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetObjectsFromViewComponent),
                 "D340933C-5C78-4052-A986-777FAE8241B0"
+            },
+            {
+                typeof(RefreshViewComponent),
+                "CB51563A-2CF6-46CF-A51F-CE8C695AD4DB"
             }
         };
 

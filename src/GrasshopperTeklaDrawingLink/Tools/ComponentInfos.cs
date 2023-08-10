@@ -479,6 +479,15 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.View
         };
+
+        public static readonly GH_InstanceDescription RefreshViewComponent = new GH_InstanceDescription
+        {
+            Name = "Refresh View",
+            NickName = "R",
+            Description = "Refresh Tekla Drawing View",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
         
     }
 }
