@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 using Grasshopper.Kernel;
 
@@ -19,7 +20,7 @@ namespace GTDrawingLink.Components.Text {
         }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager) {
-            pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item));
+           SetParametersAsOptional(pManager,new List<int> { pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item)) });
             AddTextParameter(pManager, ParamInfos.FontFamily, GH_ParamAccess.item, true);
             AddNumberParameter(pManager, ParamInfos.FontSize, GH_ParamAccess.item, true);
             AddBooleanParameter(pManager, ParamInfos.FontWeight, GH_ParamAccess.item, true);
@@ -43,71 +44,63 @@ namespace GTDrawingLink.Components.Text {
 
             object font = null;
             DA.GetData(ParamInfos.FontFamily.Name, ref font);
-            if(font!=null) {
-                Grasshopper.Kernel.Types.GH_String gH_String = font as Grasshopper.Kernel.Types.GH_String;
-                if(gH_String==null) {
-                    fontAttributes.Name="Arial Narrow";
+            if(font is null) {
+                fontAttributes.Name="Arial";
+            }
+            else {
+                if(!(font is Grasshopper.Kernel.Types.GH_String gH_String)) {
+                    fontAttributes.Name="Arial";
                 }
                 else {
                     fontAttributes.Name=gH_String.Value;
                 }
             }
-            else {
-                fontAttributes.Name="Arial Narrow";
-            }
 
             object size = null;
             DA.GetData(ParamInfos.FontSize.Name, ref size);
-            if(size!=null) {
-                Grasshopper.Kernel.Types.GH_Number gH_Number = size as Grasshopper.Kernel.Types.GH_Number;
-
-                var fontValue = gH_Number.Value;
-                if(fontValue==0) {
-                    fontAttributes.Height=2.5;
-                }
-                else {
-                    fontAttributes.Height=fontValue;
-                }
+            if(size is null) {
+                fontAttributes.Height=2.5;
             }
             else {
-                fontAttributes.Height=2.5;
+                if(size is Grasshopper.Kernel.Types.GH_Number gH_Number) {
+                    var fontSize = gH_Number.Value;
+                    if(fontSize==0) {
+                        fontAttributes.Height=2.5;
+                    }
+                    else {
+                        fontAttributes.Height=fontSize;
+                    }
+                }
             }
 
             object weight = null;
             DA.GetData(ParamInfos.FontWeight.Name, ref weight);
-            if(weight!=null) {
-                Grasshopper.Kernel.Types.GH_Boolean gH_Boolean = weight as Grasshopper.Kernel.Types.GH_Boolean;
-                if(gH_Boolean==null) {
+            if(weight is null) {
+                fontAttributes.Bold=false;
+            }
+            else {
+                if(!(weight is Grasshopper.Kernel.Types.GH_Boolean gH_Boolean)) {
                     fontAttributes.Bold=false;
                 }
                 else {
                     fontAttributes.Bold=gH_Boolean.Value;
                 }
             }
-            else {
-                fontAttributes.Bold=false;
-            }
 
             object italic = null;
             DA.GetData(ParamInfos.FontItalic.Name, ref italic);
-            if(italic!=null) {
-                Grasshopper.Kernel.Types.GH_Boolean gH_Boolean = italic as Grasshopper.Kernel.Types.GH_Boolean;
-                if(gH_Boolean==null) {
+            if(italic is null) {
+                fontAttributes.Italic=false;
+            }
+            else {
+                if(!(italic is Grasshopper.Kernel.Types.GH_Boolean gH_Boolean)) {
                     fontAttributes.Italic=false;
                 }
                 else {
                     fontAttributes.Italic=gH_Boolean.Value;
                 }
             }
-            else {
-                fontAttributes.Italic=false;
-            }
-
-
-
             DA.SetData(ParamInfos.FontAttributes.Name, new FontAttributesGoo(fontAttributes));
         }
-
-
     }
 }

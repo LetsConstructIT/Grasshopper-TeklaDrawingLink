@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 
@@ -99,6 +101,11 @@ namespace GTDrawingLink.Components
         {
             if (optional)
                 pManager[pManager.ParamCount - 1].Optional = true;
+        }
+        protected void SetParametersAsOptional(GH_InputParamManager pManager, List<int> indeces) 
+        {
+            for(int i = 0; i<indeces.Count; i++)
+                pManager[indeces[i]].Optional=true;
         }
     }
 }
