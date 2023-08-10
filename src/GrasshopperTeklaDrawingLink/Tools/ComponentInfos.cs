@@ -470,5 +470,15 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };
+
+        public static readonly GH_InstanceDescription GetObjectsFromViewComponent = new GH_InstanceDescription
+        {
+            Name = "Objects from View",
+            NickName = "G",
+            Description = "Get Tekla drawing objects from View",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
+        
     }
 }
