@@ -210,6 +210,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Drawing
         };
 
+        public static readonly GH_InstanceDescription CreateGADrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Create GA Drawing",
+            NickName = "GADrawing",
+            Description = "Create GA drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };        
+
         public static readonly GH_InstanceDescription GetSelectedDrawingsOnListComponent = new GH_InstanceDescription
         {
             Name = "Selected Drawings on List",
