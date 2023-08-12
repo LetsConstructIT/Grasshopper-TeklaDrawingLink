@@ -578,5 +578,12 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Group by Report"
         };
+
+        public static readonly GH_InstanceDescription ModelView = new GH_InstanceDescription
+        {
+            Name = "Model View",
+            NickName = "V",
+            Description = "Tekla Model View"
+        };
     }
 }

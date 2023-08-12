@@ -469,6 +469,15 @@ namespace GTDrawingLink.Tools
             Description = "Group Tekla model objects by specified criteria (right-click to choose)",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription GetModelViewsComponent = new GH_InstanceDescription
+        {
+            Name = "Model Views",
+            NickName = "MV",
+            Description = "Get Tekla model views",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
         };        
     }
 }

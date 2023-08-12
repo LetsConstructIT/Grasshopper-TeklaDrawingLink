@@ -235,6 +235,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GroupObjectsComponent),
                 "CF46774B-064B-485C-A95D-E862768B0161"
+            },
+            {
+                typeof(GetModelViewsComponent),
+                "AEC509CC-8D1D-4DE2-A674-524649BA25D2"
+            },
+            {
+                typeof(TeklaViewParam),
+                "19D9E060-DA63-4484-969F-05F7E73ADF04"
             }
         };
 
