@@ -585,5 +585,21 @@ namespace GTDrawingLink.Tools
             NickName = "V",
             Description = "Tekla Model View"
         };
+
+        public static readonly GH_InstanceDescription ViewCoordinateSystem = new GH_InstanceDescription
+        {
+            Name = "View CS",
+            NickName = "V_CS",
+            Description = "View Coordinate System"
+        };
+
+        public static readonly GH_InstanceDescription DisplayCoordinateSystem = new GH_InstanceDescription
+        {
+            Name = "Display CS",
+            NickName = "D_CS",
+            Description = "Display Coordinate System"
+        };
+
+
     }
 }

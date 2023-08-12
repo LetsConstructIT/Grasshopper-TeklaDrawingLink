@@ -243,6 +243,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(TeklaViewParam),
                 "19D9E060-DA63-4484-969F-05F7E73ADF04"
+            },
+            {
+                typeof(DeconstructModelViewComponent),
+                "7A066A78-39B0-4DB5-A9E6-39DDEA080F1B"
             }
         };
 

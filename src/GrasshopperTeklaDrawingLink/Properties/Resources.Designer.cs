@@ -93,6 +93,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ConstructModelView {
+            get {
+                object obj = ResourceManager.GetObject("ConstructModelView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ConvertDrawingToModelObject {
             get {
                 object obj = ResourceManager.GetObject("ConvertDrawingToModelObject", resourceCulture);
@@ -166,6 +176,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap DeconstructDimensionSet {
             get {
                 object obj = ResourceManager.GetObject("DeconstructDimensionSet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DeconstructModelView {
+            get {
+                object obj = ResourceManager.GetObject("DeconstructModelView", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
