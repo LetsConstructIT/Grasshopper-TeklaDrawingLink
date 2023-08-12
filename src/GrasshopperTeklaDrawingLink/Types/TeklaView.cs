@@ -9,9 +9,9 @@ namespace GTDrawingLink.Types
         public string Name { get; }
         public Plane ViewCoordinateSystem { get; }
         public Plane DisplayCoordinateSystem { get; }
-        public BoundingBox RestrictionBox { get; }
+        public Box RestrictionBox { get; }
 
-        public TeklaView(string name, Plane viewCoordinateSystem, Plane displayCoordinateSystem, BoundingBox restrictionBox)
+        public TeklaView(string name, Plane viewCoordinateSystem, Plane displayCoordinateSystem, Box restrictionBox)
         {
             Name = name ?? "";
             ViewCoordinateSystem = viewCoordinateSystem;
@@ -24,7 +24,7 @@ namespace GTDrawingLink.Types
             Name = view.Name;
             ViewCoordinateSystem = view.ViewCoordinateSystem.ToRhino();
             DisplayCoordinateSystem = view.DisplayCoordinateSystem.ToRhino();
-            RestrictionBox = view.WorkArea.ToRhino();
+            RestrictionBox = new Box(Plane.WorldXY, view.WorkArea.ToRhino());
         }
     }
 }

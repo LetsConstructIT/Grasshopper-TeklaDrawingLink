@@ -55,6 +55,18 @@ namespace GTDrawingLink.Components
             SetLastParameterAsOptional(pManager, optional);
         }
 
+        protected void AddPlaneParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            pManager.AddPlaneParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+        }
+
+        protected void AddBoxParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            pManager.AddBoxParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+        }
+
         protected void AddTextParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             pManager.AddTextParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);

@@ -474,7 +474,7 @@ namespace GTDrawingLink.Tools
         public static readonly GH_InstanceDescription GetModelViewsComponent = new GH_InstanceDescription
         {
             Name = "Model Views",
-            NickName = "MV",
+            NickName = "MVs",
             Description = "Get Tekla model views",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
@@ -482,8 +482,8 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription ConstructModelViewComponent = new GH_InstanceDescription
         {
-            Name = "Construct Model View",
-            NickName = "CMV",
+            Name = "Model View",
+            NickName = "MV",
             Description = "Construct Tekla model view",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
