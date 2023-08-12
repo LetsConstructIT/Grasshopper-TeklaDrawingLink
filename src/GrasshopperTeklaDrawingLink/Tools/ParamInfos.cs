@@ -614,19 +614,19 @@ namespace GTDrawingLink.Tools
         public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription 
         {
             Name="Font family",
-            NickName="FF",
+            NickName="F",
             Description="The font family used (Default Arial Narrow)."
         };
         public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription 
         {
             Name="Font size",
-            NickName="FS",
+            NickName="S",
             Description="The font size used (Default 2.5)."
         };
-        public static readonly GH_InstanceDescription Frame = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription FrameType = new GH_InstanceDescription 
         {
             Name="Frame",
-            NickName="FR",
+            NickName="FRM",
             Description="The frame of the text."
         };
         public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription 
@@ -644,13 +644,13 @@ namespace GTDrawingLink.Tools
         public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription 
         {
             Name="Font weight",
-            NickName="FW",
+            NickName="B",
             Description="The weight of the font, Bold or not (default: non-Bold)"
         };
         public static readonly GH_InstanceDescription FontItalic = new GH_InstanceDescription 
         {
             Name="Font italic",
-            NickName="FI",
+            NickName="I",
             Description="The italic style of the font, Italic or not (default: non-Italic)"
         };
         public static readonly GH_InstanceDescription BackgroundTransparency = new GH_InstanceDescription 
