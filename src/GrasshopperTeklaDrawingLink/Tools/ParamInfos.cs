@@ -1,4 +1,4 @@
-﻿using Grasshopper.Kernel;
+﻿﻿using Grasshopper.Kernel;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Tools
@@ -589,7 +589,7 @@ namespace GTDrawingLink.Tools
         {
             Name="Text",
             NickName="T",
-            Description="Add text"
+            Description="Add text."
         };
 
         public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription 
@@ -606,16 +606,16 @@ namespace GTDrawingLink.Tools
         };
         public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription 
         {
-            Name="Leader line end point",
-            NickName="LLSP",
-            Description="The point where the leader line ends."
+            Name="Text base point",
+            NickName="BP",
+            Description="The point where the text starts."
         };
 
         public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription 
         {
             Name="Font family",
             NickName="F",
-            Description="The font family used (Default Arial Narrow)."
+            Description="The font family used (Default Arial)."
         };
         public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription 
         {
@@ -627,7 +627,7 @@ namespace GTDrawingLink.Tools
         {
             Name="Frame",
             NickName="FRM",
-            Description="The frame of the text."
+            Description= $"The frame of the text: \n{EnumHelpers.EnumToString<FrameTypes>()}\nYou can right-click to set."
         };
         public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription 
         {
@@ -664,6 +664,36 @@ namespace GTDrawingLink.Tools
             Name="Angle",
             NickName="ANG",
             Description="Sets a angle value."
+        };
+        public static readonly GH_InstanceDescription ArrowType = new GH_InstanceDescription
+        {
+            Name = "ArrowType",
+            NickName = "T",
+            Description = $"Sets the type of the arrow: \n{EnumHelpers.EnumToString<ArrowheadTypes>()}\nYou can right-click to set."
+        };
+        public static readonly GH_InstanceDescription Width = new GH_InstanceDescription
+        {
+            Name = "Width",
+            NickName = "W",
+            Description = "Sets the width of the arrow."
+        };
+        public static readonly GH_InstanceDescription Height = new GH_InstanceDescription
+        {
+            Name = "Heigth",
+            NickName = "H",
+            Description = "Sets the heigth of the arrow."
+        };
+        public static readonly GH_InstanceDescription ArrowAttribute = new GH_InstanceDescription
+        {
+            Name = "ArrowAttribute",
+            NickName = "AA",
+            Description = "Sets the atributes of the arrow."
+        };
+        public static readonly GH_InstanceDescription TextRulerWidth = new GH_InstanceDescription
+        {
+            Name = "RulerWidth",
+            NickName = "RW",
+            Description = "Sets the width of the text area."
         };
     }
 }

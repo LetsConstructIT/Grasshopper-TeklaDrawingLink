@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Documents;
-
-using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
+﻿using Grasshopper.Kernel;
 
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+
+using System.Collections.Generic;
+using System.Drawing;
 
 using Tekla.Structures.Drawing;
 
@@ -26,11 +24,13 @@ namespace GTDrawingLink.Components.Text {
             List<int> indeces = new List<int> {
                 pManager.AddParameter(new FontAttributesParam(ParamInfos.FontAttributes, GH_ParamAccess.item)),
                 pManager.AddParameter(new EnumParam<FrameTypes>(ParamInfos.FrameType, GH_ParamAccess.item)),
-                pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item))
+                pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item)),
+                 pManager.AddParameter(new ArrowAttributesParam(ParamInfos.ArrowAttribute, GH_ParamAccess.item))
             };
             SetParametersAsOptional(pManager, indeces);
             AddBooleanParameter(pManager, ParamInfos.BackgroundTransparency, GH_ParamAccess.item, true);
             AddNumberParameter(pManager, ParamInfos.Angle, GH_ParamAccess.item, true);
+            AddNumberParameter(pManager, ParamInfos.TextRulerWidth, GH_ParamAccess.item, true);
             AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.item, true);
         }
 
@@ -45,8 +45,8 @@ namespace GTDrawingLink.Components.Text {
 
             var textAttributes = new TSD.Text.TextAttributes();
 
-            if(atrFileName!=null) {
-                textAttributes=new TSD.Text.TextAttributes(atrFileName);
+            if(atrFileName != null) {
+                textAttributes = new TSD.Text.TextAttributes(atrFileName);
             }
 
             var transparency = new bool();
@@ -55,38 +55,49 @@ namespace GTDrawingLink.Components.Text {
             var angle = new double();
             DA.GetData(ParamInfos.Angle.Name, ref angle);
 
+            var rulerWidth = new double();
+            DA.GetData(ParamInfos.TextRulerWidth.Name, ref rulerWidth);
+
             object frameType = null;
             object frameColor = null;
 
             DA.GetData(ParamInfos.FrameType.Name, ref frameType);
             DA.GetData(ParamInfos.DrawingColor.Name, ref frameColor);
 
-            if(frameType!=null) {
+            if(frameType != null) {
                 var frameTypeEnumValue = EnumHelpers.ObjectToEnumValue<FrameTypes>(frameType);
                 if(frameTypeEnumValue.HasValue) {
-                    textAttributes.Frame=new Frame(frameTypeEnumValue.Value, DrawingColors.Black);
+                    textAttributes.Frame = new Frame(frameTypeEnumValue.Value, DrawingColors.Black);
                 }
             }
-            if(frameColor!=null) {
+            if(frameColor != null) {
                 var frameColorEnumValue = EnumHelpers.ObjectToEnumValue<DrawingColors>(frameColor);
                 if(frameColorEnumValue.HasValue) {
-                    textAttributes.Frame=new Frame(FrameTypes.None, frameColorEnumValue.Value);
+                    textAttributes.Frame = new Frame(FrameTypes.None, frameColorEnumValue.Value);
                 }
             }
-            if(frameType!=null&&frameColor!=null) {
+            if(frameType != null && frameColor != null) {
                 var frameTypeEnumValue = EnumHelpers.ObjectToEnumValue<FrameTypes>(frameType);
                 var frameColorEnumValue = EnumHelpers.ObjectToEnumValue<DrawingColors>(frameColor);
-                if(frameTypeEnumValue.HasValue&&frameColorEnumValue.HasValue) {
-                    textAttributes.Frame=new Frame(frameTypeEnumValue.Value, frameColorEnumValue.Value);
+                if(frameTypeEnumValue.HasValue && frameColorEnumValue.HasValue) {
+                    textAttributes.Frame = new Frame(frameTypeEnumValue.Value, frameColorEnumValue.Value);
                 }
             }
 
             FontAttributesGoo font = new FontAttributesGoo();
             DA.GetData(ParamInfos.FontAttributes.Name, ref font);
-            font.Value=font.Value??new FontAttributes();
-            textAttributes.Font=font.Value;
-            textAttributes.Angle=angle;
-            textAttributes.TransparentBackground=transparency;
+            font.Value = font.Value ?? new FontAttributes();
+            textAttributes.Font = font.Value;
+            textAttributes.Angle = angle;
+            textAttributes.RulerWidth = rulerWidth;
+            textAttributes.TransparentBackground = transparency;
+
+
+            ArrowAttributesGoo arrowheadAttributes = new ArrowAttributesGoo();
+            DA.GetData(ParamInfos.ArrowAttribute.Name, ref arrowheadAttributes);
+            arrowheadAttributes.Value = arrowheadAttributes.Value ?? new ArrowheadAttributes();
+            textAttributes.ArrowHead = arrowheadAttributes.Value;
+
             DA.SetData(ParamInfos.TextAttributes.Name, new TextAttributesGoo(textAttributes));
         }
 

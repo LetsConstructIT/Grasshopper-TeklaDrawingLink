@@ -244,6 +244,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(FontAttributesComponent),
                 "1444CD7C-B6C1-4605-9A92-5A86B3481484"
+            },
+            {
+                typeof(ArrowAttributeComponent),
+                "70C86C3F-993C-41EE-BEC7-185A7825E9DB"
             }
         };
 
