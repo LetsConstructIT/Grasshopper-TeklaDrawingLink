@@ -600,6 +600,19 @@ namespace GTDrawingLink.Tools
             Description = "Display Coordinate System"
         };
 
+        public static readonly GH_InstanceDescription AllModelViews = new GH_InstanceDescription
+        {
+            Name = "All model views",
+            NickName = "All",
+            Description = "All model views from list"
+        };
+
+        public static readonly GH_InstanceDescription VisibleModelViews = new GH_InstanceDescription
+        {
+            Name = "Visible model views",
+            NickName = "Vis",
+            Description = "Only visible model views from list"
+        };
 
     }
 }

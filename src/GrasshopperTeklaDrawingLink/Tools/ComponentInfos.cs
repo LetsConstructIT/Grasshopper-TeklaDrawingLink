@@ -475,7 +475,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Model Views",
             NickName = "MVs",
-            Description = "Get Tekla model views",
+            Description = "Get Tekla model views (right-click to filter only visible views)",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
