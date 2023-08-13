@@ -24,6 +24,8 @@ namespace GTDrawingLink.Components
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
             pManager.AddParameter(new TeklaViewParam(ParamInfos.ModelView, GH_ParamAccess.list));
             AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
+            AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.list, true);
+            AddPointParameter(pManager, ParamInfos.ViewInsertionPoint, GH_ParamAccess.list, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -50,14 +52,22 @@ namespace GTDrawingLink.Components
             var attributesFileNames = new List<string>();
             DA.GetDataList(ParamInfos.Attributes.Name, attributesFileNames);
 
-            var viewsNumber = new int[] { modelViews.Count }.Max();
+            var scales = new List<int>();
+            DA.GetDataList(ParamInfos.Scale.Name, scales);
+
+            var insertionPoints = new List<Rhino.Geometry.Point3d>();
+            DA.GetDataList(ParamInfos.ViewInsertionPoint.Name, insertionPoints);
+
+            var viewsNumber = new int[] { modelViews.Count, attributesFileNames.Count, scales.Count, insertionPoints.Count }.Max();
             var createdViews = new View[viewsNumber];
             for (int i = 0; i < viewsNumber; i++)
             {
                 var createdView = InsertView(
                     drawing,
                     modelViews.ElementAtOrLast(i),
-                    attributesFileNames.Count > 0 ? attributesFileNames.ElementAtOrLast(i) : null);
+                    attributesFileNames.Count > 0 ? attributesFileNames.ElementAtOrLast(i) : null,
+                    scales.Count > 0 ? scales.ElementAtOrLast(i) : new int?(),
+                    insertionPoints.Count > 0 ? insertionPoints.ElementAtOrLast(i) : new Rhino.Geometry.Point3d?());
 
                 createdViews[i] = createdView;
             }
@@ -68,7 +78,7 @@ namespace GTDrawingLink.Components
             return createdViews;
         }
 
-        private View InsertView(Drawing drawing, TeklaView teklaView, string attributesFileName)
+        private View InsertView(Drawing drawing, TeklaView teklaView, string attributesFileName, int? scale, Rhino.Geometry.Point3d? insertionPoint)
         {
             var aabb = new TSG.AABB(
                 new TSG.Point(teklaView.RestrictionBox.X.Min, teklaView.RestrictionBox.Y.Min, teklaView.RestrictionBox.Z.Min),
@@ -84,6 +94,10 @@ namespace GTDrawingLink.Components
             {
                 Name = teklaView.Name
             };
+
+            if (scale.HasValue)
+                view.Attributes.Scale = scale.Value;
+
             view.Insert();
 
             LoadAttributesWithMacroIfNecessary(view, attributesFileName);
@@ -91,6 +105,15 @@ namespace GTDrawingLink.Components
             if (!string.IsNullOrEmpty(teklaView.Name))
             {
                 view.Name = teklaView.Name;
+                view.Modify();
+            }
+
+            if (insertionPoint.HasValue)
+            {
+                var lowerLeft = view.Origin + view.FrameOrigin;
+                var movementVector = insertionPoint.Value.ToTekla() - lowerLeft;
+                view.Select();
+                view.Origin += movementVector;
                 view.Modify();
             }
 
