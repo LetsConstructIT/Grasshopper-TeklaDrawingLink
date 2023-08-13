@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
+using TSG = Tekla.Structures.Geometry3d;
 
 namespace GTDrawingLink.Components
 {
@@ -61,14 +62,18 @@ namespace GTDrawingLink.Components
 
         private View InsertView(Drawing drawing, TeklaView teklaView)
         {
-            var aabb = teklaView.RestrictionBox.BoundingBox.ToTekla();
+            var aabb = new TSG.AABB(
+                new TSG.Point(teklaView.RestrictionBox.X.Min, teklaView.RestrictionBox.Y.Min, teklaView.RestrictionBox.Z.Min),
+                new TSG.Point(teklaView.RestrictionBox.X.Max, teklaView.RestrictionBox.Y.Max, teklaView.RestrictionBox.Z.Max));
 
             var view = new View(
                 drawing.GetSheet(),
                 teklaView.ViewCoordinateSystem.ToTekla(),
                 teklaView.DisplayCoordinateSystem.ToTekla(),
-                aabb);
-            view.Name = teklaView.Name;
+                aabb)
+            {
+                Name = teklaView.Name
+            };
             view.Insert();
 
             //LoadAttributesWithMacroIfNecessary(createdView, attributesFileNames);

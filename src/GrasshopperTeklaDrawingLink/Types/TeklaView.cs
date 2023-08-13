@@ -1,6 +1,7 @@
 ﻿using Rhino.Geometry;
 using GTDrawingLink.Extensions;
 using Tekla.Structures.Model.UI;
+using TSG = Tekla.Structures.Geometry3d;
 
 namespace GTDrawingLink.Types
 {
@@ -24,7 +25,11 @@ namespace GTDrawingLink.Types
             Name = view.Name;
             ViewCoordinateSystem = view.ViewCoordinateSystem.ToRhino();
             DisplayCoordinateSystem = view.DisplayCoordinateSystem.ToRhino();
-            RestrictionBox = new Box(Plane.WorldXY, view.WorkArea.ToRhino());
+
+            var matrixToCurrent= TSG.MatrixFactory.ToCoordinateSystem(view.ViewCoordinateSystem);
+            var minPt = matrixToCurrent.Transform(view.WorkArea.MinPoint);
+            var maxPt = matrixToCurrent.Transform(view.WorkArea.MaxPoint);
+            RestrictionBox = new Box(ViewCoordinateSystem, new BoundingBox(minPt.ToRhino(), maxPt.ToRhino()));
         }
     }
 }
