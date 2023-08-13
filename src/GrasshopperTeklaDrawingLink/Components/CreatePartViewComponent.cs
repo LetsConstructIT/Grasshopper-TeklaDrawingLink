@@ -23,8 +23,7 @@ namespace GTDrawingLink.Components
         {
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
             AddTextParameter(pManager, ParamInfos.ViewType, GH_ParamAccess.list);
-            pManager.AddPointParameter("Point", "P", "View insertion point", GH_ParamAccess.list);
-
+            AddPointParameter(pManager, ParamInfos.ViewInsertionPoint, GH_ParamAccess.list);
             AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.list, true);
             AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
             AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.list, true);
@@ -47,7 +46,7 @@ namespace GTDrawingLink.Components
                 return null;
 
             var insertionPoints = new List<Rhino.Geometry.Point3d>();
-            parameterSet = DA.GetDataList("Point", insertionPoints);
+            parameterSet = DA.GetDataList(ParamInfos.ViewInsertionPoint.Name, insertionPoints);
             if (!parameterSet)
                 return null;
 

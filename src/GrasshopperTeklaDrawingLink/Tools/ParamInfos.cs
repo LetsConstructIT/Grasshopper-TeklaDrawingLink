@@ -614,5 +614,11 @@ namespace GTDrawingLink.Tools
             Description = "Only visible model views from list"
         };
 
+        public static readonly GH_InstanceDescription ViewInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "View insertion point"
+        };
     }
 }
