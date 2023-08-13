@@ -23,6 +23,7 @@ namespace GTDrawingLink.Components
         {
             pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
             pManager.AddParameter(new TeklaViewParam(ParamInfos.ModelView, GH_ParamAccess.list));
+            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -41,7 +42,13 @@ namespace GTDrawingLink.Components
 
             var modelViews = DA.GetGooListValue<TeklaView>(ParamInfos.ModelView);
             if (modelViews == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Tekla model views not specified");
                 return null;
+            }
+
+            var attributesFileNames = new List<string>();
+            DA.GetDataList(ParamInfos.Attributes.Name, attributesFileNames);
 
             var viewsNumber = new int[] { modelViews.Count }.Max();
             var createdViews = new View[viewsNumber];
@@ -49,7 +56,8 @@ namespace GTDrawingLink.Components
             {
                 var createdView = InsertView(
                     drawing,
-                    modelViews.ElementAtOrLast(i));
+                    modelViews.ElementAtOrLast(i),
+                    attributesFileNames.Count > 0 ? attributesFileNames.ElementAtOrLast(i) : null);
 
                 createdViews[i] = createdView;
             }
@@ -60,29 +68,31 @@ namespace GTDrawingLink.Components
             return createdViews;
         }
 
-        private View InsertView(Drawing drawing, TeklaView teklaView)
+        private View InsertView(Drawing drawing, TeklaView teklaView, string attributesFileName)
         {
             var aabb = new TSG.AABB(
                 new TSG.Point(teklaView.RestrictionBox.X.Min, teklaView.RestrictionBox.Y.Min, teklaView.RestrictionBox.Z.Min),
                 new TSG.Point(teklaView.RestrictionBox.X.Max, teklaView.RestrictionBox.Y.Max, teklaView.RestrictionBox.Z.Max));
 
+            var attributesToUse = attributesFileName ?? "standard";
             var view = new View(
                 drawing.GetSheet(),
                 teklaView.ViewCoordinateSystem.ToTekla(),
                 teklaView.DisplayCoordinateSystem.ToTekla(),
-                aabb)
+                aabb,
+                attributesToUse)
             {
                 Name = teklaView.Name
             };
             view.Insert();
 
-            //LoadAttributesWithMacroIfNecessary(createdView, attributesFileNames);
+            LoadAttributesWithMacroIfNecessary(view, attributesFileName);
 
-            //if (!string.IsNullOrEmpty(viewName))
-            //{
-            //    createdView.Name = viewName;
-            //    createdView.Modify();
-            //}
+            if (!string.IsNullOrEmpty(teklaView.Name))
+            {
+                view.Name = teklaView.Name;
+                view.Modify();
+            }
 
             return view;
         }
