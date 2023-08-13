@@ -1,13 +1,14 @@
 ﻿using GTDrawingLink.Components;
+using GTDrawingLink.Components.Text;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace GTDrawingLink.Tools
-{
-    public static class VersionSpecificConstants
+namespace GTDrawingLink.Tools 
     {
+    public static class VersionSpecificConstants 
+        {
         private static string _tabHeading = null;
 
         private static Dictionary<Type, string> _typeGuids = new Dictionary<Type, string>
@@ -231,6 +232,22 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GroupObjectsComponent),
                 "CF46774B-064B-485C-A95D-E862768B0161"
+            },
+            {
+                typeof(CreateTextComponent),
+                "BB95F20B-A8AB-4CB6-A1B6-972AA0E1ED87"
+            },
+            {
+                typeof(TextAttributesComponent),
+                "4C1BEABA-E671-488E-B20F-8A4FDD0B2A5F"
+            },
+            {
+                typeof(FontAttributesComponent),
+                "1444CD7C-B6C1-4605-9A92-5A86B3481484"
+            },
+            {
+                typeof(ArrowAttributesComponent),
+                "70C86C3F-993C-41EE-BEC7-185A7825E9DB"
             }
         };
 
