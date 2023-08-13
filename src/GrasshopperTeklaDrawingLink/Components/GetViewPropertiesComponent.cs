@@ -3,7 +3,6 @@ using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
@@ -26,7 +25,8 @@ namespace GTDrawingLink.Components
         {
             AddTextParameter(pManager, ParamInfos.ViewType, GH_ParamAccess.item);
             pManager.AddTextParameter("Name", "N", "Name of the provided view", GH_ParamAccess.item);
-            AddPlaneParameter(pManager, ParamInfos.ViewPlane, GH_ParamAccess.item);
+            AddPlaneParameter(pManager, ParamInfos.ViewCoordinateSystem, GH_ParamAccess.item);
+            AddPlaneParameter(pManager, ParamInfos.DisplayCoordinateSystem, GH_ParamAccess.item);
             AddBoxParameter(pManager, ParamInfos.ViewRestrictionBox, GH_ParamAccess.item);
         }
 
@@ -39,13 +39,9 @@ namespace GTDrawingLink.Components
 
             DA.SetData(ParamInfos.ViewType.Name, view.ViewType.ToString());
             DA.SetData("Name", view.Name);
-            DA.SetData(ParamInfos.ViewPlane.Name, GetPlane(view));
+            DA.SetData(ParamInfos.ViewCoordinateSystem.Name, view.ViewCoordinateSystem.ToRhino());
+            DA.SetData(ParamInfos.DisplayCoordinateSystem.Name, view.DisplayCoordinateSystem.ToRhino());
             DA.SetData(ParamInfos.ViewRestrictionBox.Name, GetRestrictionBox(view));
-        }
-        private GH_Plane GetPlane(View view)
-        {
-            var coordSystem = view.DisplayCoordinateSystem;
-            return new GH_Plane(coordSystem.ToRhino());
         }
 
         private GH_Box GetRestrictionBox(View view)
