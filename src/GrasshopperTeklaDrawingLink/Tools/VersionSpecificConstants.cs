@@ -251,6 +251,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(DeconstructModelViewComponent),
                 "7A066A78-39B0-4DB5-A9E6-39DDEA080F1B"
+            },
+            {
+                typeof(CreateModelViewComponent),
+                "B4A454A8-0399-46F5-A199-06622288F3EE"
             }
         };
 

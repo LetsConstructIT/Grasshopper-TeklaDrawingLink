@@ -496,6 +496,15 @@ namespace GTDrawingLink.Tools
             Description = "Deconstruct Tekla model view",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
-        };        
+        };
+
+        public static readonly GH_InstanceDescription CreateModelViewComponent = new GH_InstanceDescription
+        {
+            Name = "Model View",
+            NickName = "MV",
+            Description = "Create Tekla model view in the drawing area",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
     }
 }

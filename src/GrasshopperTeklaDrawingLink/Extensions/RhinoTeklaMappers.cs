@@ -30,11 +30,26 @@
                 coordSystem.AxisY.ToRhino());
         }
 
+        public static Tekla.Structures.Geometry3d.CoordinateSystem ToTekla(this Rhino.Geometry.Plane plane)
+        {
+            return new Tekla.Structures.Geometry3d.CoordinateSystem(
+                plane.Origin.ToTekla(),
+                plane.XAxis.ToTekla(),
+                plane.YAxis.ToTekla());
+        }
+
         public static Rhino.Geometry.BoundingBox ToRhino(this Tekla.Structures.Geometry3d.AABB aabb)
         {
             return new Rhino.Geometry.BoundingBox(
                 aabb.MinPoint.ToRhino(),
                 aabb.MaxPoint.ToRhino());
+        }
+
+        public static Tekla.Structures.Geometry3d.AABB ToTekla(this Rhino.Geometry.BoundingBox plane)
+        {
+            return new Tekla.Structures.Geometry3d.AABB(
+                plane.Min.ToTekla(),
+                plane.Max.ToTekla());
         }
 
         public static Tekla.Structures.Geometry3d.Line ToTekla(this Rhino.Geometry.Line line)

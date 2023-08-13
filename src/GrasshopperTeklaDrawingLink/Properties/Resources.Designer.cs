@@ -393,6 +393,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ModelView {
+            get {
+                object obj = ResourceManager.GetObject("ModelView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ModifyPart {
             get {
                 object obj = ResourceManager.GetObject("ModifyPart", resourceCulture);
