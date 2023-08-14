@@ -27,11 +27,8 @@ namespace GTDrawingLink.Components.Text
             AddTextParameter(pManager, ParamInfos.Text, GH_ParamAccess.list);
             AddPointParameter(pManager, ParamInfos.MarkInsertionPoint, GH_ParamAccess.list);
             SetParametersAsOptional(pManager, new List<int> {
-                    pManager.AddPointParameter(ParamInfos.MarkLeaderLineEndPoint.Name, 
-                                                ParamInfos.MarkLeaderLineEndPoint.NickName, 
-                                                ParamInfos.MarkLeaderLineEndPoint.Description, 
-                                                GH_ParamAccess.list),
-                     pManager.AddParameter(new TextAttributesParam(ParamInfos.TextAttributes, GH_ParamAccess.list))
+                    AddPointParameter(pManager, ParamInfos.MarkLeaderLineEndPoint, GH_ParamAccess.list),
+                    pManager.AddParameter(new TextAttributesParam(ParamInfos.TextAttributes, GH_ParamAccess.list))
             });
         }
 
@@ -69,72 +66,66 @@ namespace GTDrawingLink.Components.Text
                 textElements.Count,
                 attributes.Count
             }.Max();
+            TSD.Text[] insertedTexts;
 
-            var insertedTexts = new TSD.Text[textNumber];
             if (leaderLineEndPoints.Any())
             {
-                CreateTextWithLeader(view,
+                insertedTexts = CreateTextWithLeaderLine(view,
                     insertionPoints,
                     leaderLineEndPoints,
                     textElements,
                     attributes,
-                    textNumber,
-                    insertedTexts);
+                    textNumber);
             }
             else
             {
-                CreateTextWithoutLeader(view,
+                insertedTexts = CreateTextWithoutLeaderLine(view,
                     insertionPoints,
                     textElements,
                     attributes,
-                    textNumber,
-                    insertedTexts);
+                    textNumber);
             }
             DrawingInteractor.CommitChanges();
             dA.SetDataList(ParamInfos.Text.Name, insertedTexts);
             return insertedTexts;
         }
 
-        private void CreateTextWithoutLeader(TSD.View view, List<Point3d> insertionPoints, List<string> textElements, List<TSD.Text.TextAttributes> attributes, int textNumber, TSD.Text[] insertedTexts)
+        private TSD.Text[] CreateTextWithoutLeaderLine(TSD.View view, List<Point3d> insertionPoints, List<string> textElements, List<TSD.Text.TextAttributes> attributes, int textNumber)
         {
+           var insertedTexts = new TSD.Text[textNumber];
             for (int i = 0; i < textNumber; i++)
             {
-                var text = InsertText(
+                var text = InsertTextWithoutLeaderLine(
                     view,
                     attributes.ElementAtOrLast(i),
                     insertionPoints.ElementAtOrLast(i),
                     textElements.ElementAtOrLast(i)
-              );
+                );
 
                 insertedTexts[i] = text;
             }
+            return insertedTexts;
         }
 
-        private void CreateTextWithLeader(TSD.View view, List<Point3d> insertionPoints, List<Point3d> leaderLineEndPoints, List<string> textElements, List<TSD.Text.TextAttributes> attributes, int textNumber, TSD.Text[] insertedTexts)
+        private TSD.Text[] CreateTextWithLeaderLine(TSD.View view, List<Point3d> insertionPoints, List<Point3d> leaderLineEndPoints, List<string> textElements, List<TSD.Text.TextAttributes> attributes, int textNumber)
         {
+            var insertedTexts = new TSD.Text[textNumber];
             for (int i = 0; i < textNumber; i++)
             {
-                var text = InsertText(
+                var text = InsertTextWithLeaderLine(
                     view,
                     attributes.ElementAtOrLast(i),
                     insertionPoints.ElementAtOrLast(i),
                     leaderLineEndPoints.ElementAtOrLast(i),
                     textElements.ElementAtOrLast(i)
-              );
+                );
 
                 insertedTexts[i] = text;
             }
+            return insertedTexts;
         }
 
-        /// <summary>
-        /// Inserts the text without the leader line
-        /// </summary>
-        /// <param name="view"></param>
-        /// <param name="attribute"></param>
-        /// <param name="insertionPoint"></param>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private TSD.Text InsertText(TSD.View view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, string text)
+        private TSD.Text InsertTextWithoutLeaderLine(TSD.View view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, string text)
         {
             Tekla.Structures.Drawing.Text textElement = new Tekla.Structures.Drawing.Text(view, insertionPoint.ToTekla(), text, attribute)
             {
@@ -144,16 +135,7 @@ namespace GTDrawingLink.Components.Text
             return textElement;
         }
 
-        /// <summary>
-        /// Inserts the text element with leader line
-        /// </summary>
-        /// <param name="view"></param>
-        /// <param name="attribute"></param>
-        /// <param name="insertionPoint"></param>
-        /// <param name="leaderLinePoint"></param>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private TSD.Text InsertText(TSD.View view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, Point3d leaderLinePoint, string text)
+        private TSD.Text InsertTextWithLeaderLine(TSD.View view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, Point3d leaderLinePoint, string text)
         {
 
             Tekla.Structures.Drawing.Text textElement = new Tekla.Structures.Drawing.Text(view, insertionPoint.ToTekla(), text, attribute)
@@ -164,6 +146,5 @@ namespace GTDrawingLink.Components.Text
             textElement.Insert();
             return textElement;
         }
-
     }
 }

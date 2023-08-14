@@ -39,17 +39,13 @@ namespace GTDrawingLink.Components.Text
             DA.GetData(ParamInfos.ArrowType.Name, ref arrowType);
             DA.GetData(ParamInfos.Height.Name, ref height);
             DA.GetData(ParamInfos.Width.Name, ref width);
-
-
-            height = (height == 0) ? new ArrowheadAttributes().Height : height;
-            width = (width == 0) ? new ArrowheadAttributes().Width : width;
-
+           
             var arrowHeadType = EnumHelpers.ObjectToEnumValue<ArrowheadTypes>(arrowType);
             if (arrowHeadType.HasValue)
                 arrowheadAttributes.Head = arrowHeadType.Value;
+            if (height > 0) arrowheadAttributes.Height = height;
+            if (width > 0) arrowheadAttributes.Width = width;
 
-            arrowheadAttributes.Width = width;
-            arrowheadAttributes.Height = height;
             DA.SetData(ParamInfos.ArrowAttribute.Name, new ArrowAttributesGoo(arrowheadAttributes));
         }
     }

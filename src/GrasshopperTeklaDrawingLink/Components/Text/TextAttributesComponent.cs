@@ -27,28 +27,11 @@ namespace GTDrawingLink.Components.Text
                 pManager.AddParameter(new EnumParam<FrameTypes>(ParamInfos.FrameType, GH_ParamAccess.item)),
                 pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item)),
                 pManager.AddParameter(new ArrowAttributesParam(ParamInfos.ArrowAttribute, GH_ParamAccess.item)),
-                pManager.AddBooleanParameter(
-                    ParamInfos.BackgroundTransparency.Name,
-                    ParamInfos.BackgroundTransparency.NickName,
-                    ParamInfos.BackgroundTransparency.Description,
-                    GH_ParamAccess.item),
-                pManager.AddNumberParameter(
-                    ParamInfos.Angle.Name,
-                    ParamInfos.Angle.NickName,
-                    ParamInfos.Angle.Description,
-                    GH_ParamAccess.item),
-                pManager.AddNumberParameter(
-                    ParamInfos.TextRulerWidth.Name,
-                    ParamInfos.TextRulerWidth.NickName,
-                    ParamInfos.TextRulerWidth.Description,
-                    GH_ParamAccess.item)
+                AddBooleanParameter(pManager, ParamInfos.BackgroundTransparency, GH_ParamAccess.item),
+                AddNumberParameter(pManager, ParamInfos.Angle, GH_ParamAccess.item),
+                AddNumberParameter(pManager, ParamInfos.TextRulerWidth, GH_ParamAccess.item),
+                AddGenericParameter(pManager,ParamInfos.Attributes,GH_ParamAccess.item)
             });
-
-            pManager.AddTextParameter(
-                 ParamInfos.Attributes.Name,
-                 ParamInfos.Attributes.NickName,
-                 ParamInfos.Attributes.Description,
-                 GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -76,7 +59,6 @@ namespace GTDrawingLink.Components.Text
 
             var arrowheadAttributes = new ArrowAttributesGoo();
             DA.GetData(ParamInfos.ArrowAttribute.Name, ref arrowheadAttributes);
-
 
             var textAttributes = new TSD.Text.TextAttributes();
 
@@ -107,7 +89,6 @@ namespace GTDrawingLink.Components.Text
                 }
             }
 
-
             if (frameType != null && frameColor != null)
             {
                 var frameTypeEnumValue = EnumHelpers.ObjectToEnumValue<FrameTypes>(frameType);
@@ -123,7 +104,7 @@ namespace GTDrawingLink.Components.Text
 
             textAttributes.Angle = (angle == 0.0) ? textAttributes.Angle : angle;
             textAttributes.RulerWidth = (rulerWidth == 0.0) ? textAttributes.RulerWidth : rulerWidth;
-            textAttributes.TransparentBackground = (transparency == false) ? textAttributes.TransparentBackground : transparency;
+            textAttributes.TransparentBackground = (transparency) ? textAttributes.TransparentBackground : transparency;
             textAttributes.ArrowHead = (arrowheadAttributes.Value is null) ? textAttributes.ArrowHead : arrowheadAttributes.Value;
 
             DA.SetData(ParamInfos.TextAttributes.Name, new TextAttributesGoo(textAttributes));

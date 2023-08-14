@@ -25,30 +25,10 @@ namespace GTDrawingLink.Components.Text
         {
             SetParametersAsOptional(pManager, new List<int> {
                pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item)),
-
-               pManager.AddTextParameter(
-                   ParamInfos.FontFamily.Name,
-                   ParamInfos.FontFamily.NickName,
-                   ParamInfos.FontFamily.Description,
-                   GH_ParamAccess.item),
-
-               pManager.AddNumberParameter(
-                   ParamInfos.FontSize.Name,
-                   ParamInfos.FontSize.NickName,
-                   ParamInfos.FontSize.Description,
-                   GH_ParamAccess.item),
-
-               pManager.AddBooleanParameter(
-                   ParamInfos.FontWeight.Name,
-                   ParamInfos.FontWeight.NickName,
-                   ParamInfos.FontWeight.Description,
-                   GH_ParamAccess.item),
-
-               pManager.AddBooleanParameter(
-                   ParamInfos.FontItalic.Name,
-                   ParamInfos.FontItalic.NickName,
-                   ParamInfos.FontItalic.Description,
-                   GH_ParamAccess.item),
+               AddTextParameter(pManager,ParamInfos.FontFamily,GH_ParamAccess.item),
+               AddNumberParameter(pManager,ParamInfos.FontSize,GH_ParamAccess.item),
+               AddBooleanParameter(pManager,ParamInfos.FontWeight,GH_ParamAccess.item),
+               AddBooleanParameter(pManager,ParamInfos.FontItalic,GH_ParamAccess.item)
            }); 
         }
 
