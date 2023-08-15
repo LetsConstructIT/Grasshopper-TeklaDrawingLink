@@ -211,6 +211,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Drawing
         };
 
+        public static readonly GH_InstanceDescription CreateGADrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Create GA Drawing",
+            NickName = "GADrawing",
+            Description = "Create GA drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };        
+
         public static readonly GH_InstanceDescription GetSelectedDrawingsOnListComponent = new GH_InstanceDescription
         {
             Name = "Selected Drawings on List",
@@ -518,6 +527,42 @@ namespace GTDrawingLink.Tools
             Name = "Refresh View",
             NickName = "R",
             Description = "Refresh Tekla Drawing View",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
+
+        public static readonly GH_InstanceDescription GetModelViewsComponent = new GH_InstanceDescription
+        {
+            Name = "Model Views",
+            NickName = "MVs",
+            Description = "Get Tekla model views (right-click to filter only visible views)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription ConstructModelViewComponent = new GH_InstanceDescription
+        {
+            Name = "Model View",
+            NickName = "MV",
+            Description = "Construct Tekla model view",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription DeconstructModelViewComponent = new GH_InstanceDescription
+        {
+            Name = "Deconstruct Model View",
+            NickName = "DMV",
+            Description = "Deconstruct Tekla model view",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription CreateModelViewComponent = new GH_InstanceDescription
+        {
+            Name = "Model View",
+            NickName = "MV",
+            Description = "Create Tekla model view in the drawing area",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.View
         };

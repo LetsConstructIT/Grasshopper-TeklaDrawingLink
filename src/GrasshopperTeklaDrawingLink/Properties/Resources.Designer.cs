@@ -93,6 +93,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ConstructModelView {
+            get {
+                object obj = ResourceManager.GetObject("ConstructModelView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ConvertDrawingToModelObject {
             get {
                 object obj = ResourceManager.GetObject("ConvertDrawingToModelObject", resourceCulture);
@@ -143,6 +153,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CreateGADrawing {
+            get {
+                object obj = ResourceManager.GetObject("CreateGADrawing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CreateStraightDimensionSet {
             get {
                 object obj = ResourceManager.GetObject("CreateStraightDimensionSet", resourceCulture);
@@ -169,7 +189,19 @@ namespace GTDrawingLink.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DeconstructModelView
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("DeconstructModelView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -289,7 +321,19 @@ namespace GTDrawingLink.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GetModelViews
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("GetModelViews", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -366,6 +410,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap ModelObjectHatchAttributes {
             get {
                 object obj = ResourceManager.GetObject("ModelObjectHatchAttributes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ModelView {
+            get {
+                object obj = ResourceManager.GetObject("ModelView", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

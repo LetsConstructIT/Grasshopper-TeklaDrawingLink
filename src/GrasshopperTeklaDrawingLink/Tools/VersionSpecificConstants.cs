@@ -102,6 +102,10 @@ namespace GTDrawingLink.Tools
                 "7B9407BF-DC5A-441E-9FFD-E314E32AC9B1"
             },
             {
+                typeof(CreateGADrawingComponent),
+                "0BC4FB66-6CA3-4D5E-B5A9-87DE7C2535FF"
+            },            
+            {
                 typeof(CreateDetailViewComponent),
                 "FAAF7EF8-F686-46C9-9605-6D8056D41383"
             },
@@ -260,6 +264,26 @@ namespace GTDrawingLink.Tools
             {
                 typeof(RefreshViewComponent),
                 "CB51563A-2CF6-46CF-A51F-CE8C695AD4DB"
+            },
+            {
+                typeof(GetModelViewsComponent),
+                "AEC509CC-8D1D-4DE2-A674-524649BA25D2"
+            },
+            {
+                typeof(TeklaViewParam),
+                "19D9E060-DA63-4484-969F-05F7E73ADF04"
+            },
+            {
+                typeof(ConstructModelViewComponent),
+                "69F67CC8-C21D-4ADB-BFDF-94C4E231C335"
+            },
+            {
+                typeof(DeconstructModelViewComponent),
+                "7A066A78-39B0-4DB5-A9E6-39DDEA080F1B"
+            },
+            {
+                typeof(CreateModelViewComponent),
+                "B4A454A8-0399-46F5-A199-06622288F3EE"
             }
         };
 

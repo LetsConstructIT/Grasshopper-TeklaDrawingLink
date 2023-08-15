@@ -695,5 +695,46 @@ namespace GTDrawingLink.Tools
             NickName = "RW",
             Description = "Sets the width of the text area."
         };
+        public static readonly GH_InstanceDescription ModelView = new GH_InstanceDescription
+        {
+            Name = "Model View",
+            NickName = "V",
+            Description = "Tekla Model View"
+        };
+
+        public static readonly GH_InstanceDescription ViewCoordinateSystem = new GH_InstanceDescription
+        {
+            Name = "View CS",
+            NickName = "V_CS",
+            Description = "View Coordinate System"
+        };
+
+        public static readonly GH_InstanceDescription DisplayCoordinateSystem = new GH_InstanceDescription
+        {
+            Name = "Display CS",
+            NickName = "D_CS",
+            Description = "Display Coordinate System"
+        };
+
+        public static readonly GH_InstanceDescription AllModelViews = new GH_InstanceDescription
+        {
+            Name = "All model views",
+            NickName = "All",
+            Description = "All model views from list"
+        };
+
+        public static readonly GH_InstanceDescription VisibleModelViews = new GH_InstanceDescription
+        {
+            Name = "Visible model views",
+            NickName = "Vis",
+            Description = "Only visible model views from list"
+        };
+
+        public static readonly GH_InstanceDescription ViewInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "View insertion point"
+        };
     }
 }
