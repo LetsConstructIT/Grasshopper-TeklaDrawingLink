@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using Grasshopper.Kernel;
+
 using GTDrawingLink.Tools;
 
 namespace GTDrawingLink.Components
@@ -14,91 +17,102 @@ namespace GTDrawingLink.Components
 
         }
 
-        protected void AddOptionalParameter(GH_InputParamManager pManager, IGH_Param param)
+        protected int AddOptionalParameter(GH_InputParamManager pManager, IGH_Param param)
         {
-            pManager.AddParameter(param);
+            var index = pManager.AddParameter(param);
             SetLastParameterAsOptional(pManager, true);
+            return index;
         }
 
-        protected void AddGenericParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddGenericParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddBooleanParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        protected int AddBooleanParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
-            pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            var index = pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
             SetLastParameterAsOptional(pManager, optional);
+            return index;
         }
 
-        protected void AddTextParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        protected int AddTextParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
-            pManager.AddTextParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            var index = pManager.AddTextParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
             SetLastParameterAsOptional(pManager, optional);
+            return index;
         }
 
-        protected void AddIntegerParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        protected int AddIntegerParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
-            pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            var index = pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
             SetLastParameterAsOptional(pManager, optional);
+            return index;
         }
 
-        protected void AddNumberParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        protected int AddNumberParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
-            pManager.AddNumberParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            var index = pManager.AddNumberParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
             SetLastParameterAsOptional(pManager, optional);
+            return index;
         }
 
-        protected void AddPointParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        protected int AddPointParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
-            pManager.AddPointParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            var index = pManager.AddPointParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
             SetLastParameterAsOptional(pManager, optional);
+            return index;
         }
 
-        protected void AddTextParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddTextParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddTextParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddTextParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddGenericParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddGenericParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddPlaneParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddPlaneParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddPlaneParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddPlaneParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddBoxParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddBoxParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddBoxParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddBoxParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddPointParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddPointParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddPointParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddPointParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddCurveParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddCurveParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddCurveParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddCurveParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddBooleanParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddBooleanParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
-        protected void AddIntegerParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddIntegerParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
-            pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            return pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
         protected void SetLastParameterAsOptional(GH_InputParamManager pManager, bool optional = true)
         {
             if (optional)
                 pManager[pManager.ParamCount - 1].Optional = true;
+        }
+        protected void SetParametersAsOptional(GH_InputParamManager pManager, IEnumerable<int> indices)
+        {
+            foreach (int index in indices)
+                pManager[index].Optional = true;
         }
     }
 }

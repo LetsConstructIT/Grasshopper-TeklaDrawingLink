@@ -578,5 +578,122 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Group by Report"
         };
+        public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription 
+        {
+            Name="Leader line",
+            NickName="L",
+            Description="Add text with leader line"
+        };
+
+        public static readonly GH_InstanceDescription Text = new GH_InstanceDescription 
+        {
+            Name="Text",
+            NickName="T",
+            Description="Add text."
+        };
+
+        public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription 
+        {
+            Name="BoundingBox",
+            NickName="BB",
+            Description="Represents the 2D bounding box of the object."
+        };
+        public static readonly GH_InstanceDescription MarkInsertionPoint = new GH_InstanceDescription 
+        {
+            Name="Insertion Point",
+            NickName="IP",
+            Description="The insertion point of the mark."
+        };
+        public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription 
+        {
+            Name="Text base point",
+            NickName="BP",
+            Description="The point where the text starts."
+        };
+
+        public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription 
+        {
+            Name="Font family",
+            NickName="F",
+            Description="The font family used (Default Arial)."
+        };
+        public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription 
+        {
+            Name="Font size",
+            NickName="S",
+            Description="The font size used (Default 2.5)."
+        };
+        public static readonly GH_InstanceDescription FrameType = new GH_InstanceDescription 
+        {
+            Name="Frame",
+            NickName="FRM",
+            Description= $"The frame of the text: \n{EnumHelpers.EnumToString<FrameTypes>()}\nYou can right-click to set."
+        };
+        public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription 
+        {
+            Name="Text attributes",
+            NickName="TATR",
+            Description="The attributes of the text."
+        };
+        public static readonly GH_InstanceDescription FontAttributes = new GH_InstanceDescription 
+        {
+            Name="Font attributes",
+            NickName="FATR",
+            Description="The attributes of the font used."
+        };
+        public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription 
+        {
+            Name="Font weight",
+            NickName="B",
+            Description="The weight of the font, Bold or not (default: non-Bold)"
+        };
+        public static readonly GH_InstanceDescription FontItalic = new GH_InstanceDescription 
+        {
+            Name="Font italic",
+            NickName="I",
+            Description="The italic style of the font, Italic or not (default: non-Italic)"
+        };
+        public static readonly GH_InstanceDescription BackgroundTransparency = new GH_InstanceDescription 
+        {
+            Name="Background Mask",
+            NickName="BM",
+            Description="Whether the text has a background mask as Opaque or Transparent."
+        };
+        public static readonly GH_InstanceDescription Angle = new GH_InstanceDescription 
+        {
+            Name="Angle",
+            NickName="ANG",
+            Description="Sets a angle value."
+        };
+        public static readonly GH_InstanceDescription ArrowType = new GH_InstanceDescription
+        {
+            Name = "ArrowType",
+            NickName = "T",
+            Description = $"Sets the type of the arrow: \n{EnumHelpers.EnumToString<ArrowheadTypes>()}\nYou can right-click to set."
+        };
+        public static readonly GH_InstanceDescription Width = new GH_InstanceDescription
+        {
+            Name = "Width",
+            NickName = "W",
+            Description = "Sets the width of the arrow."
+        };
+        public static readonly GH_InstanceDescription Height = new GH_InstanceDescription
+        {
+            Name = "Heigth",
+            NickName = "H",
+            Description = "Sets the heigth of the arrow."
+        };
+        public static readonly GH_InstanceDescription ArrowAttribute = new GH_InstanceDescription
+        {
+            Name = "ArrowAttribute",
+            NickName = "AA",
+            Description = "Sets the atributes of the arrow."
+        };
+        public static readonly GH_InstanceDescription TextRulerWidth = new GH_InstanceDescription
+        {
+            Name = "RulerWidth",
+            NickName = "RW",
+            Description = "Sets the width of the text area."
+        };
     }
 }

@@ -18,6 +18,7 @@ namespace GTDrawingLink.Tools
             public static readonly string Udas = "  UDAs";
             public static readonly string Plugins = " Plugins";
             public static readonly string Dimensions = "Dimensions";
+            public static readonly string Text = "Text";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -461,5 +462,37 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };        
+        public static readonly GH_InstanceDescription CreateTextComponent = new GH_InstanceDescription
+        {
+            Name="Text",
+            NickName="Txt",
+            Description="Create Tekla text.",
+            Category=VersionSpecificConstants.TabHeading,
+            SubCategory=PanelHeadings.Text
+        };
+        public static readonly GH_InstanceDescription TextAttributesComponent = new GH_InstanceDescription
+        {
+            Name="Text Attributes",
+            NickName="TxtAttr",
+            Description="Create Tekla text attributes.",
+            Category=VersionSpecificConstants.TabHeading,
+            SubCategory=PanelHeadings.Text
+        };
+        public static readonly GH_InstanceDescription FontAttributesComponent = new GH_InstanceDescription
+        {
+            Name="Font Attributes",
+            NickName="FAttr",
+            Description="Create font attributes.",
+            Category=VersionSpecificConstants.TabHeading,
+            SubCategory=PanelHeadings.Text
+        };
+        public static readonly GH_InstanceDescription ArrowAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Arrow Attributes",
+            NickName = "AAttr",
+            Description = "Create arrow attribute.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Text
+        };
     }
 }
