@@ -17,5 +17,17 @@ namespace GTDrawingLink.Extensions
             return (typeof(StraightDimensionSet).GetProperty("UpDirection", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(straightDimensionSet) as Tekla.Structures.Geometry3d.Vector);
         }
+
+        internal static string GetFilter(this View view)
+        {
+            return typeof(View).GetMethod("SelectFilter", BindingFlags.NonPublic | BindingFlags.Instance)
+                .Invoke(view, null) as string;
+        }
+
+        internal static bool SetFilter(this View view, string filterContent)
+        {
+            return (bool)typeof(View).GetMethod("ModifyFilter", BindingFlags.NonPublic | BindingFlags.Instance)
+                .Invoke(view, new object[] { filterContent });
+        }
     }
 }

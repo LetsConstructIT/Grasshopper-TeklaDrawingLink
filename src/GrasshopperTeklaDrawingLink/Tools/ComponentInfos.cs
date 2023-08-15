@@ -494,5 +494,32 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Text
         };
+
+        public static readonly GH_InstanceDescription DeleteDrawingObjectsComponent = new GH_InstanceDescription
+        {
+            Name = "Delete Objects",
+            NickName = "D",
+            Description = "Delete Tekla drawing objects",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
+
+        public static readonly GH_InstanceDescription GetObjectsFromViewComponent = new GH_InstanceDescription
+        {
+            Name = "Objects from View",
+            NickName = "G",
+            Description = "Get Tekla drawing objects from View",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
+
+        public static readonly GH_InstanceDescription RefreshViewComponent = new GH_InstanceDescription
+        {
+            Name = "Refresh View",
+            NickName = "R",
+            Description = "Refresh Tekla Drawing View",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
     }
 }

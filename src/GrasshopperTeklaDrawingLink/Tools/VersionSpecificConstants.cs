@@ -248,6 +248,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ArrowAttributesComponent),
                 "70C86C3F-993C-41EE-BEC7-185A7825E9DB"
+            },
+            {
+                typeof(DeleteDrawingObjectsComponent),
+                "0F3832E1-2D16-4C56-96E1-2F63C1C5FFAC"
+            },
+            {
+                typeof(GetObjectsFromViewComponent),
+                "D340933C-5C78-4052-A986-777FAE8241B0"
+            },
+            {
+                typeof(RefreshViewComponent),
+                "CB51563A-2CF6-46CF-A51F-CE8C695AD4DB"
             }
         };
 
