@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 
 using GTDrawingLink.Tools;
+using GTDrawingLink.Types;
 
 namespace GTDrawingLink.Components
 {
@@ -39,6 +40,13 @@ namespace GTDrawingLink.Components
         protected int AddTextParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             var index = pManager.AddTextParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
+        protected int AddTeklaDbObjectParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddParameter(new TeklaDatabaseObjectParam(paramInfo, access));
             SetLastParameterAsOptional(pManager, optional);
             return index;
         }
@@ -116,6 +124,11 @@ namespace GTDrawingLink.Components
         protected int AddIntegerParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
+        protected int AddTeklaDbObjectParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddParameter(new TeklaDatabaseObjectParam(paramInfo, access));
         }
 
         protected void SetLastParameterAsOptional(GH_InputParamManager pManager, bool optional = true)
