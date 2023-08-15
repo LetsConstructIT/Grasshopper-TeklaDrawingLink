@@ -22,7 +22,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
             pManager.AddPointParameter("Insertion point", "IP", "Insertion point of the Level Mark", GH_ParamAccess.list);
             pManager.AddPointParameter("Base point", "BP", "Base point of the Level Mark", GH_ParamAccess.list);
             pManager.AddTextParameter("Mark attributes", "MA", "Level mark attributes file name", GH_ParamAccess.list, _defaultAttributes);
@@ -30,7 +30,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Mark, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.Mark, GH_ParamAccess.list);
         }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)

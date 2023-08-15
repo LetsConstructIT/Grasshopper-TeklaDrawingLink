@@ -23,7 +23,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.TeklaDrawingPart, GH_ParamAccess.list);
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibileLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.HiddenLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.ReferenceLineTypeAttributes, GH_ParamAccess.list));
@@ -33,7 +33,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.TeklaDrawingPart, GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)

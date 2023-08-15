@@ -25,16 +25,16 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             AddTextParameter(pManager, ParamInfos.PluginName, GH_ParamAccess.item);
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.list);
             pManager.AddParameter(new PluginPickerInputParam(ParamInfos.PickerInput, GH_ParamAccess.list));
             AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
             AddTextParameter(pManager, ParamInfos.PluginAttributes, GH_ParamAccess.list, true);
-            AddOptionalParameter(pManager, new TeklaDatabaseObjectParam(ParamInfos.ObjectsToSelect, GH_ParamAccess.tree));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.ObjectsToSelect, GH_ParamAccess.tree, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Plugin, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.Plugin, GH_ParamAccess.list);
         }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)

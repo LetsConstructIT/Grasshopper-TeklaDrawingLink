@@ -26,7 +26,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.Drawing, GH_ParamAccess.list);
         }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)

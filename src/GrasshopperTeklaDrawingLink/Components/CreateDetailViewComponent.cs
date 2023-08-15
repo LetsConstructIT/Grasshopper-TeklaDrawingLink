@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
             pManager.AddPointParameter("Center point", "CP", "Center point of detail", GH_ParamAccess.list);
             pManager.AddPointParameter("Label point", "LP", "Label location", GH_ParamAccess.list);
             pManager.AddPointParameter("Insertion point", "IP", "Detail view insertion point", GH_ParamAccess.list);
@@ -35,7 +35,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.list);
             AddGenericParameter(pManager, ParamInfos.Mark, GH_ParamAccess.list);
         }
 

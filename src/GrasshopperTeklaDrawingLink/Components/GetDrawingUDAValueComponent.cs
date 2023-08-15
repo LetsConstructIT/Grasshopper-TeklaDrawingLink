@@ -20,7 +20,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.TeklaDatabaseObject, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.TeklaDatabaseObject, GH_ParamAccess.list);
             AddTextParameter(pManager, ParamInfos.UDAName, GH_ParamAccess.item, true);
             pManager.AddParameter(new EnumParam<AttributesIO.AttributeTypeEnum>(ParamInfos.UDAType, GH_ParamAccess.item, 0));
         }

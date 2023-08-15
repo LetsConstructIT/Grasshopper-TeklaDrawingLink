@@ -18,16 +18,16 @@ namespace GTDrawingLink.Components
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             var detailsDescription = new GH_InstanceDescription("Details", "D", "Details related to view", "", "");
-            pManager.AddParameter(new TeklaDatabaseObjectParam(detailsDescription, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, detailsDescription, GH_ParamAccess.list);
 
             var sectionsDescription = new GH_InstanceDescription("Sections", "S", "Sections related to view", "", "");
-            pManager.AddParameter(new TeklaDatabaseObjectParam(sectionsDescription, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, sectionsDescription, GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)

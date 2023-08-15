@@ -18,12 +18,12 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.ViewBase, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.ViewBase, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
