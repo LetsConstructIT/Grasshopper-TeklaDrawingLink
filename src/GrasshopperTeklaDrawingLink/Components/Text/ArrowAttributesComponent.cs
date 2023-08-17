@@ -1,52 +1,51 @@
 ﻿using Grasshopper.Kernel;
-
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
-
-using System.Collections.Generic;
-
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Text
 {
-    public class ArrowAttributesComponent : TeklaComponentBase
+    public class ArrowAttributesComponent : TeklaComponentBaseNew<ArrowAttributesCommand>
     {
-        public ArrowAttributesComponent()
-            : base(ComponentInfos.ArrowAttributesComponent)
-        {
-        }
         public override GH_Exposure Exposure => GH_Exposure.primary;
-        protected override void RegisterInputParams(GH_InputParamManager pManager)
+
+        public ArrowAttributesComponent() : base(ComponentInfos.ArrowAttributesComponent) { }
+
+        protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            SetParametersAsOptional(pManager, new List<int> {
-            pManager.AddParameter(new EnumParam<ArrowheadTypes>(ParamInfos.ArrowType, GH_ParamAccess.item))
-            });
-            AddNumberParameter(pManager, ParamInfos.Width, GH_ParamAccess.item, true);
-            AddNumberParameter(pManager, ParamInfos.Height, GH_ParamAccess.item, true);
+            var (head, width, height) = _command.GetInputValues();
+
+            var arrowheadAttributes = new ArrowheadAttributes()
+            {
+                Head = head,
+                Width = width,
+                Height = height
+            };
+
+            _command.SetOutputValues(DA, arrowheadAttributes);
+        }
+    }
+
+    public class ArrowAttributesCommand : CommandBase
+    {
+        private readonly InputOptionalStructParam<ArrowheadTypes> _inArrowheadType = new InputOptionalStructParam<ArrowheadTypes>(ParamInfos.ArrowType, ArrowheadTypes.FilledArrow);
+        private readonly InputOptionalStructParam<double> _inWidth = new InputOptionalStructParam<double>(ParamInfos.Width, 1.0);
+        private readonly InputOptionalStructParam<double> _inHeight = new InputOptionalStructParam<double>(ParamInfos.Height, 2.0);
+
+        private readonly OutputParam<ArrowheadAttributes> _outAttributes = new OutputParam<ArrowheadAttributes>(ParamInfos.ArrowAttribute);
+
+        internal (ArrowheadTypes type, double width, double height) GetInputValues()
+        {
+            return (
+                _inArrowheadType.Value,
+                _inWidth.Value,
+                _inHeight.Value);
         }
 
-        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
+        internal Result SetOutputValues(IGH_DataAccess DA, ArrowheadAttributes attributes)
         {
-            pManager.AddParameter(new ArrowAttributesParam(ParamInfos.ArrowAttribute, GH_ParamAccess.item));
-        }
+            _outAttributes.Value = attributes;
 
-        protected override void SolveInstance(IGH_DataAccess DA)
-        {
-            var arrowheadAttributes = new ArrowheadAttributes();
-            object arrowType = null;
-            double height = 0.0;
-            double width = 0.0;
-            DA.GetData(ParamInfos.ArrowType.Name, ref arrowType);
-            DA.GetData(ParamInfos.Height.Name, ref height);
-            DA.GetData(ParamInfos.Width.Name, ref width);
-           
-            var arrowHeadType = EnumHelpers.ObjectToEnumValue<ArrowheadTypes>(arrowType);
-            if (arrowHeadType.HasValue)
-                arrowheadAttributes.Head = arrowHeadType.Value;
-            if (height > 0) arrowheadAttributes.Height = height;
-            if (width > 0) arrowheadAttributes.Width = width;
-
-            DA.SetData(ParamInfos.ArrowAttribute.Name, new ArrowAttributesGoo(arrowheadAttributes));
+            return SetOutput(DA);
         }
     }
 }

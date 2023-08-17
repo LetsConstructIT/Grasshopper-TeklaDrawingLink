@@ -1,113 +1,74 @@
 ﻿using Grasshopper.Kernel;
-
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
-
-using System.Collections.Generic;
-
 using Tekla.Structures.Drawing;
-
 using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Text
 {
-    public class TextAttributesComponent : TeklaComponentBase
+    public class TextAttributesComponent : TeklaComponentBaseNew<TextAttributesCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
 
-        public TextAttributesComponent()
-            : base(ComponentInfos.TextAttributesComponent)
+        public TextAttributesComponent() : base(ComponentInfos.TextAttributesComponent) { }
+
+        protected override void InvokeCommand(IGH_DataAccess DA)
         {
-        }
+            var (fontAttributes, frameType, frameColor, arrowAttributes, backgroundTransparency, angle, rulerWidth, attributesName) = _command.GetInputValues();
 
-        protected override void RegisterInputParams(GH_InputParamManager pManager)
-        {
-            SetParametersAsOptional(pManager, new List<int> {
-                pManager.AddParameter(new FontAttributesParam(ParamInfos.FontAttributes, GH_ParamAccess.item)),
-                pManager.AddParameter(new EnumParam<FrameTypes>(ParamInfos.FrameType, GH_ParamAccess.item)),
-                pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item)),
-                pManager.AddParameter(new ArrowAttributesParam(ParamInfos.ArrowAttribute, GH_ParamAccess.item)),
-                AddBooleanParameter(pManager, ParamInfos.BackgroundTransparency, GH_ParamAccess.item),
-                AddNumberParameter(pManager, ParamInfos.Angle, GH_ParamAccess.item),
-                AddNumberParameter(pManager, ParamInfos.TextRulerWidth, GH_ParamAccess.item),
-                AddGenericParameter(pManager,ParamInfos.Attributes,GH_ParamAccess.item)
-            });
-        }
+            var textAttributes = new TSD.Text.TextAttributes(attributesName);
 
-        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
-        {
-            pManager.AddParameter(new TextAttributesParam(ParamInfos.TextAttributes, GH_ParamAccess.item));
-        }
+            if (fontAttributes != null)
+                textAttributes.Font = fontAttributes;
 
-        protected override void SolveInstance(IGH_DataAccess DA)
-        {
-            string attributesFromFile = null;
-            DA.GetData(ParamInfos.Attributes.Name, ref attributesFromFile);
-
-            var transparency = new bool();
-            DA.GetData(ParamInfos.BackgroundTransparency.Name, ref transparency);
-
-            var angle = new double();
-            DA.GetData(ParamInfos.Angle.Name, ref angle);
-
-            var rulerWidth = new double();
-            DA.GetData(ParamInfos.TextRulerWidth.Name, ref rulerWidth);
-
-            var font = new FontAttributesGoo();
-            DA.GetData(ParamInfos.FontAttributes.Name, ref font);
-
-
-            var arrowheadAttributes = new ArrowAttributesGoo();
-            DA.GetData(ParamInfos.ArrowAttribute.Name, ref arrowheadAttributes);
-
-            var textAttributes = new TSD.Text.TextAttributes();
-
-            if (attributesFromFile != null)
-            {
-                textAttributes = new TSD.Text.TextAttributes(attributesFromFile);
-            }
-
-            object frameType = null;
-            object frameColor = null;
-            DA.GetData(ParamInfos.FrameType.Name, ref frameType);
             if (frameType != null)
-            {
-                var frameTypeEnumValue = EnumHelpers.ObjectToEnumValue<FrameTypes>(frameType);
-                if (frameTypeEnumValue.HasValue)
-                {
-                    textAttributes.Frame = new Frame(frameTypeEnumValue.Value, DrawingColors.Black);
-                }
-            }
+                textAttributes.Frame = new Frame(frameType.Value, frameColor);
 
-            DA.GetData(ParamInfos.DrawingColor.Name, ref frameColor);
-            if (frameColor != null)
-            {
-                var frameColorEnumValue = EnumHelpers.ObjectToEnumValue<DrawingColors>(frameColor);
-                if (frameColorEnumValue.HasValue)
-                {
-                    textAttributes.Frame = new Frame(FrameTypes.None, frameColorEnumValue.Value);
-                }
-            }
+            if (arrowAttributes != null)
+                textAttributes.ArrowHead = arrowAttributes;
 
-            if (frameType != null && frameColor != null)
-            {
-                var frameTypeEnumValue = EnumHelpers.ObjectToEnumValue<FrameTypes>(frameType);
-                var frameColorEnumValue = EnumHelpers.ObjectToEnumValue<DrawingColors>(frameColor);
-                if (frameTypeEnumValue.HasValue && frameColorEnumValue.HasValue)
-                {
-                    textAttributes.Frame = new Frame(frameTypeEnumValue.Value, frameColorEnumValue.Value);
-                }
-            }
+            if (backgroundTransparency != null)
+                textAttributes.TransparentBackground = backgroundTransparency.Value;
 
-            textAttributes.Font = font?.Value ?? textAttributes.Font;
+            if (angle != null)
+                textAttributes.Angle = angle.Value;
 
+            if (rulerWidth != null)
+                textAttributes.RulerWidth = rulerWidth.Value;
 
-            textAttributes.Angle = (angle == 0.0) ? textAttributes.Angle : angle;
-            textAttributes.RulerWidth = (rulerWidth == 0.0) ? textAttributes.RulerWidth : rulerWidth;
-            textAttributes.TransparentBackground = (transparency) ? textAttributes.TransparentBackground : transparency;
-            textAttributes.ArrowHead = (arrowheadAttributes.Value is null) ? textAttributes.ArrowHead : arrowheadAttributes.Value;
+            _command.SetOutputValues(DA, textAttributes);
+        }
+    }
+    public class TextAttributesCommand : CommandBase
+    {
+        private readonly InputOptionalParam<FontAttributes> _inFontAttributes = new InputOptionalParam<FontAttributes>(ParamInfos.FontAttributes);
+        private readonly InputOptionalStructParam<FrameTypes> _inFrameType = new InputOptionalStructParam<FrameTypes>(ParamInfos.FrameType);
+        private readonly InputOptionalStructParam<DrawingColors> _inFrameColor = new InputOptionalStructParam<DrawingColors>(ParamInfos.DrawingColor, DrawingColors.Black);
+        private readonly InputOptionalParam<ArrowheadAttributes> _inArrowAttributes = new InputOptionalParam<ArrowheadAttributes>(ParamInfos.ArrowAttribute);
+        private readonly InputOptionalStructParam<bool> _inBackgroundTransparency = new InputOptionalStructParam<bool>(ParamInfos.BackgroundTransparency);
+        private readonly InputOptionalStructParam<double> _inAngle = new InputOptionalStructParam<double>(ParamInfos.Angle);
+        private readonly InputOptionalStructParam<double> _inTextRulerWidth = new InputOptionalStructParam<double>(ParamInfos.TextRulerWidth);
+        private readonly InputOptionalParam<string> _inAttributesName = new InputOptionalParam<string>(ParamInfos.Attributes, "standard");
 
-            DA.SetData(ParamInfos.TextAttributes.Name, new TextAttributesGoo(textAttributes));
+        private readonly OutputParam<TSD.Text.TextAttributes> _outAttributes = new OutputParam<TSD.Text.TextAttributes>(ParamInfos.TextAttributes);
+
+        internal (FontAttributes? fontAttributes, FrameTypes? frameType, DrawingColors frameColor, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth, string? attributesName) GetInputValues()
+        {
+            return (
+                _inFontAttributes.ValueProvidedByUser ? _inFontAttributes.Value : null,
+                _inFrameType.ValueProvidedByUser ? _inFrameType.Value : new FrameTypes?(),
+                _inFrameColor.Value,
+                _inArrowAttributes.ValueProvidedByUser ? _inArrowAttributes.Value : null,
+                _inBackgroundTransparency.ValueProvidedByUser ? _inBackgroundTransparency.Value : new bool?(),
+                _inAngle.ValueProvidedByUser ? _inAngle.Value : new double?(),
+                _inTextRulerWidth.ValueProvidedByUser ? _inTextRulerWidth.Value : new double?(),
+                _inAttributesName.Value);
+        }
+
+        internal Result SetOutputValues(IGH_DataAccess DA, TSD.Text.TextAttributes attributes)
+        {
+            _outAttributes.Value = attributes;
+
+            return SetOutput(DA);
         }
     }
 }

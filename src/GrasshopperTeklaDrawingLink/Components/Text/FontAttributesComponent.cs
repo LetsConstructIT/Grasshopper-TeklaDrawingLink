@@ -1,73 +1,57 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-
-using Grasshopper.Kernel;
-
-using GTDrawingLink.Properties;
+﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
-
 using Tekla.Structures.Drawing;
-
 
 namespace GTDrawingLink.Components.Text
 {
-    public class FontAttributesComponent : TeklaComponentBase
+    public class FontAttributesComponent : TeklaComponentBaseNew<FontAttributesCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
 
-        public FontAttributesComponent()
-            : base(ComponentInfos.FontAttributesComponent)
+        public FontAttributesComponent() : base(ComponentInfos.FontAttributesComponent) { }
+
+        protected override void InvokeCommand(IGH_DataAccess DA)
         {
-        }
+            var (color, fontFamily, fontSize, weight, italic) = _command.GetInputValues();
 
-        protected override void RegisterInputParams(GH_InputParamManager pManager)
-        {
-            SetParametersAsOptional(pManager, new List<int> {
-               pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item)),
-               AddTextParameter(pManager,ParamInfos.FontFamily,GH_ParamAccess.item),
-               AddNumberParameter(pManager,ParamInfos.FontSize,GH_ParamAccess.item),
-               AddBooleanParameter(pManager,ParamInfos.FontWeight,GH_ParamAccess.item),
-               AddBooleanParameter(pManager,ParamInfos.FontItalic,GH_ParamAccess.item)
-           }); 
-        }
-
-        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
-        {
-            pManager.AddParameter(new FontAttributesParam(ParamInfos.FontAttributes, GH_ParamAccess.item));
-        }
-
-        protected override void SolveInstance(IGH_DataAccess DA)
-        {
-            object color = null;
-            DA.GetData(ParamInfos.DrawingColor.Name, ref color);
-            var colorEnumValue = EnumHelpers.ObjectToEnumValue<DrawingColors>(color);
-
-            string font = string.Empty;
-            DA.GetData(ParamInfos.FontFamily.Name, ref font);
-            font = font ?? "Arial";
-
-
-            double height = 0.0;
-            DA.GetData(ParamInfos.FontSize.Name, ref height);
-          
-
-            bool weight = false;
-            DA.GetData(ParamInfos.FontWeight.Name, ref weight);
-
-            bool italic = false;
-            DA.GetData(ParamInfos.FontItalic.Name, ref italic);
-
-            var fontAttributes = new FontAttributes
+            var fontAttributes = new FontAttributes()
             {
-                Color = colorEnumValue ?? DrawingColors.Black,
-                Name = font,
-                Height = height,
+                Color = color,
+                Name = fontFamily,
+                Height = fontSize,
                 Bold = weight,
                 Italic = italic
             };
 
-            DA.SetData(ParamInfos.FontAttributes.Name, new FontAttributesGoo(fontAttributes));
+            _command.SetOutputValues(DA, fontAttributes);
+        }
+    }
+
+    public class FontAttributesCommand : CommandBase
+    {
+        private readonly InputOptionalStructParam<DrawingColors> _inDrawingColor = new InputOptionalStructParam<DrawingColors>(ParamInfos.DrawingColor, DrawingColors.Black);
+        private readonly InputOptionalParam<string> _inFontFamily = new InputOptionalParam<string>(ParamInfos.FontFamily, "Arial");
+        private readonly InputOptionalStructParam<double> _inFontSize = new InputOptionalStructParam<double>(ParamInfos.FontSize, 2.5);
+        private readonly InputOptionalStructParam<bool> _inFontWeight = new InputOptionalStructParam<bool>(ParamInfos.FontWeight, false);
+        private readonly InputOptionalStructParam<bool> _inFontItalic = new InputOptionalStructParam<bool>(ParamInfos.FontItalic, false);
+
+        private readonly OutputParam<FontAttributes> _outAttributes = new OutputParam<FontAttributes>(ParamInfos.FontAttributes);
+
+        internal (DrawingColors color, string fontFamily, double fontSize, bool weight, bool italic) GetInputValues()
+        {
+            return (
+                _inDrawingColor.Value,
+                _inFontFamily.Value,
+                _inFontSize.Value,
+                _inFontWeight.Value,
+                _inFontItalic.Value);
+        }
+
+        internal Result SetOutputValues(IGH_DataAccess DA, FontAttributes attributes)
+        {
+            _outAttributes.Value = attributes;
+
+            return SetOutput(DA);
         }
     }
 }
