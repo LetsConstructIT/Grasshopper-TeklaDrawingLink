@@ -1,48 +1,55 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class GetDrawingsComponent : TeklaComponentBase
+    public class GetDrawingsComponent : TeklaComponentBaseNew<GetDrawingsCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.AllDrawings;
 
-        public GetDrawingsComponent() : base(ComponentInfos.GetDrawingsComponent)
-        {
-        }
+        public GetDrawingsComponent() : base(ComponentInfos.GetDrawingsComponent) { }
 
-        protected override void RegisterInputParams(GH_InputParamManager pManager)
+        protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            AddBooleanParameter(pManager, ParamInfos.BooleanToogle, GH_ParamAccess.item);
-        }
-
-        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
-        {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.Drawing, GH_ParamAccess.item);
-        }
-
-        protected override void SolveInstance(IGH_DataAccess DA)
-        {
-            var trigger = false;
-            DA.GetData(0, ref trigger);
-
+            var trigger = _command.GetInputValues();
             if (!trigger)
                 return;
 
-            var drawings = new List<TeklaDatabaseObjectGoo>();
+            var drawings = GetDrawings();
+
+            _command.SetOutputValues(DA, drawings);
+        }
+
+        private IEnumerable<Drawing> GetDrawings()
+        {
             var drawingEnumerator = DrawingInteractor.DrawingHandler.GetDrawings();
             drawingEnumerator.SelectInstances = false;
             while (drawingEnumerator.MoveNext())
             {
-                drawings.Add(new TeklaDatabaseObjectGoo(drawingEnumerator.Current));
+                yield return drawingEnumerator.Current;
             }
+        }
+    }
 
-            DA.SetDataList(ParamInfos.Drawing.Name, drawings);
+    public class GetDrawingsCommand : CommandBase
+    {
+        private readonly InputStructParam<bool> _inToggle = new InputStructParam<bool>(ParamInfos.BooleanToogle);
+        private readonly OutputListParam<Drawing> _outDrawings = new OutputListParam<Drawing>(ParamInfos.Drawing);
+
+        internal bool GetInputValues()
+        {
+            return _inToggle.Value;
+        }
+
+        internal Result SetOutputValues(IGH_DataAccess DA, IEnumerable<Drawing> drawings)
+        {
+            _outDrawings.Value = drawings;
+
+            return SetOutput(DA);
         }
     }
 }
