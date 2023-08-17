@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <Title>GrasshopperTestAssembly</Title>
+	<LangVersion>8.0</LangVersion>
+    <Nullable>annotations</Nullable>
     <Description>Description of GrasshopperTestAssembly</Description>
     <TargetExt>.gha</TargetExt>
     <UseWpf>true</UseWpf>
