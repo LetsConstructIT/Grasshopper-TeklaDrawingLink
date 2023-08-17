@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Grasshopper.Kernel;
-
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 
@@ -119,6 +117,10 @@ namespace GTDrawingLink.Components
         protected int AddBooleanParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+        protected int AddNumberParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddNumberParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
         protected int AddIntegerParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
