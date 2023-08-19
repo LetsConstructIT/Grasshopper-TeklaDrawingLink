@@ -576,5 +576,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Rebars
         };
+
+        public static readonly GH_InstanceDescription ReinforcementAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Reinforcement Attributes",
+            NickName = "Attributes",
+            Description = "Creates/modifies a reinforcement attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Rebars
+        };
     }
 }

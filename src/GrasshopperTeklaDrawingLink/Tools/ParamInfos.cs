@@ -771,5 +771,33 @@ namespace GTDrawingLink.Tools
             NickName = "Size",
             Description = "Defines the size of the reinforcement mesh symbol."
         };
+
+        public static readonly GH_InstanceDescription RebarAtributes = new GH_InstanceDescription
+        {
+            Name = "Rebar Attributes",
+            NickName = "A",
+            Description = "Reinforcement mesh attributes"
+        };
+
+        public static readonly GH_InstanceDescription RebarVisibility = new GH_InstanceDescription
+        {
+            Name = "Visibility",
+            NickName = "V",
+            Description = $"Sets the visibility of rebars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementVisibilityTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription StraightEndSymbolTypes = new GH_InstanceDescription
+        {
+            Name = "Straight Symbol",
+            NickName = "SS",
+            Description = $"Defines how the straight ends of reinforcing bars should look like: \n{EnumHelpers.EnumToString<ReinforcementBase.StraightEndSymbolTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription HookedEndSymbolTypes = new GH_InstanceDescription
+        {
+            Name = "Hooked Symbol",
+            NickName = "HS",
+            Description = $"Defines how the hooked ends of reinforcing bars should look like: \n{EnumHelpers.EnumToString<ReinforcementBase.HookedEndSymbolTypes>()}\nYou can right-click to set."
+        };
     }
 }

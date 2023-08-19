@@ -292,7 +292,15 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ReinforcementMeshAttributesComponent),
                 "3B4C6F04-2F33-49F9-9C98-2AC061A9EDFE"
-            }
+            },
+            {
+                typeof(ReinforcementAttributesParam),
+                "BA96DFCA-1060-4908-9274-E5F7875C7CEF"
+            },
+            {
+                typeof(ReinforcementAttributesComponent),
+                "41DEF423-BD56-4826-A5C0-ECF4A6E32DD9"
+            },
         };
 
         public static string TabHeading
