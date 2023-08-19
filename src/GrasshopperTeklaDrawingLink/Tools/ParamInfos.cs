@@ -578,92 +578,92 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Group by Report"
         };
-        public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription
         {
-            Name="Leader line",
-            NickName="L",
-            Description="Add text with leader line"
+            Name = "Leader line",
+            NickName = "L",
+            Description = "Add text with leader line"
         };
 
-        public static readonly GH_InstanceDescription Text = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription Text = new GH_InstanceDescription
         {
-            Name="Text",
-            NickName="T",
-            Description="Add text."
+            Name = "Text",
+            NickName = "T",
+            Description = "Add text."
         };
 
-        public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription
         {
-            Name="BoundingBox",
-            NickName="BB",
-            Description="Represents the 2D bounding box of the object."
+            Name = "BoundingBox",
+            NickName = "BB",
+            Description = "Represents the 2D bounding box of the object."
         };
-        public static readonly GH_InstanceDescription MarkInsertionPoint = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription MarkInsertionPoint = new GH_InstanceDescription
         {
-            Name="Insertion Point",
-            NickName="IP",
-            Description="The insertion point of the mark."
+            Name = "Insertion Point",
+            NickName = "IP",
+            Description = "The insertion point of the mark."
         };
-        public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription
         {
-            Name="Text base point",
-            NickName="BP",
-            Description="The point where the text starts."
+            Name = "Text base point",
+            NickName = "BP",
+            Description = "The point where the text starts."
         };
 
-        public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription
         {
-            Name="Font family",
-            NickName="F",
-            Description="The font family used (Default Arial)."
+            Name = "Font family",
+            NickName = "F",
+            Description = "The font family used (Default Arial)."
         };
-        public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription
         {
-            Name="Font size",
-            NickName="S",
-            Description="The font size used (Default 2.5)."
+            Name = "Font size",
+            NickName = "S",
+            Description = "The font size used (Default 2.5)."
         };
-        public static readonly GH_InstanceDescription FrameType = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription FrameType = new GH_InstanceDescription
         {
-            Name="Frame",
-            NickName="FRM",
-            Description= $"The frame of the text: \n{EnumHelpers.EnumToString<FrameTypes>()}\nYou can right-click to set."
+            Name = "Frame",
+            NickName = "FRM",
+            Description = $"The frame of the text: \n{EnumHelpers.EnumToString<FrameTypes>()}\nYou can right-click to set."
         };
-        public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription
         {
-            Name="Text attributes",
-            NickName="TATR",
-            Description="The attributes of the text."
+            Name = "Text attributes",
+            NickName = "TATR",
+            Description = "The attributes of the text."
         };
-        public static readonly GH_InstanceDescription FontAttributes = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription FontAttributes = new GH_InstanceDescription
         {
-            Name="Font attributes",
-            NickName="FATR",
-            Description="The attributes of the font used."
+            Name = "Font attributes",
+            NickName = "FATR",
+            Description = "The attributes of the font used."
         };
-        public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription
         {
-            Name="Font weight",
-            NickName="B",
-            Description="The weight of the font, Bold or not (default: non-Bold)"
+            Name = "Font weight",
+            NickName = "B",
+            Description = "The weight of the font, Bold or not (default: non-Bold)"
         };
-        public static readonly GH_InstanceDescription FontItalic = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription FontItalic = new GH_InstanceDescription
         {
-            Name="Font italic",
-            NickName="I",
-            Description="The italic style of the font, Italic or not (default: non-Italic)"
+            Name = "Font italic",
+            NickName = "I",
+            Description = "The italic style of the font, Italic or not (default: non-Italic)"
         };
-        public static readonly GH_InstanceDescription BackgroundTransparency = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription BackgroundTransparency = new GH_InstanceDescription
         {
-            Name="Background Mask",
-            NickName="BM",
-            Description="Whether the text has a background mask as Opaque or Transparent."
+            Name = "Background Mask",
+            NickName = "BM",
+            Description = "Whether the text has a background mask as Opaque or Transparent."
         };
-        public static readonly GH_InstanceDescription Angle = new GH_InstanceDescription 
+        public static readonly GH_InstanceDescription Angle = new GH_InstanceDescription
         {
-            Name="Angle",
-            NickName="ANG",
-            Description="Sets a angle value."
+            Name = "Angle",
+            NickName = "ANG",
+            Description = "Sets a angle value."
         };
         public static readonly GH_InstanceDescription ArrowType = new GH_InstanceDescription
         {
@@ -735,6 +735,41 @@ namespace GTDrawingLink.Tools
             Name = "Point",
             NickName = "P",
             Description = "View insertion point"
+        };
+
+        public static readonly GH_InstanceDescription MeshAttributes = new GH_InstanceDescription
+        {
+            Name = "Mesh Attributes",
+            NickName = "A",
+            Description = "Reinforcement mesh attributes"
+        };
+
+        public static readonly GH_InstanceDescription MeshVisibilityLongitudinal = new GH_InstanceDescription
+        {
+            Name = "Visibility Longitudinal",
+            NickName = "L",
+            Description = $"Sets the visibility of longitudinal rebars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementVisibilityTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription MeshVisibilityCross = new GH_InstanceDescription
+        {
+            Name = "Visibility Cross",
+            NickName = "C",
+            Description = $"Sets the visibility of cross rebars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementVisibilityTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription MeshReinforcementSymbolIndex = new GH_InstanceDescription
+        {
+            Name = "Symbol Index",
+            NickName = "Idx",
+            Description = "Defines the index for the mesh symbol to be used.\nThe index starts from 0 and corresponds to the symbol in the file mesh.sym."
+        };
+
+        public static readonly GH_InstanceDescription MeshReinforcementSymbolSize = new GH_InstanceDescription
+        {
+            Name = "Symbol Size",
+            NickName = "Size",
+            Description = "Defines the size of the reinforcement mesh symbol."
         };
     }
 }

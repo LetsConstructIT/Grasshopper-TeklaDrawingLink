@@ -6,19 +6,20 @@ namespace GTDrawingLink.Tools
     {
         public static class PanelHeadings
         {
-            public static readonly string Params = "           Params";
-            public static readonly string Drawing = "          Drawing";
-            public static readonly string DrawingList = "         Drawing List";
-            public static readonly string View = "        View";
-            public static readonly string DrawingParts = "       Parts";
-            public static readonly string Attributes = "      Attributes";
-            public static readonly string Geometry = "     Geometry";
-            public static readonly string Misc = "    Misc";
-            public static readonly string Marks = "   Marks";
-            public static readonly string Udas = "  UDAs";
-            public static readonly string Plugins = " Plugins";
-            public static readonly string Dimensions = "Dimensions";
-            public static readonly string Text = "Text";
+            public static readonly string Params = "             Params";
+            public static readonly string Drawing = "            Drawing";
+            public static readonly string DrawingList = "           Drawing List";
+            public static readonly string View = "          View";
+            public static readonly string DrawingParts = "         Parts";
+            public static readonly string Attributes = "        Attributes";
+            public static readonly string Geometry = "       Geometry";
+            public static readonly string Misc = "      Misc";
+            public static readonly string Marks = "     Marks";
+            public static readonly string Udas = "    UDAs";
+            public static readonly string Plugins = "   Plugins";
+            public static readonly string Dimensions = "  Dimensions";
+            public static readonly string Text = " Text";
+            public static readonly string Rebars = "Rebars";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -386,7 +387,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Dimension Line Attributes",
             NickName = "Attributes",
-            Description = "Creates a dimension line attributes.",
+            Description = "Creates/modifies a dimension line attributes.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
@@ -565,6 +566,15 @@ namespace GTDrawingLink.Tools
             Description = "Create Tekla model view in the drawing area",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.View
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementMeshAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Reinforcement Mesh Attributes",
+            NickName = "Attributes",
+            Description = "Creates/modifies a reinforcement mesh attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Rebars
         };
     }
 }

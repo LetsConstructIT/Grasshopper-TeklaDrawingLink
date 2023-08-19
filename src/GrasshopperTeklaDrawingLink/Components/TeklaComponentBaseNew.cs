@@ -39,6 +39,7 @@ namespace GTDrawingLink.Components
         protected void RegisterInputParameters(GH_InputParamManager pManager, IEnumerable<InputParam> parameters)
         {
             var @switch = new Dictionary<Type, Action<InputParam, GH_InputParamManager>> {
+                { typeof(int), (param, manager) => AddIntegerParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
@@ -46,6 +47,7 @@ namespace GTDrawingLink.Components
                 { typeof(DatabaseObject), (param, manager) => AddTeklaDbObjectParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional}) },
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
+                { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
             };
 
             foreach (var parameter in parameters)
@@ -72,7 +74,8 @@ namespace GTDrawingLink.Components
                 { typeof(DatabaseObject), (param, manager) => AddTeklaDbObjectParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess))},
-                { typeof(Tekla.Structures.Drawing.Text.TextAttributes), (param, manager) => pManager.AddParameter(new TextAttributesParam(param.InstanceDescription, param.ParamAccess))}
+                { typeof(Tekla.Structures.Drawing.Text.TextAttributes), (param, manager) => pManager.AddParameter(new TextAttributesParam(param.InstanceDescription, param.ParamAccess))},
+                { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess))},
             };
 
             foreach (var parameter in parameters)

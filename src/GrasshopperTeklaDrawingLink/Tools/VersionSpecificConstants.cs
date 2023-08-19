@@ -284,6 +284,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateModelViewComponent),
                 "B4A454A8-0399-46F5-A199-06622288F3EE"
+            },
+            {
+                typeof(ReinforcementMeshAttributesParam),
+                "D41DBD10-5E53-46A0-950E-FDAAFFDAB421"
+            },
+            {
+                typeof(ReinforcementMeshAttributesComponent),
+                "3B4C6F04-2F33-49F9-9C98-2AC061A9EDFE"
             }
         };
 
