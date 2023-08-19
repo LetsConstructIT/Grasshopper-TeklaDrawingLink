@@ -180,6 +180,8 @@ namespace GTDrawingLink.Tools
 
         public override Result EvaluateInput(IGH_DataAccess DA)
         {
+            _properlySet = false;
+
             var typeOfInput = typeof(T);
             if (typeOfInput.IsEnum)
             {
@@ -229,6 +231,9 @@ namespace GTDrawingLink.Tools
 
         public override Result EvaluateInput(IGH_DataAccess DA)
         {
+            ValueProvidedByUser = false;
+            _properlySet = false;
+
             var resultFromUserInput = base.EvaluateInput(DA);
             if (resultFromUserInput.Success)
             {
