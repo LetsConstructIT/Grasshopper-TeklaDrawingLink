@@ -1,6 +1,7 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 using System;
+using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.ReinforcementBase;
 
 namespace GTDrawingLink.Components
@@ -11,7 +12,7 @@ namespace GTDrawingLink.Components
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            (ReinforcementSingleAttributes rebarAttributes, string fileName, ReinforcementVisibilityTypes? visibility, StraightEndSymbolTypes? straightEnd, HookedEndSymbolTypes? hookedEnd) = _command.GetInputValues();
+            (ReinforcementSingleAttributes rebarAttributes, string fileName, ReinforcementVisibilityTypes? visibility, StraightEndSymbolTypes? straightSymbol, HookedEndSymbolTypes? hookedSymbol, ReinforcementRepresentationTypes? representation, LineTypeAttributes? visibileLines, LineTypeAttributes? hiddenLines, bool? hiddenByPart, bool? hiddenByRebars) = _command.GetInputValues();
 
             if (!string.IsNullOrEmpty(fileName))
                 rebarAttributes.LoadAttributes(fileName);
@@ -19,11 +20,26 @@ namespace GTDrawingLink.Components
             if (visibility.HasValue)
                 rebarAttributes.ReinforcementVisibility = visibility.Value;
 
-            if (straightEnd.HasValue)
-                rebarAttributes.StraightEndSymbolType = straightEnd.Value;
+            if (straightSymbol.HasValue)
+                rebarAttributes.StraightEndSymbolType = straightSymbol.Value;
 
-            if (hookedEnd.HasValue)
-                rebarAttributes.HookedEndSymbolType = hookedEnd.Value;
+            if (hookedSymbol.HasValue)
+                rebarAttributes.HookedEndSymbolType = hookedSymbol.Value;
+
+            if (representation.HasValue)
+                rebarAttributes.ReinforcementRepresentation = representation.Value;
+
+            if (visibileLines != null)
+                rebarAttributes.VisibleLines = visibileLines;
+
+            if (hiddenLines != null)
+                rebarAttributes.HiddenLines = hiddenLines;
+
+            if (hiddenByPart.HasValue)
+                rebarAttributes.HideLinesHiddenByPart = hiddenByPart.Value;
+
+            if (hiddenByRebars.HasValue)
+                rebarAttributes.HideLinesHiddenByReinforcement = hiddenByRebars.Value;
 
             _command.SetOutputValues(DA, rebarAttributes);
         }
@@ -36,6 +52,12 @@ namespace GTDrawingLink.Components
         private readonly InputOptionalStructParam<ReinforcementVisibilityTypes> _inVisibility = new InputOptionalStructParam<ReinforcementVisibilityTypes>(ParamInfos.RebarVisibility);
         private readonly InputOptionalStructParam<StraightEndSymbolTypes> _inStraightSymbol = new InputOptionalStructParam<StraightEndSymbolTypes>(ParamInfos.StraightEndSymbolTypes);
         private readonly InputOptionalStructParam<HookedEndSymbolTypes> _inHookedSymbol = new InputOptionalStructParam<HookedEndSymbolTypes>(ParamInfos.HookedEndSymbolTypes);
+       
+        private readonly InputOptionalStructParam<ReinforcementRepresentationTypes> _inRepresentation = new InputOptionalStructParam<ReinforcementRepresentationTypes>(ParamInfos.ReinforcementRepresentationTypes);
+        private readonly InputOptionalParam<LineTypeAttributes> _inVisibleLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
+        private readonly InputOptionalParam<LineTypeAttributes> _inHiddenLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
+        private readonly InputOptionalStructParam<bool> _inHiddenByPart = new InputOptionalStructParam<bool>(ParamInfos.HideLinesHiddenByPart);
+        private readonly InputOptionalStructParam<bool> _inHiddenByRebars = new InputOptionalStructParam<bool>(ParamInfos.HideLinesHiddenByReinforcement);
 
         private readonly OutputParam<ReinforcementSingleAttributes> _outAttributes = new OutputParam<ReinforcementSingleAttributes>(ParamInfos.RebarAtributes);
 
@@ -43,15 +65,25 @@ namespace GTDrawingLink.Components
             string fileName,
             ReinforcementVisibilityTypes? visibility,
             StraightEndSymbolTypes? straightSymbol,
-            HookedEndSymbolTypes? hookedSymbol)
+            HookedEndSymbolTypes? hookedSymbol,
+            ReinforcementRepresentationTypes? representation,
+            LineTypeAttributes? visibileLines,
+            LineTypeAttributes? hiddenLines,
+            bool? hiddenByPart,
+            bool? hiddenByRebars)
             GetInputValues()
         {
             return (
                 _inMeshAttributes.Value ?? new ReinforcementSingleAttributes(),
-                _inAttributesFileName.Value,
-                _inVisibility.ValueProvidedByUser ? _inVisibility.Value : new ReinforcementVisibilityTypes?(),
-                _inStraightSymbol.ValueProvidedByUser ? _inStraightSymbol.Value : new StraightEndSymbolTypes?(),
-                _inHookedSymbol.ValueProvidedByUser ? _inHookedSymbol.Value : new HookedEndSymbolTypes?()
+                _inAttributesFileName.GetValueFromUserOrNull(),
+                _inVisibility.GetValueFromUserOrNull(),
+                _inStraightSymbol.GetValueFromUserOrNull(),
+                _inHookedSymbol.GetValueFromUserOrNull(),
+                _inRepresentation.GetValueFromUserOrNull(),
+                _inVisibleLines.GetValueFromUserOrNull(),
+                _inHiddenLines.GetValueFromUserOrNull(),
+                _inHiddenByPart.GetValueFromUserOrNull(),
+                _inHiddenByRebars.GetValueFromUserOrNull()
                 );
         }
 

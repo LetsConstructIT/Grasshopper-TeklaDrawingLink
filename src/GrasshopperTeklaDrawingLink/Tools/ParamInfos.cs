@@ -799,5 +799,26 @@ namespace GTDrawingLink.Tools
             NickName = "HS",
             Description = $"Defines how the hooked ends of reinforcing bars should look like: \n{EnumHelpers.EnumToString<ReinforcementBase.HookedEndSymbolTypes>()}\nYou can right-click to set."
         };
+
+        public static readonly GH_InstanceDescription ReinforcementRepresentationTypes = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"The representation of reinforcing bars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementRepresentationTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription HideLinesHiddenByPart = new GH_InstanceDescription
+        {
+            Name = "Hidden by Part",
+            NickName = "HP",
+            Description = "Defines whether lines hidden by parts should be hidden or not."
+        };
+
+        public static readonly GH_InstanceDescription HideLinesHiddenByReinforcement = new GH_InstanceDescription
+        {
+            Name = "Hidden by Rebars",
+            NickName = "HR",
+            Description = "Defines whether lines hidden by reinforcements should be hidden or not."
+        };
     }
 }

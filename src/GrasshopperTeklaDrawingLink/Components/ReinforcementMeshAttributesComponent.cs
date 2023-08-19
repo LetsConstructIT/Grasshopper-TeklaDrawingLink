@@ -1,6 +1,7 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 using System;
+using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.ReinforcementBase;
 
 namespace GTDrawingLink.Components
@@ -11,7 +12,7 @@ namespace GTDrawingLink.Components
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            (ReinforcementMeshAttributes meshAttributes, string fileName, ReinforcementVisibilityTypes? visibilityCross, ReinforcementVisibilityTypes? visibilityLongitudinal, int? symbolIndex, double? symbolSize) = _command.GetInputValues();
+            (ReinforcementMeshAttributes meshAttributes, string fileName, ReinforcementVisibilityTypes? visibilityCross, ReinforcementVisibilityTypes? visibilityLongitudinal, int? symbolIndex, double? symbolSize, ReinforcementRepresentationTypes? representation, LineTypeAttributes? visibileLines, LineTypeAttributes? hiddenLines, bool? hiddenByPart, bool? hiddenByRebars) = _command.GetInputValues();
 
             if (!string.IsNullOrEmpty(fileName))
                 meshAttributes.LoadAttributes(fileName);
@@ -28,6 +29,21 @@ namespace GTDrawingLink.Components
             if (symbolSize.HasValue)
                 meshAttributes.MeshReinforcementSymbolSize = symbolSize.Value;
 
+            if (representation.HasValue)
+                meshAttributes.ReinforcementRepresentation = representation.Value;
+
+            if (visibileLines != null)
+                meshAttributes.VisibleLines = visibileLines;
+
+            if (hiddenLines != null)
+                meshAttributes.HiddenLines = hiddenLines;
+
+            if (hiddenByPart.HasValue)
+                meshAttributes.HideLinesHiddenByPart = hiddenByPart.Value;
+
+            if (hiddenByRebars.HasValue)
+                meshAttributes.HideLinesHiddenByReinforcement = hiddenByRebars.Value;
+
             _command.SetOutputValues(DA, meshAttributes);
         }
     }
@@ -40,6 +56,12 @@ namespace GTDrawingLink.Components
         private readonly InputOptionalStructParam<int> _inSymbolIndex = new InputOptionalStructParam<int>(ParamInfos.MeshReinforcementSymbolIndex);
         private readonly InputOptionalStructParam<double> _inSymbolSize = new InputOptionalStructParam<double>(ParamInfos.MeshReinforcementSymbolSize);
 
+        private readonly InputOptionalStructParam<ReinforcementRepresentationTypes> _inRepresentation = new InputOptionalStructParam<ReinforcementRepresentationTypes>(ParamInfos.ReinforcementRepresentationTypes);
+        private readonly InputOptionalParam<LineTypeAttributes> _inVisibleLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
+        private readonly InputOptionalParam<LineTypeAttributes> _inHiddenLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
+        private readonly InputOptionalStructParam<bool> _inHiddenByPart = new InputOptionalStructParam<bool>(ParamInfos.HideLinesHiddenByPart);
+        private readonly InputOptionalStructParam<bool> _inHiddenByRebars = new InputOptionalStructParam<bool>(ParamInfos.HideLinesHiddenByReinforcement);
+
         private readonly OutputParam<ReinforcementMeshAttributes> _outAttributes = new OutputParam<ReinforcementMeshAttributes>(ParamInfos.MeshAttributes);
 
         internal (ReinforcementMeshAttributes Attributes,
@@ -47,16 +69,26 @@ namespace GTDrawingLink.Components
             ReinforcementVisibilityTypes? visibilityCross,
             ReinforcementVisibilityTypes? visibilityLongitudinal,
             int? symbolIndex,
-            double? symbolSize)
+            double? symbolSize,
+            ReinforcementRepresentationTypes? representation,
+            LineTypeAttributes? visibileLines,
+            LineTypeAttributes? hiddenLines,
+            bool? hiddenByPart,
+            bool? hiddenByRebars)
             GetInputValues()
         {
             return (
                 _inMeshAttributes.Value ?? new ReinforcementMeshAttributes(),
-                _inAttributesFileName.Value,
-                _inVisibilityCross.ValueProvidedByUser ? _inVisibilityCross.Value : new ReinforcementVisibilityTypes?(),
-                _inVisibilityLongitudinal.ValueProvidedByUser ? _inVisibilityLongitudinal.Value : new ReinforcementVisibilityTypes?(),
-                _inSymbolIndex.ValueProvidedByUser ? _inSymbolIndex.Value : new int?(),
-                _inSymbolSize.ValueProvidedByUser ? _inSymbolSize.Value : new double?()
+                _inAttributesFileName.GetValueFromUserOrNull(),
+                _inVisibilityCross.GetValueFromUserOrNull(),
+                _inVisibilityLongitudinal.GetValueFromUserOrNull(),
+                _inSymbolIndex.GetValueFromUserOrNull(),
+                _inSymbolSize.GetValueFromUserOrNull(),
+                _inRepresentation.GetValueFromUserOrNull(),
+                _inVisibleLines.GetValueFromUserOrNull(),
+                _inHiddenLines.GetValueFromUserOrNull(),
+                _inHiddenByPart.GetValueFromUserOrNull(),
+                _inHiddenByRebars.GetValueFromUserOrNull()
                 );
         }
 
