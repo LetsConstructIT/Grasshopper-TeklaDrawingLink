@@ -165,6 +165,11 @@ namespace GTDrawingLink.Tools
 
             return Result.Ok();
         }
+
+        public T? GetValueFromUserOrNull()
+        {
+            return ValueProvidedByUser ? Value : null;
+        }
     }
 
     public class InputStructParam<T> : InputParam where T : struct, IConvertible
@@ -246,6 +251,11 @@ namespace GTDrawingLink.Tools
             }
 
             return Result.Ok();
+        }
+
+        public T? GetValueFromUserOrNull()
+        {
+            return ValueProvidedByUser ? Value : new T?();
         }
     }
 
