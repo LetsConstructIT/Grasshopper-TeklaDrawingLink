@@ -1,6 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
-using System;
+using System.Drawing;
 using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.ReinforcementBase;
 
@@ -8,6 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class ReinforcementAttributesComponent : TeklaComponentBaseNew<ReinforcementAttributesCommand>
     {
+        protected override Bitmap Icon => Properties.Resources.RebarAttributes;
         public ReinforcementAttributesComponent() : base(ComponentInfos.ReinforcementAttributesComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
@@ -52,7 +53,7 @@ namespace GTDrawingLink.Components
         private readonly InputOptionalStructParam<ReinforcementVisibilityTypes> _inVisibility = new InputOptionalStructParam<ReinforcementVisibilityTypes>(ParamInfos.RebarVisibility);
         private readonly InputOptionalStructParam<StraightEndSymbolTypes> _inStraightSymbol = new InputOptionalStructParam<StraightEndSymbolTypes>(ParamInfos.StraightEndSymbolTypes);
         private readonly InputOptionalStructParam<HookedEndSymbolTypes> _inHookedSymbol = new InputOptionalStructParam<HookedEndSymbolTypes>(ParamInfos.HookedEndSymbolTypes);
-       
+
         private readonly InputOptionalStructParam<ReinforcementRepresentationTypes> _inRepresentation = new InputOptionalStructParam<ReinforcementRepresentationTypes>(ParamInfos.ReinforcementRepresentationTypes);
         private readonly InputOptionalParam<LineTypeAttributes> _inVisibleLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
         private readonly InputOptionalParam<LineTypeAttributes> _inHiddenLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);

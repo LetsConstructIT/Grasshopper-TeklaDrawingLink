@@ -1,6 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
-using System;
+using System.Drawing;
 using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.ReinforcementBase;
 
@@ -8,6 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class ReinforcementMeshAttributesComponent : TeklaComponentBaseNew<ReinforcementMeshAttributesCommand>
     {
+        protected override Bitmap Icon => Properties.Resources.MeshAttributes;
         public ReinforcementMeshAttributesComponent() : base(ComponentInfos.ReinforcementMeshAttributesComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
