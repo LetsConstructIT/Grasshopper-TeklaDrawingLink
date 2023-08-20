@@ -834,5 +834,12 @@ namespace GTDrawingLink.Tools
             NickName = "M",
             Description = "Drawing mesh"
         };
+
+        public static readonly GH_InstanceDescription FrameAtributes = new GH_InstanceDescription
+        {
+            Name = "Frame Attributes",
+            NickName = "F",
+            Description = "Frame attributes (type and color)"
+        };
     }
 }

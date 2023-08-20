@@ -602,5 +602,16 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
+
+        public static readonly GH_InstanceDescription FrameAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Frame Attributes",
+            NickName = "FAttr",
+            Description = "Create frame attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
+        
     }
 }

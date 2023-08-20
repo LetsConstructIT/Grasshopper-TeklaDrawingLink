@@ -308,6 +308,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyMeshComponent),
                 "A007E703-1979-4BB3-8404-B9F916D2DA4D"
+            },
+            {
+                typeof(FrameAttributesComponent),
+                "0C287E3B-A35A-4CA8-B083-21276F4AAE16"
+            },
+            {
+                typeof(FrameAttributesParam),
+                "45767F13-A924-4BC7-B45B-1A9081F2B2EE"
             }
         };
 
