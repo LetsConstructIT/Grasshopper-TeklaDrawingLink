@@ -12,7 +12,7 @@ namespace GTDrawingLink.Components
 {
     public class ModifyPartComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
 
         protected override Bitmap Icon => Resources.ModifyPart;
 
