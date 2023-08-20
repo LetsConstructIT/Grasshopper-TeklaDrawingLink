@@ -486,7 +486,7 @@ namespace GTDrawingLink.Tools
             NickName="TxtAttr",
             Description="Create Tekla text attributes.",
             Category=VersionSpecificConstants.TabHeading,
-            SubCategory=PanelHeadings.Text
+            SubCategory=PanelHeadings.Attributes
         };
         public static readonly GH_InstanceDescription FontAttributesComponent = new GH_InstanceDescription
         {
@@ -494,7 +494,7 @@ namespace GTDrawingLink.Tools
             NickName="FAttr",
             Description="Create font attributes.",
             Category=VersionSpecificConstants.TabHeading,
-            SubCategory=PanelHeadings.Text
+            SubCategory=PanelHeadings.Attributes
         };
         public static readonly GH_InstanceDescription ArrowAttributesComponent = new GH_InstanceDescription
         {
@@ -502,7 +502,7 @@ namespace GTDrawingLink.Tools
             NickName = "AAttr",
             Description = "Create arrow attribute.",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Text
+            SubCategory = PanelHeadings.Attributes
         };
 
         public static readonly GH_InstanceDescription DeleteDrawingObjectsComponent = new GH_InstanceDescription

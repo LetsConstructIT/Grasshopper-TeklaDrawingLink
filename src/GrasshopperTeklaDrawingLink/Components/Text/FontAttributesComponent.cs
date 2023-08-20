@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components.Text
 {
     public class FontAttributesComponent : TeklaComponentBaseNew<FontAttributesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Resources.FontAttributes;
 
         public FontAttributesComponent() : base(ComponentInfos.FontAttributesComponent) { }

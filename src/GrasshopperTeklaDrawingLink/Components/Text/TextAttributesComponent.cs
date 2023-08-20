@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components.Text
 {
     public class TextAttributesComponent : TeklaComponentBaseNew<TextAttributesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Resources.TextAttributes;
 
         public TextAttributesComponent() : base(ComponentInfos.TextAttributesComponent) { }
