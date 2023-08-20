@@ -301,6 +301,10 @@ namespace GTDrawingLink.Tools
                 typeof(ReinforcementAttributesComponent),
                 "41DEF423-BD56-4826-A5C0-ECF4A6E32DD9"
             },
+            {
+                typeof(ModifyRebarComponent),
+                "0D6B1B6D-D2AE-4CFE-96B8-72CC0D9995F4"
+            }
         };
 
         public static string TabHeading

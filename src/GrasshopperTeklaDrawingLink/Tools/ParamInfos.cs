@@ -776,7 +776,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Rebar Attributes",
             NickName = "A",
-            Description = "Reinforcement mesh attributes"
+            Description = "Reinforcement attributes"
         };
 
         public static readonly GH_InstanceDescription RebarVisibility = new GH_InstanceDescription
@@ -819,6 +819,13 @@ namespace GTDrawingLink.Tools
             Name = "Hidden by Rebars",
             NickName = "HR",
             Description = "Defines whether lines hidden by reinforcements should be hidden or not."
+        };
+
+        public static readonly GH_InstanceDescription Reinforcement = new GH_InstanceDescription
+        {
+            Name = "Reinforcement",
+            NickName = "R",
+            Description = "Drawing reinforcement"
         };
     }
 }

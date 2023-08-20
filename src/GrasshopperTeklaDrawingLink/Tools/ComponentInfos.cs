@@ -585,5 +585,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+
+        public static readonly GH_InstanceDescription ModifyRebarComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Rebar",
+            NickName = "MRebar",
+            Description = "Modifies a reinforcement in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Rebars
+        };
     }
 }
