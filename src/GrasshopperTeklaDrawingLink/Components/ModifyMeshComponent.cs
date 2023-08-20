@@ -9,6 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class ModifyMeshComponent : TeklaComponentBaseNew<ModifyMeshCommand>
     {
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.ModifyMesh;
         public ModifyMeshComponent() : base(ComponentInfos.ModifyMeshComponent) { }
 

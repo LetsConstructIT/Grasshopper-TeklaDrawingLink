@@ -9,6 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class ModifyRebarComponent : TeklaComponentBaseNew<ModifyRebarCommand>
     {
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.ModifyRebar;
         public ModifyRebarComponent() : base(ComponentInfos.ModifyRebarComponent) { }
 

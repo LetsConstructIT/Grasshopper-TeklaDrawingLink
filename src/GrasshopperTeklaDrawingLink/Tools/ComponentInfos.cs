@@ -317,7 +317,7 @@ namespace GTDrawingLink.Tools
             NickName = "MPart",
             Description = "Modifies a drawing part in Tekla Structures",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.DrawingParts
+            SubCategory = PanelHeadings.Modify
         };
 
         public static readonly GH_InstanceDescription GetSelectedComponent = new GH_InstanceDescription

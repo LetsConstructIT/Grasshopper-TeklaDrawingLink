@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class ReinforcementAttributesComponent : TeklaComponentBaseNew<ReinforcementAttributesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.RebarAttributes;
         public ReinforcementAttributesComponent() : base(ComponentInfos.ReinforcementAttributesComponent) { }
 
