@@ -14,11 +14,10 @@ namespace GTDrawingLink.Tools
             public static readonly string Attributes = "        Attributes";
             public static readonly string Geometry = "       Geometry";
             public static readonly string Misc = "      Misc";
-            public static readonly string Marks = "     Marks";
             public static readonly string Udas = "    UDAs";
             public static readonly string Plugins = "   Plugins";
-            public static readonly string Dimensions = "  Dimensions";
-            public static readonly string Text = " Text";
+            public static readonly string Dimensions = "  Dimensioning";
+            public static readonly string Annotations = " Annotations";
             public static readonly string Modify = "Modify";
         }
 
@@ -82,7 +81,7 @@ namespace GTDrawingLink.Tools
             NickName = "LevelMark",
             Description = "Creates Level Mark at the specified point",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Marks
+            SubCategory = PanelHeadings.Annotations
         };
 
         public static readonly GH_InstanceDescription CreatePartViewComponent = new GH_InstanceDescription
@@ -478,7 +477,7 @@ namespace GTDrawingLink.Tools
             NickName="Txt",
             Description="Create Tekla text.",
             Category=VersionSpecificConstants.TabHeading,
-            SubCategory=PanelHeadings.Text
+            SubCategory=PanelHeadings.Annotations
         };
         public static readonly GH_InstanceDescription TextAttributesComponent = new GH_InstanceDescription
         {
