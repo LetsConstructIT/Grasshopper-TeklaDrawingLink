@@ -100,6 +100,8 @@ namespace GTDrawingLink.Tools
 
         public override Result EvaluateInput(IGH_DataAccess DA)
         {
+            _properlySet = false;
+
             var typeOfInput = typeof(T);
             if (typeOfInput.InheritsFrom(typeof(DatabaseObject)))
             {
@@ -152,6 +154,8 @@ namespace GTDrawingLink.Tools
 
         public override Result EvaluateInput(IGH_DataAccess DA)
         {
+            _properlySet = false;
+
             var resultFromUserInput = base.EvaluateInput(DA);
             if (resultFromUserInput.Success)
             {
@@ -259,7 +263,7 @@ namespace GTDrawingLink.Tools
         }
     }
 
-    public class InputListParam<T> : InputParam
+    public class InputListParam<T> : InputParam where T : class
     {
         private bool _properlySet;
         private List<T> _value;
@@ -272,18 +276,38 @@ namespace GTDrawingLink.Tools
 
         public override Result EvaluateInput(IGH_DataAccess DA)
         {
-            var value = new List<GH_Goo<T>>();
-            if (DA.GetDataList(InstanceDescription.Name, value))
+            _properlySet = false;
+
+            var typeOfInput = typeof(T);
+            if (typeOfInput.InheritsFrom(typeof(DatabaseObject)))
             {
-                _value = value.Select(v => v.Value).ToList();
-                _properlySet = true;
-                return Result.Ok();
+                var value = new List<GH_Goo<DatabaseObject>>();
+                if (DA.GetDataList(InstanceDescription.Name, value))
+                {
+                    var castedToExpectedType = value.Select(v => v.Value as T);
+                    if (castedToExpectedType.Any(o => o is null))
+                    {
+                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                    }
+
+                    _value = castedToExpectedType.ToList();
+
+                    _properlySet = true;
+                    return Result.Ok();
+                }
             }
             else
             {
-                _properlySet = false;
-                return GetWrongInputMessage(InstanceDescription.Name);
+                var objectsGoo = new List<GH_Goo<T>>();
+                if (DA.GetDataList(InstanceDescription.Name, objectsGoo))
+                {
+                    _value = objectsGoo.Select(v => v.Value).ToList();
+                    _properlySet = true;
+                    return Result.Ok();
+                }
             }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
         }
     }
 
@@ -300,6 +324,8 @@ namespace GTDrawingLink.Tools
 
         public override Result EvaluateInput(IGH_DataAccess DA)
         {
+            _properlySet = false;
+
             if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
             {
                 _value = tree.Branches.Select(b => b.Select(i => i.Value).ToList()).ToList();
