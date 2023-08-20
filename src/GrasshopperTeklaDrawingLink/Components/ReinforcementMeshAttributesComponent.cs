@@ -8,6 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class ReinforcementMeshAttributesComponent : TeklaComponentBaseNew<ReinforcementMeshAttributesCommand>
     {
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.MeshAttributes;
         public ReinforcementMeshAttributesComponent() : base(ComponentInfos.ReinforcementMeshAttributesComponent) { }
 

@@ -389,7 +389,7 @@ namespace GTDrawingLink.Tools
             NickName = "Attributes",
             Description = "Creates/modifies a dimension line attributes.",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Dimensions
+            SubCategory = PanelHeadings.Attributes
         };
 
         public static readonly GH_InstanceDescription DeconstructDimensionSetComponent = new GH_InstanceDescription
