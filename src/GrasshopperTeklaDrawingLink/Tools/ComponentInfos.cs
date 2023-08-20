@@ -570,7 +570,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription ReinforcementMeshAttributesComponent = new GH_InstanceDescription
         {
-            Name = "Reinforcement Mesh Attributes",
+            Name = "Mesh Attributes",
             NickName = "Attributes",
             Description = "Creates/modifies a reinforcement mesh attributes.",
             Category = VersionSpecificConstants.TabHeading,
@@ -579,7 +579,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription ReinforcementAttributesComponent = new GH_InstanceDescription
         {
-            Name = "Reinforcement Attributes",
+            Name = "Rebar Attributes",
             NickName = "Attributes",
             Description = "Creates/modifies a reinforcement attributes.",
             Category = VersionSpecificConstants.TabHeading,
