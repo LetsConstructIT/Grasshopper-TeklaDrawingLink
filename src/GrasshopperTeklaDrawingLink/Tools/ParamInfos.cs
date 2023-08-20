@@ -841,5 +841,12 @@ namespace GTDrawingLink.Tools
             NickName = "F",
             Description = "Frame attributes (type and color)"
         };
+
+        public static readonly GH_InstanceDescription SymbolAtributes = new GH_InstanceDescription
+        {
+            Name = "Symbol Attributes",
+            NickName = "S",
+            Description = "Symbol attributes"
+        };
     }
 }

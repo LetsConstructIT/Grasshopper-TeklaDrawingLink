@@ -612,6 +612,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Attributes
         };
 
-        
+        public static readonly GH_InstanceDescription SymbolAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Symbol Attributes",
+            NickName = "SAttr",
+            Description = "Create symbol attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
+
     }
 }
