@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Tekla.Structures.Drawing;
@@ -10,6 +11,7 @@ namespace GTDrawingLink.Components
 {
     public abstract class TeklaComponentBaseNew<T> : TeklaComponentBase where T : CommandBase, new()
     {
+        private static Type _databaseObjectType = typeof(DatabaseObject);
         protected readonly T _command = new T();
 
         protected TeklaComponentBaseNew(GH_InstanceDescription info) : base(info) { }
@@ -43,8 +45,6 @@ namespace GTDrawingLink.Components
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
-                { typeof(Drawing), (param, manager) => AddTeklaDbObjectParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
-                { typeof(DatabaseObject), (param, manager) => AddTeklaDbObjectParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional}) },
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional}) },
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
@@ -62,6 +62,11 @@ namespace GTDrawingLink.Components
                     pManager.AddParameter(enumParam);
                     continue;
                 }
+                else if (IsDatabaseObject(parameter.DataType))
+                {
+                    AddTeklaDbObjectParameter(pManager, parameter.InstanceDescription, parameter.ParamAccess, parameter.IsOptional);
+                    continue;
+                }
 
                 @switch[parameter.DataType](parameter, pManager);
             }
@@ -72,8 +77,6 @@ namespace GTDrawingLink.Components
             var @switch = new Dictionary<Type, Action<OutputParam, GH_OutputParamManager>> {
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess) },
-                { typeof(Drawing), (param, manager) => AddTeklaDbObjectParameter(manager, param.InstanceDescription, param.ParamAccess) },
-                { typeof(DatabaseObject), (param, manager) => AddTeklaDbObjectParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess))},
@@ -82,12 +85,24 @@ namespace GTDrawingLink.Components
                 { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess))},
             };
 
+            var typeOfDatabaseObject = typeof(DatabaseObject);
             foreach (var parameter in parameters)
             {
+                if (IsDatabaseObject(parameter.DataType))
+                {
+                    AddTeklaDbObjectParameter(pManager, parameter.InstanceDescription, parameter.ParamAccess);
+                    continue;
+                }
+
                 @switch[parameter.DataType](parameter, pManager);
             }
         }
 
         protected abstract void InvokeCommand(IGH_DataAccess DA);
+
+        private bool IsDatabaseObject(Type type)
+        {
+            return type.InheritsFrom(_databaseObjectType);
+        }
     }
 }
