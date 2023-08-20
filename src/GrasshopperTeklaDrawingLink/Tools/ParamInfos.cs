@@ -825,7 +825,14 @@ namespace GTDrawingLink.Tools
         {
             Name = "Reinforcement",
             NickName = "R",
-            Description = "Drawing reinforcement"
+            Description = "Drawing reinforcement (single/group/strand/set)"
+        };
+
+        public static readonly GH_InstanceDescription Mesh = new GH_InstanceDescription
+        {
+            Name = "Mesh",
+            NickName = "M",
+            Description = "Drawing mesh"
         };
     }
 }

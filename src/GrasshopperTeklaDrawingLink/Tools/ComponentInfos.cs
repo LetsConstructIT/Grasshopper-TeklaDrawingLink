@@ -590,7 +590,16 @@ namespace GTDrawingLink.Tools
         {
             Name = "Modify Rebar",
             NickName = "MRebar",
-            Description = "Modifies a reinforcement in Tekla Structures",
+            Description = "Modifies a reinforcement (single/group/strand/set) in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Rebars
+        };
+
+        public static readonly GH_InstanceDescription ModifyMeshComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Mesh",
+            NickName = "MMesh",
+            Description = "Modifies a mesh in Tekla Structures",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Rebars
         };
