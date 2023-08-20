@@ -1,13 +1,14 @@
 ﻿using Grasshopper.Kernel;
 
 using GTDrawingLink.Extensions;
+using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 
 using Rhino.Geometry;
 
-using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 using TSD = Tekla.Structures.Drawing;
@@ -17,6 +18,7 @@ namespace GTDrawingLink.Components.Text
     public class CreateTextComponent : CreateDatabaseObjectComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
+        protected override Bitmap Icon => Resources.CreateText;
 
         public CreateTextComponent() : base(ComponentInfos.CreateTextComponent)
         {

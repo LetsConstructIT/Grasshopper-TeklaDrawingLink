@@ -1,5 +1,7 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
+using System.Drawing;
 using Tekla.Structures.Drawing;
 using TSD = Tekla.Structures.Drawing;
 
@@ -8,6 +10,7 @@ namespace GTDrawingLink.Components.Text
     public class TextAttributesComponent : TeklaComponentBaseNew<TextAttributesCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
+        protected override Bitmap Icon => Resources.TextAttributes;
 
         public TextAttributesComponent() : base(ComponentInfos.TextAttributesComponent) { }
 
