@@ -83,6 +83,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ArrowAttributes {
+            get {
+                object obj = ResourceManager.GetObject("ArrowAttributes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CloseDrawing {
             get {
                 object obj = ResourceManager.GetObject("CloseDrawing", resourceCulture);
@@ -256,6 +266,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap DrawingPoint {
             get {
                 object obj = ResourceManager.GetObject("DrawingPoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FontAttributes {
+            get {
+                object obj = ResourceManager.GetObject("FontAttributes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
