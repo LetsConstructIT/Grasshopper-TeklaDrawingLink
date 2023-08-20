@@ -19,7 +19,7 @@ namespace GTDrawingLink.Tools
             public static readonly string Plugins = "   Plugins";
             public static readonly string Dimensions = "  Dimensions";
             public static readonly string Text = " Text";
-            public static readonly string Rebars = "Rebars";
+            public static readonly string Modify = "Modify";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -592,7 +592,7 @@ namespace GTDrawingLink.Tools
             NickName = "MRebar",
             Description = "Modifies a reinforcement (single/group/strand/set) in Tekla Structures",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Rebars
+            SubCategory = PanelHeadings.Modify
         };
 
         public static readonly GH_InstanceDescription ModifyMeshComponent = new GH_InstanceDescription
@@ -601,7 +601,7 @@ namespace GTDrawingLink.Tools
             NickName = "MMesh",
             Description = "Modifies a mesh in Tekla Structures",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Rebars
+            SubCategory = PanelHeadings.Modify
         };
     }
 }
