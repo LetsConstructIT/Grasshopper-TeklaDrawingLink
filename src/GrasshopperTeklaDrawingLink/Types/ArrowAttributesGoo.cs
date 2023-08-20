@@ -1,5 +1,5 @@
 ﻿using Grasshopper.Kernel.Types;
-
+using GTDrawingLink.Tools;
 using System;
 
 using Tekla.Structures.Drawing;
@@ -33,7 +33,8 @@ namespace GTDrawingLink.Types {
         public override string ToString() {
             if(Value == null)
                 return "No value";
-            return $"{Value.Head} + {Value.ArrowPosition} + {Value.Width} + {Value.Height}";
+
+            return ReflectionHelper.GetPropertiesWithValues(Value);
         }
     }
 }

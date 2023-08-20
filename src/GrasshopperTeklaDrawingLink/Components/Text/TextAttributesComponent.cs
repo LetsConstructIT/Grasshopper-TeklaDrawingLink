@@ -56,12 +56,12 @@ namespace GTDrawingLink.Components.Text
         internal (FontAttributes? fontAttributes, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth, string? attributesName) GetInputValues()
         {
             return (
-                _inFontAttributes.ValueProvidedByUser ? _inFontAttributes.Value : null,
+                _inFontAttributes.GetValueFromUserOrNull(),
                 _inFrameType.GetValueFromUserOrNull(),
-                _inArrowAttributes.ValueProvidedByUser ? _inArrowAttributes.Value : null,
-                _inBackgroundTransparency.ValueProvidedByUser ? _inBackgroundTransparency.Value : new bool?(),
-                _inAngle.ValueProvidedByUser ? _inAngle.Value : new double?(),
-                _inTextRulerWidth.ValueProvidedByUser ? _inTextRulerWidth.Value : new double?(),
+                _inArrowAttributes.GetValueFromUserOrNull(),
+                _inBackgroundTransparency.GetValueFromUserOrNull(),
+                _inAngle.GetValueFromUserOrNull(),
+                _inTextRulerWidth.GetValueFromUserOrNull(),
                 _inAttributesName.Value);
         }
 

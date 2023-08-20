@@ -1,5 +1,5 @@
 ﻿using Grasshopper.Kernel.Types;
-
+using GTDrawingLink.Tools;
 using System;
 
 using Tekla.Structures.Drawing;
@@ -42,7 +42,7 @@ namespace GTDrawingLink.Types
             if (Value == null)
                 return "No value";
 
-            return $"{Value.Color} {Value.Name} {Value.Height} b: {Value.Bold} i: {Value.Italic}";
+            return ReflectionHelper.GetPropertiesWithValues(Value);
         }
     }
 }
