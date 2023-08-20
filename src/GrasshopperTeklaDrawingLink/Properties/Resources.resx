@@ -295,4 +295,10 @@
   <data name="RebarAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\RebarAttributes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ModifyMesh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ModifyMesh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ModifyRebar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ModifyRebar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

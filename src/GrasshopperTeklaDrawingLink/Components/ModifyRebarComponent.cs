@@ -2,12 +2,14 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System.Collections.Generic;
+using System.Drawing;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
     public class ModifyRebarComponent : TeklaComponentBaseNew<ModifyRebarCommand>
     {
+        protected override Bitmap Icon => Properties.Resources.ModifyRebar;
         public ModifyRebarComponent() : base(ComponentInfos.ModifyRebarComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)

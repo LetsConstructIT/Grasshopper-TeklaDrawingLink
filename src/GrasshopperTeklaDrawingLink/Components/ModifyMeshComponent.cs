@@ -2,12 +2,14 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System.Collections.Generic;
+using System.Drawing;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
     public class ModifyMeshComponent : TeklaComponentBaseNew<ModifyMeshCommand>
     {
+        protected override Bitmap Icon => Properties.Resources.ModifyMesh;
         public ModifyMeshComponent() : base(ComponentInfos.ModifyMeshComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
