@@ -14,7 +14,7 @@ namespace GTDrawingLink.Components
     public class CreateSymbolComponent : CreateDatabaseObjectComponentBaseNew<CreateSymbolCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.quarternary;
-        //protected override Bitmap Icon => Resources.FrameAttributes;
+        protected override Bitmap Icon => Resources.Symbol;
 
         public CreateSymbolComponent() : base(ComponentInfos.CreateSymbolComponent) { }
 

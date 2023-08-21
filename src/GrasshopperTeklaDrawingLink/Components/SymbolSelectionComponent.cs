@@ -1,13 +1,15 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
+using System.Drawing;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Text
 {
     public class SymbolSelectionComponent : TeklaComponentBaseNew<SymbolSelectionCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
-        //protected override Bitmap Icon => Resources.SymbolAttributes;
+        public override GH_Exposure Exposure => GH_Exposure.quinary;
+        protected override Bitmap Icon => Resources.SymbolSelection;
 
         public SymbolSelectionComponent() : base(ComponentInfos.SymbolSelectionComponent) { }
 
