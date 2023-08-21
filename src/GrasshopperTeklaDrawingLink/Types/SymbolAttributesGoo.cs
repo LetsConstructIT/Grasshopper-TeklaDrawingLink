@@ -5,19 +5,19 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class SymbolAttributesGoo : GH_Goo<Symbol.SymbolAttributes>
+    public class SymbolAttributesGoo : GH_Goo<SymbolAttributes>
     {
         public override bool IsValid => true;
 
         public override string TypeDescription => "Tekla symbol attributes";
 
-        public override string TypeName => typeof(Symbol.SymbolAttributes).ToShortString();
+        public override string TypeName => typeof(SymbolAttributes).ToShortString();
 
         public SymbolAttributesGoo()
         {
         }
 
-        public SymbolAttributesGoo(Symbol.SymbolAttributes attr)
+        public SymbolAttributesGoo(SymbolAttributes attr)
             : base(attr)
         {
         }
@@ -28,9 +28,14 @@ namespace GTDrawingLink.Types
 
         public override bool CastFrom(object source)
         {
-            if (source is Symbol.SymbolAttributes)
+            if (source is SymbolAttributes)
             {
-                Value = source as Symbol.SymbolAttributes;
+                Value = source as SymbolAttributes;
+                return true;
+            }
+            else if (source is Symbol.SymbolAttributes)
+            {
+                Value = new SymbolAttributes() { Attributes = source as Symbol.SymbolAttributes };
                 return true;
             }
             return base.CastFrom(source);
@@ -41,7 +46,7 @@ namespace GTDrawingLink.Types
             if (Value == null)
                 return "No value";
 
-            return ReflectionHelper.GetPropertiesWithValues(Value);
+            return $"{ReflectionHelper.GetPropertiesWithValues(Value.Attributes)}\n{ReflectionHelper.GetPropertiesWithValues(Value.SymbolInfo)}";
         }
     }
 }

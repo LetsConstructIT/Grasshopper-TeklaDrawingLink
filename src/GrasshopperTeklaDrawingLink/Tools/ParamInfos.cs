@@ -848,5 +848,40 @@ namespace GTDrawingLink.Tools
             NickName = "S",
             Description = "Symbol attributes"
         };
+
+        public static readonly GH_InstanceDescription SymbolSelection = new GH_InstanceDescription
+        {
+            Name = "Symbol Selection",
+            NickName = "SSel",
+            Description = "Symbol info (file name and number)"
+        };
+
+        public static readonly GH_InstanceDescription Symbol = new GH_InstanceDescription
+        {
+            Name = "Symbol",
+            NickName = "S",
+            Description = "Symbol"
+        };
+
+        public static readonly GH_InstanceDescription InsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "Insertion Point"
+        };
+
+        public static readonly GH_InstanceDescription SymbolFile = new GH_InstanceDescription
+        {
+            Name = "File",
+            NickName = "F",
+            Description = "Symbol file. E.g. \"xsteel\""
+        };
+
+        public static readonly GH_InstanceDescription SymbolIndex = new GH_InstanceDescription
+        {
+            Name = "Index",
+            NickName = "I",
+            Description = "Symbol index from 0 to 255."
+        };
     }
 }

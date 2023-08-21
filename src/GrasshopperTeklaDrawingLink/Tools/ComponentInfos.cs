@@ -621,6 +621,24 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Attributes
         };
 
+        public static readonly GH_InstanceDescription SymbolSelectionComponent = new GH_InstanceDescription
+        {
+            Name = "Symbol Selection",
+            NickName = "SSel",
+            Description = "Create symbol selection (file and number).",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
+
+        public static readonly GH_InstanceDescription CreateSymbolComponent = new GH_InstanceDescription
+        {
+            Name = "Symbol",
+            NickName = "Sym",
+            Description = "Create Tekla Drawing Symbol.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
 
     }
 }

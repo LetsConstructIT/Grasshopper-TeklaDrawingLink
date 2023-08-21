@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace GTDrawingLink.Tools 
-    {
+namespace GTDrawingLink.Tools
+{
     public static class VersionSpecificConstants 
         {
         private static string _tabHeading = null;
@@ -324,6 +324,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SymbolAttributesParam),
                 "7A22469F-0E25-4BC7-8918-973B965D30E3"
+            },
+            {
+                typeof(CreateSymbolComponent),
+                "6B4A446F-BE7D-4267-974A-40F5B16FC483"
+            },
+            {
+                typeof(SymbolSelectionComponent),
+                "A222E53B-F020-439E-BDE1-0A23C6D9CAB9"
+            },
+            {
+                typeof(SymbolInfoParam),
+                "ED253FFE-56A7-46E1-A442-458FEA1B786F"
             }
         };
 

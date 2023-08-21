@@ -5,6 +5,7 @@ using Grasshopper.Kernel.Parameters;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using Rhino.Geometry;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -45,13 +46,15 @@ namespace GTDrawingLink.Components
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional}) },
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional}) },
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
                 { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
                 { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
                 { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(Symbol.SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
+                { typeof(SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
+                { typeof(SymbolInfo), (param, manager) => pManager.AddParameter(new SymbolInfoParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
             };
 
             foreach (var parameter in parameters)
@@ -79,6 +82,7 @@ namespace GTDrawingLink.Components
             var @switch = new Dictionary<Type, Action<OutputParam, GH_OutputParamManager>> {
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess) },
+                { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess))},
@@ -86,7 +90,8 @@ namespace GTDrawingLink.Components
                 { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess))},
-                { typeof(Symbol.SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess))},
+                { typeof(SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess))},
+                { typeof(SymbolInfo), (param, manager) => pManager.AddParameter(new SymbolInfoParam(param.InstanceDescription, param.ParamAccess))},
             };
 
             var typeOfDatabaseObject = typeof(DatabaseObject);

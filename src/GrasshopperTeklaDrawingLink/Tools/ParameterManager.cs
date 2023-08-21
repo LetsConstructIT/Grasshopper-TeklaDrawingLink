@@ -114,13 +114,13 @@ namespace GTDrawingLink.Tools
             return GetWrongInputMessage(InstanceDescription.Name);
         }
     }
-    public class InputPoints : InputParam
+    public class InputListPoint : InputParam
     {
         protected bool _properlySet;
         protected List<Point3d> _value;
         public List<Point3d> Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
 
-        public InputPoints(GH_InstanceDescription instanceDescription)
+        public InputListPoint(GH_InstanceDescription instanceDescription)
             : base(typeof(Point3d), instanceDescription, GH_ParamAccess.list)
         {
         }
@@ -128,7 +128,7 @@ namespace GTDrawingLink.Tools
         public override Result EvaluateInput(IGH_DataAccess DA)
         {
             _properlySet = false;
-            
+
             var points = new List<Point3d>();
             if (DA.GetDataList(InstanceDescription.Name, points))
             {
@@ -162,10 +162,20 @@ namespace GTDrawingLink.Tools
                 GH_Goo<DatabaseObject> objectGoo = null;
                 if (DA.GetData(InstanceDescription.Name, ref objectGoo))
                 {
-                    _value = objectGoo.Value as T;
-                    if (_value == null)
+                    if (typeOfInput == typeof(ViewBase) && objectGoo.Value.GetType().InheritsFrom(typeof(Drawing)))
                     {
-                        return Result.Fail($"Provided input is not type of {typeOfInput.ToShortString()}");
+                        _properlySet = true;
+                        var sheet = (objectGoo.Value as Drawing).GetSheet();
+                        _value = sheet as T;
+                    }
+                    else
+                    {
+                        _properlySet = true;
+                        _value = objectGoo.Value as T;
+                        if (_value == null)
+                        {
+                            return Result.Fail($"Provided input is not type of {typeOfInput.ToShortString()}");
+                        }
                     }
 
                     _properlySet = true;
