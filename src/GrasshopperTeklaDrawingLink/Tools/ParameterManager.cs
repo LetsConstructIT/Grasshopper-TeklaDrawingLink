@@ -88,6 +88,59 @@ namespace GTDrawingLink.Tools
         }
     }
 
+    public class InputPoint : InputParam
+    {
+        protected bool _properlySet;
+        protected Point3d _value;
+        public Point3d Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
+
+        public InputPoint(GH_InstanceDescription instanceDescription)
+            : base(typeof(Point3d), instanceDescription, GH_ParamAccess.item)
+        {
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+
+            Point3d point = new Point3d();
+            if (DA.GetData(InstanceDescription.Name, ref point))
+            {
+                _value = point;
+                _properlySet = true;
+                return Result.Ok();
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+    public class InputPoints : InputParam
+    {
+        protected bool _properlySet;
+        protected List<Point3d> _value;
+        public List<Point3d> Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
+
+        public InputPoints(GH_InstanceDescription instanceDescription)
+            : base(typeof(Point3d), instanceDescription, GH_ParamAccess.list)
+        {
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+            
+            var points = new List<Point3d>();
+            if (DA.GetDataList(InstanceDescription.Name, points))
+            {
+                _value = points;
+                _properlySet = true;
+                return Result.Ok();
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+
     public class InputParam<T> : InputParam where T : class
     {
         protected bool _properlySet;
@@ -303,6 +356,51 @@ namespace GTDrawingLink.Tools
                 if (DA.GetDataList(InstanceDescription.Name, objectsGoo))
                 {
                     _value = objectsGoo.Select(v => v.Value).ToList();
+                    _properlySet = true;
+                    return Result.Ok();
+                }
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+
+    public class InputStructListParam<T> : InputParam where T : struct
+    {
+        protected bool _properlySet;
+        private List<T> _value;
+        public List<T> Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
+
+        public InputStructListParam(GH_InstanceDescription instanceDescription)
+            : base(typeof(T), instanceDescription, GH_ParamAccess.list)
+        {
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+
+            var typeOfInput = typeof(T);
+            if (typeOfInput.IsEnum)
+            {
+                var inputObjects = new List<object>();
+                if (DA.GetDataList(InstanceDescription.Name, inputObjects))
+                {
+                    var castedAsEnums = inputObjects.Select(o => EnumHelpers.ObjectToEnumValue<T>(o));
+                    if (castedAsEnums.All(c => c.HasValue))
+                    {
+                        _value = castedAsEnums.Select(c => c.Value).ToList();
+                        _properlySet = true;
+                        return Result.Ok();
+                    }
+                }
+            }
+            else
+            {
+                var objectGoos = new List<GH_Goo<T>>();
+                if (DA.GetDataList(InstanceDescription.Name, objectGoos))
+                {
+                    _value = objectGoos.Select(o => o.Value).ToList();
                     _properlySet = true;
                     return Result.Ok();
                 }
