@@ -8,7 +8,7 @@ namespace GTDrawingLink.Tools
 {
     public static class EnumHelpers
     {
-        public static TEnum? GetEnum<TEnum>(this IGH_DataAccess DA, GH_InstanceDescription instanceDescription) where TEnum : struct, IConvertible
+        public static TEnum? GetEnum<TEnum>(this IGH_DataAccess DA, GH_InstanceDescription instanceDescription) where TEnum : struct
         {
             object inputFromGh = null;
             DA.GetData(instanceDescription.Name, ref inputFromGh);
@@ -22,7 +22,7 @@ namespace GTDrawingLink.Tools
                 return null;
         }
 
-        public static Dictionary<int, string> GetKeyValues<TEnum>() where TEnum : struct, IConvertible
+        public static Dictionary<int, string> GetKeyValues<TEnum>() where TEnum : struct
         {
             var dictionary = new Dictionary<int, string>();
             foreach (int value in Enum.GetValues(typeof(TEnum)))
@@ -31,7 +31,7 @@ namespace GTDrawingLink.Tools
             return dictionary;
         }
 
-        public static TEnum? ObjectToEnumValue<TEnum>(object input) where TEnum : struct, IConvertible
+        public static TEnum? ObjectToEnumValue<TEnum>(object input) where TEnum : struct
         {
             if (input == null)
                 return null;

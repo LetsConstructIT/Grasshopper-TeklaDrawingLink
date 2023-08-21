@@ -2,6 +2,7 @@
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -176,7 +177,7 @@ namespace GTDrawingLink.Tools
         }
     }
 
-    public class InputStructParam<T> : InputParam where T : struct, IConvertible
+    public class InputStructParam<T> : InputParam where T : struct
     {
         protected bool _properlySet;
         protected T _value;
@@ -218,7 +219,7 @@ namespace GTDrawingLink.Tools
             return GetWrongInputMessage(InstanceDescription.Name);
         }
     }
-    public class InputOptionalStructParam<T> : InputStructParam<T> where T : struct, IConvertible
+    public class InputOptionalStructParam<T> : InputStructParam<T> where T : struct
     {
         private T _defaultValue;
 
