@@ -52,6 +52,7 @@ namespace GTDrawingLink.Components
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
                 { typeof(ModelObjectHatchAttributes), (param, manager) => pManager.AddParameter(new ModelObjectHatchAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},                
                 { typeof(Part.PartAttributes), (param, manager) => pManager.AddParameter(new PartAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
+                { typeof(Tekla.Structures.Drawing.Text.TextAttributes), (param, manager) => pManager.AddParameter(new TextAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
                 { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
                 { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
                 { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},

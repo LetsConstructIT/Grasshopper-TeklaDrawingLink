@@ -140,6 +140,49 @@ namespace GTDrawingLink.Tools
             return GetWrongInputMessage(InstanceDescription.Name);
         }
     }
+    public class InputOptionalListPoint : InputListPoint
+    {
+        private List<Point3d> _defaultValue;
+
+        public bool ValueProvidedByUser { get; private set; }
+
+        public InputOptionalListPoint(GH_InstanceDescription instanceDescription, List<Point3d> defaultValue)
+            : base(instanceDescription)
+        {
+            IsOptional = true;
+            _defaultValue = defaultValue;
+        }
+
+        public InputOptionalListPoint(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
+        {
+            IsOptional = true;
+            _defaultValue = default;
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+
+            var resultFromUserInput = base.EvaluateInput(DA);
+            if (resultFromUserInput.Success)
+            {
+                ValueProvidedByUser = true;
+            }
+            if (resultFromUserInput.Failure)
+            {
+                _value = _defaultValue;
+                _properlySet = true;
+            }
+
+            return Result.Ok();
+        }
+
+        public List<Point3d>? GetValueFromUserOrNull()
+        {
+            return ValueProvidedByUser ? Value : null;
+        }
+    }
 
     public class InputParam<T> : InputParam where T : class
     {

@@ -1,152 +1,97 @@
 ﻿using Grasshopper.Kernel;
-
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
-
 using Rhino.Geometry;
-
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-
 using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Text
 {
-    public class CreateTextComponent : CreateDatabaseObjectComponentBase
+    public class CreateTextComponent : CreateDatabaseObjectComponentBaseNew<CreateTextCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.CreateText;
 
-        public CreateTextComponent() : base(ComponentInfos.CreateTextComponent)
+        public CreateTextComponent() : base(ComponentInfos.CreateTextComponent) { }
+
+        protected override IEnumerable<TSD.DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-        }
-        protected override void RegisterInputParams(GH_InputParamManager pManager)
-        {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
-            AddTextParameter(pManager, ParamInfos.Text, GH_ParamAccess.list);
-            AddPointParameter(pManager, ParamInfos.MarkInsertionPoint, GH_ParamAccess.list);
-            SetParametersAsOptional(pManager, new List<int> {
-                    AddPointParameter(pManager, ParamInfos.MarkLeaderLineEndPoint, GH_ParamAccess.list),
-                    pManager.AddParameter(new TextAttributesParam(ParamInfos.TextAttributes, GH_ParamAccess.list))
-            });
-        }
+            (TSD.ViewBase view, List<string> texts, List<Point3d> insertionPoints, List<Point3d> leaderLineEndPoints, List<TSD.Text.TextAttributes> textAttributes) = _command.GetInputValues();
 
-        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
-        {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.Text, GH_ParamAccess.list);
-        }
+            var createdTexts = new List<TSD.Text>();
 
-
-        protected override IEnumerable<TSD.DatabaseObject> InsertObjects(IGH_DataAccess dA)
-        {
-            if (!(dA.GetGooValue<TSD.DatabaseObject>(ParamInfos.View) is TSD.View view))
-                return null;
-
-            var insertionPoints = new List<Point3d>();
-            if (!dA.GetDataList(ParamInfos.MarkInsertionPoint.Name, insertionPoints))
-                return null;
-            var leaderLineEndPoints = new List<Point3d>();
-            dA.GetDataList(ParamInfos.MarkLeaderLineEndPoint.Name, leaderLineEndPoints);
-
-            var textElements = new List<string>();
-            if (!dA.GetDataList(ParamInfos.Text.Name, textElements))
-                return null;
-
-            var attributes = dA.GetGooListValue<TSD.Text.TextAttributes>(ParamInfos.TextAttributes);
-
-            attributes = (attributes is null)
-                ?new List<TSD.Text.TextAttributes> { new TSD.Text.TextAttributes() } 
-                :attributes;
-
-            var textNumber = new int[]
+            var count = new int[] { texts.Count, insertionPoints.Count, leaderLineEndPoints.Count, textAttributes.Count }.Max();
+            for (int i = 0; i < count; i++)
             {
-                insertionPoints.Count,
-                leaderLineEndPoints.Count,
-                textElements.Count,
-                attributes.Count
-            }.Max();
-            TSD.Text[] insertedTexts;
+                var text = texts.ElementAtOrLast(i);
+                var insertionPt = insertionPoints.ElementAtOrLast(i);
+                var attributes = textAttributes.ElementAtOrLast(i);
 
-            if (leaderLineEndPoints.Any())
-            {
-                insertedTexts = CreateTextWithLeaderLine(view,
-                    insertionPoints,
-                    leaderLineEndPoints,
-                    textElements,
-                    attributes,
-                    textNumber);
+                var createdText = leaderLineEndPoints.Any() ?
+                    InsertTextWithLeaderLine(view, attributes, insertionPt, leaderLineEndPoints.ElementAtOrLast(i), text) :
+                    InsertTextWithoutLeaderLine(view, attributes, insertionPt, text);
+
+                createdTexts.Add(createdText);
             }
-            else
-            {
-                insertedTexts = CreateTextWithoutLeaderLine(view,
-                    insertionPoints,
-                    textElements,
-                    attributes,
-                    textNumber);
-            }
+
+
+            _command.SetOutputValues(DA, createdTexts);
+
             DrawingInteractor.CommitChanges();
-            dA.SetDataList(ParamInfos.Text.Name, insertedTexts);
-            return insertedTexts;
+            return createdTexts;
         }
 
-        private TSD.Text[] CreateTextWithoutLeaderLine(TSD.View view, List<Point3d> insertionPoints, List<string> textElements, List<TSD.Text.TextAttributes> attributes, int textNumber)
+        private TSD.Text InsertTextWithoutLeaderLine(TSD.ViewBase view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, string text)
         {
-           var insertedTexts = new TSD.Text[textNumber];
-            for (int i = 0; i < textNumber; i++)
-            {
-                var text = InsertTextWithoutLeaderLine(
-                    view,
-                    attributes.ElementAtOrLast(i),
-                    insertionPoints.ElementAtOrLast(i),
-                    textElements.ElementAtOrLast(i)
-                );
-
-                insertedTexts[i] = text;
-            }
-            return insertedTexts;
-        }
-
-        private TSD.Text[] CreateTextWithLeaderLine(TSD.View view, List<Point3d> insertionPoints, List<Point3d> leaderLineEndPoints, List<string> textElements, List<TSD.Text.TextAttributes> attributes, int textNumber)
-        {
-            var insertedTexts = new TSD.Text[textNumber];
-            for (int i = 0; i < textNumber; i++)
-            {
-                var text = InsertTextWithLeaderLine(
-                    view,
-                    attributes.ElementAtOrLast(i),
-                    insertionPoints.ElementAtOrLast(i),
-                    leaderLineEndPoints.ElementAtOrLast(i),
-                    textElements.ElementAtOrLast(i)
-                );
-
-                insertedTexts[i] = text;
-            }
-            return insertedTexts;
-        }
-
-        private TSD.Text InsertTextWithoutLeaderLine(TSD.View view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, string text)
-        {
-            Tekla.Structures.Drawing.Text textElement = new Tekla.Structures.Drawing.Text(view, insertionPoint.ToTekla(), text, attribute)
+            var textElement = new TSD.Text(view, insertionPoint.ToTekla(), text, attribute)
             {
                 Placing = TSD.PlacingTypes.PointPlacing()
             };
+
             textElement.Insert();
             return textElement;
         }
 
-        private TSD.Text InsertTextWithLeaderLine(TSD.View view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, Point3d leaderLinePoint, string text)
+        private TSD.Text InsertTextWithLeaderLine(TSD.ViewBase view, TSD.Text.TextAttributes attribute, Point3d insertionPoint, Point3d leaderLinePoint, string text)
         {
-
-            Tekla.Structures.Drawing.Text textElement = new Tekla.Structures.Drawing.Text(view, insertionPoint.ToTekla(), text, attribute)
+            var textElement = new TSD.Text(view, insertionPoint.ToTekla(), text, attribute)
             {
                 Placing = TSD.PlacingTypes.LeaderLinePlacing(leaderLinePoint.ToTekla())
             };
 
             textElement.Insert();
             return textElement;
+        }
+    }
+
+    public class CreateTextCommand : CommandBase
+    {
+        private readonly InputParam<TSD.ViewBase> _inView = new InputParam<TSD.ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<string> _inText = new InputListParam<string>(ParamInfos.Text);
+        private readonly InputListPoint _inInsertionPoints = new InputListPoint(ParamInfos.MarkInsertionPoint);
+        private readonly InputOptionalListPoint _inLeaderLineEndPoints = new InputOptionalListPoint(ParamInfos.MarkLeaderLineEndPoint, new List<Point3d>());
+        private readonly InputListParam<TSD.Text.TextAttributes> _inAttributes = new InputListParam<TSD.Text.TextAttributes>(ParamInfos.TextAttributes);
+
+        private readonly OutputListParam<TSD.Text> _outText = new OutputListParam<TSD.Text>(ParamInfos.Text);
+
+        internal (TSD.ViewBase view, List<string> texts, List<Point3d> insertionPoints, List<Point3d> leaderLineEndPoints, List<TSD.Text.TextAttributes> textAttributes) GetInputValues()
+        {
+            return (
+                _inView.Value,
+                _inText.Value,
+                _inInsertionPoints.Value,
+                _inLeaderLineEndPoints.Value,
+                _inAttributes.Value);
+        }
+
+        internal Result SetOutputValues(IGH_DataAccess DA, List<TSD.Text> texts)
+        {
+            _outText.Value = texts;
+
+            return SetOutput(DA);
         }
     }
 }
