@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class ModifyPartComponent : TeklaComponentBaseNew<ModifyPartCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.ModifyPart;
         public ModifyPartComponent() : base(ComponentInfos.ModifyPartComponent) { }
 
