@@ -1,43 +1,47 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class CloseDrawingComponent : TeklaComponentBase
+    public class CloseDrawingComponent : TeklaComponentBaseNew<CloseDrawingCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.septenary;
         protected override Bitmap Icon => Properties.Resources.CloseDrawing;
 
-        public CloseDrawingComponent() : base(ComponentInfos.CloseDrawingComponent)
-        {
-        }
+        public CloseDrawingComponent() : base(ComponentInfos.CloseDrawingComponent) { }
 
-        protected override void RegisterInputParams(GH_InputParamManager pManager)
+        protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.Drawing, GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Save", "S", "Should drawing be saved (true by default)", GH_ParamAccess.item, true);
-        }
-
-        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
-        {
-            pManager.AddBooleanParameter("Result", "R", "True when drawing was closed", GH_ParamAccess.item);
-        }
-
-        protected override void SolveInstance(IGH_DataAccess DA)
-        {
-            var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
-            if (drawing == null)
-                return;
-
-            var save = true;
-            DA.GetData("Save", ref save);
+            var (drawing, save) = _command.GetInputValues();
 
             var result = DrawingInteractor.DrawingHandler.CloseActiveDrawing(save);
-            DA.SetData("Result", result);
+
+            _command.SetOutputValues(DA, result);
+        }
+    }
+
+    public class CloseDrawingCommand : CommandBase
+    {
+        private readonly InputParam<Drawing> _inDrawing = new InputParam<Drawing>(ParamInfos.Drawing);
+        private readonly InputOptionalStructParam<bool> _inSave = new InputOptionalStructParam<bool>(ParamInfos.SaveDrawing, true);
+
+        private readonly OutputParam<bool> _outResult = new OutputParam<bool>(ParamInfos.DrawingSaveResult);
+
+        internal (Drawing drawing, bool save) GetInputValues()
+        {
+            return (
+                _inDrawing.Value,
+                _inSave.Value);
+        }
+
+        internal Result SetOutputValues(IGH_DataAccess DA, bool result)
+        {
+            _outResult.Value = result;
+
+            return SetOutput(DA);
         }
     }
 }

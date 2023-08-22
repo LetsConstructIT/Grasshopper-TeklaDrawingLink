@@ -897,5 +897,19 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = $"Sets the part representation: \n{EnumHelpers.EnumToString<Part.Representation>()}\nYou can right-click to set."
         };
+
+        public static readonly GH_InstanceDescription SaveDrawing = new GH_InstanceDescription
+        {
+            Name = "Save",
+            NickName = "S",
+            Description = "Should drawing be saved (true by default)"
+        };
+
+        public static readonly GH_InstanceDescription DrawingSaveResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when drawing was closed"
+        };
     }
 }
