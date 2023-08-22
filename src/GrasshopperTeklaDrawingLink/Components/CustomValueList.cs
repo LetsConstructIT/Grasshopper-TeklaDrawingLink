@@ -50,6 +50,8 @@ namespace GTDrawingLink.Components
             ListItems.Add(new GH_ValueListItem("Gray50", "131"));
             ListItems.Add(new GH_ValueListItem("Gray70", "132"));
             ListItems.Add(new GH_ValueListItem("Gray90", "133"));
+
+            SelectItem(1);
         }
     }
 }
