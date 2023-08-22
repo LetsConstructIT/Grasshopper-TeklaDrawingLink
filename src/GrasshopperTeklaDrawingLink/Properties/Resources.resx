@@ -328,4 +328,7 @@
   <data name="DrawingColors" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\DrawingColors.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PartAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\PartAttributes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

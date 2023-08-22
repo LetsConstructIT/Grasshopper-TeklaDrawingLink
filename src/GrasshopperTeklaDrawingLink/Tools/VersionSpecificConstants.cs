@@ -336,6 +336,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SymbolInfoParam),
                 "ED253FFE-56A7-46E1-A442-458FEA1B786F"
+            },
+            {
+                typeof(PartAttributesComponent),
+                "9CF81D45-6532-4755-9FCF-8976F897020D"
+            },
+            {
+                typeof(PartAttributesParam),
+                "89651017-00B9-4EFD-B595-B6F2AAA3E45D"
             }
         };
 

@@ -640,5 +640,14 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Annotations
         };
 
+        public static readonly GH_InstanceDescription PartAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Part Attributes",
+            NickName = "Attributes",
+            Description = "Creates/modifies a part attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
     }
 }

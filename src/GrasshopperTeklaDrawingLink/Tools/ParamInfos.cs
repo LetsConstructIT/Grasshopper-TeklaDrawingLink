@@ -883,5 +883,19 @@ namespace GTDrawingLink.Tools
             NickName = "I",
             Description = "Symbol index from 0 to 255."
         };
+
+        public static readonly GH_InstanceDescription PartAttributes = new GH_InstanceDescription
+        {
+            Name = "Part Attributes",
+            NickName = "A",
+            Description = "Part attributes"
+        };
+
+        public static readonly GH_InstanceDescription PartRepresentation = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"Sets the part representation: \n{EnumHelpers.EnumToString<Part.Representation>()}\nYou can right-click to set."
+        };
     }
 }
