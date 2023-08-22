@@ -3,6 +3,7 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,13 +11,14 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class ModifyPartComponent : TeklaComponentBase
+    [Obsolete]
+    public class ModifyPartComponentOLD : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
 
         protected override Bitmap Icon => Resources.ModifyPart;
 
-        public ModifyPartComponent()
+        public ModifyPartComponentOLD()
             : base(ComponentInfos.ModifyPartComponent)
         {
         }

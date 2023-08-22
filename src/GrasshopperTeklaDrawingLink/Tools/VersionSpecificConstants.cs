@@ -150,7 +150,7 @@ namespace GTDrawingLink.Tools
                 "0DF6013A-F529-46C9-BC2A-B2585A8267F8"
             },
             {
-                typeof(ModifyPartComponent),
+                typeof(ModifyPartComponentOLD),
                 "E18A1FF6-9CBA-488D-AE9E-7CAC8C03A6F9"
             },
             {
