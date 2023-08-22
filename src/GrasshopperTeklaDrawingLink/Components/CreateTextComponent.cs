@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Linq;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Text
+namespace GTDrawingLink.Components
 {
     public class CreateTextComponent : CreateDatabaseObjectComponentBaseNew<CreateTextCommand>
     {

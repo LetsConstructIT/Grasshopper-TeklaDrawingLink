@@ -3,9 +3,8 @@ using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
-using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Text
+namespace GTDrawingLink.Components
 {
     public class TextAttributesComponent : TeklaComponentBaseNew<TextAttributesCommand>
     {
@@ -18,7 +17,7 @@ namespace GTDrawingLink.Components.Text
         {
             var (fontAttributes, frame, arrowAttributes, backgroundTransparency, angle, rulerWidth, attributesName) = _command.GetInputValues();
 
-            var textAttributes = new TSD.Text.TextAttributes(attributesName);
+            var textAttributes = new Text.TextAttributes(attributesName);
 
             if (fontAttributes != null)
                 textAttributes.Font = fontAttributes;
@@ -51,7 +50,7 @@ namespace GTDrawingLink.Components.Text
         private readonly InputOptionalStructParam<double> _inTextRulerWidth = new InputOptionalStructParam<double>(ParamInfos.TextRulerWidth);
         private readonly InputOptionalParam<string> _inAttributesName = new InputOptionalParam<string>(ParamInfos.Attributes, "standard");
 
-        private readonly OutputParam<TSD.Text.TextAttributes> _outAttributes = new OutputParam<TSD.Text.TextAttributes>(ParamInfos.TextAttributes);
+        private readonly OutputParam<Text.TextAttributes> _outAttributes = new OutputParam<Text.TextAttributes>(ParamInfos.TextAttributes);
 
         internal (FontAttributes? fontAttributes, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth, string? attributesName) GetInputValues()
         {
@@ -65,7 +64,7 @@ namespace GTDrawingLink.Components.Text
                 _inAttributesName.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, TSD.Text.TextAttributes attributes)
+        internal Result SetOutputValues(IGH_DataAccess DA, Text.TextAttributes attributes)
         {
             _outAttributes.Value = attributes;
 

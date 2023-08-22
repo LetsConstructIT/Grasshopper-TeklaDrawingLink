@@ -5,7 +5,7 @@ using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Text
+namespace GTDrawingLink.Components
 {
     public class SymbolAttributesComponent : TeklaComponentBaseNew<SymbolAttributesCommand>
     {

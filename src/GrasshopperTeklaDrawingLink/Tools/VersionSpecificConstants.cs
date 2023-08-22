@@ -1,5 +1,4 @@
 ﻿using GTDrawingLink.Components;
-using GTDrawingLink.Components.Text;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;

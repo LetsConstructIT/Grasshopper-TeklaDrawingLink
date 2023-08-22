@@ -4,7 +4,7 @@ using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Text
+namespace GTDrawingLink.Components
 {
     public class ArrowAttributesComponent : TeklaComponentBaseNew<ArrowAttributesCommand>
     {
