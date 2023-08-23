@@ -347,6 +347,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyPartComponent),
                 "4E1B4B00-521E-45CD-ACD5-F60A4A67E7DA"
+            },
+            {
+                typeof(DeleteDrawingComponent),
+                "F1DD22E3-E5D1-44F4-AF3C-E0815DD643AA"
             }
         };
 

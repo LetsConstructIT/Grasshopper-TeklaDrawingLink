@@ -649,5 +649,13 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Attributes
         };
 
+        public static readonly GH_InstanceDescription DeleteDrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Delete Drawing",
+            NickName = "Del",
+            Description = "Delete Tekla drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };
     }
 }
