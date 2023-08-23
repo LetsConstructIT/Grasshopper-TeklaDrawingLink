@@ -23,9 +23,11 @@ namespace GTDrawingLink.Components
             return index;
         }
 
-        protected int AddGenericParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        protected int AddGenericParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
-            return pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            var index = pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
         }
 
         protected int AddBooleanParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)

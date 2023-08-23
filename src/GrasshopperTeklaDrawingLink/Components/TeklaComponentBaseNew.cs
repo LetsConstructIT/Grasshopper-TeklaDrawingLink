@@ -7,6 +7,7 @@ using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Rhino.Geometry;
 using Tekla.Structures.Drawing;
+using TSM = Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components
 {
@@ -47,17 +48,18 @@ namespace GTDrawingLink.Components
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
-                { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional}) },
-                { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional}) },
-                { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(ModelObjectHatchAttributes), (param, manager) => pManager.AddParameter(new ModelObjectHatchAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},                
-                { typeof(Part.PartAttributes), (param, manager) => pManager.AddParameter(new PartAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(Text.TextAttributes), (param, manager) => pManager.AddParameter(new TextAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
-                { typeof(SymbolInfo), (param, manager) => pManager.AddParameter(new SymbolInfoParam(param.InstanceDescription, param.ParamAccess) {Optional = param.IsOptional} )},
+                { typeof(TSM.ModelObject), (param, manager) => AddGenericParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional}) },
+                { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional}) },
+                { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(ModelObjectHatchAttributes), (param, manager) => pManager.AddParameter(new ModelObjectHatchAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(Part.PartAttributes), (param, manager) => pManager.AddParameter(new PartAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(Text.TextAttributes), (param, manager) => pManager.AddParameter(new TextAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(SymbolInfo), (param, manager) => pManager.AddParameter(new SymbolInfoParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
             };
 
             foreach (var parameter in parameters)

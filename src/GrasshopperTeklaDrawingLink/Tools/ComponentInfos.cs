@@ -657,5 +657,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Drawing
         };
+
+        public static readonly GH_InstanceDescription GetDrawingsFromModelObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Get Drawings From Model Objects",
+            NickName = "Dr",
+            Description = "Get Tekla drawings from source model objects",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingList
+        };
     }
 }
