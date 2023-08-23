@@ -1,5 +1,4 @@
 ﻿using Grasshopper.Kernel;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -8,7 +7,7 @@ namespace GTDrawingLink.Components
 {
     public class CloseDrawingComponent : TeklaComponentBaseNew<CloseDrawingCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.septenary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.CloseDrawing;
 
         public CloseDrawingComponent() : base(ComponentInfos.CloseDrawingComponent) { }
