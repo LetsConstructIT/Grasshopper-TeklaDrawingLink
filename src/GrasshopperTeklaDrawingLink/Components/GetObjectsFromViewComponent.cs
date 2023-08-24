@@ -12,7 +12,7 @@ namespace GTDrawingLink.Components
 {
     public class GetObjectsFromViewComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.GetObjectsFromView;
 
         public GetObjectsFromViewComponent() : base(ComponentInfos.GetObjectsFromViewComponent)

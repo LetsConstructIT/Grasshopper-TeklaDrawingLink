@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class MoveViewComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.MoveView;
 
         public MoveViewComponent() : base(ComponentInfos.MoveViewComponent)

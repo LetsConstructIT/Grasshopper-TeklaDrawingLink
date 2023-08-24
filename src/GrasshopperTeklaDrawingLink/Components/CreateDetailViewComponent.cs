@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class CreateDetailViewComponent : CreateViewBaseComponent
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.DetailView;
         private int _defaultRadius = 500;
 

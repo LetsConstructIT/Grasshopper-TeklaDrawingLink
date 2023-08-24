@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class GetViewFrameGeometryComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.ViewFrame;
 
         public GetViewFrameGeometryComponent() : base(ComponentInfos.GetViewFrameGeometryComponent)
