@@ -660,9 +660,9 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetDrawingsFromModelObjectComponent = new GH_InstanceDescription
         {
-            Name = "Get Drawings From Model Objects",
+            Name = "Get Drawings From Model Object",
             NickName = "Dr",
-            Description = "Get Tekla drawings from source model objects",
+            Description = "Get Tekla drawings from source model object",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingList
         };

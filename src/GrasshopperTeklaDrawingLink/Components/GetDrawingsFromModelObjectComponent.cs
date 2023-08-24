@@ -25,17 +25,17 @@ namespace GTDrawingLink.Components
 
             SelectObject(mos, modelObject);
 
-            var drawings = new List<TSD.Drawing>();
-            var selected = Tekla.Structures.DrawingInternal.Operation.GetDrawingsBySelectedParts(true, true);
+            var drawingIds = Tekla.Structures.DrawingInternal.Operation.GetDrawingsBySelectedParts(true, true);
 
-            foreach (var id in selected)
+            SelectObjects(mos, preSelectedObjects);
+
+            var drawings = new List<TSD.Drawing>();
+            foreach (var id in drawingIds)
             {
                 var identifier = new Tekla.Structures.Identifier(id);
                 var drawing = Tekla.Structures.DrawingInternal.Operation.GetDrawing(identifier);
                 drawings.Add(drawing);
             }
-
-            SelectObjects(mos, preSelectedObjects);
 
             _command.SetOutputValues(DA, drawings);
         }
