@@ -918,5 +918,12 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "True when drawing was deleted"
         };
+
+        public static readonly GH_InstanceDescription DrawingObjectDeleteResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when drawing object was deleted"
+        };
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
@@ -24,7 +23,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddBooleanParameter("Output", "O", "Status of operation", GH_ParamAccess.item);
+            AddBooleanParameter(pManager, ParamInfos.DrawingObjectDeleteResult, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -38,7 +37,7 @@ namespace GTDrawingLink.Components
 
             DrawingInteractor.CommitChanges();
 
-            DA.SetData("Output", statuses.All(s => s == true));
+            DA.SetData(ParamInfos.DrawingObjectDeleteResult.Name, statuses.All(s => s == true));
         }
     }
 }
