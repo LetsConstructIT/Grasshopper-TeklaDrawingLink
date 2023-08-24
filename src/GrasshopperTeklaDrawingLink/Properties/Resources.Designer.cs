@@ -583,6 +583,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PartViewTypes {
+            get {
+                object obj = ResourceManager.GetObject("PartViewTypes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PickerInput {
             get {
                 object obj = ResourceManager.GetObject("PickerInput", resourceCulture);
