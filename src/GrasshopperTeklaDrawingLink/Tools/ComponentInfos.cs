@@ -289,7 +289,7 @@ namespace GTDrawingLink.Tools
             NickName = "COG",
             Description = "Gets center of gravity of model or drawing object in global coordinate system",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Misc
+            SubCategory = PanelHeadings.Geometry
         };
 
         public static readonly GH_InstanceDescription LineTypeAttributesComponent = new GH_InstanceDescription
@@ -424,7 +424,7 @@ namespace GTDrawingLink.Tools
             NickName = "ExtPts",
             Description = "Get planar extreme points",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Misc
+            SubCategory = PanelHeadings.Geometry
         };
 
         public static readonly GH_InstanceDescription GetPartLinesComponent = new GH_InstanceDescription
@@ -433,7 +433,7 @@ namespace GTDrawingLink.Tools
             NickName = "PartLines",
             Description = "Get Part lines",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Misc
+            SubCategory = PanelHeadings.Geometry
         };
 
         public static readonly GH_InstanceDescription GetCustomPartPointsComponent = new GH_InstanceDescription
@@ -442,7 +442,7 @@ namespace GTDrawingLink.Tools
             NickName = "CmPrtPts",
             Description = "Get Custom Part points",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Misc
+            SubCategory = PanelHeadings.Geometry
         };
 
         public static readonly GH_InstanceDescription CreateAngleDimensionComponent = new GH_InstanceDescription

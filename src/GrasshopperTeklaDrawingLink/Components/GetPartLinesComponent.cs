@@ -10,7 +10,7 @@ namespace GTDrawingLink.Components
 {
     public class GetPartLinesComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.GetPartLines;
 
         public GetPartLinesComponent() : base(ComponentInfos.GetPartLinesComponent)

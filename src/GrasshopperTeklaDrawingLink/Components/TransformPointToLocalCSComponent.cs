@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class TransformPointToLocalCSComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.TransformPointToLocal;
 
         public TransformPointToLocalCSComponent() : base(ComponentInfos.TransformPointToLocalCS)

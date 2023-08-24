@@ -13,7 +13,7 @@ namespace GTDrawingLink.Components
 {
     public class TransformPointToViewCSComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.TransformPointToView;
 
         public TransformPointToViewCSComponent() : base(ComponentInfos.TransformPointToViewCS)
