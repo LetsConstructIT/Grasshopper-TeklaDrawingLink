@@ -631,7 +631,7 @@ namespace GTDrawingLink.Tools
         };
         public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription
         {
-            Name = "Text attributes",
+            Name = "Text Attributes",
             NickName = "TATR",
             Description = "The attributes of the text."
         };
