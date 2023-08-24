@@ -112,6 +112,9 @@ namespace GTDrawingLink.Tools
 
         public static void Highlight(ArrayList objects)
         {
+            if (!IsAnyDrawingOpened())
+                return;
+
             var dos = DrawingHandler.GetDrawingObjectSelector();
 
             if (objects == null)
@@ -122,8 +125,16 @@ namespace GTDrawingLink.Tools
 
         public static void UnHighlight()
         {
+            if (!IsAnyDrawingOpened())
+                return;
+
             var dos = DrawingHandler.GetDrawingObjectSelector();
             dos.UnselectAllObjects();
+        }
+
+        private static bool IsAnyDrawingOpened()
+        {
+            return DrawingHandler.GetActiveDrawing() != null;
         }
     }
 }
