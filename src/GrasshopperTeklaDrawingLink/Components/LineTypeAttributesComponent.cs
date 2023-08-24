@@ -21,6 +21,9 @@ namespace GTDrawingLink.Components
         {
             pManager.AddParameter(new EnumParam<LineTypesEnum>(ParamInfos.LineType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item));
+
+            for (int i = 0; i < pManager.ParamCount; i++)
+                pManager[i].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
