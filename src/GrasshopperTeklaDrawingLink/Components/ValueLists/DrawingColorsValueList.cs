@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
-using System.Drawing.Drawing2D;
-using Grasshopper.GUI.Canvas;
-using Grasshopper.GUI;
 using GTDrawingLink.Tools;
 using static GTDrawingLink.Tools.ComponentInfos;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.ValueLists
 {
     public class DrawingColorsValueList : GH_ValueList
     {
