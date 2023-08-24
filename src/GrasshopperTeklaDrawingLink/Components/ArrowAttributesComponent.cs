@@ -34,7 +34,7 @@ namespace GTDrawingLink.Components
         private readonly InputOptionalStructParam<double> _inWidth = new InputOptionalStructParam<double>(ParamInfos.Width, 1.0);
         private readonly InputOptionalStructParam<double> _inHeight = new InputOptionalStructParam<double>(ParamInfos.Height, 2.0);
 
-        private readonly OutputParam<ArrowheadAttributes> _outAttributes = new OutputParam<ArrowheadAttributes>(ParamInfos.ArrowAttribute);
+        private readonly OutputParam<ArrowheadAttributes> _outAttributes = new OutputParam<ArrowheadAttributes>(ParamInfos.ArrowAttributes);
 
         internal (ArrowheadTypes type, double width, double height) GetInputValues()
         {

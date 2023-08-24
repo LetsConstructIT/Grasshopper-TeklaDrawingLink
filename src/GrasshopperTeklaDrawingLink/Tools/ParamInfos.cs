@@ -637,7 +637,7 @@ namespace GTDrawingLink.Tools
         };
         public static readonly GH_InstanceDescription FontAttributes = new GH_InstanceDescription
         {
-            Name = "Font attributes",
+            Name = "Font Attributes",
             NickName = "FATR",
             Description = "The attributes of the font used."
         };
@@ -667,7 +667,7 @@ namespace GTDrawingLink.Tools
         };
         public static readonly GH_InstanceDescription ArrowType = new GH_InstanceDescription
         {
-            Name = "ArrowType",
+            Name = "Arrow Type",
             NickName = "T",
             Description = $"Sets the type of the arrow: \n{EnumHelpers.EnumToString<ArrowheadTypes>()}\nYou can right-click to set."
         };
@@ -683,9 +683,9 @@ namespace GTDrawingLink.Tools
             NickName = "H",
             Description = "Sets the heigth of the arrow."
         };
-        public static readonly GH_InstanceDescription ArrowAttribute = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription ArrowAttributes = new GH_InstanceDescription
         {
-            Name = "ArrowAttribute",
+            Name = "Arrow Attributes",
             NickName = "AA",
             Description = "Sets the atributes of the arrow."
         };
