@@ -50,7 +50,7 @@ namespace GTDrawingLink.Components
                 return;
             }
 
-            DA.SetData(_modelObjectName, ModelInteractor.GetModelObject(identifier));
+            DA.SetData(_modelObjectName, new ModelObjectGoo(ModelInteractor.GetModelObject(identifier)));
         }
     }
 }

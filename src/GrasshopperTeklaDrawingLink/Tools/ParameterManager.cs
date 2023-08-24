@@ -227,12 +227,15 @@ namespace GTDrawingLink.Tools
             }
             else
             {
-                GH_Goo<T> objectGoo = null;
-                if (DA.GetData(InstanceDescription.Name, ref objectGoo))
+                object input = null;
+                if (DA.GetData(InstanceDescription.Name, ref input))
                 {
-                    _value = objectGoo.Value;
-                    _properlySet = true;
-                    return Result.Ok();
+                    if (input is GH_Goo<T> ghGoo)
+                    {
+                        _value = ghGoo.Value;
+                        _properlySet = true;
+                        return Result.Ok();
+                    }
                 }
             }
 
