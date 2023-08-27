@@ -940,6 +940,13 @@ namespace GTDrawingLink.Tools
             Description = "Distance between dimensions"
         };
 
+        public static readonly GH_InstanceDescription Bolt = new GH_InstanceDescription
+        {
+            Name = "Bolt",
+            NickName = "B",
+            Description = "Tekla drawing Bolt"
+        };
+
         public static readonly GH_InstanceDescription BoltAttributes = new GH_InstanceDescription
         {
             Name = "Bolt Attributes",

@@ -684,5 +684,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+
+        public static readonly GH_InstanceDescription ModifyBoltComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Bolt",
+            NickName = "MBolt",
+            Description = "Modifies a drawing bolt in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
+        };
     }
 }
