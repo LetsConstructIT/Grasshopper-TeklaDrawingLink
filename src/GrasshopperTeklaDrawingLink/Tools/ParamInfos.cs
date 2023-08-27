@@ -939,5 +939,33 @@ namespace GTDrawingLink.Tools
             NickName = "D",
             Description = "Distance between dimensions"
         };
+
+        public static readonly GH_InstanceDescription BoltAttributes = new GH_InstanceDescription
+        {
+            Name = "Bolt Attributes",
+            NickName = "A",
+            Description = "Bolt attributes"
+        };
+
+        public static readonly GH_InstanceDescription BoltRepresentation = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"Sets the bolt representation: \n{EnumHelpers.EnumToString<Bolt.Representation>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription SymbolContainsHole = new GH_InstanceDescription
+        {
+            Name = "Hole visible",
+            NickName = "H",
+            Description = "True if the bolt symbol contains a hole."
+        };
+
+        public static readonly GH_InstanceDescription SymbolContainsAxis = new GH_InstanceDescription
+        {
+            Name = "Axis visible",
+            NickName = "Ax",
+            Description = "True if the bolt symbol contains an axis."
+        };
     }
 }

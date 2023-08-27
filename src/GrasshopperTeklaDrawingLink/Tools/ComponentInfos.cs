@@ -675,5 +675,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
+
+        public static readonly GH_InstanceDescription BoltAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Bolt Attributes",
+            NickName = "Attributes",
+            Description = "Creates/modifies a bolt attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
     }
 }
