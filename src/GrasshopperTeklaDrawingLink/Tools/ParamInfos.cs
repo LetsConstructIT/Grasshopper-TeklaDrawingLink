@@ -306,6 +306,13 @@ namespace GTDrawingLink.Tools
             Description = "Dimension Line"
         };
 
+        public static readonly GH_InstanceDescription StraightDimensionSets = new GH_InstanceDescription
+        {
+            Name = "Dimension Lines",
+            NickName = "Dims",
+            Description = "Dimension Lines"
+        };
+
         public static readonly GH_InstanceDescription DimensionPoints = new GH_InstanceDescription
         {
             Name = "Points",
@@ -924,6 +931,13 @@ namespace GTDrawingLink.Tools
             Name = "Result",
             NickName = "R",
             Description = "True when drawing object was deleted"
+        };
+
+        public static readonly GH_InstanceDescription DistanceBetweenDimensions = new GH_InstanceDescription
+        {
+            Name = "Distance",
+            NickName = "D",
+            Description = "Distance between dimensions"
         };
     }
 }

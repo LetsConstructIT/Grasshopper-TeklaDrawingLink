@@ -53,6 +53,12 @@ namespace GTDrawingLink.Extensions
             return new LineSegment(firstPt, lastPt);
         }
 
+        internal static LineSegment GetDimensionLocation(this StraightDimensionSet sds)
+        {
+            var dimPoints = sds.GetPoints();
+            return sds.GetDimensionLocation(dimPoints);
+        }
+
         internal static string GetFilter(this View view)
         {
             return typeof(View).GetMethod("SelectFilter", BindingFlags.NonPublic | BindingFlags.Instance)

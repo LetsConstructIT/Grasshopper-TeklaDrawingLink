@@ -666,5 +666,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingList
         };
+
+        public static readonly GH_InstanceDescription OrderStraightDimensionSetComponent = new GH_InstanceDescription
+        {
+            Name = "Order Dim Lines",
+            NickName = "ODim",
+            Description = "Orders Tekla dimension line by specified distance.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
     }
 }
