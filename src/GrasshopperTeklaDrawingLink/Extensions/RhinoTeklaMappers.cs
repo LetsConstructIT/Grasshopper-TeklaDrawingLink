@@ -12,6 +12,11 @@
             return new Rhino.Geometry.Point3d(point.X, point.Y, point.Z);
         }
 
+        public static Rhino.Geometry.Line ToRhino(this Tekla.Structures.Geometry3d.LineSegment line)
+        {
+            return new Rhino.Geometry.Line(line.Point1.ToRhino(), line.Point2.ToRhino());
+        }
+
         public static Tekla.Structures.Geometry3d.Vector ToTekla(this Rhino.Geometry.Vector3d point)
         {
             return new Tekla.Structures.Geometry3d.Vector(point.X, point.Y, point.Z);

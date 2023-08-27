@@ -114,6 +114,7 @@ namespace GTDrawingLink.Tools
             return GetWrongInputMessage(InstanceDescription.Name);
         }
     }
+
     public class InputListPoint : InputParam
     {
         protected bool _properlySet;
@@ -140,6 +141,7 @@ namespace GTDrawingLink.Tools
             return GetWrongInputMessage(InstanceDescription.Name);
         }
     }
+
     public class InputOptionalListPoint : InputListPoint
     {
         private List<Point3d> _defaultValue;
@@ -181,6 +183,77 @@ namespace GTDrawingLink.Tools
         public List<Point3d>? GetValueFromUserOrNull()
         {
             return ValueProvidedByUser ? Value : null;
+        }
+    }
+
+    public class InputLine : InputParam
+    {
+        protected bool _properlySet;
+        protected Rhino.Geometry.Line _value;
+        public Rhino.Geometry.Line Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
+
+        public InputLine(GH_InstanceDescription instanceDescription)
+            : base(typeof(Rhino.Geometry.Line), instanceDescription, GH_ParamAccess.item)
+        {
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+
+            Rhino.Geometry.Line line = new Rhino.Geometry.Line();
+            if (DA.GetData(InstanceDescription.Name, ref line))
+            {
+                _value = line;
+                _properlySet = true;
+                return Result.Ok();
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+
+    public class InputOptionalLine : InputLine
+    {
+        private Rhino.Geometry.Line _defaultValue;
+
+        public bool ValueProvidedByUser { get; private set; }
+
+        public InputOptionalLine(GH_InstanceDescription instanceDescription, Rhino.Geometry.Line defaultValue)
+            : base(instanceDescription)
+        {
+            IsOptional = true;
+            _defaultValue = defaultValue;
+        }
+
+        public InputOptionalLine(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
+        {
+            IsOptional = true;
+            _defaultValue = default;
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+
+            var resultFromUserInput = base.EvaluateInput(DA);
+            if (resultFromUserInput.Success)
+            {
+                ValueProvidedByUser = true;
+            }
+            if (resultFromUserInput.Failure)
+            {
+                _value = _defaultValue;
+                _properlySet = true;
+            }
+
+            return Result.Ok();
+        }
+
+        public Rhino.Geometry.Line? GetValueFromUserOrNull()
+        {
+            return ValueProvidedByUser ? Value : new Rhino.Geometry.Line?();
         }
     }
 

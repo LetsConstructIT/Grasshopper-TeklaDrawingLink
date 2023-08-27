@@ -26,7 +26,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddCurveParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.item);
+            pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
             pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.item);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
         }
@@ -38,35 +38,11 @@ namespace GTDrawingLink.Components
 
             sds.Select();
 
-            var dimensionPoints = (typeof(TSD.StraightDimensionSet).GetProperty("DimensionPoints", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(sds) as TSD.PointList).ToArray();
+            var dimensionPoints = sds.GetPoints();
 
-            DA.SetData(ParamInfos.DimensionPoints.Name, new GH_Curve(new Rhino.Geometry.Polyline(dimensionPoints.Select(p => p.ToRhino())).ToPolylineCurve()));
-            DA.SetData(ParamInfos.DimensionLocation.Name, GetDimensionLocation(sds, dimensionPoints));
+            DA.SetDataList(ParamInfos.DimensionPoints.Name, dimensionPoints.Select(p => p.ToRhino()));
+            DA.SetData(ParamInfos.DimensionLocation.Name, sds.GetDimensionLocation(dimensionPoints).ToRhino());
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(sds.Attributes));
-        }
-
-        private Rhino.Geometry.Line GetDimensionLocation(TSD.StraightDimensionSet sds, Point[] dimPoints)
-        {
-            var upDirection = sds.GetUpDirection();
-            var dimLineDirection = upDirection.Cross(new Vector(0, 0, 1));
-
-            var initialPoint = dimPoints.First() + sds.Distance * upDirection;
-            var dimLineCoordSystem = new CoordinateSystem(initialPoint, dimLineDirection, upDirection);
-
-            var toDimLocationCs = MatrixFactory.ToCoordinateSystem(dimLineCoordSystem);
-
-            var dimLine = new Line(initialPoint, dimLineDirection);
-            var projectedPoints = dimPoints.Select(p => Projection.PointToLine(p, dimLine)).ToList();
-            var localPoints = projectedPoints.Select(p => toDimLocationCs.Transform(p)).ToList();
-            var orderedPoints = localPoints.OrderBy(p => p.X);
-
-            var firstPt = projectedPoints[localPoints.IndexOf(orderedPoints.First())];
-            var lastPt = projectedPoints[localPoints.IndexOf(orderedPoints.Last())];
-
-            firstPt.Z = 0;
-            lastPt.Z = 0;
-            return new Rhino.Geometry.Line(firstPt.ToRhino(), lastPt.ToRhino());
         }
     }
 }
