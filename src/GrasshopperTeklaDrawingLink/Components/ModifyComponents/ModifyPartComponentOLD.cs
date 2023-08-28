@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.ModifyComponents
 {
     [Obsolete]
     public class ModifyPartComponentOLD : TeklaComponentBase
@@ -94,7 +94,7 @@ namespace GTDrawingLink.Components
         private T GetNthLine<T>(List<T> lineTypeAttributes, int index)
         {
             if (!lineTypeAttributes.HasItems())
-                return default(T);
+                return default;
 
             if (lineTypeAttributes.Count - 1 < index)
                 return lineTypeAttributes.Last();
