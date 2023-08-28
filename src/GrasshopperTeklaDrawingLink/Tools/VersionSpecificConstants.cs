@@ -381,6 +381,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(WeldAttributesComponent),
                 "C338DEF9-FE2C-4C37-BD91-B970F676C8B4"
+            },
+            {
+                typeof(ModifyWeldComponent),
+                "70A547A6-F2D3-48FE-A2E3-E5CA03CD0109"
             }
         };
 

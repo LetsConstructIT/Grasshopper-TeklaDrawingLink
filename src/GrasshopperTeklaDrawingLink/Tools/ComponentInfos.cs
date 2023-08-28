@@ -702,5 +702,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+
+        public static readonly GH_InstanceDescription ModifyWeldComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Weld",
+            NickName = "MWeld",
+            Description = "Modifies a drawing weld in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
+        };
     }
 }

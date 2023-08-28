@@ -1002,5 +1002,12 @@ namespace GTDrawingLink.Tools
             NickName = "DrOH",
             Description = "True if own hidden lines are drawn."
         };
+
+        public static readonly GH_InstanceDescription Weld = new GH_InstanceDescription
+        {
+            Name = "Weld",
+            NickName = "W",
+            Description = "Tekla drawing Weld"
+        };
     }
 }
