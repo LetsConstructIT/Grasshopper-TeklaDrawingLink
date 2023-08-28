@@ -1,48 +1,8 @@
-﻿using Grasshopper.Kernel.Types;
-using GTDrawingLink.Tools;
-using System;
-
-using Tekla.Structures.Drawing;
+﻿using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class FontAttributesGoo : GH_Goo<FontAttributes>
+    public class FontAttributesGoo : TeklaAttributesBaseGoo<FontAttributes>
     {
-        public override bool IsValid => true;
-
-        public override string TypeDescription => "Tekla font attributes";
-
-        public override string TypeName => typeof(FontAttributes).ToShortString();
-
-        public FontAttributesGoo()
-        {
-        }
-
-        public FontAttributesGoo(FontAttributes attr)
-            : base(attr)
-        {
-        }
-        public override IGH_Goo Duplicate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CastFrom(object source)
-        {
-            if (source is FontAttributes)
-            {
-                Value = source as FontAttributes;
-                return true;
-            }
-            return base.CastFrom(source);
-        }
-
-        public override string ToString()
-        {
-            if (Value == null)
-                return "No value";
-
-            return ReflectionHelper.GetPropertiesWithValues(Value);
-        }
     }
 }
