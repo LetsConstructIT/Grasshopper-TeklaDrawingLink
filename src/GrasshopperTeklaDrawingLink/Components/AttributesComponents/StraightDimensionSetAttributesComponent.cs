@@ -6,7 +6,7 @@ using System.Drawing;
 using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.StraightDimensionSet;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.AttributesComponents
 {
     public class StraightDimensionSetAttributesComponent : TeklaComponentBase
     {

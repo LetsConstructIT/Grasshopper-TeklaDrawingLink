@@ -4,7 +4,7 @@ using System.Drawing;
 using Tekla.Structures.Drawing;
 using static Tekla.Structures.Drawing.ReinforcementBase;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.AttributesComponents
 {
     public class ReinforcementMeshAttributesComponent : TeklaComponentBaseNew<ReinforcementMeshAttributesCommand>
     {

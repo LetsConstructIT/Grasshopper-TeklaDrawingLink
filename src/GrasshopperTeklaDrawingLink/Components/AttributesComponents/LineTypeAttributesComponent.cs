@@ -5,7 +5,7 @@ using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.AttributesComponents
 {
     public class LineTypeAttributesComponent : TeklaComponentBase
     {
@@ -34,7 +34,7 @@ namespace GTDrawingLink.Components
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var lineTypeAttributes = new LineTypeAttributes();
-            
+
             object lineType = null;
             DA.GetData(ParamInfos.LineType.Name, ref lineType);
             if (lineType != null)
