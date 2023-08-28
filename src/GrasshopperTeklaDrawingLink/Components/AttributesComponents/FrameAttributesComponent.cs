@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components.AttributesComponents
 {
     public class FrameAttributesComponent : TeklaComponentBaseNew<FrameAttributesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.FrameAttributes;
 
         public FrameAttributesComponent() : base(ComponentInfos.FrameAttributesComponent) { }

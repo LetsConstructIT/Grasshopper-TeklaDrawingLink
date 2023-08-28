@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components.AttributesComponents
 {
     public class ArrowAttributesComponent : TeklaComponentBaseNew<ArrowAttributesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.ArrowAttributes;
 
         public ArrowAttributesComponent() : base(ComponentInfos.ArrowAttributesComponent) { }

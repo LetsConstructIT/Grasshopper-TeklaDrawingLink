@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components.AttributesComponents
 {
     public class SymbolAttributesComponent : TeklaComponentBaseNew<SymbolAttributesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quinary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Resources.SymbolAttributes;
 
         public SymbolAttributesComponent() : base(ComponentInfos.SymbolAttributesComponent) { }

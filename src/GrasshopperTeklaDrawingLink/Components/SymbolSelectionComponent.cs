@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class SymbolSelectionComponent : TeklaComponentBaseNew<SymbolSelectionCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quinary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Resources.SymbolSelection;
 
         public SymbolSelectionComponent() : base(ComponentInfos.SymbolSelectionComponent) { }
