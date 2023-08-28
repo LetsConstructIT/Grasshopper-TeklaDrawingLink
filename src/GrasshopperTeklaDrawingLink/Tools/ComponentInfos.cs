@@ -693,5 +693,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
+
+        public static readonly GH_InstanceDescription WeldAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Weld Attributes",
+            NickName = "Attributes",
+            Description = "Creates/modifies a weld attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
     }
 }

@@ -138,11 +138,11 @@ namespace GTDrawingLink.Tools
             Description = "Line type attributes"
         };
 
-        public static readonly GH_InstanceDescription VisibileLineTypeAttributes = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription VisibleLineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Visibile lines",
             NickName = "Vis",
-            Description = "Part visibile lines attribute"
+            Description = "Part visible lines attribute"
         };
 
         public static readonly GH_InstanceDescription HiddenLineTypeAttributes = new GH_InstanceDescription
@@ -973,6 +973,34 @@ namespace GTDrawingLink.Tools
             Name = "Axis visible",
             NickName = "Ax",
             Description = "True if the bolt symbol contains an axis."
+        };
+
+        public static readonly GH_InstanceDescription WeldAttributes = new GH_InstanceDescription
+        {
+            Name = "Weld Attributes",
+            NickName = "A",
+            Description = "Weld attributes"
+        };
+
+        public static readonly GH_InstanceDescription WeldRepresentation = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"Sets the weld representation: \n{EnumHelpers.EnumToString<Weld.Representation>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription DrawHiddenLines = new GH_InstanceDescription
+        {
+            Name = "Draw Hidden",
+            NickName = "DrH",
+            Description = "True if hidden lines are drawn."
+        };
+
+        public static readonly GH_InstanceDescription DrawOwnHiddenLines = new GH_InstanceDescription
+        {
+            Name = "Draw Own Hidden",
+            NickName = "DrOH",
+            Description = "True if own hidden lines are drawn."
         };
     }
 }

@@ -26,7 +26,7 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             AddTeklaDbObjectParameter(pManager, ParamInfos.TeklaDrawingPart, GH_ParamAccess.list);
-            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibileLineTypeAttributes, GH_ParamAccess.list));
+            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibleLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.HiddenLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.ReferenceLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new ModelObjectHatchAttributesParam(ParamInfos.PartFacesHatchAttributes, GH_ParamAccess.list));
@@ -44,7 +44,7 @@ namespace GTDrawingLink.Components
             if (drawingObjects == null || drawingObjects.Count == 0)
                 return;
 
-            var visibileLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
+            var visibileLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.VisibleLineTypeAttributes);
             var hiddenLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
             var referenceLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.ReferenceLineTypeAttributes);
             var faceHatches = DA.GetGooListValue<ModelObjectHatchAttributes>(ParamInfos.PartFacesHatchAttributes);

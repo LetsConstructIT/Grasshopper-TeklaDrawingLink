@@ -376,6 +376,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(WeldAttributesParam),
                 "3A00A7BB-16F0-4F85-B564-1501548596D0"
+            },
+            {
+                typeof(WeldAttributesComponent),
+                "C338DEF9-FE2C-4C37-BD91-B970F676C8B4"
             }
         };
 

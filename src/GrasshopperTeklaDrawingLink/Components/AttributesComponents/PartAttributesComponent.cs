@@ -45,7 +45,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         private readonly InputOptionalParam<Part.PartAttributes> _inPartAttributes = new InputOptionalParam<Part.PartAttributes>(ParamInfos.PartAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
 
-        private readonly InputOptionalParam<LineTypeAttributes> _inVisibleLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
+        private readonly InputOptionalParam<LineTypeAttributes> _inVisibleLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.VisibleLineTypeAttributes);
         private readonly InputOptionalParam<LineTypeAttributes> _inHiddenLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
         private readonly InputOptionalParam<LineTypeAttributes> _inReferenceLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.ReferenceLineTypeAttributes);
 

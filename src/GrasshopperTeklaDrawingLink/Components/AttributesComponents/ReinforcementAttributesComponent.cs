@@ -56,7 +56,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         private readonly InputOptionalStructParam<HookedEndSymbolTypes> _inHookedSymbol = new InputOptionalStructParam<HookedEndSymbolTypes>(ParamInfos.HookedEndSymbolTypes);
 
         private readonly InputOptionalStructParam<ReinforcementRepresentationTypes> _inRepresentation = new InputOptionalStructParam<ReinforcementRepresentationTypes>(ParamInfos.ReinforcementRepresentationTypes);
-        private readonly InputOptionalParam<LineTypeAttributes> _inVisibleLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
+        private readonly InputOptionalParam<LineTypeAttributes> _inVisibleLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.VisibleLineTypeAttributes);
         private readonly InputOptionalParam<LineTypeAttributes> _inHiddenLines = new InputOptionalParam<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
         private readonly InputOptionalStructParam<bool> _inHiddenByPart = new InputOptionalStructParam<bool>(ParamInfos.HideLinesHiddenByPart);
         private readonly InputOptionalStructParam<bool> _inHiddenByRebars = new InputOptionalStructParam<bool>(ParamInfos.HideLinesHiddenByReinforcement);
