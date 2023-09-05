@@ -974,5 +974,12 @@ namespace GTDrawingLink.Tools
             NickName = "Ax",
             Description = "True if the bolt symbol contains an axis."
         };
+
+        public static readonly GH_InstanceDescription DrawingModelObject = new GH_InstanceDescription {
+            Name="Drawing Model Object",
+            NickName="DMO",
+            Description="The Tekla drawing model object"
+        };
+
     }
 }

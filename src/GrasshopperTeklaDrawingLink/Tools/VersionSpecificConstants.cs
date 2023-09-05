@@ -371,7 +371,11 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyBoltComponent),
                 "EAF4CD74-D728-43BF-ACC1-6ACF0EF8D6F3"
-            }
+            },
+             {
+                typeof(CreateMarkComponent),
+                "C1C167C1-E219-42B4-BFE5-0672B3B1B359"
+            },
         };
 
         public static string TabHeading
