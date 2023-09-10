@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using TSMUI = Tekla.Structures.Model.UI;
 
@@ -95,7 +96,7 @@ namespace GTDrawingLink.Components
                 return;
 
             var teklaViews = new List<TeklaView>();
-            foreach (var view in GetViews())
+            foreach (var view in OrderByName(GetViews()))
             {
                 teklaViews.Add(new TeklaView(view));
             }
@@ -129,6 +130,10 @@ namespace GTDrawingLink.Components
             {
                 yield return mve.Current;
             }
+        }
+        private IOrderedEnumerable<TSMUI.View> OrderByName(IEnumerable<TSMUI.View> views)
+        {
+            return views.OrderBy(v => v.Name, new NaturalStringComparer());
         }
 
         enum GetViewMode
