@@ -31,8 +31,8 @@ namespace GTDrawingLink.Components.AttributesComponents
     public class ArrowAttributesCommand : CommandBase
     {
         private readonly InputOptionalStructParam<ArrowheadTypes> _inArrowheadType = new InputOptionalStructParam<ArrowheadTypes>(ParamInfos.ArrowType, ArrowheadTypes.FilledArrow);
-        private readonly InputOptionalStructParam<double> _inWidth = new InputOptionalStructParam<double>(ParamInfos.Width, 1.0);
-        private readonly InputOptionalStructParam<double> _inHeight = new InputOptionalStructParam<double>(ParamInfos.Height, 2.0);
+        private readonly InputOptionalStructParam<double> _inWidth = new InputOptionalStructParam<double>(ParamInfos.ArrowWidth, 1.0);
+        private readonly InputOptionalStructParam<double> _inHeight = new InputOptionalStructParam<double>(ParamInfos.ArrowHeight, 2.0);
 
         private readonly OutputParam<ArrowheadAttributes> _outAttributes = new OutputParam<ArrowheadAttributes>(ParamInfos.ArrowAttributes);
 

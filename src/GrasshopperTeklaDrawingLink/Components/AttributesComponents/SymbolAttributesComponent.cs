@@ -47,7 +47,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
         private readonly InputOptionalParam<SymbolInfo> _inInfo = new InputOptionalParam<SymbolInfo>(ParamInfos.SymbolSelection);
         private readonly InputOptionalStructParam<DrawingColors> _inColor = new InputOptionalStructParam<DrawingColors>(ParamInfos.DrawingColor);
-        private readonly InputOptionalStructParam<double> _inHeight = new InputOptionalStructParam<double>(ParamInfos.Height);
+        private readonly InputOptionalStructParam<double> _inHeight = new InputOptionalStructParam<double>(ParamInfos.SymbolHeight);
         private readonly InputOptionalStructParam<double> _inAngle = new InputOptionalStructParam<double>(ParamInfos.Angle);
         private readonly InputOptionalParam<Frame> _inFrame = new InputOptionalParam<Frame>(ParamInfos.FrameAtributes);
 

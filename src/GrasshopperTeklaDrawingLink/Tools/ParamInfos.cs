@@ -613,20 +613,20 @@ namespace GTDrawingLink.Tools
         };
         public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription
         {
-            Name = "Text base point",
+            Name = "Text Base Point",
             NickName = "BP",
             Description = "The point where the text starts."
         };
 
         public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription
         {
-            Name = "Font family",
+            Name = "Font Family",
             NickName = "F",
             Description = "The font family used (Default Arial)."
         };
         public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription
         {
-            Name = "Font size",
+            Name = "Font Size",
             NickName = "S",
             Description = "The font size used (Default 2.5)."
         };
@@ -650,13 +650,13 @@ namespace GTDrawingLink.Tools
         };
         public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription
         {
-            Name = "Font weight",
+            Name = "Font Weight",
             NickName = "B",
             Description = "The weight of the font, Bold or not (default: non-Bold)"
         };
         public static readonly GH_InstanceDescription FontItalic = new GH_InstanceDescription
         {
-            Name = "Font italic",
+            Name = "Font Italic",
             NickName = "I",
             Description = "The italic style of the font, Italic or not (default: non-Italic)"
         };
@@ -678,17 +678,17 @@ namespace GTDrawingLink.Tools
             NickName = "T",
             Description = $"Sets the type of the arrow: \n{EnumHelpers.EnumToString<ArrowheadTypes>()}\nYou can right-click to set."
         };
-        public static readonly GH_InstanceDescription Width = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription ArrowWidth = new GH_InstanceDescription
         {
             Name = "Width",
             NickName = "W",
             Description = "Sets the width of the arrow."
         };
-        public static readonly GH_InstanceDescription Height = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription ArrowHeight = new GH_InstanceDescription
         {
-            Name = "Heigth",
+            Name = "Height",
             NickName = "H",
-            Description = "Sets the heigth of the arrow."
+            Description = "Sets the height of the arrow."
         };
         public static readonly GH_InstanceDescription ArrowAttributes = new GH_InstanceDescription
         {
@@ -698,7 +698,7 @@ namespace GTDrawingLink.Tools
         };
         public static readonly GH_InstanceDescription TextRulerWidth = new GH_InstanceDescription
         {
-            Name = "RulerWidth",
+            Name = "Ruler Width",
             NickName = "RW",
             Description = "Sets the width of the text area."
         };
@@ -1008,6 +1008,13 @@ namespace GTDrawingLink.Tools
             Name = "Weld",
             NickName = "W",
             Description = "Tekla drawing Weld"
+        };
+
+        public static readonly GH_InstanceDescription SymbolHeight = new GH_InstanceDescription
+        {
+            Name = "Height",
+            NickName = "H",
+            Description = "Sets the height of the symbol."
         };
     }
 }
