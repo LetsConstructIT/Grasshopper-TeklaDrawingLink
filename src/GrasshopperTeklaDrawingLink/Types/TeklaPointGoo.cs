@@ -52,7 +52,7 @@ namespace GTDrawingLink.Types
             if (source is GH_Point)
             {
 
-                Value = (source as GH_Point).Value.ToTeklaPoint();
+                Value = (source as GH_Point).Value.ToTekla();
                 return true;
             }
             return base.CastFrom(source);
@@ -62,7 +62,7 @@ namespace GTDrawingLink.Types
         {
             if (target is IGH_GeometricGoo)
             {
-                target = (Q)(object)new GH_Point(Value.ToRhinoPoint());
+                target = (Q)(object)new GH_Point(Value.ToRhino());
                 return true;
             }
             return base.CastTo(ref target);

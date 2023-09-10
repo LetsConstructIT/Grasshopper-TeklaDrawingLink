@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class GetCOGComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.GetCOG;
 
         public GetCOGComponent() : base(ComponentInfos.GetCOGComponent)

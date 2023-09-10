@@ -5,7 +5,7 @@ using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.AttributesComponents
 {
     public class LineTypeAttributesComponent : TeklaComponentBase
     {
@@ -21,6 +21,9 @@ namespace GTDrawingLink.Components
         {
             pManager.AddParameter(new EnumParam<LineTypesEnum>(ParamInfos.LineType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item));
+
+            for (int i = 0; i < pManager.ParamCount; i++)
+                pManager[i].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -31,7 +34,7 @@ namespace GTDrawingLink.Components
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var lineTypeAttributes = new LineTypeAttributes();
-            
+
             object lineType = null;
             DA.GetData(ParamInfos.LineType.Name, ref lineType);
             if (lineType != null)

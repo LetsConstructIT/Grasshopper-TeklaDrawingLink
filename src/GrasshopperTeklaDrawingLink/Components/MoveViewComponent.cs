@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class MoveViewComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.MoveView;
 
         public MoveViewComponent() : base(ComponentInfos.MoveViewComponent)
@@ -18,13 +18,13 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
             pManager.AddVectorParameter("Vector", "Movement Vector", "Vector of movement", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -38,7 +38,7 @@ namespace GTDrawingLink.Components
             if (!parameterSet)
                 return;
 
-            var teklaVector = vector.ToTeklaVector();
+            var teklaVector = vector.ToTekla();
 
             view.Select();
             view.Origin += teklaVector;

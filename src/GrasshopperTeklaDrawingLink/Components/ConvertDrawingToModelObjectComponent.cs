@@ -18,8 +18,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            var inputParam = new TeklaDatabaseObjectParam(ComponentInfos.DrawingPartParam, typeof(DrawingObject));
-            pManager.AddParameter(inputParam);
+            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingPartParam, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)

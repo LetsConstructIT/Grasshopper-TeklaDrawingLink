@@ -3,28 +3,30 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.ModifyComponents
 {
-    public class ModifyPartComponent : TeklaComponentBase
+    [Obsolete]
+    public class ModifyPartComponentOLD : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
 
         protected override Bitmap Icon => Resources.ModifyPart;
 
-        public ModifyPartComponent()
+        public ModifyPartComponentOLD()
             : base(ComponentInfos.ModifyPartComponent)
         {
         }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
-            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibileLineTypeAttributes, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.TeklaDrawingPart, GH_ParamAccess.list);
+            AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.VisibleLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.HiddenLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new LineTypeAttributesParam(ParamInfos.ReferenceLineTypeAttributes, GH_ParamAccess.list));
             AddOptionalParameter(pManager, new ModelObjectHatchAttributesParam(ParamInfos.PartFacesHatchAttributes, GH_ParamAccess.list));
@@ -33,7 +35,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.TeklaDrawingPart, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.TeklaDrawingPart, GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -42,7 +44,7 @@ namespace GTDrawingLink.Components
             if (drawingObjects == null || drawingObjects.Count == 0)
                 return;
 
-            var visibileLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.VisibileLineTypeAttributes);
+            var visibileLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.VisibleLineTypeAttributes);
             var hiddenLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.HiddenLineTypeAttributes);
             var referenceLines = DA.GetGooListValue<LineTypeAttributes>(ParamInfos.ReferenceLineTypeAttributes);
             var faceHatches = DA.GetGooListValue<ModelObjectHatchAttributes>(ParamInfos.PartFacesHatchAttributes);
@@ -92,7 +94,7 @@ namespace GTDrawingLink.Components
         private T GetNthLine<T>(List<T> lineTypeAttributes, int index)
         {
             if (!lineTypeAttributes.HasItems())
-                return default(T);
+                return default;
 
             if (lineTypeAttributes.Count - 1 < index)
                 return lineTypeAttributes.Last();

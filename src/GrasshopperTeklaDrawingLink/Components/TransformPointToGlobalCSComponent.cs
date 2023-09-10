@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class TransformPointToGlobalCSComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.TransformPointToGlobal;
 
         public TransformPointToGlobalCSComponent() : base(ComponentInfos.TransformPointToGlobalCS)
@@ -35,7 +35,7 @@ namespace GTDrawingLink.Components
             if (!parameterSet)
                 return;
 
-            var teklaPoint = point.ToTeklaPoint();
+            var teklaPoint = point.ToTekla();
 
             var matrix = ModelInteractor.Model
                 .GetWorkPlaneHandler()
@@ -44,7 +44,7 @@ namespace GTDrawingLink.Components
 
             var resultPoint = matrix.Transform(teklaPoint);
 
-            DA.SetData("Point", new GH_Point(resultPoint.ToRhinoPoint()));
+            DA.SetData("Point", new GH_Point(resultPoint.ToRhino()));
         }
     }
 }

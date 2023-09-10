@@ -1,41 +1,44 @@
 ﻿using Grasshopper.Kernel;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class GetDrawingSizeComponent : TeklaComponentBase
+    public class GetDrawingSizeComponent : TeklaComponentBaseNew<GetDrawingSizeCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.GetDrawingSize;
 
-        public GetDrawingSizeComponent() : base(ComponentInfos.GetDrawingSizeComponent)
-        {
-        }
+        public GetDrawingSizeComponent() : base(ComponentInfos.GetDrawingSizeComponent) { }
 
-        protected override void RegisterInputParams(GH_InputParamManager pManager)
+        protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.Drawing, GH_ParamAccess.item));
-        }
-
-        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
-        {
-            pManager.AddNumberParameter("Width", "W", "Drawing width", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Height", "H", "Drawing height", GH_ParamAccess.list);
-        }
-
-        protected override void SolveInstance(IGH_DataAccess DA)
-        {
-            var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
-            if (drawing == null)
-                return;
+            var drawing = _command.GetInputValues();
 
             var sheetSize = drawing.Layout.SheetSize;
-            DA.SetData("Width", sheetSize.Width);
-            DA.SetData("Height", sheetSize.Height);
+
+            _command.SetOutputValues(DA, sheetSize.Width, sheetSize.Height);
+        }
+    }
+
+    public class GetDrawingSizeCommand : CommandBase
+    {
+        private readonly InputParam<Drawing> _inDrawing = new InputParam<Drawing>(ParamInfos.Drawing);
+        private readonly OutputParam<double> _outWidth = new OutputParam<double>(new GH_InstanceDescription("Width", "W", "Drawing width", "", ""));
+        private readonly OutputParam<double> _outHeight = new OutputParam<double>(new GH_InstanceDescription("Height", "H", "Drawing height", "", ""));
+
+        internal Drawing GetInputValues()
+        {
+            return _inDrawing.Value;
+        }
+
+        internal Result SetOutputValues(IGH_DataAccess DA, double width, double height)
+        {
+            _outWidth.Value = width;
+            _outHeight.Value = height;
+
+            return SetOutput(DA);
         }
     }
 }

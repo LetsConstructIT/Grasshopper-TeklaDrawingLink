@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class GetViewFrameGeometryComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.ViewFrame;
 
         public GetViewFrameGeometryComponent() : base(ComponentInfos.GetViewFrameGeometryComponent)
@@ -20,7 +20,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -47,13 +47,13 @@ namespace GTDrawingLink.Components
             var upperLeft = lowerLeft + new T3D.Vector(0, 1, 0) * viewBase.Height;
             var upperRight = lowerRight + new T3D.Vector(0, 1, 0) * viewBase.Height;
 
-            DA.SetData("Upper left", upperLeft.ToRhinoPoint());
-            DA.SetData("Upper right", upperRight.ToRhinoPoint());
-            DA.SetData("Lower left", lowerLeft.ToRhinoPoint());
-            DA.SetData("Lower right", lowerRight.ToRhinoPoint());
+            DA.SetData("Upper left", upperLeft.ToRhino());
+            DA.SetData("Upper right", upperRight.ToRhino());
+            DA.SetData("Lower left", lowerLeft.ToRhino());
+            DA.SetData("Lower right", lowerRight.ToRhino());
             DA.SetData("Width", viewBase.Width);
             DA.SetData("Height", viewBase.Height);
-            DA.SetData("Origin", viewBase.Origin.ToRhinoPoint());
+            DA.SetData("Origin", viewBase.Origin.ToRhino());
         }
     }
 }

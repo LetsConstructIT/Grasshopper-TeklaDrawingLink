@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Reflection;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.AttributesComponents
 {
     public class ModelObjectHatchAttributesComponent : TeklaComponentBase
     {

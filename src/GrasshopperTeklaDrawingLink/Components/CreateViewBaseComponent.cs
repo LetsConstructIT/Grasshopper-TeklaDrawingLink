@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace GTDrawingLink.Components
 {
-    public abstract class CreateViewBaseComponent : TeklaComponentBase
+    public abstract class CreateViewBaseComponent : CreateDatabaseObjectComponentBase
     {
         protected bool _loadAttributesWithMacro;
 

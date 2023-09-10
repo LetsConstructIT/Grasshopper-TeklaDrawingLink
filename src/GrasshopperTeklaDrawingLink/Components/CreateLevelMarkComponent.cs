@@ -2,13 +2,17 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class CreateLevelMarkComponent : TeklaComponentBase
+    public class CreateLevelMarkComponent : CreateDatabaseObjectComponentBase
     {
+        private const string _defaultAttributes = "standard";
+
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.LevelMark;
 
@@ -18,51 +22,72 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ParamInfos.View, GH_ParamAccess.item));
-            pManager.AddPointParameter("Insertion point", "IP", "Insertion point of the Level Mark", GH_ParamAccess.item);
-            pManager.AddPointParameter("Base point", "BP", "Base point of the Level Mark", GH_ParamAccess.item);
-            pManager.AddTextParameter("Mark attributes", "MA", "Level mark attributes file name", GH_ParamAccess.item, "standard");
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
+            pManager.AddPointParameter("Insertion point", "IP", "Insertion point of the Level Mark", GH_ParamAccess.list);
+            pManager.AddPointParameter("Base point", "BP", "Base point of the Level Mark", GH_ParamAccess.list);
+            pManager.AddTextParameter("Mark attributes", "MA", "Level mark attributes file name", GH_ParamAccess.list, _defaultAttributes);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            AddGenericParameter(pManager, ParamInfos.Mark, GH_ParamAccess.item);
+            AddTeklaDbObjectParameter(pManager, ParamInfos.Mark, GH_ParamAccess.list);
         }
 
-        protected override void SolveInstance(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
-                return;
+                return null;
 
-            Rhino.Geometry.Point3d insertionPoint = new Rhino.Geometry.Point3d();
-            if (!DA.GetData("Insertion point", ref insertionPoint))
-                return;
+            var insertionPoints = new List<Rhino.Geometry.Point3d>();
+            if (!DA.GetDataList("Insertion point", insertionPoints))
+                return null;
 
-            Rhino.Geometry.Point3d basePoint = new Rhino.Geometry.Point3d();
-            if (!DA.GetData("Base point", ref basePoint))
-                return;
+            var basePoints = new List<Rhino.Geometry.Point3d>();
+            if (!DA.GetDataList("Base point", basePoints))
+                return null;
 
-            var levelMarkAttributesFileName = string.Empty;
-            DA.GetData("Mark attributes", ref levelMarkAttributesFileName);
+            var levelMarkAttributesFileNames = new List<string>();
+            DA.GetDataList("Mark attributes", levelMarkAttributesFileNames);
+
+            var levelMarksNumber = new int[] { insertionPoints.Count, basePoints.Count, levelMarkAttributesFileNames.Count }.Max();
+            var createdLevelMarks = new LevelMark[levelMarksNumber];
+            for (int i = 0; i < levelMarksNumber; i++)
+            {
+                var levelMark = InsertLevelMark(
+                    view,
+                    insertionPoints.ElementAtOrLast(i),
+                    basePoints.ElementAtOrLast(i),
+                    levelMarkAttributesFileNames.Count > 0 ? levelMarkAttributesFileNames.ElementAtOrLast(i) : _defaultAttributes);
+
+                createdLevelMarks[i] = levelMark;
+            }
+
+            DrawingInteractor.CommitChanges();
+
+            DA.SetDataList(ParamInfos.Mark.Name, createdLevelMarks.Select(l => new TeklaDatabaseObjectGoo(l)));
+
+            return createdLevelMarks;
+        }
+
+        protected LevelMark InsertLevelMark(View view,
+                                            Rhino.Geometry.Point3d insertionPoint,
+                                            Rhino.Geometry.Point3d basePoint,
+                                            string levelMarkAttributesFileName)
+        {
             var levelMarkAttributes = new LevelMark.LevelMarkAttributes();
             if (!string.IsNullOrEmpty(levelMarkAttributesFileName))
                 levelMarkAttributes.LoadAttributes(levelMarkAttributesFileName);
 
             var levelMark = new LevelMark(
-                view, 
-                insertionPoint.ToTeklaPoint(), 
-                basePoint.ToTeklaPoint(), 
+                view,
+                insertionPoint.ToTekla(),
+                basePoint.ToTekla(),
                 levelMarkAttributes);
 
             levelMark.Insert();
 
-            DrawingInteractor.CommitChanges();
-
-            if (levelMark != null)
-            {
-                DA.SetData(ParamInfos.Mark.Name, levelMark);
-            }
+            return levelMark;
         }
     }
 }

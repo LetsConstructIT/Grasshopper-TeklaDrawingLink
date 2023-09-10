@@ -12,11 +12,11 @@ namespace GTDrawingLink.Tools
             Description = "Drawing"
         };
 
-        public static readonly GH_InstanceDescription BooleanTrigger = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription BooleanToogle = new GH_InstanceDescription
         {
-            Name = "Boolean Trigger",
-            NickName = "B",
-            Description = "Boolean flag"
+            Name = "Toggle",
+            NickName = "T",
+            Description = "Boolean toogle for launching component"
         };
 
         public static readonly GH_InstanceDescription ViewBase = new GH_InstanceDescription
@@ -56,7 +56,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription Attributes = new GH_InstanceDescription
         {
-            Name = "Attributes",
+            Name = "Attributes Name",
             NickName = "A",
             Description = "Attribute filename"
         };
@@ -138,11 +138,11 @@ namespace GTDrawingLink.Tools
             Description = "Line type attributes"
         };
 
-        public static readonly GH_InstanceDescription VisibileLineTypeAttributes = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription VisibleLineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Visibile lines",
             NickName = "Vis",
-            Description = "Part visibile lines attribute"
+            Description = "Part visible lines attribute"
         };
 
         public static readonly GH_InstanceDescription HiddenLineTypeAttributes = new GH_InstanceDescription
@@ -283,6 +283,738 @@ namespace GTDrawingLink.Tools
             Name = "Attributes by macro",
             NickName = "M",
             Description = "Load view attributes with macro"
+        };
+
+        public static readonly GH_InstanceDescription StraightDimensionSetAttributes = new GH_InstanceDescription
+        {
+            Name = "Dimension Line Attributes",
+            NickName = "A",
+            Description = "Dimension Line Attributes"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLineType = new GH_InstanceDescription
+        {
+            Name = "Dim Type",
+            NickName = "T",
+            Description = $"Type of dimension line:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.DimensionTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription StraightDimensionSet = new GH_InstanceDescription
+        {
+            Name = "Dimension Line",
+            NickName = "Dim",
+            Description = "Dimension Line"
+        };
+
+        public static readonly GH_InstanceDescription StraightDimensionSets = new GH_InstanceDescription
+        {
+            Name = "Dimension Lines",
+            NickName = "Dims",
+            Description = "Dimension Lines"
+        };
+
+        public static readonly GH_InstanceDescription DimensionPoints = new GH_InstanceDescription
+        {
+            Name = "Points",
+            NickName = "P",
+            Description = "Dimension Points"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLocation = new GH_InstanceDescription
+        {
+            Name = "Location",
+            NickName = "L",
+            Description = "Dimension Line Location"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLinePlacingType = new GH_InstanceDescription
+        {
+            Name = "Placing Type",
+            NickName = "PT",
+            Description = $"Placing type of dimension line:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.Placings>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription ShortDimensionType = new GH_InstanceDescription
+        {
+            Name = "Short Dimension Type",
+            NickName = "ST",
+            Description = $"Position of the short dimension value:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.ShortDimensionTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription ExtensionLineType = new GH_InstanceDescription
+        {
+            Name = "Extension Line Type",
+            NickName = "ET",
+            Description = $"The extension line type:\n{EnumHelpers.EnumToString<DimensionSetBaseAttributes.ExtensionLineTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription ExcludePartsAccordingToFilter = new GH_InstanceDescription
+        {
+            Name = "Exclude Filter",
+            NickName = "EF",
+            Description = "Filter name used for excluding parts in dimension line tags"
+        };
+
+        public static readonly GH_InstanceDescription ViewPlane = new GH_InstanceDescription
+        {
+            Name = "Plane",
+            NickName = "P",
+            Description = "View plane"
+        };
+
+        public static readonly GH_InstanceDescription ViewRestrictionBox = new GH_InstanceDescription
+        {
+            Name = "Restriction Box",
+            NickName = "RB",
+            Description = "View restriction box"
+        };
+
+        public static readonly GH_InstanceDescription RegenerateObjects = new GH_InstanceDescription
+        {
+            Name = "Recompute Component",
+            NickName = "Recompute",
+            Description = "Update the objects in Tekla Structures, regenerating any missing ones"
+        };
+
+        public static readonly GH_InstanceDescription BakeToTekla = new GH_InstanceDescription
+        {
+            Name = "Bake To Tekla",
+            NickName = "Bake",
+            Description = "Create an independent copy of the model objects that were generated by this component in Tekla Structures"
+        };
+
+        public static readonly GH_InstanceDescription DeleteTeklaObjects = new GH_InstanceDescription
+        {
+            Name = "Delete Objects In Tekla",
+            NickName = "Delete",
+            Description = "Delete the model objects that were generated by this component in Tekla Structures"
+        };
+
+        public static readonly GH_InstanceDescription BakeAllToTekla = new GH_InstanceDescription
+        {
+            Name = "Bake All Objects To Tekla",
+            NickName = "Bake",
+            Description = "Create an independent copy of all the generated model objects in Tekla Structures"
+        };
+
+        public static readonly GH_InstanceDescription DeleteAllTeklaObjects = new GH_InstanceDescription
+        {
+            Name = "Delete All Objects In Tekla",
+            NickName = "Delete",
+            Description = "Delete all objects that are currently being generated in Tekla Structures"
+        };
+
+        public static readonly GH_InstanceDescription SelectAllTeklaObjects = new GH_InstanceDescription
+        {
+            Name = "Select All Objects In Tekla",
+            NickName = "Select",
+            Description = "Select all objects that are currently being generated in Tekla Structures"
+        };
+
+        public static readonly GH_InstanceDescription Points = new GH_InstanceDescription
+        {
+            Name = "Points",
+            NickName = "P",
+            Description = "Points"
+        };
+
+        public static readonly GH_InstanceDescription HorizontalExtremes = new GH_InstanceDescription
+        {
+            Name = "Horizontal Extremes",
+            NickName = "H",
+            Description = "Two extreme points along X"
+        };
+
+        public static readonly GH_InstanceDescription VerticalExtremes = new GH_InstanceDescription
+        {
+            Name = "Vertical Extremes",
+            NickName = "V",
+            Description = "Two extreme points along Y"
+        };
+
+        public static readonly GH_InstanceDescription ModelObject = new GH_InstanceDescription
+        {
+            Name = "Model Object",
+            NickName = "MO",
+            Description = "Tekla model object"
+        };
+
+        public static readonly GH_InstanceDescription PartReferenceLine = new GH_InstanceDescription
+        {
+            Name = "Ref Line",
+            NickName = "Ref",
+            Description = "Part reference line"
+        };
+
+        public static readonly GH_InstanceDescription PartCenterLine = new GH_InstanceDescription
+        {
+            Name = "Center Line",
+            NickName = "Cen",
+            Description = "Part center line"
+        };
+
+        public static readonly GH_InstanceDescription StartPoint = new GH_InstanceDescription
+        {
+            Name = "Start Point",
+            NickName = "S",
+            Description = "Part start point"
+        };
+
+        public static readonly GH_InstanceDescription EndPoint = new GH_InstanceDescription
+        {
+            Name = "End Point",
+            NickName = "E",
+            Description = "Part end point"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionOriginPoint = new GH_InstanceDescription
+        {
+            Name = "Origin",
+            NickName = "O",
+            Description = "Angle dimension origin"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionPoint1 = new GH_InstanceDescription
+        {
+            Name = "Point 1",
+            NickName = "P1",
+            Description = "First point to be used"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionPoint2 = new GH_InstanceDescription
+        {
+            Name = "Point 2",
+            NickName = "P2",
+            Description = "Second point to be used"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionDistance = new GH_InstanceDescription
+        {
+            Name = "Distance",
+            NickName = "D",
+            Description = "Distance of the angle sign from the origin to the first point."
+        };
+
+        public static readonly GH_InstanceDescription AngleDimensionAttributes = new GH_InstanceDescription
+        {
+            Name = "Attributes",
+            NickName = "A",
+            Description = "Angle Dimension Attributes"
+        };
+
+        public static readonly GH_InstanceDescription ObjectMatch = new GH_InstanceDescription
+        {
+            Name = "Match",
+            NickName = "M",
+            Description = "Result of matching model object to filter"
+        };
+
+        public static readonly GH_InstanceDescription ObjectFilter = new GH_InstanceDescription
+        {
+            Name = "Filter",
+            NickName = "F",
+            Description = "Tekla Object Selection Filter"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLineAlwaysMode = new GH_InstanceDescription
+        {
+            Name = "Insert always",
+            NickName = "Always",
+            Description = "Dimension line will be created despite of projection result"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLineMoreThan2PointsMode = new GH_InstanceDescription
+        {
+            Name = "More than 2 projected points",
+            NickName = "ProjectionLimit",
+            Description = "Dimension line will be created only when more than 2 projected points"
+        };
+
+        public static readonly GH_InstanceDescription PropertyName = new GH_InstanceDescription
+        {
+            Name = "Property",
+            NickName = "P",
+            Description = "Property name used for grouping (for UDA or Report mode)"
+        };
+
+        public static readonly GH_InstanceDescription GroupingIndices = new GH_InstanceDescription
+        {
+            Name = "Indices",
+            NickName = "I",
+            Description = "Grouping Indices"
+        };
+
+        public static readonly GH_InstanceDescription GroupingKeys = new GH_InstanceDescription
+        {
+            Name = "Keys",
+            NickName = "K",
+            Description = "Grouping Keys"
+        };
+
+        public static readonly GH_InstanceDescription GroupByPosition = new GH_InstanceDescription
+        {
+            Name = "Group by Assembly Position",
+            NickName = "Pos",
+            Description = "Group by Assembly Position"
+        };
+
+        public static readonly GH_InstanceDescription GroupByName = new GH_InstanceDescription
+        {
+            Name = "Group by Name",
+            NickName = "N",
+            Description = "Group by Name"
+        };
+
+        public static readonly GH_InstanceDescription GroupByClass = new GH_InstanceDescription
+        {
+            Name = "Group by Class",
+            NickName = "C",
+            Description = "Group by Class"
+        };
+
+        public static readonly GH_InstanceDescription GroupByUDA = new GH_InstanceDescription
+        {
+            Name = "Group by UDA",
+            NickName = "U",
+            Description = "Group by UDA"
+        };
+
+        public static readonly GH_InstanceDescription GroupByReport = new GH_InstanceDescription
+        {
+            Name = "Group by Report",
+            NickName = "R",
+            Description = "Group by Report"
+        };
+        public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription
+        {
+            Name = "Leader line",
+            NickName = "L",
+            Description = "Add text with leader line"
+        };
+
+        public static readonly GH_InstanceDescription Text = new GH_InstanceDescription
+        {
+            Name = "Text",
+            NickName = "T",
+            Description = "Add text."
+        };
+
+        public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription
+        {
+            Name = "BoundingBox",
+            NickName = "BB",
+            Description = "Represents the 2D bounding box of the object."
+        };
+        public static readonly GH_InstanceDescription MarkInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion Point",
+            NickName = "IP",
+            Description = "The insertion point of the mark."
+        };
+        public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription
+        {
+            Name = "Text Base Point",
+            NickName = "BP",
+            Description = "The point where the text starts."
+        };
+
+        public static readonly GH_InstanceDescription FontFamily = new GH_InstanceDescription
+        {
+            Name = "Font Family",
+            NickName = "F",
+            Description = "The font family used (Default Arial)."
+        };
+        public static readonly GH_InstanceDescription FontSize = new GH_InstanceDescription
+        {
+            Name = "Font Size",
+            NickName = "S",
+            Description = "The font size used (Default 2.5)."
+        };
+        public static readonly GH_InstanceDescription FrameType = new GH_InstanceDescription
+        {
+            Name = "Frame",
+            NickName = "FRM",
+            Description = $"The frame of the text: \n{EnumHelpers.EnumToString<FrameTypes>()}\nYou can right-click to set."
+        };
+        public static readonly GH_InstanceDescription TextAttributes = new GH_InstanceDescription
+        {
+            Name = "Text Attributes",
+            NickName = "TATR",
+            Description = "The attributes of the text."
+        };
+        public static readonly GH_InstanceDescription FontAttributes = new GH_InstanceDescription
+        {
+            Name = "Font Attributes",
+            NickName = "FATR",
+            Description = "The attributes of the font used."
+        };
+        public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription
+        {
+            Name = "Font Weight",
+            NickName = "B",
+            Description = "The weight of the font, Bold or not (default: non-Bold)"
+        };
+        public static readonly GH_InstanceDescription FontItalic = new GH_InstanceDescription
+        {
+            Name = "Font Italic",
+            NickName = "I",
+            Description = "The italic style of the font, Italic or not (default: non-Italic)"
+        };
+        public static readonly GH_InstanceDescription BackgroundTransparency = new GH_InstanceDescription
+        {
+            Name = "Background Mask",
+            NickName = "BM",
+            Description = "Whether the text has a background mask as Opaque or Transparent."
+        };
+        public static readonly GH_InstanceDescription Angle = new GH_InstanceDescription
+        {
+            Name = "Angle",
+            NickName = "ANG",
+            Description = "Sets a angle value."
+        };
+        public static readonly GH_InstanceDescription ArrowType = new GH_InstanceDescription
+        {
+            Name = "Arrow Type",
+            NickName = "T",
+            Description = $"Sets the type of the arrow: \n{EnumHelpers.EnumToString<ArrowheadTypes>()}\nYou can right-click to set."
+        };
+        public static readonly GH_InstanceDescription ArrowWidth = new GH_InstanceDescription
+        {
+            Name = "Width",
+            NickName = "W",
+            Description = "Sets the width of the arrow."
+        };
+        public static readonly GH_InstanceDescription ArrowHeight = new GH_InstanceDescription
+        {
+            Name = "Height",
+            NickName = "H",
+            Description = "Sets the height of the arrow."
+        };
+        public static readonly GH_InstanceDescription ArrowAttributes = new GH_InstanceDescription
+        {
+            Name = "Arrow Attributes",
+            NickName = "AA",
+            Description = "Sets the atributes of the arrow."
+        };
+        public static readonly GH_InstanceDescription TextRulerWidth = new GH_InstanceDescription
+        {
+            Name = "Ruler Width",
+            NickName = "RW",
+            Description = "Sets the width of the text area."
+        };
+        public static readonly GH_InstanceDescription ModelView = new GH_InstanceDescription
+        {
+            Name = "Model View",
+            NickName = "V",
+            Description = "Tekla Model View"
+        };
+
+        public static readonly GH_InstanceDescription ViewCoordinateSystem = new GH_InstanceDescription
+        {
+            Name = "View CS",
+            NickName = "V_CS",
+            Description = "View Coordinate System"
+        };
+
+        public static readonly GH_InstanceDescription DisplayCoordinateSystem = new GH_InstanceDescription
+        {
+            Name = "Display CS",
+            NickName = "D_CS",
+            Description = "Display Coordinate System"
+        };
+
+        public static readonly GH_InstanceDescription AllModelViews = new GH_InstanceDescription
+        {
+            Name = "All model views",
+            NickName = "All",
+            Description = "All model views from list"
+        };
+
+        public static readonly GH_InstanceDescription VisibleModelViews = new GH_InstanceDescription
+        {
+            Name = "Visible model views",
+            NickName = "Vis",
+            Description = "Only visible model views from list"
+        };
+
+        public static readonly GH_InstanceDescription ViewInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "View insertion point"
+        };
+
+        public static readonly GH_InstanceDescription MeshAttributes = new GH_InstanceDescription
+        {
+            Name = "Mesh Attributes",
+            NickName = "A",
+            Description = "Reinforcement mesh attributes"
+        };
+
+        public static readonly GH_InstanceDescription MeshVisibilityLongitudinal = new GH_InstanceDescription
+        {
+            Name = "Visibility Longitudinal",
+            NickName = "L",
+            Description = $"Sets the visibility of longitudinal rebars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementVisibilityTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription MeshVisibilityCross = new GH_InstanceDescription
+        {
+            Name = "Visibility Cross",
+            NickName = "C",
+            Description = $"Sets the visibility of cross rebars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementVisibilityTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription MeshReinforcementSymbolIndex = new GH_InstanceDescription
+        {
+            Name = "Symbol Index",
+            NickName = "Idx",
+            Description = "Defines the index for the mesh symbol to be used.\nThe index starts from 0 and corresponds to the symbol in the file mesh.sym."
+        };
+
+        public static readonly GH_InstanceDescription MeshReinforcementSymbolSize = new GH_InstanceDescription
+        {
+            Name = "Symbol Size",
+            NickName = "Size",
+            Description = "Defines the size of the reinforcement mesh symbol."
+        };
+
+        public static readonly GH_InstanceDescription RebarAtributes = new GH_InstanceDescription
+        {
+            Name = "Rebar Attributes",
+            NickName = "A",
+            Description = "Reinforcement attributes"
+        };
+
+        public static readonly GH_InstanceDescription RebarVisibility = new GH_InstanceDescription
+        {
+            Name = "Visibility",
+            NickName = "V",
+            Description = $"Sets the visibility of rebars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementVisibilityTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription StraightEndSymbolTypes = new GH_InstanceDescription
+        {
+            Name = "Straight Symbol",
+            NickName = "SS",
+            Description = $"Defines how the straight ends of reinforcing bars should look like: \n{EnumHelpers.EnumToString<ReinforcementBase.StraightEndSymbolTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription HookedEndSymbolTypes = new GH_InstanceDescription
+        {
+            Name = "Hooked Symbol",
+            NickName = "HS",
+            Description = $"Defines how the hooked ends of reinforcing bars should look like: \n{EnumHelpers.EnumToString<ReinforcementBase.HookedEndSymbolTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementRepresentationTypes = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"The representation of reinforcing bars: \n{EnumHelpers.EnumToString<ReinforcementBase.ReinforcementRepresentationTypes>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription HideLinesHiddenByPart = new GH_InstanceDescription
+        {
+            Name = "Hidden by Part",
+            NickName = "HP",
+            Description = "Defines whether lines hidden by parts should be hidden or not."
+        };
+
+        public static readonly GH_InstanceDescription HideLinesHiddenByReinforcement = new GH_InstanceDescription
+        {
+            Name = "Hidden by Rebars",
+            NickName = "HR",
+            Description = "Defines whether lines hidden by reinforcements should be hidden or not."
+        };
+
+        public static readonly GH_InstanceDescription Reinforcement = new GH_InstanceDescription
+        {
+            Name = "Reinforcement",
+            NickName = "R",
+            Description = "Drawing reinforcement (single/group/strand/set)"
+        };
+
+        public static readonly GH_InstanceDescription Mesh = new GH_InstanceDescription
+        {
+            Name = "Mesh",
+            NickName = "M",
+            Description = "Drawing mesh"
+        };
+
+        public static readonly GH_InstanceDescription FrameAtributes = new GH_InstanceDescription
+        {
+            Name = "Frame Attributes",
+            NickName = "F",
+            Description = "Frame attributes (type and color)"
+        };
+
+        public static readonly GH_InstanceDescription SymbolAtributes = new GH_InstanceDescription
+        {
+            Name = "Symbol Attributes",
+            NickName = "S",
+            Description = "Symbol attributes"
+        };
+
+        public static readonly GH_InstanceDescription SymbolSelection = new GH_InstanceDescription
+        {
+            Name = "Symbol Selection",
+            NickName = "SSel",
+            Description = "Symbol info (file name and number)"
+        };
+
+        public static readonly GH_InstanceDescription Symbol = new GH_InstanceDescription
+        {
+            Name = "Symbol",
+            NickName = "S",
+            Description = "Symbol"
+        };
+
+        public static readonly GH_InstanceDescription InsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "Insertion Point"
+        };
+
+        public static readonly GH_InstanceDescription SymbolFile = new GH_InstanceDescription
+        {
+            Name = "File",
+            NickName = "F",
+            Description = "Symbol file. E.g. \"xsteel\""
+        };
+
+        public static readonly GH_InstanceDescription SymbolIndex = new GH_InstanceDescription
+        {
+            Name = "Index",
+            NickName = "I",
+            Description = "Symbol index from 0 to 255."
+        };
+
+        public static readonly GH_InstanceDescription PartAttributes = new GH_InstanceDescription
+        {
+            Name = "Part Attributes",
+            NickName = "A",
+            Description = "Part attributes"
+        };
+
+        public static readonly GH_InstanceDescription PartRepresentation = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"Sets the part representation: \n{EnumHelpers.EnumToString<Part.Representation>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription SaveDrawing = new GH_InstanceDescription
+        {
+            Name = "Save",
+            NickName = "S",
+            Description = "Should drawing be saved (true by default)"
+        };
+
+        public static readonly GH_InstanceDescription DrawingSaveResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when drawing was closed"
+        };
+
+        public static readonly GH_InstanceDescription DrawingDeleteResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when drawing was deleted"
+        };
+
+        public static readonly GH_InstanceDescription DrawingObjectDeleteResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when drawing object was deleted"
+        };
+
+        public static readonly GH_InstanceDescription DistanceBetweenDimensions = new GH_InstanceDescription
+        {
+            Name = "Distance",
+            NickName = "D",
+            Description = "Distance between dimensions"
+        };
+
+        public static readonly GH_InstanceDescription Bolt = new GH_InstanceDescription
+        {
+            Name = "Bolt",
+            NickName = "B",
+            Description = "Tekla drawing Bolt"
+        };
+
+        public static readonly GH_InstanceDescription BoltAttributes = new GH_InstanceDescription
+        {
+            Name = "Bolt Attributes",
+            NickName = "A",
+            Description = "Bolt attributes"
+        };
+
+        public static readonly GH_InstanceDescription BoltRepresentation = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"Sets the bolt representation: \n{EnumHelpers.EnumToString<Bolt.Representation>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription SymbolContainsHole = new GH_InstanceDescription
+        {
+            Name = "Hole visible",
+            NickName = "H",
+            Description = "True if the bolt symbol contains a hole."
+        };
+
+        public static readonly GH_InstanceDescription SymbolContainsAxis = new GH_InstanceDescription
+        {
+            Name = "Axis visible",
+            NickName = "Ax",
+            Description = "True if the bolt symbol contains an axis."
+        };
+
+        public static readonly GH_InstanceDescription WeldAttributes = new GH_InstanceDescription
+        {
+            Name = "Weld Attributes",
+            NickName = "A",
+            Description = "Weld attributes"
+        };
+
+        public static readonly GH_InstanceDescription WeldRepresentation = new GH_InstanceDescription
+        {
+            Name = "Representation",
+            NickName = "R",
+            Description = $"Sets the weld representation: \n{EnumHelpers.EnumToString<Weld.Representation>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription DrawHiddenLines = new GH_InstanceDescription
+        {
+            Name = "Draw Hidden",
+            NickName = "DrH",
+            Description = "True if hidden lines are drawn."
+        };
+
+        public static readonly GH_InstanceDescription DrawOwnHiddenLines = new GH_InstanceDescription
+        {
+            Name = "Draw Own Hidden",
+            NickName = "DrOH",
+            Description = "True if own hidden lines are drawn."
+        };
+
+        public static readonly GH_InstanceDescription Weld = new GH_InstanceDescription
+        {
+            Name = "Weld",
+            NickName = "W",
+            Description = "Tekla drawing Weld"
+        };
+
+        public static readonly GH_InstanceDescription SymbolHeight = new GH_InstanceDescription
+        {
+            Name = "Height",
+            NickName = "H",
+            Description = "Sets the height of the symbol."
         };
     }
 }

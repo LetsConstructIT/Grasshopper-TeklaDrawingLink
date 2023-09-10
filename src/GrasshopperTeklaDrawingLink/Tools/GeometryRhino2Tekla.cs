@@ -16,13 +16,13 @@ namespace GTDrawingLink.Tools
             IList<Point> result = new List<Point>();
             if (boundary is GH_Point)
             {
-                result.Add((boundary as GH_Point).Value.ToTeklaPoint());
+                result.Add((boundary as GH_Point).Value.ToTekla());
             }
             else if (boundary is GH_Line)
             {
                 var line = (boundary as GH_Line).Value;
-                result.Add(line.From.ToTeklaPoint());
-                result.Add(line.To.ToTeklaPoint());
+                result.Add(line.From.ToTekla());
+                result.Add(line.To.ToTekla());
             }
 
             return result;

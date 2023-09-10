@@ -17,22 +17,22 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddBooleanParameter(pManager, ParamInfos.BooleanTrigger, GH_ParamAccess.item);
+            AddBooleanParameter(pManager, ParamInfos.BooleanToogle, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new TeklaDatabaseObjectParam(ComponentInfos.DrawingObjectParam, GH_ParamAccess.list));
+            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var trigger = false;
-            DA.GetData(ParamInfos.BooleanTrigger.Name, ref trigger);
+            DA.GetData(0, ref trigger);
 
             if (!trigger)
                 return;
-
+            
             var selected = new List<TeklaDatabaseObjectGoo>();
 
             var doe = DrawingInteractor.DrawingHandler

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace GTDrawingLink.Tools
@@ -40,6 +42,19 @@ namespace GTDrawingLink.Tools
                 throw new ArgumentOutOfRangeException("propertyName",
                   string.Format("Couldn't find property {0} in type {1}", propertyName, objType.FullName));
             propInfo.SetValue(obj, val, null);
+        }
+
+        public static string GetPropertiesWithValues(object obj)
+        {
+            var propertiesWithValues = new Dictionary<string, string>();
+
+            var type = obj.GetType();
+            foreach (var propertyInfo in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                propertiesWithValues.Add(propertyInfo.Name, propertyInfo.GetValue(obj).ToString());
+            }
+
+            return string.Join("\n", propertiesWithValues.OrderBy(p=>p.Key).Select(p => $"{p.Key}: {p.Value}"));
         }
     }
 }

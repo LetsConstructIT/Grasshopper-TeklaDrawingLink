@@ -1,4 +1,6 @@
 ﻿using GTDrawingLink.Components;
+using GTDrawingLink.Components.AttributesComponents;
+using GTDrawingLink.Components.ModifyComponents;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
@@ -6,8 +8,8 @@ using System.Windows.Forms;
 
 namespace GTDrawingLink.Tools
 {
-    public static class VersionSpecificConstants
-    {
+    public static class VersionSpecificConstants 
+        {
         private static string _tabHeading = null;
 
         private static Dictionary<Type, string> _typeGuids = new Dictionary<Type, string>
@@ -58,6 +60,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(GetViewPropertiesComponent),
+                "01D3A4EF-043E-4149-A7FF-02398F010476"
+            },
+            {
+                typeof(GetViewPropertiesComponentOLD),
                 "659B5B28-ADB8-41B4-B19F-E68F77023EA4"
             },
             {
@@ -96,6 +102,10 @@ namespace GTDrawingLink.Tools
                 typeof(CreateADrawingComponent),
                 "7B9407BF-DC5A-441E-9FFD-E314E32AC9B1"
             },
+            {
+                typeof(CreateGADrawingComponent),
+                "0BC4FB66-6CA3-4D5E-B5A9-87DE7C2535FF"
+            },            
             {
                 typeof(CreateDetailViewComponent),
                 "FAAF7EF8-F686-46C9-9605-6D8056D41383"
@@ -141,7 +151,7 @@ namespace GTDrawingLink.Tools
                 "0DF6013A-F529-46C9-BC2A-B2585A8267F8"
             },
             {
-                typeof(ModifyPartComponent),
+                typeof(ModifyPartComponentOLD),
                 "E18A1FF6-9CBA-488D-AE9E-7CAC8C03A6F9"
             },
             {
@@ -183,6 +193,198 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreatePluginComponent),
                 "81D25C54-4C0B-4724-B79D-02C836C16C60"
+            },
+            {
+                typeof(StraightDimensionSetAttributesComponent),
+                "99E2E30E-2C42-4BC8-9489-D9F1A400F354"
+            },
+            {
+                typeof(StraightDimensionSetAttributesParam),
+                "6A4DE637-B72D-4DF0-8D30-8A9418881033"
+            },
+            {
+                typeof(DeconstructDimensionSetComponent),
+                "9EE842B8-EA60-4B5F-A123-86640387E410"
+            },
+            {
+                typeof(CreateStraightDimensionSetComponent),
+                "BCB39278-F65B-4F14-92C2-6D371E22ECE4"
+            },
+            {
+                typeof(CreateDimensionLinkComponent),
+                "9184C91C-AB99-418F-B8C0-DE8792A43037"
+            },
+            {
+                typeof(GetExtremePointsComponent),
+                "C899D93F-3390-4325-9A5D-5884A6387B16"
+            },
+            {
+                typeof(GetPartLinesComponent),
+                "ACDB464C-ABBF-4113-A4A3-77DBF4E66DBF"
+            },
+            {
+                typeof(GetCustomPartPointsComponent),
+                "4471F91D-084A-4571-85D2-BFDB5CB4965B"
+            },
+            {
+                typeof(CreateAngleDimensionComponent),
+                "52322B95-A7CA-4B4E-96B2-4E1B6D239CBA"
+            },
+            {
+                typeof(ObjectMatchesToFilterComponent),
+                "37BF7499-39CD-4124-81D4-64BE134418F6"
+            },
+            {
+                typeof(GroupObjectsComponent),
+                "CF46774B-064B-485C-A95D-E862768B0161"
+            },
+            {
+                typeof(CreateTextComponent),
+                "BB95F20B-A8AB-4CB6-A1B6-972AA0E1ED87"
+            },
+            {
+                typeof(TextAttributesComponent),
+                "4C1BEABA-E671-488E-B20F-8A4FDD0B2A5F"
+            },
+            {
+                typeof(FontAttributesComponent),
+                "1444CD7C-B6C1-4605-9A92-5A86B3481484"
+            },
+            {
+                typeof(ArrowAttributesComponent),
+                "70C86C3F-993C-41EE-BEC7-185A7825E9DB"
+            },
+            {
+                typeof(DeleteDrawingObjectsComponent),
+                "0F3832E1-2D16-4C56-96E1-2F63C1C5FFAC"
+            },
+            {
+                typeof(GetObjectsFromViewComponent),
+                "D340933C-5C78-4052-A986-777FAE8241B0"
+            },
+            {
+                typeof(RefreshViewComponent),
+                "CB51563A-2CF6-46CF-A51F-CE8C695AD4DB"
+            },
+            {
+                typeof(GetModelViewsComponent),
+                "AEC509CC-8D1D-4DE2-A674-524649BA25D2"
+            },
+            {
+                typeof(TeklaViewParam),
+                "19D9E060-DA63-4484-969F-05F7E73ADF04"
+            },
+            {
+                typeof(ConstructModelViewComponent),
+                "69F67CC8-C21D-4ADB-BFDF-94C4E231C335"
+            },
+            {
+                typeof(DeconstructModelViewComponent),
+                "7A066A78-39B0-4DB5-A9E6-39DDEA080F1B"
+            },
+            {
+                typeof(CreateModelViewComponent),
+                "B4A454A8-0399-46F5-A199-06622288F3EE"
+            },
+            {
+                typeof(ReinforcementMeshAttributesParam),
+                "D41DBD10-5E53-46A0-950E-FDAAFFDAB421"
+            },
+            {
+                typeof(ReinforcementMeshAttributesComponent),
+                "3B4C6F04-2F33-49F9-9C98-2AC061A9EDFE"
+            },
+            {
+                typeof(ReinforcementAttributesParam),
+                "BA96DFCA-1060-4908-9274-E5F7875C7CEF"
+            },
+            {
+                typeof(ReinforcementAttributesComponent),
+                "41DEF423-BD56-4826-A5C0-ECF4A6E32DD9"
+            },
+            {
+                typeof(ModifyRebarComponent),
+                "0D6B1B6D-D2AE-4CFE-96B8-72CC0D9995F4"
+            },
+            {
+                typeof(ModifyMeshComponent),
+                "A007E703-1979-4BB3-8404-B9F916D2DA4D"
+            },
+            {
+                typeof(FrameAttributesComponent),
+                "0C287E3B-A35A-4CA8-B083-21276F4AAE16"
+            },
+            {
+                typeof(FrameAttributesParam),
+                "45767F13-A924-4BC7-B45B-1A9081F2B2EE"
+            },
+            {
+                typeof(SymbolAttributesComponent),
+                "368A230A-B959-40FE-B360-7578418E3243"
+            },
+            {
+                typeof(SymbolAttributesParam),
+                "7A22469F-0E25-4BC7-8918-973B965D30E3"
+            },
+            {
+                typeof(CreateSymbolComponent),
+                "6B4A446F-BE7D-4267-974A-40F5B16FC483"
+            },
+            {
+                typeof(SymbolSelectionComponent),
+                "A222E53B-F020-439E-BDE1-0A23C6D9CAB9"
+            },
+            {
+                typeof(SymbolInfoParam),
+                "ED253FFE-56A7-46E1-A442-458FEA1B786F"
+            },
+            {
+                typeof(PartAttributesComponent),
+                "9CF81D45-6532-4755-9FCF-8976F897020D"
+            },
+            {
+                typeof(PartAttributesParam),
+                "89651017-00B9-4EFD-B595-B6F2AAA3E45D"
+            },
+            {
+                typeof(ModifyPartComponent),
+                "4E1B4B00-521E-45CD-ACD5-F60A4A67E7DA"
+            },
+            {
+                typeof(DeleteDrawingComponent),
+                "F1DD22E3-E5D1-44F4-AF3C-E0815DD643AA"
+            },
+            {
+                typeof(GetDrawingsFromModelObjectComponent),
+                "7F316FBD-CCAF-425F-AB4E-DAD134E9F492"
+            },
+            {
+                typeof(OrderStraightDimensionSetComponent),
+                "22FD71AB-4520-4A0A-BDAE-A73E9C12B1BE"
+            },
+            {
+                typeof(BoltAttributesParam),
+                "01DF170C-7782-47F8-BE39-C25E011EF209"
+            },
+            {
+                typeof(BoltAttributesComponent),
+                "285C891D-4A8F-484B-AD6C-7BA5E6D2BECF"
+            },
+            {
+                typeof(ModifyBoltComponent),
+                "EAF4CD74-D728-43BF-ACC1-6ACF0EF8D6F3"
+            },
+            {
+                typeof(WeldAttributesParam),
+                "3A00A7BB-16F0-4F85-B564-1501548596D0"
+            },
+            {
+                typeof(WeldAttributesComponent),
+                "C338DEF9-FE2C-4C37-BD91-B970F676C8B4"
+            },
+            {
+                typeof(ModifyWeldComponent),
+                "70A547A6-F2D3-48FE-A2E3-E5CA03CD0109"
             }
         };
 
