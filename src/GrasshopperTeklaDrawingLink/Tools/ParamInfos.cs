@@ -1087,6 +1087,13 @@ namespace GTDrawingLink.Tools
             Description = "Reinforcement type"
         };
 
+        public static readonly GH_InstanceDescription ReinforcementShape = new GH_InstanceDescription
+        {
+            Name = "Shape",
+            NickName = "Shp",
+            Description = "Reinforcement shape"
+        };
+
         public static readonly GH_InstanceDescription ReinforcementGeometry = new GH_InstanceDescription
         {
             Name = "Geometry",

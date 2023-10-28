@@ -3,8 +3,6 @@ using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using Rhino.Geometry;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -15,7 +13,7 @@ namespace GTDrawingLink.Components
 {
     public class GetReinforcementPropertiesComponent : TeklaComponentBaseNew<GetReinforcementPropertiesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.ReinforcementProperties;
 
         public GetReinforcementPropertiesComponent() : base(ComponentInfos.GetReinforcementPropertiesComponent) { }
@@ -31,6 +29,8 @@ namespace GTDrawingLink.Components
 
             var size = string.Empty;
             reinforcement.GetReportProperty("SIZE", ref size);
+            var shape = string.Empty;
+            reinforcement.GetReportProperty("SHAPE", ref shape);
 
             var (geometries, radiuses) = GetRebarGeometries(reinforcement);
 
@@ -39,6 +39,7 @@ namespace GTDrawingLink.Components
                                      reinforcement.Grade,
                                      reinforcement.Name,
                                      GetRebarType(reinforcement),
+                                     shape,
                                      geometries,
                                      radiuses);
         }
@@ -91,6 +92,7 @@ namespace GTDrawingLink.Components
         private readonly OutputParam<string> _outGrade = new OutputParam<string>(ParamInfos.ReinforcementGrade);
         private readonly OutputParam<string> _outName = new OutputParam<string>(ParamInfos.ReinforcementName);
         private readonly OutputParam<string> _outType = new OutputParam<string>(ParamInfos.ReinforcementType);
+        private readonly OutputParam<string> _outShape = new OutputParam<string>(ParamInfos.ReinforcementShape);
         private readonly OutputListParam<Rhino.Geometry.Polyline> _outGeometry = new OutputListParam<Rhino.Geometry.Polyline>(ParamInfos.ReinforcementGeometry);
         private readonly OutputListParam<double> _outBendingRadiuses = new OutputListParam<double>(ParamInfos.ReinforcementBendingRadius);
 
@@ -99,12 +101,13 @@ namespace GTDrawingLink.Components
             return GetReinforcementFromInput(_inTeklaObject.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, string size, string grade, string name, string type, List<Rhino.Geometry.Polyline> geometries, List<double> bendingRadiuses)
+        internal Result SetOutputValues(IGH_DataAccess DA, string size, string grade, string name, string type, string shape, List<Rhino.Geometry.Polyline> geometries, List<double> bendingRadiuses)
         {
             _outSize.Value = size;
             _outGrade.Value = grade;
             _outName.Value = name;
             _outType.Value = type;
+            _outShape.Value = shape;
             _outGeometry.Value = geometries;
             _outBendingRadiuses.Value = bendingRadiuses;
 
