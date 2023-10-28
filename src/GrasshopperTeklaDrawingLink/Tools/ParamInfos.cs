@@ -1051,5 +1051,54 @@ namespace GTDrawingLink.Tools
             NickName = "P",
             Description = "Bolt positions"
         };
+
+        public static readonly GH_InstanceDescription ReinforcementObject = new GH_InstanceDescription
+        {
+            Name = "Reinforcement",
+            NickName = "R",
+            Description = "Tekla Reinforcement object"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementSize = new GH_InstanceDescription
+        {
+            Name = "Size",
+            NickName = "S",
+            Description = "Reinforcement size"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementGrade = new GH_InstanceDescription
+        {
+            Name = "Grade",
+            NickName = "G",
+            Description = "Reinforcement grade"
+        };
+        
+        public static readonly GH_InstanceDescription ReinforcementName = new GH_InstanceDescription
+        {
+            Name = "Name",
+            NickName = "N",
+            Description = "Reinforcement name"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementType = new GH_InstanceDescription
+        {
+            Name = "Type",
+            NickName = "T",
+            Description = "Reinforcement type"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementGeometry = new GH_InstanceDescription
+        {
+            Name = "Geometry",
+            NickName = "Geo",
+            Description = "Reinforcement geometry"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementBendingRadius = new GH_InstanceDescription
+        {
+            Name = "Bending radius",
+            NickName = "R",
+            Description = "Reinforcement bending radius"
+        };
     }
 }

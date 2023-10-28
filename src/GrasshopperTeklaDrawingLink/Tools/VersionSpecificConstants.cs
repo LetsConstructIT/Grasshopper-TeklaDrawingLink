@@ -389,6 +389,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetBoltPropertiesComponent),
                 "84AD7FFD-7124-435C-ACB3-EBC311C0745E"
+            },
+            {
+                typeof(GetReinforcementPropertiesComponent),
+                "16DA2C14-E971-46A9-AF34-03C2F7B25A2E"
             }
         };
 

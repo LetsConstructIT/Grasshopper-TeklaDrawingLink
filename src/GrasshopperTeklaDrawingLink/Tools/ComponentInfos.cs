@@ -720,5 +720,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Geometry
         };
+
+        public static readonly GH_InstanceDescription GetReinforcementPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Reinforcement Properties",
+            NickName = "RProps",
+            Description = "Returns Tekla model reinforcement properties ",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };        
     }
 }
