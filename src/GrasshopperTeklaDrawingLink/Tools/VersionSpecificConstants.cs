@@ -385,6 +385,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyWeldComponent),
                 "70A547A6-F2D3-48FE-A2E3-E5CA03CD0109"
+            },
+            {
+                typeof(GetBoltPropertiesComponent),
+                "84AD7FFD-7124-435C-ACB3-EBC311C0745E"
             }
         };
 

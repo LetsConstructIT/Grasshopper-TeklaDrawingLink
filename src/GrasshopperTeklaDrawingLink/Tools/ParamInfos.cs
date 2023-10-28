@@ -1016,5 +1016,40 @@ namespace GTDrawingLink.Tools
             NickName = "H",
             Description = "Sets the height of the symbol."
         };
+
+        public static readonly GH_InstanceDescription BoltObject = new GH_InstanceDescription
+        {
+            Name = "Bolt",
+            NickName = "B",
+            Description = "Tekla Bolt object"
+        };
+
+        public static readonly GH_InstanceDescription BoltSize = new GH_InstanceDescription
+        {
+            Name = "Size",
+            NickName = "S",
+            Description = "Bolt size"
+        };
+
+        public static readonly GH_InstanceDescription BoltStandard = new GH_InstanceDescription
+        {
+            Name = "Standard",
+            NickName = "Std",
+            Description = "Bolt standard"
+        };
+
+        public static readonly GH_InstanceDescription BoltType = new GH_InstanceDescription
+        {
+            Name = "Type",
+            NickName = "T",
+            Description = "Bolt type"
+        };
+
+        public static readonly GH_InstanceDescription BoltPositions = new GH_InstanceDescription
+        {
+            Name = "Positions",
+            NickName = "P",
+            Description = "Bolt positions"
+        };
     }
 }

@@ -103,6 +103,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BoltProperties {
+            get {
+                object obj = ResourceManager.GetObject("BoltProperties", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CloseDrawing {
             get {
                 object obj = ResourceManager.GetObject("CloseDrawing", resourceCulture);

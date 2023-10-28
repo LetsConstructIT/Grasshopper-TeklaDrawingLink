@@ -36,8 +36,7 @@ namespace GTDrawingLink.Components
                 var databaseObject = (input as TeklaDatabaseObjectGoo).Value;
                 if (databaseObject is ModelObject drawingObject)
                 {
-                    var model = new TSM.Model();
-                    var modelObject = model.SelectModelObject(drawingObject.ModelIdentifier);
+                    var modelObject = ModelInteractor.GetModelObject(drawingObject.ModelIdentifier);
 
                     DA.SetData(0, modelObject);
                 }

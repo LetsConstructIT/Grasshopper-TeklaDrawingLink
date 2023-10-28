@@ -711,5 +711,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
+
+        public static readonly GH_InstanceDescription GetBoltPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Bolt Properties",
+            NickName = "BProps",
+            Description = "Returns Tekla model bolt properties ",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
     }
 }

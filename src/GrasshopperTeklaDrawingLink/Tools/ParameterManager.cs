@@ -309,6 +309,12 @@ namespace GTDrawingLink.Tools
                         _properlySet = true;
                         return Result.Ok();
                     }
+                    else if (input is T)
+                    {
+                        _value = input as T;
+                        _properlySet = true;
+                        return Result.Ok();
+                    }
                 }
             }
 
