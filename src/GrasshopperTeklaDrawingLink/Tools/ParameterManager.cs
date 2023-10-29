@@ -487,12 +487,21 @@ namespace GTDrawingLink.Tools
             }
             else
             {
-                var objectsGoo = new List<GH_Goo<T>>();
-                if (DA.GetDataList(InstanceDescription.Name, objectsGoo))
+                var input = new List<object>();
+                if (DA.GetDataList(InstanceDescription.Name, input))
                 {
-                    _value = objectsGoo.Select(v => v.Value).ToList();
-                    _properlySet = true;
-                    return Result.Ok();
+                    if (input is List<GH_Goo<T>> objectsGoo)
+                    {
+                        _value = objectsGoo.Select(v => v.Value).ToList();
+                        _properlySet = true;
+                        return Result.Ok();
+                    }
+                    else if (input is List<T> objects)
+                    {
+                        _value = objects;
+                        _properlySet = true;
+                        return Result.Ok();
+                    }
                 }
             }
 

@@ -728,6 +728,15 @@ namespace GTDrawingLink.Tools
             Description = "Returns Tekla model reinforcement properties ",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription SelectModelObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Select Model Object",
+            NickName = "SelMO",
+            Description = "Select object in model space",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
         };        
     }
 }

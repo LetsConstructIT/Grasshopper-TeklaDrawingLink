@@ -1107,5 +1107,12 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Reinforcement bending radius"
         };
+
+        public static readonly GH_InstanceDescription SelectionResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when model object was selected"
+        };
     }
 }

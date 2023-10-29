@@ -393,6 +393,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetReinforcementPropertiesComponent),
                 "16DA2C14-E971-46A9-AF34-03C2F7B25A2E"
+            },
+            {
+                typeof(SelectModelObjectComponent),
+                "E74EA104-BF59-438A-91B0-B4EF3513AAF7"
             }
         };
 
