@@ -1072,7 +1072,7 @@ namespace GTDrawingLink.Tools
             NickName = "G",
             Description = "Reinforcement grade"
         };
-        
+
         public static readonly GH_InstanceDescription ReinforcementName = new GH_InstanceDescription
         {
             Name = "Name",
@@ -1113,6 +1113,27 @@ namespace GTDrawingLink.Tools
             Name = "Result",
             NickName = "R",
             Description = "True when model object was selected"
+        };
+
+        public static readonly GH_InstanceDescription NumberingResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when numbering was started"
+        };
+
+        public static readonly GH_InstanceDescription NumberAllModified = new GH_InstanceDescription
+        {
+            Name = "All Modified",
+            NickName = "All",
+            Description = "Number all modified Tekla objects"
+        };
+
+        public static readonly GH_InstanceDescription NumberSelected = new GH_InstanceDescription
+        {
+            Name = "Selected",
+            NickName = "Sel",
+            Description = "Number only selected, modified Tekla objects"
         };
     }
 }

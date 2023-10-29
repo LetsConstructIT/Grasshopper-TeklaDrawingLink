@@ -397,6 +397,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SelectModelObjectComponent),
                 "E74EA104-BF59-438A-91B0-B4EF3513AAF7"
+            },
+            {
+                typeof(PerformNumberingComponent),
+                "7DB6A0CB-4D87-47FA-A7E9-FA34DD908BEE"
             }
         };
 

@@ -33,6 +33,11 @@ namespace GTDrawingLink.Types
             _modelObjectSelector.Select(arrayList);
         }
 
+        internal static bool IsAnythingSelected()
+        {
+            return _modelObjectSelector.GetSelectedObjects().GetSize() > 0;
+        }
+
         internal static bool IsConnected()
         {
             return Model.GetConnectionStatus();

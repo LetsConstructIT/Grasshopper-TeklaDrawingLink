@@ -737,6 +737,17 @@ namespace GTDrawingLink.Tools
             Description = "Select object in model space",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
-        };        
+        };
+
+        public static readonly GH_InstanceDescription PerformNumberingComponent = new GH_InstanceDescription
+        {
+            Name = "Perform Numbering",
+            NickName = "Numb",
+            Description = "Performs numbering in Tekla model area (right-click to numbering type)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        
     }
 }
