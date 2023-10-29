@@ -1016,5 +1016,124 @@ namespace GTDrawingLink.Tools
             NickName = "H",
             Description = "Sets the height of the symbol."
         };
+
+        public static readonly GH_InstanceDescription BoltObject = new GH_InstanceDescription
+        {
+            Name = "Bolt",
+            NickName = "B",
+            Description = "Tekla Bolt object"
+        };
+
+        public static readonly GH_InstanceDescription BoltSize = new GH_InstanceDescription
+        {
+            Name = "Size",
+            NickName = "S",
+            Description = "Bolt size"
+        };
+
+        public static readonly GH_InstanceDescription BoltStandard = new GH_InstanceDescription
+        {
+            Name = "Standard",
+            NickName = "Std",
+            Description = "Bolt standard"
+        };
+
+        public static readonly GH_InstanceDescription BoltType = new GH_InstanceDescription
+        {
+            Name = "Type",
+            NickName = "T",
+            Description = "Bolt type"
+        };
+
+        public static readonly GH_InstanceDescription BoltPositions = new GH_InstanceDescription
+        {
+            Name = "Positions",
+            NickName = "P",
+            Description = "Bolt positions"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementObject = new GH_InstanceDescription
+        {
+            Name = "Reinforcement",
+            NickName = "R",
+            Description = "Tekla Reinforcement object"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementSize = new GH_InstanceDescription
+        {
+            Name = "Size",
+            NickName = "S",
+            Description = "Reinforcement size"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementGrade = new GH_InstanceDescription
+        {
+            Name = "Grade",
+            NickName = "G",
+            Description = "Reinforcement grade"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementName = new GH_InstanceDescription
+        {
+            Name = "Name",
+            NickName = "N",
+            Description = "Reinforcement name"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementType = new GH_InstanceDescription
+        {
+            Name = "Type",
+            NickName = "T",
+            Description = "Reinforcement type"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementShape = new GH_InstanceDescription
+        {
+            Name = "Shape",
+            NickName = "Shp",
+            Description = "Reinforcement shape"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementGeometry = new GH_InstanceDescription
+        {
+            Name = "Geometry",
+            NickName = "Geo",
+            Description = "Reinforcement geometry"
+        };
+
+        public static readonly GH_InstanceDescription ReinforcementBendingRadius = new GH_InstanceDescription
+        {
+            Name = "Bending radius",
+            NickName = "R",
+            Description = "Reinforcement bending radius"
+        };
+
+        public static readonly GH_InstanceDescription SelectionResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when model object was selected"
+        };
+
+        public static readonly GH_InstanceDescription NumberingResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "True when numbering was started"
+        };
+
+        public static readonly GH_InstanceDescription NumberAllModified = new GH_InstanceDescription
+        {
+            Name = "All Modified",
+            NickName = "All",
+            Description = "Number all modified Tekla objects"
+        };
+
+        public static readonly GH_InstanceDescription NumberSelected = new GH_InstanceDescription
+        {
+            Name = "Selected",
+            NickName = "Sel",
+            Description = "Number only selected, modified Tekla objects"
+        };
     }
 }

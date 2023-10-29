@@ -385,6 +385,22 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyWeldComponent),
                 "70A547A6-F2D3-48FE-A2E3-E5CA03CD0109"
+            },
+            {
+                typeof(GetBoltPropertiesComponent),
+                "84AD7FFD-7124-435C-ACB3-EBC311C0745E"
+            },
+            {
+                typeof(GetReinforcementPropertiesComponent),
+                "16DA2C14-E971-46A9-AF34-03C2F7B25A2E"
+            },
+            {
+                typeof(SelectModelObjectComponent),
+                "E74EA104-BF59-438A-91B0-B4EF3513AAF7"
+            },
+            {
+                typeof(PerformNumberingComponent),
+                "7DB6A0CB-4D87-47FA-A7E9-FA34DD908BEE"
             }
         };
 

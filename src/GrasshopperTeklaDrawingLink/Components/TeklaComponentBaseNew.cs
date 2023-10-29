@@ -64,6 +64,7 @@ namespace GTDrawingLink.Components
                 { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(SymbolInfo), (param, manager) => pManager.AddParameter(new SymbolInfoParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
+                { typeof(object), (param, manager) => AddGenericParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
             };
 
             foreach (var parameter in parameters)
@@ -90,9 +91,11 @@ namespace GTDrawingLink.Components
         {
             var @switch = new Dictionary<Type, Action<OutputParam, GH_OutputParamManager>> {
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess) },
+                { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(Rhino.Geometry.Line), (param, manager) => AddLineParameter(manager, param.InstanceDescription, param.ParamAccess) },
+                { typeof(Rhino.Geometry.Polyline), (param, manager) => AddCurveParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(StraightDimensionSet.StraightDimensionSetAttributes), (param, manager) => pManager.AddParameter(new StraightDimensionSetAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess))},

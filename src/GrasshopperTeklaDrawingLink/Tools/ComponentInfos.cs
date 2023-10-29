@@ -711,5 +711,43 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
+
+        public static readonly GH_InstanceDescription GetBoltPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Bolt Properties",
+            NickName = "BProps",
+            Description = "Returns Tekla model bolt properties ",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription GetReinforcementPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Reinforcement Properties",
+            NickName = "RProps",
+            Description = "Returns Tekla model reinforcement properties ",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription SelectModelObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Select Model Object",
+            NickName = "SelMO",
+            Description = "Select object in model space",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription PerformNumberingComponent = new GH_InstanceDescription
+        {
+            Name = "Perform Numbering",
+            NickName = "Numb",
+            Description = "Performs numbering in Tekla model area (right-click to numbering type)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        
     }
 }

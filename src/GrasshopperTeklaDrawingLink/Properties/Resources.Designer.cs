@@ -103,6 +103,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BoltProperties {
+            get {
+                object obj = ResourceManager.GetObject("BoltProperties", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CloseDrawing {
             get {
                 object obj = ResourceManager.GetObject("CloseDrawing", resourceCulture);
@@ -633,6 +643,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PerformNumbering {
+            get {
+                object obj = ResourceManager.GetObject("PerformNumbering", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PickerInput {
             get {
                 object obj = ResourceManager.GetObject("PickerInput", resourceCulture);
@@ -683,6 +703,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ReinforcementProperties {
+            get {
+                object obj = ResourceManager.GetObject("ReinforcementProperties", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RunMacro {
             get {
                 object obj = ResourceManager.GetObject("RunMacro", resourceCulture);
@@ -726,6 +756,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap SelectedObjects {
             get {
                 object obj = ResourceManager.GetObject("SelectedObjects", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SelectModelObject {
+            get {
+                object obj = ResourceManager.GetObject("SelectModelObject", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
