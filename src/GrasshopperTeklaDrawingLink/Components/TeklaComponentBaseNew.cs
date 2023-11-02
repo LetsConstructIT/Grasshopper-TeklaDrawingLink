@@ -58,13 +58,12 @@ namespace GTDrawingLink.Components
                 { typeof(Part.PartAttributes), (param, manager) => pManager.AddParameter(new PartAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(Text.TextAttributes), (param, manager) => pManager.AddParameter(new TextAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(Bolt.BoltAttributes), (param, manager) => pManager.AddParameter(new BoltAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
-                { typeof(Weld.WeldAttributes), (param, manager) => pManager.AddParameter(new WeldAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},                
+                { typeof(Weld.WeldAttributes), (param, manager) => pManager.AddParameter(new WeldAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(SymbolAttributes), (param, manager) => pManager.AddParameter(new SymbolAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(SymbolInfo), (param, manager) => pManager.AddParameter(new SymbolInfoParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
-                { typeof(object), (param, manager) => AddGenericParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
             };
 
             foreach (var parameter in parameters)
@@ -104,7 +103,7 @@ namespace GTDrawingLink.Components
                 { typeof(Part.PartAttributes), (param, manager) => pManager.AddParameter(new PartAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(Text.TextAttributes), (param, manager) => pManager.AddParameter(new TextAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(Bolt.BoltAttributes), (param, manager) => pManager.AddParameter(new BoltAttributesParam(param.InstanceDescription, param.ParamAccess))},
-                { typeof(Weld.WeldAttributes), (param, manager) => pManager.AddParameter(new WeldAttributesParam(param.InstanceDescription, param.ParamAccess))},                
+                { typeof(Weld.WeldAttributes), (param, manager) => pManager.AddParameter(new WeldAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ReinforcementBase.ReinforcementMeshAttributes), (param, manager) => pManager.AddParameter(new ReinforcementMeshAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ReinforcementBase.ReinforcementSingleAttributes), (param, manager) => pManager.AddParameter(new ReinforcementAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(Frame), (param, manager) => pManager.AddParameter(new FrameAttributesParam(param.InstanceDescription, param.ParamAccess))},
