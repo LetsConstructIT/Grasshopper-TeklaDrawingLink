@@ -52,7 +52,7 @@ namespace GTDrawingLink.Components
 
     public class GetBoltPropertiesCommand : CommandBase
     {
-        private readonly InputParam<object> _inTeklaObject = new InputParam<object>(ParamInfos.BoltObject);
+        private readonly InputParam<TSM.ModelObject> _inTeklaObject = new InputParam<TSM.ModelObject>(ParamInfos.BoltObject);
 
         private readonly OutputParam<double> _outSize = new OutputParam<double>(ParamInfos.BoltSize);
         private readonly OutputParam<string> _outStandard = new OutputParam<string>(ParamInfos.BoltStandard);
@@ -80,14 +80,17 @@ namespace GTDrawingLink.Components
             {
                 return (modelGoo.Value) as TSM.BoltGroup;
             }
+            else if (inputObject is TSM.ModelObject modelObject)
+            {
+                return modelObject as TSM.BoltGroup;
+            }
             else if (inputObject is TeklaDatabaseObjectGoo drawingObject)
             {
                 var drawingModelObject = drawingObject.Value as ModelObject;
                 if (drawingModelObject is null)
                     return null;
 
-                var modelObject = ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier);
-                return modelObject as TSM.BoltGroup;
+                return ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier) as TSM.BoltGroup;
             }
 
             return null;

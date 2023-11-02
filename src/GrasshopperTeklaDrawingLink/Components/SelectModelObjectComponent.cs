@@ -1,5 +1,4 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Collections.Generic;
@@ -32,14 +31,14 @@ namespace GTDrawingLink.Components
 
     public class SelectModelObjectCommand : CommandBase
     {
-        private readonly InputListParam<object> _inModelObject = new InputListParam<object>(ParamInfos.ModelObject);
+        private readonly InputListParam<TSM.ModelObject> _inModelObjects = new InputListParam<TSM.ModelObject>(ParamInfos.ModelObject);
 
         private readonly OutputParam<bool> _outStatus = new OutputParam<bool>(ParamInfos.SelectionResult);
 
 
         internal List<TSM.ModelObject> GetInputValues()
         {
-            return GetModelObjectFromInput(_inModelObject.Value);
+            return _inModelObjects.Value;
         }
 
         internal Result SetOutputValue(IGH_DataAccess DA, bool status)
@@ -47,20 +46,6 @@ namespace GTDrawingLink.Components
             _outStatus.Value = status;
 
             return SetOutput(DA);
-        }
-
-        private List<TSM.ModelObject> GetModelObjectFromInput(List<object> inputObjects)
-        {
-            var modelObjects = new List<TSM.ModelObject>();
-            foreach (var inputObject in inputObjects)
-            {
-                if (inputObject is GH_Goo<TSM.ModelObject> modelGoo)
-                {
-                    modelObjects.Add(modelGoo.Value);
-                }
-            }
-
-            return modelObjects;
         }
     }
 }

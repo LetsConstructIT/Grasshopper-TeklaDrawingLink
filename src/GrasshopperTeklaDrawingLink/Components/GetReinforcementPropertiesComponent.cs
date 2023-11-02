@@ -86,7 +86,7 @@ namespace GTDrawingLink.Components
 
     public class GetReinforcementPropertiesCommand : CommandBase
     {
-        private readonly InputParam<object> _inTeklaObject = new InputParam<object>(ParamInfos.ReinforcementObject);
+        private readonly InputParam<TSM.ModelObject> _inTeklaObject = new InputParam<TSM.ModelObject>(ParamInfos.ReinforcementObject);
 
         private readonly OutputParam<string> _outSize = new OutputParam<string>(ParamInfos.ReinforcementSize);
         private readonly OutputParam<string> _outGrade = new OutputParam<string>(ParamInfos.ReinforcementGrade);
@@ -120,14 +120,17 @@ namespace GTDrawingLink.Components
             {
                 return (modelGoo.Value) as TSM.Reinforcement;
             }
+            else if (inputObject is TSM.ModelObject modelObject)
+            {
+                return modelObject as TSM.Reinforcement;
+            }
             else if (inputObject is TeklaDatabaseObjectGoo drawingObject)
             {
                 var drawingModelObject = drawingObject.Value as ModelObject;
                 if (drawingModelObject is null)
                     return null;
 
-                var modelObject = ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier);
-                return modelObject as TSM.Reinforcement;
+                return ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier) as TSM.Reinforcement;
             }
 
             return null;
