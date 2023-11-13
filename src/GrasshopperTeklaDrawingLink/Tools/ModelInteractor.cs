@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using GTDrawingLink.Extensions;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Tekla.Structures;
+using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using TSMUI = Tekla.Structures.Model.UI;
 
@@ -41,6 +44,25 @@ namespace GTDrawingLink.Types
         internal static bool IsConnected()
         {
             return Model.GetConnectionStatus();
+        }
+
+        internal static AABB? GetAabb(Identifier modelIdentifier)
+        {
+            var modelObject = GetModelObject(modelIdentifier);
+            if (modelObject is BoltGroup bolt)
+            {
+                return bolt.GetSolid().ToAabb();
+            }
+            else if (modelObject is Part part)
+            {
+                return part.GetSolid().ToAabb();
+            }
+            else if (modelObject is Reinforcement rebar)
+            {
+                return rebar.GetSolid().ToAabb();
+            }
+
+            return null;
         }
     }
 }

@@ -1135,5 +1135,19 @@ namespace GTDrawingLink.Tools
             NickName = "Sel",
             Description = "Number only selected, modified Tekla objects"
         };
+
+        public static readonly GH_InstanceDescription AllObjects = new GH_InstanceDescription
+        {
+            Name = "All objects",
+            NickName = "All",
+            Description = "Get all objects"
+        };
+
+        public static readonly GH_InstanceDescription OnlyVisibleObjects = new GH_InstanceDescription
+        {
+            Name = "Only visible",
+            NickName = "Visible",
+            Description = "Get only visible objects (in view restriction box)"
+        };
     }
 }
