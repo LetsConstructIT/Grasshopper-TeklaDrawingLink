@@ -8,6 +8,9 @@ Originally, drawing part was not under the scope of link. I hope that as a Tekla
 ## Installation
 You have to point .gha file with drawing components to Rhino. It can be done in exactly same manner as the [Model link](https://support.tekla.com/pl/node/107964#setup). List of available releases of Drawing link can be found at [Releases](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/releases) section.
 
+Video instruction can be found on:
+[YouTube](https://www.youtube.com/watch?v=IkuimFKCGMw)
+
 ## License
 Grasshopper-Tekla Drawing Link is provided as-is under the MIT license. For more information see [LICENSE](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/blob/main/LICENSE).
 
