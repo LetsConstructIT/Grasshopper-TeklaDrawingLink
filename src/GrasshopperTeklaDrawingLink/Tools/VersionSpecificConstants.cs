@@ -8,8 +8,8 @@ using System.Windows.Forms;
 
 namespace GTDrawingLink.Tools
 {
-    public static class VersionSpecificConstants 
-        {
+    public static class VersionSpecificConstants
+    {
         private static string _tabHeading = null;
 
         private static Dictionary<Type, string> _typeGuids = new Dictionary<Type, string>
@@ -105,7 +105,7 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateGADrawingComponent),
                 "0BC4FB66-6CA3-4D5E-B5A9-87DE7C2535FF"
-            },            
+            },
             {
                 typeof(CreateDetailViewComponent),
                 "FAAF7EF8-F686-46C9-9605-6D8056D41383"
@@ -405,6 +405,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateAssociativeNoteComponent),
                 "7D4A48E0-1CB9-4D49-BAD6-8B04494C532E"
+            },
+            {
+                typeof(TextAttributesParam),
+                "00A1ED2E-9166-442F-9F17-DE7A08575A57"
             }
         };
 
