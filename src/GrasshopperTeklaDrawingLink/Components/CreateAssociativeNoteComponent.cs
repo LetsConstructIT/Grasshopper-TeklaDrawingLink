@@ -4,7 +4,7 @@ using GTDrawingLink.Tools;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Linq;
-using TSD = Tekla.Structures.Drawing;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
@@ -15,11 +15,11 @@ namespace GTDrawingLink.Components
 
         public CreateAssociativeNoteComponent() : base(ComponentInfos.CreateAssociativeNoteComponent) { }
 
-        protected override IEnumerable<TSD.DatabaseObject> InsertObjects(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var (modelObjects, attributeFiles, basePoints, leaderLinePoints) = _command.GetInputValues();
 
-            var createdMarks = new List<TSD.Mark>();
+            var createdMarks = new List<Mark>();
 
             var count = new int[] { modelObjects.Count(), attributeFiles.Count(), basePoints.Count(), leaderLinePoints.Count() }.Max();
             for (int i = 0; i < count; i++)
@@ -40,21 +40,21 @@ namespace GTDrawingLink.Components
             return createdMarks;
         }
 
-        private TSD.PlacingBase GetPlacing(List<Point3d> leaderLinePoints, int index)
+        private PlacingBase GetPlacing(List<Point3d> leaderLinePoints, int index)
         {
             if (!leaderLinePoints.Any())
-                return TSD.PlacingTypes.PointPlacing();
+                return PlacingTypes.PointPlacing();
             else
-                return TSD.PlacingTypes.LeaderLinePlacing(leaderLinePoints.ElementAtOrLast(index).ToTekla());
+                return PlacingTypes.LeaderLinePlacing(leaderLinePoints.ElementAtOrLast(index).ToTekla());
         }
 
-        private TSD.Mark InsertMark(TSD.ModelObject modelObject, string attributeFile, Point3d basePoint, TSD.PlacingBase placing)
+        private Mark InsertMark(ModelObject modelObject, Mark.MarkAttributes attributes, Point3d basePoint, PlacingBase placing)
         {
-            var mark = new TSD.Mark(modelObject)
+            var mark = new Mark(modelObject)
             {
                 InsertionPoint = basePoint.ToTekla(),
                 Placing = placing,
-                Attributes = new TSD.Mark.MarkAttributes(modelObject, attributeFile)
+                Attributes = attributes
             };
             mark.Insert();
 
@@ -64,14 +64,14 @@ namespace GTDrawingLink.Components
 
     public class CreateAssociativeNoteCommand : CommandBase
     {
-        private readonly InputListParam<TSD.ModelObject> _inModel = new InputListParam<TSD.ModelObject>(ParamInfos.DrawingModelObject);
+        private readonly InputListParam<ModelObject> _inModel = new InputListParam<ModelObject>(ParamInfos.DrawingModelObject);
         private readonly InputListPoint _inInsertionPoints = new InputListPoint(ParamInfos.MarkInsertionPoint);
         private readonly InputOptionalListPoint _inLeaderLineEndPoints = new InputOptionalListPoint(ParamInfos.MarkLeaderLineEndPoint, new List<Point3d>());
-        private readonly InputListParam<string> _inAttributes = new InputListParam<string>(ParamInfos.Attributes);
+        private readonly InputListParam<Mark.MarkAttributes> _inAttributes = new InputListParam<Mark.MarkAttributes>(ParamInfos.MarkAttributes);
 
-        private readonly OutputListParam<TSD.Mark> _outMark = new OutputListParam<TSD.Mark>(ParamInfos.AssociativeNote);
+        private readonly OutputListParam<Mark> _outMark = new OutputListParam<Mark>(ParamInfos.AssociativeNote);
 
-        internal (List<TSD.ModelObject> modelObjects, List<string> attributeFiles, List<Point3d> basePoints, List<Point3d> leaderLinePoints) GetInputValues()
+        internal (List<ModelObject> modelObjects, List<Mark.MarkAttributes> attributeFiles, List<Point3d> basePoints, List<Point3d> leaderLinePoints) GetInputValues()
         {
             return (
                 _inModel.Value,
@@ -80,7 +80,7 @@ namespace GTDrawingLink.Components
                 _inLeaderLineEndPoints.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, List<TSD.Mark> marks)
+        internal Result SetOutputValues(IGH_DataAccess DA, List<Mark> marks)
         {
             _outMark.Value = marks;
 
