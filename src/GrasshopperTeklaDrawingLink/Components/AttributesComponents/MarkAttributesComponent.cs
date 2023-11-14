@@ -15,59 +15,57 @@ namespace GTDrawingLink.Components.AttributesComponents
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (textAttributes, fileName, fontAttributes, frame, arrowAttributes, backgroundTransparency, angle, rulerWidth) = _command.GetInputValues();
+            var (markAttributes, fileName, modelObject, frame, arrowAttributes, backgroundTransparency) = _command.GetInputValues();
+
+            if (markAttributes is null)
+            {
+                if (modelObject is null)
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Drawing object is obligatory to properly read marks' content");
+                    return;
+                }
+
+                markAttributes = new Mark.MarkAttributes(modelObject);
+            }
 
             if (!string.IsNullOrEmpty(fileName))
-                textAttributes.LoadAttributes(fileName);
-
-            if (fontAttributes != null)
-                textAttributes.Font = fontAttributes;
+                markAttributes.LoadAttributes(fileName);
 
             if (frame != null)
-                textAttributes.Frame = frame;
+                markAttributes.Frame = frame;
 
             if (arrowAttributes != null)
-                textAttributes.ArrowHead = arrowAttributes;
+                markAttributes.ArrowHead = arrowAttributes;
 
             if (backgroundTransparency != null)
-                textAttributes.TransparentBackground = backgroundTransparency.Value;
+                markAttributes.TransparentBackground = backgroundTransparency.Value;
 
-            if (angle != null)
-                textAttributes.Angle = angle.Value;
-
-            if (rulerWidth != null)
-                textAttributes.RulerWidth = rulerWidth.Value;
-
-            _command.SetOutputValues(DA, textAttributes);
+            _command.SetOutputValues(DA, markAttributes);
         }
     }
     public class MarkAttributesCommand : CommandBase
     {
-        private readonly InputOptionalParam<Text.TextAttributes> _inTextAttributes = new InputOptionalParam<Text.TextAttributes>(ParamInfos.TextAttributes);
+        private readonly InputOptionalParam<Mark.MarkAttributes> _inMarkAttributes = new InputOptionalParam<Mark.MarkAttributes>(ParamInfos.MarkAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
-        private readonly InputOptionalParam<FontAttributes> _inFontAttributes = new InputOptionalParam<FontAttributes>(ParamInfos.FontAttributes);
+        private readonly InputOptionalParam<ModelObject> _inModel = new InputOptionalParam<ModelObject>(ParamInfos.DrawingModelObject);
         private readonly InputOptionalParam<Frame> _inFrameType = new InputOptionalParam<Frame>(ParamInfos.FrameAtributes);
         private readonly InputOptionalParam<ArrowheadAttributes> _inArrowAttributes = new InputOptionalParam<ArrowheadAttributes>(ParamInfos.ArrowAttributes);
         private readonly InputOptionalStructParam<bool> _inBackgroundTransparency = new InputOptionalStructParam<bool>(ParamInfos.BackgroundTransparency);
-        private readonly InputOptionalStructParam<double> _inAngle = new InputOptionalStructParam<double>(ParamInfos.Angle);
-        private readonly InputOptionalStructParam<double> _inTextRulerWidth = new InputOptionalStructParam<double>(ParamInfos.TextRulerWidth);
 
-        private readonly OutputParam<Text.TextAttributes> _outAttributes = new OutputParam<Text.TextAttributes>(ParamInfos.TextAttributes);
+        private readonly OutputParam<Mark.MarkAttributes> _outAttributes = new OutputParam<Mark.MarkAttributes>(ParamInfos.MarkAttributes);
 
-        internal (Text.TextAttributes textAttributes, string? attributesName, FontAttributes? fontAttributes, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth) GetInputValues()
+        internal (Mark.MarkAttributes? textAttributes, string? attributesName, ModelObject? modelObject, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency) GetInputValues()
         {
             return (
-                _inTextAttributes.Value ?? new Text.TextAttributes(),
+                _inMarkAttributes.GetValueFromUserOrNull(),
                 _inAttributesFileName.GetValueFromUserOrNull(),
-                _inFontAttributes.GetValueFromUserOrNull(),
+                _inModel.GetValueFromUserOrNull(),
                 _inFrameType.GetValueFromUserOrNull(),
                 _inArrowAttributes.GetValueFromUserOrNull(),
-                _inBackgroundTransparency.GetValueFromUserOrNull(),
-                _inAngle.GetValueFromUserOrNull(),
-                _inTextRulerWidth.GetValueFromUserOrNull());
+                _inBackgroundTransparency.GetValueFromUserOrNull());
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, Text.TextAttributes attributes)
+        internal Result SetOutputValues(IGH_DataAccess DA, Mark.MarkAttributes attributes)
         {
             _outAttributes.Value = attributes;
 
