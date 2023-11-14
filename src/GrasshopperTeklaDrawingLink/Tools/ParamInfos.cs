@@ -1162,6 +1162,13 @@ namespace GTDrawingLink.Tools
             Name = "Drawing Object",
             NickName = "O",
             Description = "Drawing model object (Part/Bolt/Rebar/Weld)"
-        };        
+        };
+
+        public static readonly GH_InstanceDescription AssociativeNoteAttributes = new GH_InstanceDescription
+        {
+            Name = "Associative Note Attributes",
+            NickName = "A",
+            Description = "The attributes of the Associative Note."
+        };
     }
 }
