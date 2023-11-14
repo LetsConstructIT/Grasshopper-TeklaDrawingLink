@@ -401,6 +401,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(PerformNumberingComponent),
                 "7DB6A0CB-4D87-47FA-A7E9-FA34DD908BEE"
+            },
+            {
+                typeof(CreateAssociativeNoteComponent),
+                "7D4A48E0-1CB9-4D49-BAD6-8B04494C532E"
             }
         };
 

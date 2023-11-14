@@ -616,10 +616,10 @@ namespace GTDrawingLink.Tools {
             SubCategory=PanelHeadings.Modify
         };
 
-        public static readonly GH_InstanceDescription CreateMarkComponent = new GH_InstanceDescription {
-            Name="Mark",
-            NickName="M",
-            Description="Add a mark for a model object",
+        public static readonly GH_InstanceDescription CreateAssociativeNoteComponent = new GH_InstanceDescription {
+            Name= "Associative Note",
+            NickName="A",
+            Description= "Create Associative Note",
             Category=VersionSpecificConstants.TabHeading,
             SubCategory=PanelHeadings.Annotations
         };

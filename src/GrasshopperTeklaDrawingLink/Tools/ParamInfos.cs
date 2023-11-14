@@ -1149,5 +1149,19 @@ namespace GTDrawingLink.Tools
             NickName = "Visible",
             Description = "Get only visible objects (in view restriction box)"
         };
+
+        public static readonly GH_InstanceDescription AssociativeNote = new GH_InstanceDescription
+        {
+            Name = "Note",
+            NickName = "N",
+            Description = "Drawing Associative Note"
+        };
+
+        public static readonly GH_InstanceDescription DrawingModelObject = new GH_InstanceDescription
+        {
+            Name = "Drawing Object",
+            NickName = "O",
+            Description = "Drawing model object (Part/Bolt/Rebar/Weld)"
+        };        
     }
 }
