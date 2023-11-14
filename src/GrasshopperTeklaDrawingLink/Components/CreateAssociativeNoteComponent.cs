@@ -4,13 +4,14 @@ using GTDrawingLink.Tools;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Linq;
-
 using TSD = Tekla.Structures.Drawing;
+
 namespace GTDrawingLink.Components
 {
     public class CreateAssociativeNoteComponent : CreateDatabaseObjectComponentBaseNew<CreateAssociativeNoteCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.AssociativeNote;
 
         public CreateAssociativeNoteComponent() : base(ComponentInfos.CreateAssociativeNoteComponent) { }
 
