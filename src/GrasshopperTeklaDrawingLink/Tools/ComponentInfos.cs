@@ -678,6 +678,13 @@ namespace GTDrawingLink.Tools {
             SubCategory = PanelHeadings.Misc
         };
 
-        
+        public static readonly GH_InstanceDescription MarkAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Mark Attributes",
+            NickName = "MAttr",
+            Description = "Create Tekla Mark Attributes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
     }
 }

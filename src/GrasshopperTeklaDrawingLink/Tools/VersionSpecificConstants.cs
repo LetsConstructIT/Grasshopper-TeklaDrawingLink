@@ -413,6 +413,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(MarkAttributesParam),
                 "7F904691-96A2-4F92-B95F-423DB7020E4D"
+            },
+            {
+                typeof(MarkAttributesComponent),
+                "F0939985-9E2E-4677-957F-F56C07AE6BEF"
             }
         };
 
