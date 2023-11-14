@@ -37,7 +37,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Mark",
             NickName = "M",
-            Description = "Drawing mark"
+            Description = "Tekla Mark"
         };
 
         public static readonly GH_InstanceDescription ViewType = new GH_InstanceDescription
@@ -596,7 +596,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Text",
             NickName = "T",
-            Description = "Add text."
+            Description = "Tekla Text"
         };
 
         public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription
@@ -867,7 +867,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Symbol",
             NickName = "S",
-            Description = "Symbol"
+            Description = "Tekla Symbol"
         };
 
         public static readonly GH_InstanceDescription InsertionPoint = new GH_InstanceDescription
@@ -1154,7 +1154,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Note",
             NickName = "N",
-            Description = "Drawing Associative Note"
+            Description = "Tekla Associative Note"
         };
 
         public static readonly GH_InstanceDescription DrawingModelObject = new GH_InstanceDescription
