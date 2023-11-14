@@ -28,9 +28,8 @@ namespace GTDrawingLink.Components
                 var insertionPt = basePoints.ElementAtOrLast(i);
                 var attribute = attributeFiles.ElementAtOrLast(i);
 
-                var createMarks = leaderLinePoints.Any() ?
-                    InsertMarkWithLeaderLine(modelObject, attribute, insertionPt, leaderLinePoints.ElementAtOrLast(i)) :
-                    InsertMarktWithoutLeaderLine(modelObject, attribute, insertionPt);
+                var placing = GetPlacing(leaderLinePoints, i);
+                var createMarks = InsertMark(modelObject, attribute, insertionPt, placing);
 
                 createdMarks.Add(createMarks);
             }
@@ -41,27 +40,24 @@ namespace GTDrawingLink.Components
             return createdMarks;
         }
 
-        private TSD.Mark InsertMarktWithoutLeaderLine(TSD.ModelObject modelObject, string attributeFile, Point3d basePoint)
+        private TSD.PlacingBase GetPlacing(List<Point3d> leaderLinePoints, int index)
         {
-            var mark = new TSD.Mark(modelObject)
-            {
-                InsertionPoint = basePoint.ToTekla(),
-                Placing = TSD.PlacingTypes.PointPlacing(),
-                Attributes = new TSD.Mark.MarkAttributes(modelObject, attributeFile)
-            };
-            mark.Insert();
-            return mark;
+            if (!leaderLinePoints.Any())
+                return TSD.PlacingTypes.PointPlacing();
+            else
+                return TSD.PlacingTypes.LeaderLinePlacing(leaderLinePoints.ElementAtOrLast(index).ToTekla());
         }
 
-        private TSD.Mark InsertMarkWithLeaderLine(TSD.ModelObject modelObject, string attributeFile, Point3d basePoint, Point3d leaderLinePoint)
+        private TSD.Mark InsertMark(TSD.ModelObject modelObject, string attributeFile, Point3d basePoint, TSD.PlacingBase placing)
         {
             var mark = new TSD.Mark(modelObject)
             {
                 InsertionPoint = basePoint.ToTekla(),
-                Placing = TSD.PlacingTypes.LeaderLinePlacing(leaderLinePoint.ToTekla()),
+                Placing = placing,
                 Attributes = new TSD.Mark.MarkAttributes(modelObject, attributeFile)
             };
             mark.Insert();
+
             return mark;
         }
     }
