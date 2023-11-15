@@ -2,6 +2,7 @@
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
+using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -573,6 +574,27 @@ namespace GTDrawingLink.Tools
             }
         }
     }
+    public class OutputTreeParam<T> : OutputParam
+    {
+        private readonly int _index;
+
+        public IGH_Structure Value { get; set; }
+
+        public OutputTreeParam(GH_InstanceDescription instanceDescription, int index)
+            : base(typeof(T), instanceDescription, GH_ParamAccess.tree)
+        {
+            this._index = index;
+        }
+
+        public override Result SetOutput(IGH_DataAccess DA)
+        {
+            if (DA.SetDataTree(_index, Value))
+                return Result.Ok();
+            else
+                return Result.Fail("SetDataList failed");
+        }
+    }
+
     public abstract class CommandBase
     {
         private IEnumerable<InputParam> _inputParameters;
