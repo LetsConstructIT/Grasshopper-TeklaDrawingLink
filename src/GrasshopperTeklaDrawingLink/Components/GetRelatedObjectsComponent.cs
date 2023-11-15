@@ -1,6 +1,9 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
+using GTDrawingLink.Types;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -16,9 +19,19 @@ namespace GTDrawingLink.Components
         {
             var drawingObject = _command.GetInputValues();
 
-            //var result = DrawingInteractor.DrawingHandler.CloseActiveDrawing(save);
+            var childObjectsGroupedByType = GetRelatedObjectsGroupedByType(drawingObject);
 
-            _command.SetOutputValues(DA, true);
+
+            _command.SetOutputValues(DA, childObjectsGroupedByType.Select(c => c.Key).ToList());
+        }
+        private IEnumerable<IGrouping<string, DrawingObject>> GetRelatedObjectsGroupedByType(DrawingObject drawingObject)
+        {
+            var childObjects = new List<DrawingObject>();
+            var doe = drawingObject.GetRelatedObjects();
+            while (doe.MoveNext())
+                childObjects.Add(doe.Current);
+
+            return childObjects.GroupBy(o => o.GetType().ToShortString()).OrderBy(o => o.Key);
         }
     }
 
@@ -26,16 +39,16 @@ namespace GTDrawingLink.Components
     {
         private readonly InputParam<DrawingObject> _inDrawingObject = new InputParam<DrawingObject>(ParamInfos.DrawingObject);
 
-        private readonly OutputParam<bool> _outResult = new OutputParam<bool>(ParamInfos.DrawingSaveResult);
+        private readonly OutputListParam<string> _outTypes = new OutputListParam<string>(ParamInfos.GroupingKeys);
 
         internal DrawingObject GetInputValues()
         {
             return _inDrawingObject.Value;
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, bool result)
+        internal Result SetOutputValues(IGH_DataAccess DA, List<string> types)
         {
-            _outResult.Value = result;
+            _outTypes.Value = types;
 
             return SetOutput(DA);
         }
