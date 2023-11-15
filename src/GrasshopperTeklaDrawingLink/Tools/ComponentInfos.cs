@@ -686,5 +686,15 @@ namespace GTDrawingLink.Tools {
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+
+
+        public static readonly GH_InstanceDescription GetRelatedObjectsComponent = new GH_InstanceDescription
+        {
+            Name = "Related object",
+            NickName = "RelatedObjects",
+            Description = "Get related objects",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
     }
 }

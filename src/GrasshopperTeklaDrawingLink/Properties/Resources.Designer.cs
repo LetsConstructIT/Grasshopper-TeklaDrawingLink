@@ -443,6 +443,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GetRelatedObjects {
+            get {
+                object obj = ResourceManager.GetObject("GetRelatedObjects", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GetRelatedViews {
             get {
                 object obj = ResourceManager.GetObject("GetRelatedViews", resourceCulture);

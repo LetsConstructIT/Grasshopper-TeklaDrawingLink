@@ -1170,5 +1170,12 @@ namespace GTDrawingLink.Tools
             NickName = "MAttr",
             Description = "The attributes of the Mark"
         };
+
+        public static readonly GH_InstanceDescription DrawingObject = new GH_InstanceDescription
+        {
+            Name = "Drawing Object",
+            NickName = "O",
+            Description = "Drawing object"
+        };
     }
 }
