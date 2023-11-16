@@ -3,7 +3,6 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,13 +11,14 @@ using Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components
 {
-    public class GroupObjectsComponent : TeklaComponentBase
+    [Obsolete]
+    public class GroupObjectsComponentOLD : TeklaComponentBase
     {
         private GroupingMode _mode = GroupingMode.ByAssemblyPosition;
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.GroupObjects;
 
-        public GroupObjectsComponent() : base(ComponentInfos.GroupObjectsComponent)
+        public GroupObjectsComponentOLD() : base(ComponentInfos.GroupObjectsComponent)
         {
             SetCustomMessage();
         }
@@ -116,7 +116,7 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            AddGenericParameter(pManager, ParamInfos.ModelObject, GH_ParamAccess.tree);
+            AddIntegerParameter(pManager, ParamInfos.GroupingIndices, GH_ParamAccess.tree);
             AddTextParameter(pManager, ParamInfos.GroupingKeys, GH_ParamAccess.list);
         }
 
@@ -154,10 +154,9 @@ namespace GTDrawingLink.Components
                     dictionary.Add(propertyValue, new List<ModelObject> { modelObject });
             }
 
-            var ordered = dictionary.OrderBy(kvp => kvp.Key).ToArray();
 
-            DA.SetDataTree(0, GetOutputTree(ordered));
-            DA.SetDataList(1, ordered.Select(d => d.Key));
+            DA.SetDataTree(0, GetOutputTree(dictionary, modelObjects));
+            DA.SetDataList(1, dictionary.Select(d => d.Key));
         }
 
         private string GetPropertyValue(ModelObject inputObject, string inputProperty)
@@ -241,19 +240,20 @@ namespace GTDrawingLink.Components
             return null;
         }
 
-        private IGH_Structure GetOutputTree(KeyValuePair<string, List<ModelObject>>[] dictionary)
+        private IGH_Structure GetOutputTree(Dictionary<string, List<ModelObject>> dictionary, List<ModelObject> modelObjects)
         {
-            var output = new GH_Structure<ModelObjectGoo>();
+            var output = new GH_Structure<GH_Integer>();
 
             var index = 0;
-            foreach (var currentObjects in dictionary)
+            foreach (var keyValuePair in dictionary)
             {
-                var indicies = currentObjects.Value.Select(o => new ModelObjectGoo(o));
+                var currentObjects = keyValuePair.Value;
+
+                var indicies = currentObjects.Select(o => new GH_Integer(modelObjects.IndexOf(o)));
                 output.AppendRange(indicies, new GH_Path(0, index));
 
                 index++;
             }
-
             return output;
         }
 
