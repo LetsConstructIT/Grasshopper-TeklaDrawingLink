@@ -72,6 +72,13 @@ namespace GTDrawingLink.Components
             return index;
         }
 
+        protected int AddVectorParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddVectorParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
         protected int AddLineParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             var index = pManager.AddLineParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
@@ -116,6 +123,11 @@ namespace GTDrawingLink.Components
         protected int AddPointParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddPointParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
+        protected int AddVectorParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddVectorParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
         protected int AddLineParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)

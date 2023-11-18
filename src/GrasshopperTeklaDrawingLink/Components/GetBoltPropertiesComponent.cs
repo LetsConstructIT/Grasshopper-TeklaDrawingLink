@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.Geometry3d;
 using TSG = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
 
@@ -30,12 +31,14 @@ namespace GTDrawingLink.Components
             }
 
             var boltPositions = GetBoltPositions(bolt.BoltPositions);
+            var direction = GetZDirection(bolt.GetCoordinateSystem());
 
             _command.SetOutputValues(DA,
                                      bolt.BoltSize,
                                      bolt.BoltStandard,
                                      bolt.BoltType.ToString(),
-                                     boltPositions);
+                                     boltPositions,
+                                     direction);
         }
 
         private List<Point3d> GetBoltPositions(ArrayList boltPositions)
@@ -48,6 +51,13 @@ namespace GTDrawingLink.Components
 
             return points;
         }
+
+        private Vector3d GetZDirection(CoordinateSystem coordinateSystem)
+        {
+            var zDir = coordinateSystem.AxisX.Cross(coordinateSystem.AxisY).GetNormal();
+
+            return zDir.ToRhino();
+        }
     }
 
     public class GetBoltPropertiesCommand : CommandBase
@@ -58,18 +68,20 @@ namespace GTDrawingLink.Components
         private readonly OutputParam<string> _outStandard = new OutputParam<string>(ParamInfos.BoltStandard);
         private readonly OutputParam<string> _outType = new OutputParam<string>(ParamInfos.BoltType);
         private readonly OutputListParam<Point3d> _outPositions = new OutputListParam<Point3d>(ParamInfos.BoltPositions);
+        private readonly OutputParam<Vector3d> _outDirection = new OutputParam<Vector3d>(ParamInfos.BoltDirection);
 
         internal TSM.BoltGroup? GetInputValues()
         {
             return GetBoltFromInput(_inTeklaObject.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, double size, string standard, string type, List<Point3d> positions)
+        internal Result SetOutputValues(IGH_DataAccess DA, double size, string standard, string type, List<Point3d> positions, Vector3d direction)
         {
             _outSize.Value = size;
             _outStandard.Value = standard;
             _outType.Value = type;
             _outPositions.Value = positions;
+            _outDirection.Value = direction;
 
             return SetOutput(DA);
         }

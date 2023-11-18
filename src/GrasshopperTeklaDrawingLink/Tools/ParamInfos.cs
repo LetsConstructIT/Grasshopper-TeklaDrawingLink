@@ -1052,6 +1052,13 @@ namespace GTDrawingLink.Tools
             Description = "Bolt positions"
         };
 
+        public static readonly GH_InstanceDescription BoltDirection = new GH_InstanceDescription
+        {
+            Name = "Direction",
+            NickName = "D",
+            Description = "Bolt direction"
+        };
+
         public static readonly GH_InstanceDescription ReinforcementObject = new GH_InstanceDescription
         {
             Name = "Reinforcement",
