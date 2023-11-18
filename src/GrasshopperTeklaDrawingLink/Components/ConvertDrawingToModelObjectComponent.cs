@@ -3,7 +3,6 @@ using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
-using TSM = Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components
 {
@@ -38,7 +37,7 @@ namespace GTDrawingLink.Components
                 {
                     var modelObject = ModelInteractor.GetModelObject(drawingObject.ModelIdentifier);
 
-                    DA.SetData(0, modelObject);
+                    DA.SetData(0, new ModelObjectGoo(modelObject));
                 }
             }
         }
