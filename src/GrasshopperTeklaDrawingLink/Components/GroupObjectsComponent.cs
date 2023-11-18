@@ -189,26 +189,29 @@ namespace GTDrawingLink.Components
                 return "";
             }
 
-            var mainPart = GetMainPart(inputObject);
-            if (mainPart == null)
+            var mainObject = inputObject;
+            if (inputObject is Part)
+                mainObject = GetMainPart(inputObject);
+
+            if (mainObject == null)
             {
                 return "";
             }
 
             var strValue = "";
-            if (mainPart.GetReportProperty(propertyName, ref strValue))
+            if (mainObject.GetReportProperty(propertyName, ref strValue))
             {
                 return strValue;
             }
 
             var dblValue = 0.0;
-            if (mainPart.GetReportProperty(propertyName, ref dblValue))
+            if (mainObject.GetReportProperty(propertyName, ref dblValue))
             {
                 return dblValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
             }
 
             var intValue = 0;
-            if (mainPart.GetReportProperty(propertyName, ref intValue))
+            if (mainObject.GetReportProperty(propertyName, ref intValue))
             {
                 return intValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
             }
