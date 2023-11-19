@@ -51,6 +51,36 @@ namespace GTDrawingLink.Components
             return type.Replace("Tekla.Structures.Model.", "");
         }
 
+
+#if API2020
+        private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
+        {
+            var rebarPolylines = new List<Rhino.Geometry.Polyline>();
+            var bendingRadiuses = new List<double>();
+
+            var geometries = reinforcement.GetRebarGeometriesWithoutClashes(true);
+            foreach (TSM.RebarGeometry geometry in geometries)
+            {
+                var polyline = new Rhino.Geometry.Polyline();
+
+                foreach (TSG.Point point in geometry.Shape.Points)
+                {
+                    polyline.Add(point.ToRhino());
+                }
+
+                rebarPolylines.Add(polyline);
+
+                if (bendingRadiuses.Count == 0)
+                {
+                    foreach (double radius in geometry.BendingRadiuses)
+                        bendingRadiuses.Add(radius);
+                }
+            }
+
+            return (rebarPolylines, bendingRadiuses);
+        }
+
+#else
         private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
         {
             var rebarPolylines = new List<Rhino.Geometry.Polyline>();
@@ -82,6 +112,8 @@ namespace GTDrawingLink.Components
 
             return (rebarPolylines, bendingRadiuses);
         }
+#endif
+
     }
 
     public class GetReinforcementPropertiesCommand : CommandBase

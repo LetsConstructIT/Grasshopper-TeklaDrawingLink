@@ -25,7 +25,12 @@ namespace GTDrawingLink.Components
 
             SelectObject(mos, modelObject);
 
+#if API2020
+            var drawingIds = Tekla.Structures.DrawingInternal.Operation.GetDrawingsBySelectedParts();
+
+#else
             var drawingIds = Tekla.Structures.DrawingInternal.Operation.GetDrawingsBySelectedParts(true, true);
+#endif
 
             SelectObjects(mos, preSelectedObjects);
 
