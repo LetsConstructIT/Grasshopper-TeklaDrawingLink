@@ -189,59 +189,25 @@ namespace GTDrawingLink.Components
                 return "";
             }
 
-            var mainObject = inputObject;
-            if (inputObject is Part)
-                mainObject = GetMainPart(inputObject);
-
-            if (mainObject == null)
-            {
-                return "";
-            }
-
             var strValue = "";
-            if (mainObject.GetReportProperty(propertyName, ref strValue))
+            if (inputObject.GetReportProperty(propertyName, ref strValue))
             {
                 return strValue;
             }
 
             var dblValue = 0.0;
-            if (mainObject.GetReportProperty(propertyName, ref dblValue))
+            if (inputObject.GetReportProperty(propertyName, ref dblValue))
             {
                 return dblValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
             }
 
             var intValue = 0;
-            if (mainObject.GetReportProperty(propertyName, ref intValue))
+            if (inputObject.GetReportProperty(propertyName, ref intValue))
             {
                 return intValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
             }
 
             return "";
-        }
-
-        private Part GetMainPart(ModelObject modelObject)
-        {
-            if (modelObject is Part part)
-            {
-                return part;
-            }
-            else if (modelObject is Assembly assembly)
-            {
-                return assembly.GetMainPart() as Part;
-            }
-            else if (modelObject is CustomPart customPart)
-            {
-                var moe = customPart.GetChildren();
-                while (moe.MoveNext())
-                {
-                    if (moe.Current is Part innerPart)
-                    {
-                        return innerPart.GetAssembly().GetMainPart() as Part;
-                    }
-                }
-            }
-
-            return null;
         }
 
         private IGH_Structure GetOutputTree(KeyValuePair<string, List<ModelObject>>[] dictionary)
