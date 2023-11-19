@@ -134,12 +134,8 @@ namespace GTDrawingLink.Components
                 view.Select();
                 var matrix = MatrixFactory.FromCoordinateSystem(view.ViewCoordinateSystem);
 
-                return new AABB(
-                    new Tekla.Structures.Geometry3d.Point[]
-                    {
-                        matrix.Transform(view.RestrictionBox.MinPoint),
-                        matrix.Transform(view.RestrictionBox.MaxPoint)
-                    });
+                return new AABB(matrix.Transform(view.RestrictionBox.MinPoint),
+                                matrix.Transform(view.RestrictionBox.MaxPoint));
             }
 
             return null;
