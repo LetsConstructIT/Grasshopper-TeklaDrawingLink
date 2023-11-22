@@ -696,5 +696,15 @@ namespace GTDrawingLink.Tools {
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };
+
+        public static readonly GH_InstanceDescription ConvertModelToDrawingObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Model to Drawing Object",
+            NickName = "MtoD",
+            Description = "Converts the Tekla Structures model object to associated drawing object",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
+
     }
 }
