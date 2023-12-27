@@ -136,7 +136,9 @@ namespace GTDrawingLink.Components
             view.Select();
 
             var matrix = MatrixFactory.FromCoordinateSystem(view.ViewCoordinateSystem);
-            return new AABB(matrix.Transform(new TSG.Point[] { view.RestrictionBox.MinPoint, view.RestrictionBox.MaxPoint }));
+            var pts = new TSG.Point[] { view.RestrictionBox.MinPoint, view.RestrictionBox.MaxPoint }
+                .Select(p => matrix.Transform(p));
+            return AABBFactory.FromPoints(pts);
         }
 
         private IGH_Structure GetOutputTree(IEnumerable<IGrouping<string, DrawingObject>> childObjectsGroupedByType)
