@@ -251,8 +251,16 @@ namespace GTDrawingLink.Tools
                 "4C1BEABA-E671-488E-B20F-8A4FDD0B2A5F"
             },
             {
+                typeof(FontAttributesParam),
+                "CB121329-597E-4117-A75E-53C342FC3E8A"
+            },
+            {
                 typeof(FontAttributesComponent),
                 "1444CD7C-B6C1-4605-9A92-5A86B3481484"
+            },
+            {
+                typeof(ArrowAttributesParam),
+                "F8EAEBC0-5A1F-4057-85CD-E115FB0AE776"
             },
             {
                 typeof(ArrowAttributesComponent),
@@ -323,12 +331,12 @@ namespace GTDrawingLink.Tools
                 "45767F13-A924-4BC7-B45B-1A9081F2B2EE"
             },
             {
-                typeof(SymbolAttributesComponent),
-                "368A230A-B959-40FE-B360-7578418E3243"
-            },
-            {
                 typeof(SymbolAttributesParam),
                 "7A22469F-0E25-4BC7-8918-973B965D30E3"
+            },
+            {
+                typeof(SymbolAttributesComponent),
+                "368A230A-B959-40FE-B360-7578418E3243"
             },
             {
                 typeof(CreateSymbolComponent),
@@ -343,12 +351,12 @@ namespace GTDrawingLink.Tools
                 "ED253FFE-56A7-46E1-A442-458FEA1B786F"
             },
             {
-                typeof(PartAttributesComponent),
-                "9CF81D45-6532-4755-9FCF-8976F897020D"
-            },
-            {
                 typeof(PartAttributesParam),
                 "89651017-00B9-4EFD-B595-B6F2AAA3E45D"
+            },
+            {
+                typeof(PartAttributesComponent),
+                "9CF81D45-6532-4755-9FCF-8976F897020D"
             },
             {
                 typeof(ModifyPartComponent),
