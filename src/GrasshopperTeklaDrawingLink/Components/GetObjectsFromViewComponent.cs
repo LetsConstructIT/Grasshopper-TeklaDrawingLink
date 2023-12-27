@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
+using TSG = Tekla.Structures.Geometry3d;
 
 namespace GTDrawingLink.Components
 {
@@ -129,16 +130,13 @@ namespace GTDrawingLink.Components
 
         private AABB? GetViewAabb(ViewBase viewBase)
         {
-            if (viewBase is Tekla.Structures.Drawing.View view)
-            {
-                view.Select();
-                var matrix = MatrixFactory.FromCoordinateSystem(view.ViewCoordinateSystem);
+            if (!(viewBase is Tekla.Structures.Drawing.View view))
+                return null;
 
-                return new AABB(matrix.Transform(view.RestrictionBox.MinPoint),
-                                matrix.Transform(view.RestrictionBox.MaxPoint));
-            }
+            view.Select();
 
-            return null;
+            var matrix = MatrixFactory.FromCoordinateSystem(view.ViewCoordinateSystem);
+            return new AABB(matrix.Transform(new TSG.Point[] { view.RestrictionBox.MinPoint, view.RestrictionBox.MaxPoint }));
         }
 
         private IGH_Structure GetOutputTree(IEnumerable<IGrouping<string, DrawingObject>> childObjectsGroupedByType)
