@@ -425,6 +425,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetRelatedObjectsComponent),
                 "597CE529-4306-4F4E-BF80-01C93E3613A5"
+            },
+            {
+                typeof(ConvertModelToDrawingObjectComponent),
+                "062D04D8-CA58-4DF3-A6CA-708EDB16518D"
             }
         };
 
