@@ -1184,5 +1184,12 @@ namespace GTDrawingLink.Tools
             NickName = "O",
             Description = "Drawing object"
         };
+
+        public static readonly GH_InstanceDescription MarkAttributesFile = new GH_InstanceDescription
+        {
+            Name = "Attributes",
+            NickName = "Attr",
+            Description = "Name of mark attributes file"
+        };
     }
 }

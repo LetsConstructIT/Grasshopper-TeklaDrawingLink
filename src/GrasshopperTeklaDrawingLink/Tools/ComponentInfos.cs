@@ -624,6 +624,15 @@ namespace GTDrawingLink.Tools {
             SubCategory=PanelHeadings.Annotations
         };
 
+        public static readonly GH_InstanceDescription CreateMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Mark",
+            NickName = "M",
+            Description = "Create Part/Rebar/Weld/Bolt Mark by 'macroing'",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };                
+
         public static readonly GH_InstanceDescription WeldAttributesComponent = new GH_InstanceDescription
         {
             Name = "Weld Attributes",

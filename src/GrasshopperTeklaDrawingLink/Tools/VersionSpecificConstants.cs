@@ -437,6 +437,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ConvertModelToDrawingObjectComponent),
                 "062D04D8-CA58-4DF3-A6CA-708EDB16518D"
+            },
+            {
+                typeof(CreateMarkComponent),
+                "EEA2C71F-2778-4F47-806A-8C23F238ABEB"
             }
         };
 
