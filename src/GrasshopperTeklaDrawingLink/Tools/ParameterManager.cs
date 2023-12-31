@@ -546,7 +546,7 @@ namespace GTDrawingLink.Tools
         }
     }
 
-    public class InputTreeParam<T> : InputParam
+    public class InputTreeParam<T> : InputParam where T : class
     {
         private bool _properlySet;
         private List<List<T>> _value;
@@ -561,17 +561,34 @@ namespace GTDrawingLink.Tools
         {
             _properlySet = false;
 
-            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
+            var typeOfInput = typeof(T);
+            if (typeOfInput.InheritsFrom(typeof(DatabaseObject)))
             {
-                _value = tree.Branches.Select(b => b.Select(i => i.Value).ToList()).ToList();
-                _properlySet = true;
-                return Result.Ok();
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<DatabaseObject>> tree))
+                {
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
+                    if (castedToExpectedType.Any(o => o.Any(e => e is null)))
+                    {
+                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                    }
+
+                    _value = castedToExpectedType.ToList();
+
+                    _properlySet = true;
+                    return Result.Ok();
+                }
             }
             else
             {
-                _properlySet = false;
-                return GetWrongInputMessage(InstanceDescription.Name);
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
+                {
+                    _value = tree.Branches.Select(b => b.Select(i => i.Value).ToList()).ToList();
+                    _properlySet = true;
+                    return Result.Ok();
+                }
             }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
         }
     }
     public class OutputTreeParam<T> : OutputParam
