@@ -1,7 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
@@ -27,10 +26,33 @@ namespace GTDrawingLink.Components
                 var modelObjects = modelObjectsTree.ElementAtOrLast(i);
                 var attribute = attributeFiles.ElementAtOrLast(i);
 
-                //var placing = GetPlacing(leaderLinePoints, i);
-                //var createMarks = InsertMark(modelObject, attribute, insertionPt, placing);
+                DrawingInteractor.Highlight(modelObjects);
 
-                //createdMarks.Add(createMarks);
+                var macroContent = string.Empty;
+                var modelObject = modelObjects.First();
+                if (modelObject.GetType().InheritsFrom(typeof(ReinforcementBase)))
+                    macroContent = Macros.InsertRebarMark(attribute);
+                else if (modelObjects.First() is Part)
+                    macroContent = Macros.InsertPartMark(attribute);
+                else if (modelObjects.First() is Weld)
+                    macroContent = Macros.InsertWeldMark(attribute);
+                else if (modelObjects.First() is Bolt)
+                    macroContent = Macros.InsertBoltMark(attribute);
+
+                if (string.IsNullOrEmpty(macroContent))
+                    continue;
+
+                var macroPath = new LightweightMacroBuilder()
+                            .SaveMacroAndReturnRelativePath(macroContent);
+
+                Tekla.Structures.Model.Operations.Operation.RunMacro(macroPath);
+
+                // get previously correlated marks
+                // check if all modelObjects are the same type (watchout for ReinforcementBase)
+                // select all model objects
+                // apply macro file for loading
+                // insert macro
+                // compare new marks with the previous
             }
 
             _command.SetOutputValues(DA, createdMarks);
@@ -38,19 +60,6 @@ namespace GTDrawingLink.Components
             DrawingInteractor.CommitChanges();
             return createdMarks;
         }
-
-        //private Mark InsertMark(ModelObject modelObject, Mark.MarkAttributes attributes, Point3d basePoint, PlacingBase placing)
-        //{
-        //    var mark = new Mark(modelObject)
-        //    {
-        //        InsertionPoint = basePoint.ToTekla(),
-        //        Placing = placing,
-        //        Attributes = attributes
-        //    };
-        //    mark.Insert();
-
-        //    return mark;
-        //}
     }
 
     public class CreateMarkCommand : CommandBase
