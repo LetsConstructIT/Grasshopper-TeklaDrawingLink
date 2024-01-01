@@ -94,7 +94,7 @@ namespace GTDrawingLink.Components
 
             var childObjectsGroupedByType = GetChildObjectsGroupedByType(view);
 
-            DA.SetDataTree(0, GetOutputTree(childObjectsGroupedByType));
+            DA.SetDataTree(0, GetOutputTree(DA.Iteration, childObjectsGroupedByType));
             DA.SetDataList(ParamInfos.GroupingKeys.Name, childObjectsGroupedByType.Select(c => c.Key));
         }
 
@@ -136,7 +136,7 @@ namespace GTDrawingLink.Components
             return AABBFactory.FromPoints(pts);
         }
 
-        private IGH_Structure GetOutputTree(IEnumerable<IGrouping<string, DrawingObject>> childObjectsGroupedByType)
+        private IGH_Structure GetOutputTree(int iteration, IEnumerable<IGrouping<string, DrawingObject>> childObjectsGroupedByType)
         {
             var output = new GH_Structure<TeklaDatabaseObjectGoo>();
 
@@ -144,7 +144,7 @@ namespace GTDrawingLink.Components
             foreach (var currentObjects in childObjectsGroupedByType)
             {
                 var indicies = currentObjects.Select(o => new TeklaDatabaseObjectGoo(o));
-                output.AppendRange(indicies, new GH_Path(0, index));
+                output.AppendRange(indicies, new GH_Path(iteration, index));
 
                 index++;
             }
