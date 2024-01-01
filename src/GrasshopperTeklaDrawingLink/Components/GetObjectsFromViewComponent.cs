@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 using TSG = Tekla.Structures.Geometry3d;
+using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
@@ -51,18 +52,12 @@ namespace GTDrawingLink.Components
 
         private void SetCustomMessage()
         {
-            switch (_mode)
+            base.Message = _mode switch
             {
-                case QueryMode.AllObjects:
-                    base.Message = "All objects";
-                    break;
-                case QueryMode.OnlyVisibleObjects:
-                    base.Message = "Only visible objects";
-                    break;
-                default:
-                    base.Message = "";
-                    break;
-            }
+                QueryMode.AllObjects => "All objects",
+                QueryMode.OnlyVisibleObjects => "Only visible objects",
+                _ => "",
+            };
         }
 
         public override bool Write(GH_IWriter writer)
@@ -111,18 +106,18 @@ namespace GTDrawingLink.Components
             var doe = viewBase.GetObjects();
             while (doe.MoveNext())
             {
-                var drawingObject = doe.Current;
-                if (viewAabb != null &&
-                    _mode == QueryMode.OnlyVisibleObjects &&
-                    drawingObject is ModelObject modelObject)
+                if (_mode == QueryMode.OnlyVisibleObjects && viewAabb != null && doe.Current is ModelObject modelObject)
                 {
                     var objectAabb = ModelInteractor.GetAabb(modelObject.ModelIdentifier);
-                    if (objectAabb is null ||
-                        !viewAabb.Collide(objectAabb))
+                    if (objectAabb is null)
+                        continue;
+
+                    var transformedObjectAabb = objectAabb.Transform(ModelInteractor.TransformationMatrixToGlobal);
+                    if (!viewAabb.Collide(transformedObjectAabb))
                         continue;
                 }
 
-                childObjects.Add(drawingObject);
+                childObjects.Add(doe.Current);
             }
 
             return childObjects.GroupBy(o => o.GetType().ToShortString()).OrderBy(o => o.Key);
@@ -130,7 +125,7 @@ namespace GTDrawingLink.Components
 
         private AABB? GetViewAabb(ViewBase viewBase)
         {
-            if (!(viewBase is Tekla.Structures.Drawing.View view))
+            if (!(viewBase is TSD.View view))
                 return null;
 
             view.Select();

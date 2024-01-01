@@ -22,6 +22,12 @@ namespace GTDrawingLink.Types
             _modelObjectSelector = new TSMUI.ModelObjectSelector();
         }
 
+        internal static Matrix TransformationMatrixToGlobal
+            => Model.GetWorkPlaneHandler().GetCurrentTransformationPlane().TransformationMatrixToGlobal;
+
+        internal static Matrix TransformationMatrixToLocal()
+            => Model.GetWorkPlaneHandler().GetCurrentTransformationPlane().TransformationMatrixToLocal;
+
         internal static ModelObject GetModelObject(Identifier identifier)
         {
             return Model.SelectModelObject(identifier);
