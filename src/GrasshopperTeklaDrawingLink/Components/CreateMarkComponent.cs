@@ -38,6 +38,8 @@ namespace GTDrawingLink.Components
                     macroContent = Macros.InsertRebarMark(attribute);
                 else if (modelObjects.First() is Part)
                     macroContent = Macros.InsertPartMark(attribute);
+                else if (modelObjects.First() is PourObject)
+                    macroContent = Macros.InsertPourMark(attribute);
                 else if (modelObjects.First() is Weld)
                     macroContent = Macros.InsertWeldMark(attribute);
                 else if (modelObjects.First() is Bolt)
