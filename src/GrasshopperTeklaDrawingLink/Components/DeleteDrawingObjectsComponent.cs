@@ -32,12 +32,11 @@ namespace GTDrawingLink.Components
             if (drawingObjects == null)
                 return;
 
-            var statuses = drawingObjects.Select(d => d.Delete())
-                .ToList();
+            var status = DrawingInteractor.DeleteObjects(drawingObjects.OfType<DrawingObject>());
 
             DrawingInteractor.CommitChanges();
 
-            DA.SetData(ParamInfos.DrawingObjectDeleteResult.Name, statuses.All(s => s == true));
+            DA.SetData(ParamInfos.DrawingObjectDeleteResult.Name, status);
         }
     }
 }

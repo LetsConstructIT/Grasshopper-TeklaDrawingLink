@@ -136,5 +136,26 @@ namespace GTDrawingLink.Tools
         {
             return DrawingHandler.GetActiveDrawing() != null;
         }
+
+        internal static bool DeleteObjects(IEnumerable<DrawingObject> drawingObjects)
+        {
+            if (drawingObjects.Any(o => o is Mark))
+            {
+                Highlight(drawingObjects);
+
+                var macroContent = Macros.DeleteSelection();
+                var macroPath = new LightweightMacroBuilder()
+                            .SaveMacroAndReturnRelativePath(macroContent);
+
+                Tekla.Structures.Model.Operations.Operation.RunMacro(macroPath);
+
+                return true;
+            }
+            else
+            {
+                var statuses = drawingObjects.Select(d => d.Delete());
+                return statuses.All(s => s);
+            }
+        }
     }
 }

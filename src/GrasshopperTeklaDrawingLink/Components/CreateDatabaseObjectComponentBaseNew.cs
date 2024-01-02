@@ -70,7 +70,7 @@ namespace GTDrawingLink.Components
         {
             if (_insertedObjects.Any())
             {
-                _insertedObjects.ForEach(o => o.Delete());
+                DrawingInteractor.DeleteObjects(_insertedObjects.OfType<DrawingObject>());
                 _insertedObjects.Clear();
                 DrawingInteractor.CommitChanges();
             }
@@ -84,11 +84,7 @@ namespace GTDrawingLink.Components
 
         protected void RemoveInsertedObjects()
         {
-            foreach (var item in _insertedObjects)
-            {
-                if (item != null)
-                    item.Delete();
-            }
+            DrawingInteractor.DeleteObjects(_insertedObjects.OfType<DrawingObject>());
             _insertedObjects.Clear();
         }
 
