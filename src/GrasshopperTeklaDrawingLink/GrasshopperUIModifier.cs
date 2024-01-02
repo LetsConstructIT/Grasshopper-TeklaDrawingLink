@@ -55,7 +55,7 @@ namespace GTDrawingLink
         private void SelectObjectsMenuItem_Clicked(object sender, EventArgs e)
         {
             var drawingObjects = new List<Tekla.Structures.Drawing.DrawingObject>();
-            foreach (var component in GetAllComponentsOfType<CreateDatabaseObjectComponentBase>())
+            foreach (var component in GetAllComponentsOfType<IBakeable>())
             {
                 component.GetObjects().ForEach(o =>
                 {
@@ -69,7 +69,7 @@ namespace GTDrawingLink
 
         private void DeleteObjectsMenuItem_Clicked(object sender, EventArgs e)
         {
-            foreach (var component in GetAllComponentsOfType<CreateDatabaseObjectComponentBase>())
+            foreach (var component in GetAllComponentsOfType<IBakeable>())
             {
                 component.DeleteObjects();
             }
@@ -77,10 +77,8 @@ namespace GTDrawingLink
 
         private void BakeMenuItem_Clicked(object sender, EventArgs e)
         {
-            foreach (var component in GetAllComponentsOfType<CreateDatabaseObjectComponentBase>())
-            {
+            foreach (var component in GetAllComponentsOfType<IBakeable>())
                 component.BakeToTekla();
-            }
         }
 
         private static GH_Document GetDocument()
