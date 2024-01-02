@@ -8,7 +8,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public abstract class CreateDatabaseObjectComponentBase : TeklaComponentBase
+    public abstract class CreateDatabaseObjectComponentBase : TeklaComponentBase, IBakeable
     {
         private List<DatabaseObject> _insertedObjects = new List<DatabaseObject>();
 
