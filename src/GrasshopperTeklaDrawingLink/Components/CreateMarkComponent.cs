@@ -1,9 +1,11 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.DrawingInternal;
 
 namespace GTDrawingLink.Components
 {
@@ -24,6 +26,8 @@ namespace GTDrawingLink.Components
             for (int i = 0; i < count; i++)
             {
                 var modelObjects = modelObjectsTree.ElementAtOrLast(i);
+                var initialMarks = SearchExistingMarks(modelObjects);
+
                 var attribute = attributeFiles.ElementAtOrLast(i);
 
                 DrawingInteractor.Highlight(modelObjects);
@@ -47,6 +51,11 @@ namespace GTDrawingLink.Components
 
                 Tekla.Structures.Model.Operations.Operation.RunMacro(macroPath);
 
+
+                var updatedMarks = SearchExistingMarks(modelObjects);
+
+                createdMarks.AddRange(FindNewMarks(updatedMarks, initialMarks));
+
                 // get previously correlated marks
                 // check if all modelObjects are the same type (watchout for ReinforcementBase)
                 // select all model objects
@@ -59,6 +68,41 @@ namespace GTDrawingLink.Components
 
             DrawingInteractor.CommitChanges();
             return createdMarks;
+        }
+
+        private Dictionary<ModelObject, List<Mark>> SearchExistingMarks(List<ModelObject> modelObjects)
+        {
+            var result = new Dictionary<ModelObject, List<Mark>>();
+            foreach (var modelObject in modelObjects)
+            {
+                var marks = new List<Mark>();
+                var doe = modelObject.GetRelatedObjects(new Type[] { typeof(Mark) });
+                while (doe.MoveNext())
+                    marks.Add((Mark)doe.Current);
+
+                result[modelObject] = marks;
+            }
+
+            return result;
+        }
+
+        private IEnumerable<Mark> FindNewMarks(Dictionary<ModelObject, List<Mark>> updatedMarksCollection, Dictionary<ModelObject, List<Mark>> initialMarksCollection)
+        {
+            var newMarks = new List<Mark>();
+
+            foreach (var updatedMarksPair in updatedMarksCollection)
+            {
+                var initialIds = initialMarksCollection[updatedMarksPair.Key].Select(m => m.GetIdentifier().ID);
+
+                foreach (Mark newMark in updatedMarksPair.Value)
+                {
+                    var id = newMark.GetIdentifier().ID;
+                    if (!initialIds.Contains(id))
+                        newMarks.Add(newMark);
+                }
+            }
+
+            return newMarks;
         }
     }
 
