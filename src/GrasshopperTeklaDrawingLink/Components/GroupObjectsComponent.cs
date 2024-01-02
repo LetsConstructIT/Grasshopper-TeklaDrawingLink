@@ -1,7 +1,6 @@
 ﻿using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System;
@@ -126,6 +125,9 @@ namespace GTDrawingLink.Components
             if (!DA.GetDataList(ParamInfos.ModelObject.Name, inputObjects))
                 return;
 
+            if (inputObjects.Any(i => i is null))
+                return;
+
             var modelObjects = inputObjects.Select(i => i.Value as ModelObject).ToList();
 
             var propertyName = string.Empty;
@@ -156,7 +158,7 @@ namespace GTDrawingLink.Components
 
             var ordered = dictionary.OrderBy(kvp => kvp.Key).ToArray();
 
-            DA.SetDataTree(0, GetOutputTree(ordered));
+            DA.SetDataTree(0, GetOutputTree(DA.Iteration, ordered));
             DA.SetDataList(1, ordered.Select(d => d.Key));
         }
 
@@ -210,7 +212,7 @@ namespace GTDrawingLink.Components
             return "";
         }
 
-        private IGH_Structure GetOutputTree(KeyValuePair<string, List<ModelObject>>[] dictionary)
+        private IGH_Structure GetOutputTree(int iteration, KeyValuePair<string, List<ModelObject>>[] dictionary)
         {
             var output = new GH_Structure<ModelObjectGoo>();
 
@@ -218,7 +220,7 @@ namespace GTDrawingLink.Components
             foreach (var currentObjects in dictionary)
             {
                 var indicies = currentObjects.Value.Select(o => new ModelObjectGoo(o));
-                output.AppendRange(indicies, new GH_Path(0, index));
+                output.AppendRange(indicies, new GH_Path(iteration, index));
 
                 index++;
             }

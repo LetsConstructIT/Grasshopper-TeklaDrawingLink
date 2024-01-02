@@ -5,7 +5,6 @@ using GTDrawingLink.Types;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Windows.Documents;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -22,7 +21,7 @@ namespace GTDrawingLink.Components
             var drawingObject = _command.GetInputValues();
 
             var relatedObjectsGroupedByType = GetRelatedObjectsGroupedByType(drawingObject);
-            var tree = GetOutputTree(relatedObjectsGroupedByType);
+            var tree = GetOutputTree(DA.Iteration, relatedObjectsGroupedByType);
 
             _command.SetOutputValues(DA, tree, relatedObjectsGroupedByType.Select(c => c.Key).ToList());
         }
@@ -37,7 +36,7 @@ namespace GTDrawingLink.Components
             return childObjects.GroupBy(o => o.GetType().ToShortString()).OrderBy(o => o.Key);
         }
 
-        private IGH_Structure GetOutputTree(IEnumerable<IGrouping<string, DrawingObject>> childObjectsGroupedByType)
+        private IGH_Structure GetOutputTree(int iteration, IEnumerable<IGrouping<string, DrawingObject>> childObjectsGroupedByType)
         {
             var output = new GH_Structure<TeklaDatabaseObjectGoo>();
 
@@ -45,7 +44,7 @@ namespace GTDrawingLink.Components
             foreach (var currentObjects in childObjectsGroupedByType)
             {
                 var indicies = currentObjects.Select(o => new TeklaDatabaseObjectGoo(o));
-                output.AppendRange(indicies, new GH_Path(0, index));
+                output.AppendRange(indicies, new GH_Path(iteration, index));
 
                 index++;
             }
