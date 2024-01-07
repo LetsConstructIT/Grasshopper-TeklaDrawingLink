@@ -1191,5 +1191,12 @@ namespace GTDrawingLink.Tools
             NickName = "Attr",
             Description = "Name of mark attributes file"
         };
+
+        public static readonly GH_InstanceDescription Curve = new GH_InstanceDescription
+        {
+            Name = "Curve",
+            NickName = "C",
+            Description = "Curve"
+        };
     }
 }

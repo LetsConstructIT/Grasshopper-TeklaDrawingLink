@@ -578,6 +578,22 @@ namespace GTDrawingLink.Tools
                     return Result.Ok();
                 }
             }
+            else if (typeOfInput == typeof(IGH_GeometricGoo))
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<IGH_GeometricGoo> tree))
+                {
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
+                    if (castedToExpectedType.Any(o => o.Any(e => e is null)))
+                    {
+                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                    }
+
+                    _value = castedToExpectedType.ToList();
+
+                    _properlySet = true;
+                    return Result.Ok();
+                }
+            }
             else
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))

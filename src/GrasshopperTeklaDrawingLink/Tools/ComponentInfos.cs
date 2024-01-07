@@ -715,5 +715,14 @@ namespace GTDrawingLink.Tools {
             SubCategory = PanelHeadings.DrawingParts
         };
 
+        public static readonly GH_InstanceDescription CreateLineComponent = new GH_InstanceDescription
+        {
+            Name = "Line",
+            NickName = "L",
+            Description = "Draw Line in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
     }
 }

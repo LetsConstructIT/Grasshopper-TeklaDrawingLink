@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -48,7 +49,8 @@ namespace GTDrawingLink.Components
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
-                { typeof(Vector3d), (param, manager) => AddVectorParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },                
+                { typeof(Vector3d), (param, manager) => AddVectorParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(IGH_GeometricGoo), (param, manager) => AddGeometryParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Rhino.Geometry.Line), (param, manager) => AddLineParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(TSM.ModelObject), (param, manager) => AddGenericParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(StraightDimensionSet.StraightDimensionSetAttributes), (param, manager) => pManager.AddParameter(new StraightDimensionSetAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},

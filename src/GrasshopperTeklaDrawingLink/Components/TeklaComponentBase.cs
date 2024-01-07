@@ -72,6 +72,13 @@ namespace GTDrawingLink.Components
             return index;
         }
 
+        protected int AddGeometryParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddGeometryParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
         protected int AddVectorParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             var index = pManager.AddVectorParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
