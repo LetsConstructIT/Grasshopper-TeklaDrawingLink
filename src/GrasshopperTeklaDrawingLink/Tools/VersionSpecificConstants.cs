@@ -445,6 +445,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateLineComponent),
                 "4D6C495A-FE2F-4990-9CBC-51B5BBEBBEA4"
+            },
+            {
+                typeof(LineAttributesComponent),
+                "DEA25FDD-43B1-4B44-9517-08891061592A"
+            },
+            {
+                typeof(LineAttributesParam),
+                "17ADE8BF-8120-43F4-9822-95E05E875428"
             }
         };
 

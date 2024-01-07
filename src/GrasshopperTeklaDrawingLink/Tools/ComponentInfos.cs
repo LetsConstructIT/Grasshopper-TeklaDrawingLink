@@ -446,6 +446,14 @@ namespace GTDrawingLink.Tools {
             Category=VersionSpecificConstants.TabHeading,
             SubCategory=PanelHeadings.Attributes
         };
+        public static readonly GH_InstanceDescription LineAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Line Attributes",
+            NickName = "LAttr",
+            Description = "Create line attribute.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
 
         public static readonly GH_InstanceDescription DeleteDrawingObjectsComponent = new GH_InstanceDescription {
             Name="Delete Objects",

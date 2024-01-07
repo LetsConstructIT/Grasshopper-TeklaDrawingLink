@@ -1198,5 +1198,26 @@ namespace GTDrawingLink.Tools
             NickName = "C",
             Description = "Curve"
         };
+
+        public static readonly GH_InstanceDescription Line = new GH_InstanceDescription
+        {
+            Name = "Line",
+            NickName = "L",
+            Description = "Tekla Line"
+        };
+
+        public static readonly GH_InstanceDescription LineAttributes = new GH_InstanceDescription
+        {
+            Name = "Line attributes",
+            NickName = "LAttr",
+            Description = "Line attributes"
+        };
+
+        public static readonly GH_InstanceDescription LineTypeAttributes2 = new GH_InstanceDescription
+        {
+            Name = "Line Type",
+            NickName = "LTAttr",
+            Description = "Line type attributes"
+        };
     }
 }

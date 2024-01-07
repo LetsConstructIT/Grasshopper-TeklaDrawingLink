@@ -9,6 +9,7 @@ using GTDrawingLink.Types;
 using Rhino.Geometry;
 using Tekla.Structures.Drawing;
 using TSM = Tekla.Structures.Model;
+using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
@@ -56,6 +57,7 @@ namespace GTDrawingLink.Components
                 { typeof(StraightDimensionSet.StraightDimensionSetAttributes), (param, manager) => pManager.AddParameter(new StraightDimensionSetAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional}) },
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional}) },
+                { typeof(TSD.Line.LineAttributes), (param, manager) => pManager.AddParameter(new LineAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional}) },
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(ModelObjectHatchAttributes), (param, manager) => pManager.AddParameter(new ModelObjectHatchAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
                 { typeof(Part.PartAttributes), (param, manager) => pManager.AddParameter(new PartAttributesParam(param.InstanceDescription, param.ParamAccess) { Optional = param.IsOptional })},
@@ -103,6 +105,7 @@ namespace GTDrawingLink.Components
                 { typeof(StraightDimensionSet.StraightDimensionSetAttributes), (param, manager) => pManager.AddParameter(new StraightDimensionSetAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ArrowheadAttributes), (param, manager) => pManager.AddParameter(new ArrowAttributesParam(param.InstanceDescription, param.ParamAccess))},
+                { typeof(TSD.Line.LineAttributes), (param, manager) => pManager.AddParameter(new LineAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(FontAttributes), (param, manager) => pManager.AddParameter(new FontAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(ModelObjectHatchAttributes), (param, manager) => pManager.AddParameter(new ModelObjectHatchAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(Part.PartAttributes), (param, manager) => pManager.AddParameter(new PartAttributesParam(param.InstanceDescription, param.ParamAccess))},

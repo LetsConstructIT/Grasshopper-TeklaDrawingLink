@@ -1,69 +1,72 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
-using Rhino.Geometry;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
-using Tekla.Structures.Geometry3d;
+using TSD = Tekla.Structures.Drawing;
 using TSG = Tekla.Structures.Geometry3d;
-using TSM = Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components
 {
-    public class CreateLineComponent : TeklaComponentBaseNew<CreateLineCommand>
+    public class CreateLineComponent : CreateDatabaseObjectComponentBaseNew<CreateLineCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.Line;
 
         public CreateLineComponent() : base(ComponentInfos.CreateLineComponent) { }
 
-        protected override void InvokeCommand(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var test = _command.GetInputValues();
+            (ViewBase View, List<List<TSG.Point>> GroupOfPoints, Line.LineAttributes Attributes) = _command.GetInputValues();
+            var lines = new List<Line>();
 
-            //_command.SetOutputValues(DA,
-            //                         bolt.BoltSize,
-            //                         bolt.BoltStandard,
-            //                         bolt.BoltType.ToString(),
-            //                         boltPositions,
-            //                         direction);
+            foreach (var points in GroupOfPoints)
+            {
+                for (int i = 1; i < points.Count; i++)
+                {
+                    var line = new Line(View, points[i - 1], points[i], Attributes);
+                    line.Insert();
+
+                    lines.Add(line);
+                }
+            }
+
+            _command.SetOutputValues(DA, lines);
+
+            DrawingInteractor.CommitChanges();
+            return lines;
         }
     }
 
     public class CreateLineCommand : CommandBase
     {
-        private readonly InputTreeParam<IGH_GeometricGoo> _inGeometricGoo = new InputTreeParam<IGH_GeometricGoo>(ParamInfos.Curve);
+        private readonly InputParam<ViewBase> _inView = new InputParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<IGH_GeometricGoo> _inGeometricGoo = new InputListParam<IGH_GeometricGoo>(ParamInfos.Curve);
+        private readonly InputParam<Line.LineAttributes> _inAttributes = new InputParam<Line.LineAttributes>(ParamInfos.LineAttributes);
 
-        private readonly OutputParam<double> _outSize = new OutputParam<double>(ParamInfos.BoltSize);
-        private readonly OutputParam<string> _outStandard = new OutputParam<string>(ParamInfos.BoltStandard);
-        private readonly OutputParam<string> _outType = new OutputParam<string>(ParamInfos.BoltType);
-        private readonly OutputListParam<Point3d> _outPositions = new OutputListParam<Point3d>(ParamInfos.BoltPositions);
-        private readonly OutputParam<Vector3d> _outDirection = new OutputParam<Vector3d>(ParamInfos.BoltDirection);
+        private readonly OutputListParam<TSD.Line> _outLines = new OutputListParam<TSD.Line>(ParamInfos.Line);
 
-        internal List<List<TSG.Point>> GetInputValues()
+        internal (ViewBase View, List<List<TSG.Point>> GroupOfPoints, Line.LineAttributes Attributes) GetInputValues()
         {
-            return ParseInputTree(_inGeometricGoo.Value);
+            return (_inView.Value,
+                    ParseInputTree(_inGeometricGoo.Value),
+                    _inAttributes.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, double size, string standard, string type, List<Point3d> positions, Vector3d direction)
+        internal Result SetOutputValues(IGH_DataAccess DA, List<TSD.Line> lines)
         {
-            _outSize.Value = size;
-            _outStandard.Value = standard;
-            _outType.Value = type;
-            _outPositions.Value = positions;
-            _outDirection.Value = direction;
+            _outLines.Value = lines;
 
             return SetOutput(DA);
         }
 
-        private List<List<TSG.Point>> ParseInputTree(List<List<IGH_GeometricGoo>> inputObject)
+        private List<List<TSG.Point>> ParseInputTree(List<IGH_GeometricGoo> inputObjects)
         {
             var parsed = new List<List<TSG.Point>>();
-
+            foreach (var inputObject in inputObjects)
+                parsed.Add(inputObject.GetMergedBoundaryPoints(false).ToList());
 
             return parsed;
         }
