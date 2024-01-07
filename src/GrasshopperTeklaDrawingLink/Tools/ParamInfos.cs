@@ -678,6 +678,12 @@ namespace GTDrawingLink.Tools
             NickName = "T",
             Description = $"Sets the type of the arrow: \n{EnumHelpers.EnumToString<ArrowheadTypes>()}\nYou can right-click to set."
         };
+        public static readonly GH_InstanceDescription ArrowPositions = new GH_InstanceDescription
+        {
+            Name = "Arrow Positions",
+            NickName = "P",
+            Description = $"Sets the positions of the arrow: \n{EnumHelpers.EnumToString<ArrowheadPositions>()}\nYou can right-click to set."
+        };
         public static readonly GH_InstanceDescription ArrowWidth = new GH_InstanceDescription
         {
             Name = "Width",

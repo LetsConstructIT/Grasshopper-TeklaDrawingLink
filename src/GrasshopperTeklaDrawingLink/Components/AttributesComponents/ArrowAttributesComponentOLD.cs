@@ -6,20 +6,19 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.AttributesComponents
 {
-    public class ArrowAttributesComponent : TeklaComponentBaseNew<ArrowAttributesCommand>
+    public class ArrowAttributesComponentOLD : TeklaComponentBaseNew<ArrowAttributesCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.ArrowAttributes;
 
-        public ArrowAttributesComponent() : base(ComponentInfos.ArrowAttributesComponent) { }
+        public ArrowAttributesComponentOLD() : base(ComponentInfos.ArrowAttributesComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (positions, head, width, height) = _command.GetInputValues();
+            var (head, width, height) = _command.GetInputValues();
 
             var arrowheadAttributes = new ArrowheadAttributes()
             {
-                ArrowPosition = positions,
                 Head = head,
                 Width = width,
                 Height = height
@@ -29,19 +28,17 @@ namespace GTDrawingLink.Components.AttributesComponents
         }
     }
 
-    public class ArrowAttributesCommand : CommandBase
+    public class ArrowAttributesCommandOLD : CommandBase
     {
-        private readonly InputOptionalStructParam<ArrowheadPositions> _inArrowheadPositions = new InputOptionalStructParam<ArrowheadPositions>(ParamInfos.ArrowPositions, ArrowheadPositions.None);
         private readonly InputOptionalStructParam<ArrowheadTypes> _inArrowheadType = new InputOptionalStructParam<ArrowheadTypes>(ParamInfos.ArrowType, ArrowheadTypes.FilledArrow);
         private readonly InputOptionalStructParam<double> _inWidth = new InputOptionalStructParam<double>(ParamInfos.ArrowWidth, 1.0);
         private readonly InputOptionalStructParam<double> _inHeight = new InputOptionalStructParam<double>(ParamInfos.ArrowHeight, 2.0);
 
         private readonly OutputParam<ArrowheadAttributes> _outAttributes = new OutputParam<ArrowheadAttributes>(ParamInfos.ArrowAttributes);
 
-        internal (ArrowheadPositions positions, ArrowheadTypes type, double width, double height) GetInputValues()
+        internal (ArrowheadTypes type, double width, double height) GetInputValues()
         {
             return (
-                _inArrowheadPositions.Value,
                 _inArrowheadType.Value,
                 _inWidth.Value,
                 _inHeight.Value);
