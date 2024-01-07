@@ -1225,5 +1225,19 @@ namespace GTDrawingLink.Tools
             NickName = "LTAttr",
             Description = "Line type attributes"
         };
+
+        public static readonly GH_InstanceDescription Polyline = new GH_InstanceDescription
+        {
+            Name = "Polyline",
+            NickName = "PL",
+            Description = "Tekla Polyline"
+        };
+
+        public static readonly GH_InstanceDescription PolylineAttributes = new GH_InstanceDescription
+        {
+            Name = "Polyline attributes",
+            NickName = "PLAttr",
+            Description = "Polyline attributes"
+        };
     }
 }

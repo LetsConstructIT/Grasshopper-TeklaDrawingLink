@@ -454,6 +454,14 @@ namespace GTDrawingLink.Tools {
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+        public static readonly GH_InstanceDescription PolylineAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Polyline Attributes",
+            NickName = "PLAttr",
+            Description = "Create polyline attribute.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
 
         public static readonly GH_InstanceDescription DeleteDrawingObjectsComponent = new GH_InstanceDescription {
             Name="Delete Objects",
@@ -728,6 +736,15 @@ namespace GTDrawingLink.Tools {
             Name = "Line",
             NickName = "L",
             Description = "Draw Line in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription CreatePolylineComponent = new GH_InstanceDescription
+        {
+            Name = "Polyline",
+            NickName = "PL",
+            Description = "Draw Polyline in Tekla Drawing",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Annotations
         };
