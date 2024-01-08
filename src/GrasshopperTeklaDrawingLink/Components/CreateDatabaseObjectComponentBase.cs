@@ -71,7 +71,8 @@ namespace GTDrawingLink.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            RemoveInsertedObjects();
+            if (DA.Iteration == 0)
+                RemoveInsertedObjects();
 
             var insertedObjects = InsertObjects(DA);
 

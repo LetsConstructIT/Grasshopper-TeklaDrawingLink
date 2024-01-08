@@ -22,7 +22,8 @@ namespace GTDrawingLink.Components
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            RemoveInsertedObjects();
+            if (DA.Iteration == 0)
+                RemoveInsertedObjects();
 
             var insertedObjects = InsertObjects(DA);
 
