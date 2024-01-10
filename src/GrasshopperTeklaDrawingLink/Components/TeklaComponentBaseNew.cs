@@ -49,6 +49,7 @@ namespace GTDrawingLink.Components
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(GH_String), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Vector3d), (param, manager) => AddVectorParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(IGH_GeometricGoo), (param, manager) => AddGeometryParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
@@ -98,6 +99,7 @@ namespace GTDrawingLink.Components
             var @switch = new Dictionary<Type, Action<OutputParam, GH_OutputParamManager>> {
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess) },
+                { typeof(GH_String), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(double), (param, manager) => AddNumberParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(Vector3d), (param, manager) => AddVectorParameter(manager, param.InstanceDescription, param.ParamAccess) },
