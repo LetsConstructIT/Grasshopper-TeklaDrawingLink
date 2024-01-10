@@ -569,6 +569,9 @@ namespace GTDrawingLink.Tools
         private List<List<T>> _value;
         public List<List<T>> Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
 
+        private IReadOnlyList<GH_Path> _paths;
+        public IReadOnlyList<GH_Path> Paths => _properlySet ? _paths : throw new InvalidOperationException(InstanceDescription.Name);
+
         public InputTreeParam(GH_InstanceDescription instanceDescription)
             : base(typeof(T), instanceDescription, GH_ParamAccess.tree)
         {
@@ -590,6 +593,7 @@ namespace GTDrawingLink.Tools
                     }
 
                     _value = castedToExpectedType.ToList();
+                    _paths = tree.Paths.ToList();
 
                     _properlySet = true;
                     return Result.Ok();
