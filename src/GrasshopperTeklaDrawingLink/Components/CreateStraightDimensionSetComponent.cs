@@ -96,7 +96,7 @@ namespace GTDrawingLink.Components
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
+            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as ViewBase;
             if (view == null)
                 return null;
 
@@ -138,7 +138,7 @@ namespace GTDrawingLink.Components
             return insertedDimensions;
         }
 
-        private StraightDimensionSet InsertDimensionLine(View view, List<Point3d> points, Rhino.Geometry.Line location, StraightDimensionSet.StraightDimensionSetAttributes attributes)
+        private StraightDimensionSet InsertDimensionLine(ViewBase view, List<Point3d> points, Rhino.Geometry.Line location, StraightDimensionSet.StraightDimensionSetAttributes attributes)
         {
             var pointList = new PointList();
             foreach (var point in points)
