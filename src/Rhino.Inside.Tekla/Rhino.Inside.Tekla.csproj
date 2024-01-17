@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+	
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <Title>Rhino.Inside.Tekla</Title>
+	<LangVersion>8.0</LangVersion>
+    <Nullable>annotations</Nullable>
+    <Description>Rhino Inside Tekla for Drawing Link</Description>
+    <RootNamespace>Rhino.Inside.Tekla</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Rhino.Inside" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>
