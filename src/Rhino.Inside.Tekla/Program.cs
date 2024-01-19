@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Grasshopper.Plugin;
+using Rhino.Runtime.InProcess;
+using System;
 
 namespace Rhino.Inside.Tekla
 {
     internal class Program
     {
+        private static RhinoCore _rhinoCore;
+        private static GH_RhinoScriptInterface _grasshopper;
+
         static Program()
         {
             RhinoInside.Resolver.Initialize();
@@ -11,17 +16,28 @@ namespace Rhino.Inside.Tekla
 
         static void Main(string[] args)
         {
-            using (var core = new Runtime.InProcess.RhinoCore())
+            string filePath = @"C:\Users\grzeg\OneDrive\Desktop\Line.gh";
+            while (!string.IsNullOrEmpty(Console.ReadLine()))
             {
-                RunHelper();
+                InitalizeRhino();
+                Solve(filePath);
             }
         }
-        static void RunHelper()
-        {
-            string filePath = @"C:\Users\grzeg\OneDrive\Desktop\Line.gh";
 
-            var pluginObject = RhinoApp.GetPlugInObject("Grasshopper") as Grasshopper.Plugin.GH_RhinoScriptInterface;
-            pluginObject.RunHeadless();
+        private static void InitalizeRhino()
+        {
+            _rhinoCore ??= new RhinoCore();
+        }
+
+        static void Solve(string filePath)
+        {
+            if (_grasshopper is null)
+            {
+                _grasshopper = (GH_RhinoScriptInterface)RhinoApp.GetPlugInObject("Grasshopper");
+                _grasshopper.RunHeadless();
+            }
+
+            _grasshopper.CloseDocument();
 
             var io = new Grasshopper.Kernel.GH_DocumentIO();
             if (!io.Open(filePath))
@@ -32,9 +48,6 @@ namespace Rhino.Inside.Tekla
                 doc.Enabled = true;
                 doc.NewSolution(false);
             }
-
-            Console.WriteLine("Done... press any key to exit");
-            Console.ReadKey();
         }
     }
 }
