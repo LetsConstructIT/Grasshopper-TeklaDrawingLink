@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GTDrawingLink.Extensions;
 using Tekla.Structures.Geometry3d;
+using System.Linq;
 
 namespace GTDrawingLink.Tools
 {
@@ -9,7 +10,7 @@ namespace GTDrawingLink.Tools
     {
         internal static IList<Point> GetMergedBoundaryPoints(this IGH_GeometricGoo boundary, bool openLoops)
         {
-            IList<Point> result = new List<Point>();
+            var result = new List<Point>();
             if (boundary is GH_Point)
             {
                 result.Add((boundary as GH_Point).Value.ToTekla());
@@ -28,6 +29,19 @@ namespace GTDrawingLink.Tools
 
                 if (!openLoops)
                     result.Add(rectangle.Corner(0).ToTekla());
+            }
+            else if (boundary is GH_Curve)
+            {
+                var curve = (boundary as GH_Curve).Value;
+                if (curve.TryGetPolyline(out var polyline))
+                {
+                    result.AddRange(polyline.Select(p => p.ToTekla()));
+                }
+                else if (curve.IsLinear())
+                {
+                    result.Add(curve.PointAtStart.ToTekla());
+                    result.Add(curve.PointAtEnd.ToTekla());
+                }
             }
 
             return result;
