@@ -21,6 +21,11 @@ namespace GTDrawingLink.Components
         {
             (ViewBase View, List<List<TSG.Point>> GroupOfPoints, Line.LineAttributes Attributes) = _command.GetInputValues();
             var lines = new List<Line>();
+            if (GroupOfPoints.Count == 0)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The specified point group could not be parsed");
+                return lines;
+            }
 
             foreach (var points in GroupOfPoints)
             {

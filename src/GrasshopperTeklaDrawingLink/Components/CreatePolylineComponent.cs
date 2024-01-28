@@ -21,6 +21,11 @@ namespace GTDrawingLink.Components
         {
             (ViewBase View, List<List<TSG.Point>> GroupOfPoints, Polyline.PolylineAttributes Attributes) = _command.GetInputValues();
             var lines = new List<Polyline>();
+            if (GroupOfPoints.Count == 0)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The specified point group could not be parsed");
+                return lines;
+            }
 
             foreach (var points in GroupOfPoints)
             {
