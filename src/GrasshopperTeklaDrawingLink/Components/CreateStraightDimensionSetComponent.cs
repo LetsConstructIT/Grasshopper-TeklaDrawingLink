@@ -1,5 +1,6 @@
 ﻿using GH_IO.Serialization;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
@@ -81,61 +82,132 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
+            AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.list);
             pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.tree);
-            pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.list);
-            pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.list));
+            pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.tree);
+            pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.tree));
 
             SetLastParameterAsOptional(pManager, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.StraightDimensionSet, GH_ParamAccess.list);
+            AddTeklaDbObjectParameter(pManager, ParamInfos.StraightDimensionSet, GH_ParamAccess.tree);
         }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as ViewBase;
-            if (view == null)
+            var views = GetInputViews(DA);
+            if (views == null || views.Count == 0)
                 return null;
 
-            var dimGhPointTree = DA.GetGooDataTree<GH_Point>(ParamInfos.DimensionPoints);
-            var dimPointsTree = CastToPoints(dimGhPointTree);
-            if (dimPointsTree == null)
+            if (!DA.GetDataTree(ParamInfos.DimensionPoints.Name, out GH_Structure<GH_Point> dimPointsTree))
                 return null;
 
-            var dimLocations = DA.GetGooListValue<Rhino.Geometry.Line>(ParamInfos.DimensionLocation);
-            if (dimLocations == null)
+            if (!DA.GetDataTree(ParamInfos.DimensionLocation.Name, out GH_Structure<GH_Line> locationsTree))
                 return null;
 
-            var attributes = DA.GetGooListValue<StraightDimensionSet.StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
-            if (attributes == null)
+            if (!DA.GetDataTree(ParamInfos.StraightDimensionSetAttributes.Name, out GH_Structure<GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>> attributesTree))
+                return null;
+
+            var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();
+            var insertedDimensions = new List<StraightDimensionSet>();
+            foreach (var pointsPath in dimPointsTree.Paths)
             {
-                attributes = new List<StraightDimensionSet.StraightDimensionSetAttributes>
-                {
-                    new StraightDimensionSet.StraightDimensionSetAttributes(modelObject:null, "standard")
-                };
-            }
+                var viewIdx = pointsPath.Indices.First();
+                var view = views.ElementAtOrLast(viewIdx);
 
-            var dimensionNumber = new int[] { dimPointsTree.Count, dimLocations.Count }.Max();
-            var insertedDimensions = new StraightDimensionSet[dimensionNumber];
-            for (int i = 0; i < dimensionNumber; i++)
-            {
+                var points = GetPoints(dimPointsTree, pointsPath);
+                var location = GetLocation(locationsTree, pointsPath);
+                var attributes = GetAttributes(attributesTree, pointsPath);
+
                 var dimension = InsertDimensionLine(
                     view,
-                    dimPointsTree.ElementAtOrLast(i),
-                    dimLocations.ElementAtOrLast(i),
-                    attributes.ElementAtOrLast(i));
+                    points,
+                    location,
+                    attributes);
 
-                insertedDimensions[i] = dimension;
+                outputTree.Append(new TeklaDatabaseObjectGoo(dimension), pointsPath);
+                insertedDimensions.Add(dimension);
             }
 
             DrawingInteractor.CommitChanges();
 
-            DA.SetDataList(ParamInfos.StraightDimensionSet.Name, insertedDimensions);
+            DA.SetDataTree(0, outputTree);
 
             return insertedDimensions;
+        }
+
+        private List<Point3d> GetPoints(GH_Structure<GH_Point> dimPointsTree, GH_Path pointsPath)
+        {
+            var points = new List<Point3d>();
+            foreach (var item in dimPointsTree.get_Branch(pointsPath))
+            {
+                if (item is GH_Point point)
+                    points.Add(point.Value);
+            }
+            return points;
+        }
+
+        private Rhino.Geometry.Line GetLocation(GH_Structure<GH_Line> tree, GH_Path sourcePath)
+        {
+            if (tree.Branches.Count == 1)
+            {
+                var branch = tree.Branches.First();
+                var locationIdx = sourcePath.Indices.Last();
+                if (locationIdx < branch.Count)
+                    return branch[locationIdx].Value;
+                else
+                    return branch.Last().Value;
+            }
+            else if (tree.PathExists(sourcePath))
+                return ((GH_Line)tree.get_Branch(sourcePath)[0]).Value;
+            else
+                return tree.Last().Value;
+        }
+
+        private StraightDimensionSet.StraightDimensionSetAttributes GetAttributes(GH_Structure<GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>> tree, GH_Path sourcePath)
+        {
+            if (tree.Branches.Count == 1)
+            {
+                var branch = tree.Branches.First();
+                var locationIdx = sourcePath.Indices.Last();
+                if (locationIdx < branch.Count)
+                    return branch[locationIdx].Value;
+                else
+                    return branch.Last().Value;
+            }
+            else if (tree.PathExists(sourcePath))
+                return ((GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>)tree.get_Branch(sourcePath)[0]).Value;
+            else
+                return tree.Last().Value;
+        }
+
+        private List<ViewBase> GetInputViews(IGH_DataAccess DA)
+        {
+            var inputs = DA.GetGooListValue<DatabaseObject>(ParamInfos.View);
+            if (inputs == null)
+                return null;
+
+            var viewBases = new List<ViewBase>();
+            foreach (var viewInput in inputs)
+            {
+                if (viewInput is ViewBase viewBase)
+                {
+                    viewBases.Add(viewBase);
+                }
+                else if (viewInput is Drawing drawing)
+                {
+                    viewBases.Add(drawing.GetSheet());
+                }
+                else
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unrecognized View input");
+                    return null;
+                }
+            }
+
+            return viewBases;
         }
 
         private StraightDimensionSet InsertDimensionLine(ViewBase view, List<Point3d> points, Rhino.Geometry.Line location, StraightDimensionSet.StraightDimensionSetAttributes attributes)
@@ -175,45 +247,6 @@ namespace GTDrawingLink.Components
             return uniquePoints;
         }
 
-        private List<List<Point3d>> CastToPoints(List<List<GH_Point>> inputTree)
-        {
-            var outputTree = new List<List<Point3d>>();
-
-            foreach (var branch in inputTree)
-            {
-                var outputList = new List<Point3d>();
-                outputTree.Add(outputList);
-                foreach (var element in branch)
-                {
-                    if (element == null || !element.IsValid)
-                    {
-                        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Non existing point provided");
-                        return null;
-                    }
-
-                    outputList.Add(element.Value);
-                }
-            }
-
-            return outputTree;
-        }
-
-        private List<StraightDimensionSet.StraightDimensionSetAttributes> CastToAttributes(List<GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>> inputTree)
-        {
-            var outputList = new List<StraightDimensionSet.StraightDimensionSetAttributes>();
-            foreach (var element in inputTree)
-            {
-                if (element == null)
-                {
-                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Non existing line provided");
-                    return null;
-                }
-
-                outputList.Add(element.Value);
-            }
-
-            return outputList;
-        }
 
         private (Vector vector, double distance) CalculateLocation(Tekla.Structures.Geometry3d.Line line, Tekla.Structures.Geometry3d.Point teklaPoint)
         {
