@@ -168,7 +168,11 @@ namespace GTDrawingLink.Components
 
         private StraightDimensionSet.StraightDimensionSetAttributes GetAttributes(GH_Structure<GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>> tree, GH_Path sourcePath)
         {
-            if (tree.Branches.Count == 1)
+            if (tree.Branches.Count == 0)
+            {
+                return new StraightDimensionSet.StraightDimensionSetAttributes(null, "standard");
+            }
+            else if (tree.Branches.Count == 1)
             {
                 var branch = tree.Branches.First();
                 var locationIdx = sourcePath.Indices.Last();
