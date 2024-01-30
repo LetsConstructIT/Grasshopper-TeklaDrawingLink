@@ -13,7 +13,6 @@
     <Deterministic>false</Deterministic>
     <Configurations>Debug;Release;_2019;_2020;_2021;_2022;_2023</Configurations>
     <AssemblyName>$(MSBuildProjectName)$(Configuration)</AssemblyName>
-	<OutputPath>bin\</OutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   
@@ -39,6 +38,20 @@
     <When Condition="'$(Configuration)'=='_2021'">
         <ItemGroup>
 			<PackageReference Include="Tekla.Structures.Drawing" Version="2021.0.*">
+			  <IncludeAssets>compile;build</IncludeAssets>
+			</PackageReference>
+        </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='_2020'">
+        <ItemGroup>
+			<PackageReference Include="TeklaOpenAPI" Version="2020.0.*">
+			  <IncludeAssets>compile;build</IncludeAssets>
+			</PackageReference>
+        </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='_2019'">
+        <ItemGroup>
+			<PackageReference Include="TeklaOpenAPI" Version="2019.0.*">
 			  <IncludeAssets>compile;build</IncludeAssets>
 			</PackageReference>
         </ItemGroup>
@@ -86,5 +99,13 @@
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
     <StartArguments>/nosplash /notemplate /runscript="-grasshopper Window Show"</StartArguments>
     <StartAction>Program</StartAction>
+  </PropertyGroup>
+    
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2019|AnyCPU'">
+    <DefineConstants>$(DefineConstants);API2020</DefineConstants>
+  </PropertyGroup>
+    
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2020|AnyCPU'">
+    <DefineConstants>$(DefineConstants);API2020</DefineConstants>
   </PropertyGroup>  
 </Project>
