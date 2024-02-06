@@ -196,6 +196,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(StraightDimensionSetAttributesComponent),
+                "E207603B-8583-4425-B147-ACBD7CB56E51"
+            },
+            {
+                typeof(StraightDimensionSetAttributesComponentOLD),
                 "99E2E30E-2C42-4BC8-9489-D9F1A400F354"
             },
             {

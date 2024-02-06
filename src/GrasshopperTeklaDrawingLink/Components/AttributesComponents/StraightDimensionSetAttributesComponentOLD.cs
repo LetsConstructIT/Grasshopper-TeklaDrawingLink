@@ -8,12 +8,12 @@ using static Tekla.Structures.Drawing.StraightDimensionSet;
 
 namespace GTDrawingLink.Components.AttributesComponents
 {
-    public class StraightDimensionSetAttributesComponent : TeklaComponentBase
+    public class StraightDimensionSetAttributesComponentOLD : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.DimensionLineAttributes;
 
-        public StraightDimensionSetAttributesComponent() : base(ComponentInfos.StraightDimensionSetAttributesComponent)
+        public StraightDimensionSetAttributesComponentOLD() : base(ComponentInfos.StraightDimensionSetAttributesComponent)
         {
         }
 
@@ -21,7 +21,6 @@ namespace GTDrawingLink.Components.AttributesComponents
         {
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
             pManager.AddTextParameter(ParamInfos.Attributes.Name, ParamInfos.Attributes.NickName, ParamInfos.Attributes.Description, GH_ParamAccess.item);
-            AddTeklaDbObjectParameter(pManager, ParamInfos.TeklaDatabaseObject, GH_ParamAccess.item);
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.DimensionTypes>(ParamInfos.DimensionLineType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.Placings>(ParamInfos.DimensionLinePlacingType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DimensionSetBaseAttributes.ShortDimensionTypes>(ParamInfos.ShortDimensionType, GH_ParamAccess.item));
@@ -40,8 +39,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var attributes = DA.GetGooValue<StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
-             
-            var drawingPart = DA.GetGooValue<DatabaseObject>(ParamInfos.TeklaDatabaseObject) as ModelObject;
+
             var attributesFileName = string.Empty;
             DA.GetData(ParamInfos.Attributes.Name, ref attributesFileName);
 
@@ -50,12 +48,12 @@ namespace GTDrawingLink.Components.AttributesComponents
                 if (string.IsNullOrEmpty(attributesFileName))
                     attributesFileName = "standard";
 
-                attributes = new StraightDimensionSetAttributes(drawingPart, attributesFileName);
+                attributes = new StraightDimensionSetAttributes(modelObject: null, attributesFileName);
             }
             else
             {
                 if (!string.IsNullOrEmpty(attributesFileName))
-                    attributes = new StraightDimensionSetAttributes(drawingPart, attributesFileName);
+                    attributes.LoadAttributes(attributesFileName);
             }
 
             SetDimensionType(DA, attributes);
