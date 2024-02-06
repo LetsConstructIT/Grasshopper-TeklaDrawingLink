@@ -95,7 +95,7 @@
     </None>
   </ItemGroup>
     
-  <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
+  <PropertyGroup>
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
     <StartArguments>/nosplash /notemplate /runscript="-grasshopper Window Show"</StartArguments>
     <StartAction>Program</StartAction>
