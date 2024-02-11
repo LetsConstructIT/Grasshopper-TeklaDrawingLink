@@ -473,6 +473,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(PolylineAttributesParam),
                 "7D41B46D-B151-4F4C-832D-4459758EFA04"
+            },
+            {
+                typeof(EmbeddedObjectAttributesParam),
+                "E5A2A179-1400-4E9B-9CC7-6BD0D081F165"
+            },
+            {
+                typeof(EmbeddedObjectAttributesComponent),
+                "1726839C-46FF-4DE9-B7DC-C418C80C3EE4"
             }
         };
 

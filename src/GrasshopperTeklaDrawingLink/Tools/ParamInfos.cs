@@ -1239,5 +1239,40 @@ namespace GTDrawingLink.Tools
             NickName = "PLAttr",
             Description = "Polyline attributes"
         };
+
+        public static readonly GH_InstanceDescription DwgAttributes = new GH_InstanceDescription
+        {
+            Name = "DWG Attributes",
+            NickName = "A",
+            Description = "DWG attributes"
+        };
+
+        public static readonly GH_InstanceDescription DwgScaling = new GH_InstanceDescription
+        {
+            Name = "Scaling",
+            NickName = "S",
+            Description = $"Sets the scaling type: \n{EnumHelpers.EnumToString<EmbeddedObjectScalingOptions>()}\nYou can right-click to set."
+        };
+
+        public static readonly GH_InstanceDescription XScale = new GH_InstanceDescription
+        {
+            Name = "X Scale",
+            NickName = "X",
+            Description = "X Scale. Changing this property will set the scaling type to ScaleXY."
+        };
+
+        public static readonly GH_InstanceDescription YScale = new GH_InstanceDescription
+        {
+            Name = "Y Scale",
+            NickName = "Y",
+            Description = "Y Scale. Changing this property will set the scaling type to ScaleXY."
+        };
+
+        public static readonly GH_InstanceDescription Frame = new GH_InstanceDescription
+        {
+            Name = "Frame",
+            NickName = "F",
+            Description = "Frame (line type and color)"
+        };
     }
 }

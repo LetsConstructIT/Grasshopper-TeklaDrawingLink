@@ -749,5 +749,14 @@ namespace GTDrawingLink.Tools {
             SubCategory = PanelHeadings.Annotations
         };
 
+        public static readonly GH_InstanceDescription EmbeddedObjectAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "DWG Attributes",
+            NickName = "DAttr",
+            Description = "Create DWG/DXF attribute.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
     }
 }
