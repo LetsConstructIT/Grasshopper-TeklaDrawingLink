@@ -1288,5 +1288,26 @@ namespace GTDrawingLink.Tools
             NickName = "F",
             Description = "The filename to be used."
         };
+
+        public static readonly GH_InstanceDescription DetailPath = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Detail path (directory + file name)"
+        };
+
+        public static readonly GH_InstanceDescription DetailScale = new GH_InstanceDescription
+        {
+            Name = "Scale",
+            NickName = "S",
+            Description = "Detail scale"
+        };
+
+        public static readonly GH_InstanceDescription LibraryPlugin = new GH_InstanceDescription
+        {
+            Name = "Detail",
+            NickName = "L",
+            Description = "2d Detail Plugin"
+        };
     }
 }

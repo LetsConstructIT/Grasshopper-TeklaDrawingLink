@@ -768,6 +768,13 @@ namespace GTDrawingLink.Tools {
             SubCategory = PanelHeadings.Annotations
         };
 
-        
+        public static readonly GH_InstanceDescription CreateDrawingLibraryComponent = new GH_InstanceDescription
+        {
+            Name = "2D Library",
+            NickName = "2D",
+            Description = "Insert 2D Drawing Library detail",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
     }
 }
