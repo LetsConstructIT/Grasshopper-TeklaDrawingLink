@@ -1274,5 +1274,19 @@ namespace GTDrawingLink.Tools
             NickName = "F",
             Description = "Frame (line type and color)"
         };
+
+        public static readonly GH_InstanceDescription Dwg = new GH_InstanceDescription
+        {
+            Name = "DWG",
+            NickName = "D",
+            Description = "DWG inserted as a link"
+        };
+
+        public static readonly GH_InstanceDescription DwgFileName = new GH_InstanceDescription
+        {
+            Name = "File Name",
+            NickName = "F",
+            Description = "The filename to be used."
+        };
     }
 }

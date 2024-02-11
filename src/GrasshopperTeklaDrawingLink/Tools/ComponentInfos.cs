@@ -758,5 +758,16 @@ namespace GTDrawingLink.Tools {
             SubCategory = PanelHeadings.Attributes
         };
 
+
+        public static readonly GH_InstanceDescription CreateEmbeddedObjectComponent = new GH_InstanceDescription
+        {
+            Name = "DWG",
+            NickName = "D",
+            Description = "Insert DWG/DXF as a link",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        
     }
 }

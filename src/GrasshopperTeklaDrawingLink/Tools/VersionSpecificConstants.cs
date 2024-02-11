@@ -481,6 +481,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(EmbeddedObjectAttributesComponent),
                 "1726839C-46FF-4DE9-B7DC-C418C80C3EE4"
+            },
+            {
+                typeof(CreateEmbeddedObjectComponent),
+                "215A4809-255C-4D74-B19F-E6CF20B8F4AF"
             }
         };
 
