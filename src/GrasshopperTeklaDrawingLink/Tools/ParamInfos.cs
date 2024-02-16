@@ -1309,5 +1309,26 @@ namespace GTDrawingLink.Tools
             NickName = "L",
             Description = "2d Detail Plugin"
         };
+
+        public static readonly GH_InstanceDescription LoopStart = new GH_InstanceDescription
+        {
+            Name = ">",
+            NickName = ">",
+            Description = "Connect to Loop End"
+        };
+
+        public static readonly GH_InstanceDescription LoopEnd = new GH_InstanceDescription
+        {
+            Name = "<",
+            NickName = "<",
+            Description = "Connect to Loop Start"
+        };
+
+        public static readonly GH_InstanceDescription LoopCompletition = new GH_InstanceDescription
+        {
+            Name = "Completion",
+            NickName = "C",
+            Description = "True when loop was completed"
+        };
     }
 }

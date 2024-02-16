@@ -1,5 +1,6 @@
 ﻿using GTDrawingLink.Components;
 using GTDrawingLink.Components.AttributesComponents;
+using GTDrawingLink.Components.Loops;
 using GTDrawingLink.Components.ModifyComponents;
 using GTDrawingLink.Types;
 using System;
@@ -12,7 +13,11 @@ namespace GTDrawingLink.Tools
     {
         private static string _tabHeading = null;
 
-        private static Dictionary<Type, string> _typeGuids = new Dictionary<Type, string>
+        public const string LoopStart = "3368FCF5-A321-4B54-944E-36A20DD01ED0";
+        public const string LoopEnd = "13DC5668-65C5-43E3-A1EF-F9099205B878";
+        public const string LinkParameter = "2E15CB40-F22E-47A9-AB91-311C496A6778";
+
+        private static readonly Dictionary<Type, string> _typeGuids = new Dictionary<Type, string>
         {
             {
                 typeof(TeklaDatabaseObjectFloatingParam),
@@ -489,6 +494,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateDrawingLibraryComponent),
                 "C896EED1-A8E9-412E-927B-1E2E80A0C046"
+            },
+            {
+                typeof(LoopStartComponent),
+                LoopStart
+            },
+            {
+                typeof(LoopEndComponent),
+                LoopEnd
             }
         };
 

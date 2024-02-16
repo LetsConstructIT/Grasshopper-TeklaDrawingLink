@@ -403,4 +403,13 @@
   <data name="DrawingLibrary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\DrawingLibrary.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LoopEnd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LoopEnd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LoopStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LoopStart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LoopLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LoopLink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
