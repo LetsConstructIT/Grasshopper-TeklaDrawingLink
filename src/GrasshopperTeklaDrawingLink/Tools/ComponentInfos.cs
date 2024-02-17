@@ -184,6 +184,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Drawing
         };
 
+        public static readonly GH_InstanceDescription GetDrawingPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Drawing Properties",
+            NickName = "Prop",
+            Description = "Get drawing properties",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };        
+
         public static readonly GH_InstanceDescription GetDrawingSourceObjectComponent = new GH_InstanceDescription
         {
             Name = "Drawing Source",
