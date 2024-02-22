@@ -6,12 +6,12 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class GetDrawingPropertiesComponent : TeklaComponentBaseNew<GetDrawingPropertiesCommand>
+    public class ModifyDrawingPropertiesComponent : TeklaComponentBaseNew<ModifyDrawingPropertiesCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.GetDrawingProperties;
 
-        public GetDrawingPropertiesComponent() : base(ComponentInfos.GetDrawingPropertiesComponent) { }
+        public ModifyDrawingPropertiesComponent() : base(ComponentInfos.ModifyDrawingPropertiesComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -35,7 +35,7 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class GetDrawingPropertiesCommand : CommandBase
+    public class ModifyDrawingPropertiesCommand : CommandBase
     {
         private readonly InputParam<Drawing> _inDrawing = new InputParam<Drawing>(ParamInfos.Drawing);
         private readonly OutputParam<string> _outName = new OutputParam<string>(new GH_InstanceDescription("Name", "N", "Drawing name", "", ""));

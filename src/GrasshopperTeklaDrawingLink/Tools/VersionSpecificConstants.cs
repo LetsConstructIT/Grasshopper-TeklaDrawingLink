@@ -471,7 +471,7 @@ namespace GTDrawingLink.Tools
                 "7D41B46D-B151-4F4C-832D-4459758EFA04"
             },
             {
-                typeof(GetDrawingPropertiesComponent),
+                typeof(ModifyDrawingPropertiesComponent),
                 "F8CED9AF-8543-435E-B0D1-AB29F5A65CEE"
             }
         };
