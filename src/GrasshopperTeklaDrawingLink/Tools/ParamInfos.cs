@@ -1239,5 +1239,40 @@ namespace GTDrawingLink.Tools
             NickName = "PLAttr",
             Description = "Polyline attributes"
         };
+
+        public static readonly GH_InstanceDescription DrawingName = new GH_InstanceDescription
+        {
+            Name = "Name",
+            NickName = "N",
+            Description = "Drawing name"
+        };
+
+        public static readonly GH_InstanceDescription DrawingTitle1 = new GH_InstanceDescription
+        {
+            Name = "Title 1",
+            NickName = "T1",
+            Description = "Drawing title 1"
+        };
+
+        public static readonly GH_InstanceDescription DrawingTitle2 = new GH_InstanceDescription
+        {
+            Name = "Title 2",
+            NickName = "T2",
+            Description = "Drawing title 2"
+        };
+
+        public static readonly GH_InstanceDescription DrawingTitle3 = new GH_InstanceDescription
+        {
+            Name = "Title 3",
+            NickName = "T3",
+            Description = "Drawing title 3"
+        };
+
+        public static readonly GH_InstanceDescription DrawingSheetNumber = new GH_InstanceDescription
+        {
+            Name = "Sheet number",
+            NickName = "No",
+            Description = "Drawing sheet number"
+        };
     }
 }
