@@ -98,6 +98,7 @@ namespace GTDrawingLink.Components
         protected void RegisterOutputParameters(GH_OutputParamManager pManager, IEnumerable<OutputParam> parameters)
         {
             var @switch = new Dictionary<Type, Action<OutputParam, GH_OutputParamManager>> {
+                { typeof(int), (param, manager) => AddIntegerParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(bool), (param, manager) => AddBooleanParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(GH_String), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess) },
