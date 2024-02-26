@@ -15,6 +15,7 @@ namespace GTDrawingLink.Components
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             var drawing = _command.GetInputValues();
+            drawing.Select();
 
             var sheetSize = drawing.Layout.SheetSize;
 
