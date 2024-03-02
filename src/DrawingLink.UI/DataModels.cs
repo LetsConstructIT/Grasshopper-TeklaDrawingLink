@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
@@ -8,35 +9,35 @@ namespace DrawingLink.UI
 {
     public static class UiPopulator
     {
-        public static UiRoot GetSample()
+        public static ParametersRoot GetSample()
         {
             var stringCounter = 0;
             var doubleCounter = 0;
             var intCounter = 0;
 
-            var root = new UiRoot();
+            var root = new ParametersRoot();
 
             var modelTab = new UiTab("Model");
             var geoGroup = new UiGroup("Geometry");
-            geoGroup.AddParam(new InfoParam("Hi, let's see what we can do. This is the simplest info param"));
-            geoGroup.AddParam(new InfoParam("https://www.google.com"));
-            geoGroup.AddParam(new InfoParam("Sample file:///C:\\temp\\ReadMe.txt"));
-            geoGroup.AddParam(new TextParam($"int_{intCounter++}", "Integer param", "10"));
-            geoGroup.AddParam(new SliderParam($"double_{doubleCounter++}", "Slider", 0, 500, 20, 2));
+            geoGroup.AddParam(new InfoParam("Hi, let's see what we can do. This is the simplest info param", 0));
+            geoGroup.AddParam(new InfoParam("https://www.google.com", 0));
+            geoGroup.AddParam(new InfoParam("Sample file:///C:\\temp\\ReadMe.txt", 2));
+            geoGroup.AddParam(new TextParam($"int_{intCounter++}", "Integer param", "10", 3));
+            geoGroup.AddParam(new SliderParam($"double_{doubleCounter++}", "Slider", 0, 500, 20, 2, 4));
 
-            var bitmapImage = new BitmapImage(new Uri(@"C:\Users\grzeg\Downloads\tekla.png"));
-            geoGroup.AddParam(new ImageParam(bitmapImage));
+            var bitmapImage = (Bitmap)Image.FromFile((@"C:\Users\grzeg\Downloads\tekla.png"));
+            geoGroup.AddParam(new ImageParam(bitmapImage, 5));
             modelTab.AddGroup(geoGroup);
 
             var secondGroup = new UiGroup("Second");
-            secondGroup.AddParam(new TextParam($"string_{stringCounter++}", "Text param", "Default value"));
-            secondGroup.AddParam(new ListParamData($"string_{stringCounter++}", "Toggle", new string[] { "False", "True" }, "False"));
+            secondGroup.AddParam(new TextParam($"string_{stringCounter++}", "Text param", "Default value", 6));
+            secondGroup.AddParam(new ListParamData($"string_{stringCounter++}", "Toggle", new string[] { "False", "True" }, "False", 7));
             modelTab.AddGroup(secondGroup);
             root.AddTab(modelTab);
 
             var drawingTab = new UiTab("Drawing");
             var drawingGroup = new UiGroup("Main");
-            drawingGroup.AddParam(new TextParam($"string_{stringCounter++}", "Text param", "Default value"));
+            drawingGroup.AddParam(new TextParam($"string_{stringCounter++}", "Text param", "Default value", 8));
             drawingTab.AddGroup(drawingGroup);
             root.AddTab(drawingTab);
 
@@ -44,12 +45,12 @@ namespace DrawingLink.UI
         }
     }
 
-    public class UiRoot
+    public class ParametersRoot
     {
         private readonly List<UiTab> _tabs;
         public IReadOnlyList<UiTab> Tabs => _tabs;
 
-        public UiRoot()
+        public ParametersRoot()
         {
             _tabs = new List<UiTab>();
         }
@@ -101,10 +102,12 @@ namespace DrawingLink.UI
     public abstract class Param
     {
         public string Name { get; }
+        public float Top { get; }
 
-        protected Param(string name)
+        protected Param(string name, float top)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
+            Top = top;
         }
     }
 
@@ -112,17 +115,20 @@ namespace DrawingLink.UI
     {
         public string FieldName { get; }
 
-        protected PersistableParam(string fieldName, string name) : base(name)
+        protected PersistableParam(string fieldName, string name, float top) : base(name, top)
         {
             FieldName = fieldName ?? throw new ArgumentNullException(nameof(fieldName));
         }
+
+        public bool HasValidFieldName()
+            => !string.IsNullOrEmpty(FieldName);
     }
 
     public class InfoParam : Param
     {
         public string Value { get; }
 
-        public InfoParam(string value) : base(string.Empty)
+        public InfoParam(string value, float top) : base(string.Empty, top)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -130,9 +136,9 @@ namespace DrawingLink.UI
 
     public class ImageParam : Param
     {
-        public BitmapImage Value { get; }
+        public Bitmap Value { get; }
 
-        public ImageParam(BitmapImage value) : base(string.Empty)
+        public ImageParam(Bitmap value, float top) : base(string.Empty, top)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -140,16 +146,11 @@ namespace DrawingLink.UI
 
     public class TextParam : PersistableParam
     {
-        public string Value { get; private set; }
+        public string Value { get; }
 
-        public TextParam(string fieldName, string name, string value) : base(fieldName, name)
+        public TextParam(string fieldName, string name, string value, float top) : base(fieldName, name, top)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public void SetValue(string value)
-        {
-            Value = value;
         }
     }
 
@@ -160,7 +161,7 @@ namespace DrawingLink.UI
         public double Value { get; }
         public int DecimalPlaces { get; }
 
-        public SliderParam(string fieldName, string name, double minValue, double maxValue, double value, int decimalPlaces) : base(fieldName, name)
+        public SliderParam(string fieldName, string name, double minValue, double maxValue, double value, int decimalPlaces, float top) : base(fieldName, name, top)
         {
             Minimum = minValue;
             Maximum = maxValue;
@@ -180,10 +181,22 @@ namespace DrawingLink.UI
         public IReadOnlyList<string> Items { get; }
         public string SelectedItem { get; }
 
-        public ListParamData(string fieldName, string name, IEnumerable<string> items, string selectedItem) : base(fieldName, name)
+        public ListParamData(string fieldName, string name, IEnumerable<string> items, string selectedItem, float top) : base(fieldName, name, top)
         {
             Items = items.ToArray();
             SelectedItem = selectedItem;
+        }
+    }
+
+    public class CatalogParamData : PersistableParam
+    {
+        public string Value { get; private set; }
+        public Func<string, string> PickFromCatalog { get; }
+
+        public CatalogParamData(string fieldName, string name, string value, Func<string, string> pickFromCatalog, float top) : base(fieldName, name, top)
+        {
+            Value = value ?? throw new ArgumentNullException(nameof(value));
+            PickFromCatalog = pickFromCatalog ?? throw new ArgumentNullException(nameof(pickFromCatalog));
         }
     }
 }

@@ -8,8 +8,8 @@
                            xmlns:tsd="clr-namespace:Tekla.Structures.Dialog;assembly=Tekla.Structures.Dialog"
                            mc:Ignorable="d"
                            Title="MainWindow"
-                           Height="500"
-                           Width="500">
+                           Height="800"
+                           Width="700">
 
   <Grid>
     <Grid.RowDefinitions>
@@ -32,11 +32,14 @@
              VerticalAlignment="Center"
              Grid.Column="0" />
       <TextBox Text="{Binding DefinitionPath}"
+               x:Name="tbDefinitionPath"
                Grid.Column="1" />
       <Button Content="..."
               ToolTip="Select the Grasshopper definition"
+              Click="SelectGrasshopperFile_Click"
               Grid.Column="2" />
       <Button ToolTip="Reload the Grasshopper definition"
+              Click="ReloadGrasshopperFile_Click"
               Grid.Column="3">
         <Button.Content>
           <Path Data="M58.5125 162.5H25V175H68.75L75 168.75V125H62.5V150A62.5 62.5 0 1 1 119.125 159.5125L122.9 171.4375A75 75 0 1 0 58.5125 162.5z"

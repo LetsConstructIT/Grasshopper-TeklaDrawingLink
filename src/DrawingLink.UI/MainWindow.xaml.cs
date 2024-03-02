@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using DrawingLink.UI.GH;
+using Fusion;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,23 +27,55 @@ namespace DrawingLink.UI
             InitializeComponent();
             _viewModel = viewModel;
             InitializeDataStorage(_viewModel);
-
-            Loaded += MainWindow_Loaded;
+            parameterViewer.GhAttributeLoaded += ParameterViewer_SetAttributeValue;
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void ParameterViewer_SetAttributeValue(object sender, EventArgs e)
         {
-            parameterViewer.Load();
+            if (e is SetAttributeEventArgs args)
+            {
+                var property = _viewModel.GetType().GetProperty(args.AttributeName);
+                property.SetValue(_viewModel, args.Value);
+            }
         }
 
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
         {
+            var instance = GrasshopperCaller.GetInstance();
+            instance.Solve(_viewModel.DefinitionPath);
 
         }
 
         private void WpfOkCreateCancel_ApplyClicked(object sender, EventArgs e)
         {
 
+        }
+
+        private void SelectGrasshopperFile_Click(object sender, RoutedEventArgs e)
+        {
+
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".gh",
+                Filter = "Grasshopper file (.gh)|*.gh"
+            };
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            var fileName = dialog.FileName;
+
+            tbDefinitionPath.Text = fileName;
+            tbDefinitionPath
+                .GetBindingExpression(TextBox.TextProperty)
+                .UpdateSource();
+
+            parameterViewer.ShowControls(fileName, true);
+        }
+
+        private void ReloadGrasshopperFile_Click(object sender, RoutedEventArgs e)
+        {
+            parameterViewer.ShowControls(tbDefinitionPath.Text, true);
         }
     }
 }

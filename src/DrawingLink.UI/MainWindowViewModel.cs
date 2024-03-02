@@ -1,13 +1,14 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using DrawingLink.UI.GH;
+using DrawingLink.UI.WPF;
+using System.Windows.Input;
 using Tekla.Structures.Dialog;
 using TD = Tekla.Structures.Datatype;
 
 namespace DrawingLink.UI
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
-        private string definitionPath = string.Empty;
+        private string definitionPath = @"C:\Users\grzeg\Downloads\PanelConnectedWith.gh";
         [StructuresDialog("definitionPath", typeof(TD.String))]
         public string DefinitionPath
         {
@@ -17,7 +18,7 @@ namespace DrawingLink.UI
 
         #region StructuresDialog_String
 
-        private string _string_0 = "Sample value";
+        private string _string_0 = string.Empty;
         [StructuresDialog("string_0", typeof(TD.String))]
         public string string_0
         {
@@ -4226,14 +4227,10 @@ namespace DrawingLink.UI
             get { return _double_199; }
             set { _double_199 = value; OnPropertyChanged(); }
         }
-
         #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public MainWindowViewModel()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
