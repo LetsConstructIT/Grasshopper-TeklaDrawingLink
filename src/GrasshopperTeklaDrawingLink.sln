@@ -5,11 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrasshopperTeklaDrawingLink", "GrasshopperTeklaDrawingLink\GrasshopperTeklaDrawingLink.csproj", "{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rhino.Inside.Tekla", "Rhino.Inside.Tekla\Rhino.Inside.Tekla.csproj", "{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeklaPlugins", "TeklaPlugins\TeklaPlugins.csproj", "{91397807-C15A-48AC-9706-46C3E2E89D00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawingLink.UI", "DrawingLink.UI\DrawingLink.UI.csproj", "{CE027F16-EB04-44D8-B6C3-AF95417CC6B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingLink.UI", "DrawingLink.UI\DrawingLink.UI.csproj", "{CE027F16-EB04-44D8-B6C3-AF95417CC6B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,20 +34,6 @@ Global
 		{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{531DCA2A-4161-4EAD-956F-6F33CB74A5EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2019|Any CPU.ActiveCfg = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2019|Any CPU.Build.0 = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2020|Any CPU.ActiveCfg = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2020|Any CPU.Build.0 = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2021|Any CPU.ActiveCfg = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2021|Any CPU.Build.0 = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2022|Any CPU.ActiveCfg = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2022|Any CPU.Build.0 = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2023|Any CPU.ActiveCfg = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}._2023|Any CPU.Build.0 = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{553EE7B9-F4F7-4E3C-A226-BEACD5418D56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{91397807-C15A-48AC-9706-46C3E2E89D00}._2019|Any CPU.ActiveCfg = Release|Any CPU
 		{91397807-C15A-48AC-9706-46C3E2E89D00}._2019|Any CPU.Build.0 = Release|Any CPU
 		{91397807-C15A-48AC-9706-46C3E2E89D00}._2020|Any CPU.ActiveCfg = Release|Any CPU
