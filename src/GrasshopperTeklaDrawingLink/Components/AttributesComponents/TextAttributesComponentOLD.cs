@@ -6,12 +6,12 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.AttributesComponents
 {
-    public class TextAttributesComponent : TeklaComponentBaseNew<TextAttributesCommand>
+    public class TextAttributesComponentOLD : TeklaComponentBaseNew<TextAttributesCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.TextAttributes;
 
-        public TextAttributesComponent() : base(ComponentInfos.TextAttributesComponent) { }
+        public TextAttributesComponentOLD() : base(ComponentInfos.TextAttributesComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -41,7 +41,7 @@ namespace GTDrawingLink.Components.AttributesComponents
             _command.SetOutputValues(DA, textAttributes);
         }
     }
-    public class TextAttributesCommand : CommandBase
+    public class TextAttributesCommandOLD : CommandBase
     {
         private readonly InputOptionalParam<Text.TextAttributes> _inTextAttributes = new InputOptionalParam<Text.TextAttributes>(ParamInfos.TextAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
