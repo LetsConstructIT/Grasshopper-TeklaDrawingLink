@@ -477,6 +477,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyDrawingPropertiesComponent),
                 "F8CED9AF-8543-435E-B0D1-AB29F5A65CEE"
+            },
+            {
+                typeof(RotateViewComponent),
+                "3CFBE786-A757-4700-94F3-3CF0976C421C"
             }
         };
 

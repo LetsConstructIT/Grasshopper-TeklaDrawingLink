@@ -1280,5 +1280,12 @@ namespace GTDrawingLink.Tools
             NickName = "No",
             Description = "Drawing sheet number"
         };
+
+        public static readonly GH_InstanceDescription RotationAngle = new GH_InstanceDescription
+        {
+            Name = "Angle",
+            NickName = "A",
+            Description = "Rotation angle"
+        };
     }
 }
