@@ -41,6 +41,7 @@ namespace GTDrawingLink.Components.AttributesComponents
             if (rulerWidth.HasValue)
             {
                 textAttributes.RulerWidth = rulerWidth.Value;
+                textAttributes.UseWordWrapping = rulerWidth.Value > 1;
             }
 
             _command.SetOutputValues(DA, textAttributes);
