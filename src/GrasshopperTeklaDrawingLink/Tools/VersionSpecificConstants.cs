@@ -247,6 +247,10 @@ namespace GTDrawingLink.Tools
                 "BB95F20B-A8AB-4CB6-A1B6-972AA0E1ED87"
             },
             {
+                typeof(TextAttributesComponent),
+                "2B9593A2-8F23-47E3-9156-82FF3A206C67"
+            },
+            {
                 typeof(TextAttributesComponentOLD),
                 "4C1BEABA-E671-488E-B20F-8A4FDD0B2A5F"
             },
