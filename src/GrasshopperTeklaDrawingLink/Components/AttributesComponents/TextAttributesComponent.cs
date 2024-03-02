@@ -15,7 +15,7 @@ namespace GTDrawingLink.Components.AttributesComponents
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (textAttributes, fileName, fontAttributes, frame, arrowAttributes, backgroundTransparency, angle, rulerWidth) = _command.GetInputValues();
+            var (textAttributes, fileName, fontAttributes, frame, arrowAttributes, backgroundTransparency, angle, rulerWidth, alignment) = _command.GetInputValues();
 
             if (!string.IsNullOrEmpty(fileName))
                 textAttributes.LoadAttributes(fileName);
@@ -29,14 +29,19 @@ namespace GTDrawingLink.Components.AttributesComponents
             if (arrowAttributes != null)
                 textAttributes.ArrowHead = arrowAttributes;
 
-            if (backgroundTransparency != null)
+            if (backgroundTransparency.HasValue)
                 textAttributes.TransparentBackground = backgroundTransparency.Value;
 
-            if (angle != null)
+            if (angle.HasValue)
                 textAttributes.Angle = angle.Value;
 
-            if (rulerWidth != null)
+            if (alignment.HasValue)
+                textAttributes.Alignment = alignment.Value;
+
+            if (rulerWidth.HasValue)
+            {
                 textAttributes.RulerWidth = rulerWidth.Value;
+            }
 
             _command.SetOutputValues(DA, textAttributes);
         }
@@ -51,10 +56,11 @@ namespace GTDrawingLink.Components.AttributesComponents
         private readonly InputOptionalStructParam<bool> _inBackgroundTransparency = new InputOptionalStructParam<bool>(ParamInfos.BackgroundTransparency);
         private readonly InputOptionalStructParam<double> _inAngle = new InputOptionalStructParam<double>(ParamInfos.Angle);
         private readonly InputOptionalStructParam<double> _inTextRulerWidth = new InputOptionalStructParam<double>(ParamInfos.TextRulerWidth);
+        private readonly InputOptionalStructParam<TextAlignment> _inAlignment = new InputOptionalStructParam<TextAlignment>(ParamInfos.TextAlignment);
 
         private readonly OutputParam<Text.TextAttributes> _outAttributes = new OutputParam<Text.TextAttributes>(ParamInfos.TextAttributes);
 
-        internal (Text.TextAttributes textAttributes, string? attributesName, FontAttributes? fontAttributes, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth) GetInputValues()
+        internal (Text.TextAttributes textAttributes, string? attributesName, FontAttributes? fontAttributes, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth, TextAlignment? alignment) GetInputValues()
         {
             return (
                 _inTextAttributes.Value ?? new Text.TextAttributes(),
@@ -64,7 +70,8 @@ namespace GTDrawingLink.Components.AttributesComponents
                 _inArrowAttributes.GetValueFromUserOrNull(),
                 _inBackgroundTransparency.GetValueFromUserOrNull(),
                 _inAngle.GetValueFromUserOrNull(),
-                _inTextRulerWidth.GetValueFromUserOrNull());
+                _inTextRulerWidth.GetValueFromUserOrNull(),
+                _inAlignment.GetValueFromUserOrNull());
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, Text.TextAttributes attributes)

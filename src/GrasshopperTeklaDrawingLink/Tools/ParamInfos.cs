@@ -708,6 +708,12 @@ namespace GTDrawingLink.Tools
             NickName = "RW",
             Description = "Sets the width of the text area."
         };
+        public static readonly GH_InstanceDescription TextAlignment = new GH_InstanceDescription
+        {
+            Name = "Alignment",
+            NickName = "Al",
+            Description = "The text object's alignment (left, center, right)"
+        };
         public static readonly GH_InstanceDescription ModelView = new GH_InstanceDescription
         {
             Name = "Model View",
