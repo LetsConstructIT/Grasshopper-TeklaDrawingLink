@@ -760,7 +760,7 @@ namespace GTDrawingLink.Tools {
 
         public static readonly GH_InstanceDescription RotateViewComponent = new GH_InstanceDescription
         {
-            Name = "Rotate",
+            Name = "Rotate View",
             NickName = "R",
             Description = "Rotate drawing view on the drawing plane",
             Category = VersionSpecificConstants.TabHeading,
