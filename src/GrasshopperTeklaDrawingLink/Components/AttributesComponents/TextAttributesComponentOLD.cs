@@ -6,16 +6,16 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.AttributesComponents
 {
-    public class TextAttributesComponent : TeklaComponentBaseNew<TextAttributesCommand>
+    public class TextAttributesComponentOLD : TeklaComponentBaseNew<TextAttributesCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.TextAttributes;
 
-        public TextAttributesComponent() : base(ComponentInfos.TextAttributesComponent) { }
+        public TextAttributesComponentOLD() : base(ComponentInfos.TextAttributesComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (textAttributes, fileName, fontAttributes, frame, arrowAttributes, backgroundTransparency, angle, rulerWidth, alignment) = _command.GetInputValues();
+            var (textAttributes, fileName, fontAttributes, frame, arrowAttributes, backgroundTransparency, angle, rulerWidth) = _command.GetInputValues();
 
             if (!string.IsNullOrEmpty(fileName))
                 textAttributes.LoadAttributes(fileName);
@@ -29,25 +29,19 @@ namespace GTDrawingLink.Components.AttributesComponents
             if (arrowAttributes != null)
                 textAttributes.ArrowHead = arrowAttributes;
 
-            if (backgroundTransparency.HasValue)
+            if (backgroundTransparency != null)
                 textAttributes.TransparentBackground = backgroundTransparency.Value;
 
-            if (angle.HasValue)
+            if (angle != null)
                 textAttributes.Angle = angle.Value;
 
-            if (alignment.HasValue)
-                textAttributes.Alignment = alignment.Value;
-
-            if (rulerWidth.HasValue)
-            {
+            if (rulerWidth != null)
                 textAttributes.RulerWidth = rulerWidth.Value;
-                textAttributes.UseWordWrapping = rulerWidth.Value > 1;
-            }
 
             _command.SetOutputValues(DA, textAttributes);
         }
     }
-    public class TextAttributesCommand : CommandBase
+    public class TextAttributesCommandOLD : CommandBase
     {
         private readonly InputOptionalParam<Text.TextAttributes> _inTextAttributes = new InputOptionalParam<Text.TextAttributes>(ParamInfos.TextAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
@@ -57,11 +51,10 @@ namespace GTDrawingLink.Components.AttributesComponents
         private readonly InputOptionalStructParam<bool> _inBackgroundTransparency = new InputOptionalStructParam<bool>(ParamInfos.BackgroundTransparency);
         private readonly InputOptionalStructParam<double> _inAngle = new InputOptionalStructParam<double>(ParamInfos.Angle);
         private readonly InputOptionalStructParam<double> _inTextRulerWidth = new InputOptionalStructParam<double>(ParamInfos.TextRulerWidth);
-        private readonly InputOptionalStructParam<TextAlignment> _inAlignment = new InputOptionalStructParam<TextAlignment>(ParamInfos.TextAlignment);
 
         private readonly OutputParam<Text.TextAttributes> _outAttributes = new OutputParam<Text.TextAttributes>(ParamInfos.TextAttributes);
 
-        internal (Text.TextAttributes textAttributes, string? attributesName, FontAttributes? fontAttributes, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth, TextAlignment? alignment) GetInputValues()
+        internal (Text.TextAttributes textAttributes, string? attributesName, FontAttributes? fontAttributes, Frame? frame, ArrowheadAttributes? arrowAttributes, bool? backgroundTransparency, double? angle, double? rulerWidth) GetInputValues()
         {
             return (
                 _inTextAttributes.Value ?? new Text.TextAttributes(),
@@ -71,8 +64,7 @@ namespace GTDrawingLink.Components.AttributesComponents
                 _inArrowAttributes.GetValueFromUserOrNull(),
                 _inBackgroundTransparency.GetValueFromUserOrNull(),
                 _inAngle.GetValueFromUserOrNull(),
-                _inTextRulerWidth.GetValueFromUserOrNull(),
-                _inAlignment.GetValueFromUserOrNull());
+                _inTextRulerWidth.GetValueFromUserOrNull());
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, Text.TextAttributes attributes)

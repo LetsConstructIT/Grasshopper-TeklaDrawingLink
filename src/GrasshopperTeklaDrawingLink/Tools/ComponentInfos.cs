@@ -882,5 +882,13 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
+        public static readonly GH_InstanceDescription RotateViewComponent = new GH_InstanceDescription
+        {
+            Name = "Rotate View",
+            NickName = "R",
+            Description = "Rotate drawing view on the drawing plane",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
     }
 }

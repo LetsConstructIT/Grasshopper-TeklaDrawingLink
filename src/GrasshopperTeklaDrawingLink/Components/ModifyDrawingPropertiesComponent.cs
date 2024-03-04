@@ -15,6 +15,7 @@ namespace GTDrawingLink.Components
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             (Drawing drawing, string? name, string? title1, string? title2, string? title3) = _command.GetInputValues();
+            drawing.Select();
 
             var needsModification = false;
             if (!string.IsNullOrEmpty(name))

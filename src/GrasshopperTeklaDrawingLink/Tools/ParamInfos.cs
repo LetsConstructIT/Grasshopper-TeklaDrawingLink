@@ -708,6 +708,12 @@ namespace GTDrawingLink.Tools
             NickName = "RW",
             Description = "Sets the width of the text area."
         };
+        public static readonly GH_InstanceDescription TextAlignment = new GH_InstanceDescription
+        {
+            Name = "Alignment",
+            NickName = "Al",
+            Description = "The text object's alignment (left, center, right)"
+        };
         public static readonly GH_InstanceDescription ModelView = new GH_InstanceDescription
         {
             Name = "Model View",
@@ -1364,6 +1370,13 @@ namespace GTDrawingLink.Tools
             Name = "Sheet number",
             NickName = "No",
             Description = "Drawing sheet number"
+        };
+
+        public static readonly GH_InstanceDescription RotationAngle = new GH_InstanceDescription
+        {
+            Name = "Angle",
+            NickName = "A",
+            Description = "Rotation angle"
         };
     }
 }

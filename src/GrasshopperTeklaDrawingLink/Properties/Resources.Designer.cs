@@ -873,6 +873,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RotateView {
+            get {
+                object obj = ResourceManager.GetObject("RotateView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RunMacro {
             get {
                 object obj = ResourceManager.GetObject("RunMacro", resourceCulture);

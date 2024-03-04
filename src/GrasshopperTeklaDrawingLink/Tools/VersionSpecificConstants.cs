@@ -257,6 +257,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(TextAttributesComponent),
+                "2B9593A2-8F23-47E3-9156-82FF3A206C67"
+            },
+            {
+                typeof(TextAttributesComponentOLD),
                 "4C1BEABA-E671-488E-B20F-8A4FDD0B2A5F"
             },
             {
@@ -506,6 +510,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyDrawingPropertiesComponent),
                 "F8CED9AF-8543-435E-B0D1-AB29F5A65CEE"
+            },
+            {
+                typeof(RotateViewComponent),
+                "3CFBE786-A757-4700-94F3-3CF0976C421C"
             }
         };
 
