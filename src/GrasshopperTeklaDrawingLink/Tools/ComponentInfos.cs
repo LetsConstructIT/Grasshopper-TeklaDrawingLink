@@ -896,7 +896,7 @@ namespace GTDrawingLink.Tools
             NickName = "F",
             Description = "Find edges visible from side",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.Misc
+            SubCategory = PanelHeadings.Geometry
         };
     }
 }

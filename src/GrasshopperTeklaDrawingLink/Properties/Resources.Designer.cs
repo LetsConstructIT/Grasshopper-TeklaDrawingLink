@@ -363,6 +363,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FindVisibleEdges {
+            get {
+                object obj = ResourceManager.GetObject("FindVisibleEdges", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FontAttributes {
             get {
                 object obj = ResourceManager.GetObject("FontAttributes", resourceCulture);
