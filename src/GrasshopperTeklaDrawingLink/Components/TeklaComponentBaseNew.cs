@@ -51,6 +51,7 @@ namespace GTDrawingLink.Components
                 { typeof(string), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(GH_String), (param, manager) => AddTextParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Point3d), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(Rhino.Geometry.Curve), (param, manager) => AddCurveParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Vector3d), (param, manager) => AddVectorParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(IGH_GeometricGoo), (param, manager) => AddGeometryParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Rhino.Geometry.Line), (param, manager) => AddLineParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },

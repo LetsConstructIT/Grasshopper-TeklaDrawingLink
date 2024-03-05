@@ -514,6 +514,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(RotateViewComponent),
                 "3CFBE786-A757-4700-94F3-3CF0976C421C"
+            },
+            {
+                typeof(FindVisibleEdgesComponent),
+                "CB585309-AE84-45AD-BA49-236237548D6E"
             }
         };
 

@@ -890,5 +890,13 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.View
         };
+        public static readonly GH_InstanceDescription FindVisibleEdgesComponent = new GH_InstanceDescription
+        {
+            Name = "Find Visible Edges",
+            NickName = "F",
+            Description = "Find edges visible from side",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
     }
 }

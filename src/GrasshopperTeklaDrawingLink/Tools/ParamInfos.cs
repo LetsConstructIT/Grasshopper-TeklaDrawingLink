@@ -1211,6 +1211,13 @@ namespace GTDrawingLink.Tools
             Description = "Curve"
         };
 
+        public static readonly GH_InstanceDescription ViewingVector = new GH_InstanceDescription
+        {
+            Name = "Vector",
+            NickName = "V",
+            Description = "Viewing Vector"
+        };
+
         public static readonly GH_InstanceDescription Line = new GH_InstanceDescription
         {
             Name = "Line",
@@ -1377,6 +1384,27 @@ namespace GTDrawingLink.Tools
             Name = "Angle",
             NickName = "A",
             Description = "Rotation angle"
+        };
+
+        public static readonly GH_InstanceDescription VisiblePoints = new GH_InstanceDescription
+        {
+            Name = "Points",
+            NickName = "P",
+            Description = "Visible Points"
+        };
+
+        public static readonly GH_InstanceDescription VisibleEdges = new GH_InstanceDescription
+        {
+            Name = "Edges",
+            NickName = "E",
+            Description = "Visible Edges"
+        };
+
+        public static readonly GH_InstanceDescription ExtremePoints = new GH_InstanceDescription
+        {
+            Name = "Extremes",
+            NickName = "Ext",
+            Description = "Extreme Points"
         };
     }
 }
