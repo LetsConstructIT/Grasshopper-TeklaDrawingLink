@@ -8,12 +8,12 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    public class GetViewPropertiesComponent : TeklaComponentBase
+    public class GetViewPropertiesComponentOLD : TeklaComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.ViewProperties;
 
-        public GetViewPropertiesComponent() : base(ComponentInfos.GetViewPropertiesComponent)
+        public GetViewPropertiesComponentOLD() : base(ComponentInfos.GetViewPropertiesComponent)
         {
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
