@@ -2,19 +2,17 @@
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
-    [Obsolete]
-    public class GetViewPropertiesComponentOLD : TeklaComponentBase
+    public class GetViewPropertiesComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.hidden;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.ViewProperties;
 
-        public GetViewPropertiesComponentOLD() : base(ComponentInfos.GetViewPropertiesComponent)
+        public GetViewPropertiesComponent() : base(ComponentInfos.GetViewPropertiesComponent)
         {
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
@@ -29,6 +27,7 @@ namespace GTDrawingLink.Components
             AddPlaneParameter(pManager, ParamInfos.ViewCoordinateSystem, GH_ParamAccess.item);
             AddPlaneParameter(pManager, ParamInfos.DisplayCoordinateSystem, GH_ParamAccess.item);
             AddBoxParameter(pManager, ParamInfos.ViewRestrictionBox, GH_ParamAccess.item);
+            AddNumberParameter(pManager, ParamInfos.Scale, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -43,6 +42,7 @@ namespace GTDrawingLink.Components
             DA.SetData(ParamInfos.ViewCoordinateSystem.Name, view.ViewCoordinateSystem.ToRhino());
             DA.SetData(ParamInfos.DisplayCoordinateSystem.Name, view.DisplayCoordinateSystem.ToRhino());
             DA.SetData(ParamInfos.ViewRestrictionBox.Name, GetRestrictionBox(view));
+            DA.SetData(ParamInfos.Scale.Name, view.Attributes.Scale);
         }
 
         private GH_Box GetRestrictionBox(View view)
