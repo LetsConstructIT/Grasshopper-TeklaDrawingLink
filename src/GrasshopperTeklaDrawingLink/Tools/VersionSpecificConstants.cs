@@ -63,7 +63,7 @@ namespace GTDrawingLink.Tools
                 "01D3A4EF-043E-4149-A7FF-02398F010476"
             },
             {
-                typeof(GetViewPropertiesComponentOLD),
+                typeof(GetViewPropertiesComponentOLD2),
                 "659B5B28-ADB8-41B4-B19F-E68F77023EA4"
             },
             {
