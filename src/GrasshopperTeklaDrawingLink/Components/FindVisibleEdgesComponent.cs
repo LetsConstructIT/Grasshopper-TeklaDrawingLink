@@ -3,6 +3,7 @@ using GTDrawingLink.Tools;
 using System.Collections.Generic;
 using System.Linq;
 using Rhino.Geometry;
+using Rhino;
 
 namespace GTDrawingLink.Components
 {
@@ -20,6 +21,7 @@ namespace GTDrawingLink.Components
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             (Curve curve, Vector3d direction) = _command.GetInputValues();
+            curve = curve.Simplify(CurveSimplifyOptions.All, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance, RhinoDoc.ActiveDoc.ModelAngleToleranceRadians);
             if (!CheckInitialAssumptions(curve, out Polyline polyline))
                 return;
 
