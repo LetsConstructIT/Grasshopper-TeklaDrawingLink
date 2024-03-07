@@ -2,7 +2,11 @@
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Documents;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -28,6 +32,7 @@ namespace GTDrawingLink.Components
             AddPlaneParameter(pManager, ParamInfos.DisplayCoordinateSystem, GH_ParamAccess.item);
             AddBoxParameter(pManager, ParamInfos.ViewRestrictionBox, GH_ParamAccess.item);
             AddNumberParameter(pManager, ParamInfos.Scale, GH_ParamAccess.item);
+            AddTextParameter(pManager, ParamInfos.ViewTags, GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -43,6 +48,26 @@ namespace GTDrawingLink.Components
             DA.SetData(ParamInfos.DisplayCoordinateSystem.Name, view.DisplayCoordinateSystem.ToRhino());
             DA.SetData(ParamInfos.ViewRestrictionBox.Name, GetRestrictionBox(view));
             DA.SetData(ParamInfos.Scale.Name, view.Attributes.Scale);
+            DA.SetDataList(ParamInfos.ViewTags.Name, FormatTagsAsList(view.Attributes.TagsAttributes));
+        }
+
+        private List<string> FormatTagsAsList(View.ViewMarkTagsAttributes tagsAttributes)
+        {
+            var tags = new List<string>
+            {
+                EscapeCurlyBraces(tagsAttributes.TagA1.TagContent.GetUnformattedString()),
+                EscapeCurlyBraces(tagsAttributes.TagA2.TagContent.GetUnformattedString()),
+                EscapeCurlyBraces(tagsAttributes.TagA3.TagContent.GetUnformattedString()),
+                EscapeCurlyBraces(tagsAttributes.TagA4.TagContent.GetUnformattedString()),
+                EscapeCurlyBraces(tagsAttributes.TagA5.TagContent.GetUnformattedString()),
+            };
+            
+                return tags;
+
+            string EscapeCurlyBraces(string text)
+            {
+                return text.TrimStart("{\n").TrimEnd("}\n");
+            }
         }
 
         private GH_Box GetRestrictionBox(View view)
