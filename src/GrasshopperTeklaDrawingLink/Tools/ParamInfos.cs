@@ -75,6 +75,13 @@ namespace GTDrawingLink.Tools
             Description = "View scale (integer value after the colon mark)"
         };
 
+        public static readonly GH_InstanceDescription ViewTags = new GH_InstanceDescription
+        {
+            Name = "Tags",
+            NickName = "T",
+            Description = "View Tags (A1, A2, ... A5)"
+        };
+
         public static readonly GH_InstanceDescription GravityObject = new GH_InstanceDescription
         {
             Name = "Gravity object",
