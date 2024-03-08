@@ -72,6 +72,13 @@ namespace GTDrawingLink.Components
             return index;
         }
 
+        protected int AddBrepParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddBrepParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+        
         protected int AddGeometryParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             var index = pManager.AddGeometryParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
@@ -134,6 +141,11 @@ namespace GTDrawingLink.Components
             return pManager.AddBoxParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
+        protected int AddSurfaceParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddSurfaceParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+        
         protected int AddPointParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddPointParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);

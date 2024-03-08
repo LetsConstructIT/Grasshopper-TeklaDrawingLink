@@ -898,5 +898,17 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Geometry
         };
+
+        public static readonly GH_InstanceDescription BrepProjectionBorderComponent = new GH_InstanceDescription
+        {
+            Name = "Brep Projection Border",
+            NickName = "Border",
+            Description = "Gets the outer border and all inner borders of brep projection",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+
+        
     }
 }

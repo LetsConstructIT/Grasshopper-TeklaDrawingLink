@@ -1413,5 +1413,40 @@ namespace GTDrawingLink.Tools
             NickName = "Ext",
             Description = "Extreme Points"
         };
+
+        public static readonly GH_InstanceDescription Brep = new GH_InstanceDescription
+        {
+            Name = "Brep",
+            NickName = "B",
+            Description = "Brep to project and obtain border of"
+        };
+
+        public static readonly GH_InstanceDescription ProjectionPlane = new GH_InstanceDescription
+        {
+            Name = "Plane",
+            NickName = "P",
+            Description = "Projection plane"
+        };
+
+        public static readonly GH_InstanceDescription ProjectedBoundary = new GH_InstanceDescription
+        {
+            Name = "Boundary",
+            NickName = "B",
+            Description = "Outer border of projected surface"
+        };
+
+        public static readonly GH_InstanceDescription ProjectedHole = new GH_InstanceDescription
+        {
+            Name = "Hole",
+            NickName = "H",
+            Description = "Inner border of projected surface"
+        };
+
+        public static readonly GH_InstanceDescription ProjectedRectangle = new GH_InstanceDescription
+        {
+            Name = "Rectangle",
+            NickName = "R",
+            Description = "Projection boundary surface"
+        };
     }
 }
