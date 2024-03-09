@@ -627,6 +627,11 @@ namespace GTDrawingLink.Tools
 
             return GetWrongInputMessage(InstanceDescription.Name);
         }
+
+        internal TreeData<T> AsTreeData()
+        {
+            return new TreeData<T>(Value, Paths);
+        }
     }
     public class OutputTreeParam<T> : OutputParam
     {
@@ -759,6 +764,18 @@ namespace GTDrawingLink.Tools
             : base(success, error)
         {
             Value = value;
+        }
+    }
+
+    public class TreeData<T>
+    {
+        public List<List<T>> Objects { get; }
+        public IReadOnlyList<GH_Path> Paths { get; }
+
+        public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths)
+        {
+            Objects = objects ?? throw new ArgumentNullException(nameof(objects));
+            Paths = paths ?? throw new ArgumentNullException(nameof(paths));
         }
     }
 }
