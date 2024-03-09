@@ -587,48 +587,33 @@ namespace GTDrawingLink.Tools
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<DatabaseObject>> tree))
                 {
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
-                    if (castedToExpectedType.Any(o => o.Any(e => e is null)))
-                    {
-                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
-                    }
-
-                    _value = castedToExpectedType.ToList();
-                    _paths = tree.Paths.ToList();
-
-                    _properlySet = true;
-                    return Result.Ok();
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
-            else if (typeOfInput == typeof(IGH_GeometricGoo))
+            else if (typeOfInput == typeof(GH_Brep))
             {
-                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<IGH_GeometricGoo> tree))
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Brep> tree))
                 {
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
-                    if (castedToExpectedType.Any(o => o.Any(e => e is null)))
-                    {
-                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
-                    }
-
-                    _value = castedToExpectedType.ToList();
-                    _paths = tree.Paths.ToList();
-
-                    _properlySet = true;
-                    return Result.Ok();
-                }
-            }
-            else
-            {
-                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
-                {
-                    _value = tree.Branches.Select(b => b.Select(i => i.Value).ToList()).ToList();
-                    _paths = tree.Paths.ToList();
-
-                    _properlySet = true;
-                    return Result.Ok();
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
 
             return GetWrongInputMessage(InstanceDescription.Name);
+        }
+
+        private Result ProcessResults(Type typeOfInput, IGH_Structure tree, IEnumerable<List<T>> castedToExpectedType)
+        {
+            if (castedToExpectedType.Any(o => o.Any(e => e is null)))
+            {
+                return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+            }
+
+            _value = castedToExpectedType.ToList();
+            _paths = tree.Paths.ToList();
+
+            _properlySet = true;
+            return Result.Ok();
         }
 
         internal TreeData<T> AsTreeData()
