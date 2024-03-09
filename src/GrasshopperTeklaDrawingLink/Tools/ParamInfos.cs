@@ -1442,11 +1442,11 @@ namespace GTDrawingLink.Tools
             Description = "Inner border of projected surface"
         };
 
-        public static readonly GH_InstanceDescription ProjectedRectangle = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription UnionRectangle = new GH_InstanceDescription
         {
-            Name = "Rectangle",
+            Name = "Union Rectangle",
             NickName = "R",
-            Description = "Projection boundary surface"
+            Description = "Union of projected bounding rectangles"
         };
     }
 }

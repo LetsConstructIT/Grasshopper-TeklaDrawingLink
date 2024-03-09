@@ -1,12 +1,11 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Types.Transforms;
 using GTDrawingLink.Tools;
-using Rhino.Collections;
 using Rhino.Geometry;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tekla.Structures.Datatype;
 
 namespace GTDrawingLink.Components
 {
@@ -18,17 +17,37 @@ namespace GTDrawingLink.Components
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            (Brep brep, Plane plane) = _command.GetInputValues();
+            (TreeData<GH_Brep> brepTree, Plane plane) = _command.GetInputValues();
 
-            var orientedBrep = ApplyOrientation(brep, plane);
-            var mesh = GetMesh(orientedBrep);
-            var shadow = GetShadowOutlines(mesh);
-            _command.SetOutputValues(DA,
-                                     SimplifyPolyline(shadow.Item1),
-                                     shadow.Item2.Select(SimplifyPolyline).ToList());
+            var outerTree = new GH_Structure<GH_Curve>();
+            var innerTree = new GH_Structure<GH_Curve>();
+            for (int i = 0; i < brepTree.Objects.Count; i++)
+            {
+                var branchObjects = brepTree.Objects[i];
+                var path = brepTree.Paths[i];
+
+                var outers = new List<Polyline>();
+                var holes = new List<List<Polyline>>();
+                for (int j = 0; j < branchObjects.Count; j++)
+                {
+                    var brep = branchObjects[j].Value;
+                    var orientedBrep = ApplyOrientation(brep, plane);
+                    var mesh = GetMesh(orientedBrep);
+                    var shadow = GetShadowOutlines(mesh);
+
+                    var outer = SimplifyPolyline(shadow.Item1);
+                    var inners = shadow.Item2.Select(SimplifyPolyline).ToList();
+
+                    outerTree.Append(new GH_Curve(outer), path);
+                    var holePath = path.AppendElement(j);
+                    innerTree.AppendRange(inners, holePath);
+                }
+            }
+
+            _command.SetOutputValues(DA, outerTree, innerTree);
         }
 
-        private Polyline SimplifyPolyline(Polyline polyline)
+        private GH_Curve SimplifyPolyline(Polyline polyline)
         {
             var angleTolerance = 0;
 
@@ -65,7 +84,7 @@ namespace GTDrawingLink.Components
             }
 
             cornerPts.Add(cornerPts.First());
-            return new Polyline(cornerPts);
+            return new GH_Curve(new Polyline(cornerPts).ToPolylineCurve());
         }
 
         private Brep ApplyOrientation(Brep brep, Plane plane)
@@ -104,19 +123,19 @@ namespace GTDrawingLink.Components
 
     public class BrepProjectionBorderCommand : CommandBase
     {
-        private readonly InputParam<Brep> _inBrep = new InputParam<Brep>(ParamInfos.Brep);
+        private readonly InputTreeParam<GH_Brep> _inBrep = new InputTreeParam<GH_Brep>(ParamInfos.Brep);
         private readonly InputOptionalStructParam<Plane> _inPlane = new InputOptionalStructParam<Plane>(ParamInfos.ProjectionPlane, Plane.WorldXY);
 
-        private readonly OutputParam<Polyline> _outOuterBorder = new OutputParam<Polyline>(ParamInfos.ProjectedBoundary);
-        private readonly OutputListParam<Polyline> _outInnerBorder = new OutputListParam<Polyline>(ParamInfos.ProjectedHole);
+        private readonly OutputTreeParam<Polyline> _outOuterBorder = new OutputTreeParam<Polyline>(ParamInfos.ProjectedBoundary, 0);
+        private readonly OutputTreeParam<Polyline> _outInnerBorder = new OutputTreeParam<Polyline>(ParamInfos.ProjectedHole, 1);
 
-        internal (Brep Brep, Plane Plane) GetInputValues()
+        internal (TreeData<GH_Brep> BrepTree, Plane Plane) GetInputValues()
         {
-            return (_inBrep.Value,
+            return (_inBrep.AsTreeData(),
                     _inPlane.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, Polyline outer, List<Polyline> inners)
+        internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure outer, IGH_Structure inners)
         {
             _outOuterBorder.Value = outer;
             _outInnerBorder.Value = inners;
