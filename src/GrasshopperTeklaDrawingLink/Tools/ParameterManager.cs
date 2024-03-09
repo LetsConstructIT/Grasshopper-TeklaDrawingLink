@@ -610,6 +610,7 @@ namespace GTDrawingLink.Tools
                     }
 
                     _value = castedToExpectedType.ToList();
+                    _paths = tree.Paths.ToList();
 
                     _properlySet = true;
                     return Result.Ok();
@@ -620,6 +621,8 @@ namespace GTDrawingLink.Tools
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
                 {
                     _value = tree.Branches.Select(b => b.Select(i => i.Value).ToList()).ToList();
+                    _paths = tree.Paths.ToList();
+
                     _properlySet = true;
                     return Result.Ok();
                 }
