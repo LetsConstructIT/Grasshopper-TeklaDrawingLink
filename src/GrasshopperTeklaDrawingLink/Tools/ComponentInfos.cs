@@ -908,7 +908,16 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Geometry
         };
 
+        public static readonly GH_InstanceDescription SearchUsingKeyComponent = new GH_InstanceDescription
+        {
+            Name = "Search using Key",
+            NickName = "Search",
+            Description = "Find branch with provided key",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
 
-        
+
+
     }
 }

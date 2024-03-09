@@ -1448,5 +1448,26 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Union of projected bounding rectangles"
         };
+
+        public static readonly GH_InstanceDescription Values = new GH_InstanceDescription
+        {
+            Name = "Values",
+            NickName = "V",
+            Description = "Tree Branches"
+        };
+
+        public static readonly GH_InstanceDescription Search = new GH_InstanceDescription
+        {
+            Name = "Search",
+            NickName = "S",
+            Description = "Search key"
+        };
+
+        public static readonly GH_InstanceDescription FoundedBranches = new GH_InstanceDescription
+        {
+            Name = "Match",
+            NickName = "M",
+            Description = "Matched tree branches"
+        };
     }
 }

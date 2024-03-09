@@ -526,6 +526,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(BrepProjectionBorderComponent),
                 "CAF205C7-EB01-454B-97DF-A79DD04B7442"
+            },
+            {
+                typeof(SearchUsingKeyComponent),
+                "9B5CF5F4-0B09-4E47-A07F-38155EDCBEC8"
             }
         };
 
