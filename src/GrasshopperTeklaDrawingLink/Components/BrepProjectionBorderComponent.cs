@@ -4,8 +4,10 @@ using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Types.Transforms;
 using GTDrawingLink.Tools;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace GTDrawingLink.Components
 {
@@ -19,6 +21,7 @@ namespace GTDrawingLink.Components
         {
             (TreeData<GH_Brep> brepTree, Plane plane) = _command.GetInputValues();
 
+            var allOuters = new List<Polyline>();
             var outerTree = new GH_Structure<GH_Curve>();
             var innerTree = new GH_Structure<GH_Curve>();
             for (int i = 0; i < brepTree.Objects.Count; i++)
@@ -26,8 +29,6 @@ namespace GTDrawingLink.Components
                 var branchObjects = brepTree.Objects[i];
                 var path = brepTree.Paths[i];
 
-                var outers = new List<Polyline>();
-                var holes = new List<List<Polyline>>();
                 for (int j = 0; j < branchObjects.Count; j++)
                 {
                     var brep = branchObjects[j].Value;
@@ -38,16 +39,21 @@ namespace GTDrawingLink.Components
                     var outer = SimplifyPolyline(shadow.Item1);
                     var inners = shadow.Item2.Select(SimplifyPolyline).ToList();
 
-                    outerTree.Append(new GH_Curve(outer), path);
+                    allOuters.Add(outer);
+
+                    outerTree.Append(TransformToCurve(outer), path);
+
                     var holePath = path.AppendElement(j);
-                    innerTree.AppendRange(inners, holePath);
+                    innerTree.AppendRange(inners.Select(TransformToCurve), holePath);
                 }
             }
 
-            _command.SetOutputValues(DA, outerTree, innerTree);
+            var unionRectangle = Union(allOuters);
+
+            _command.SetOutputValues(DA, outerTree, innerTree, unionRectangle);
         }
 
-        private GH_Curve SimplifyPolyline(Polyline polyline)
+        private Polyline SimplifyPolyline(Polyline polyline)
         {
             var angleTolerance = 0;
 
@@ -84,7 +90,7 @@ namespace GTDrawingLink.Components
             }
 
             cornerPts.Add(cornerPts.First());
-            return new GH_Curve(new Polyline(cornerPts).ToPolylineCurve());
+            return new Polyline(cornerPts);
         }
 
         private Brep ApplyOrientation(Brep brep, Plane plane)
@@ -119,6 +125,20 @@ namespace GTDrawingLink.Components
             var outlines = mesh.GetOutlines(Plane.WorldXY);
             return (outlines.First(), outlines.Skip(1));
         }
+
+        private GH_Curve TransformToCurve(Polyline polyline)
+            => new GH_Curve(polyline.ToPolylineCurve());
+
+        private Polyline Union(List<Polyline> polylines)
+        {
+            var boundingBox = BoundingBox.Unset;
+
+            foreach (var polyline in polylines)
+                boundingBox.Union(polyline.BoundingBox);
+
+            var rectangle = new Rectangle3d(Plane.WorldXY, boundingBox.Min, boundingBox.Max);
+            return rectangle.ToPolyline();
+        }
     }
 
     public class BrepProjectionBorderCommand : CommandBase
@@ -128,6 +148,7 @@ namespace GTDrawingLink.Components
 
         private readonly OutputTreeParam<Polyline> _outOuterBorder = new OutputTreeParam<Polyline>(ParamInfos.ProjectedBoundary, 0);
         private readonly OutputTreeParam<Polyline> _outInnerBorder = new OutputTreeParam<Polyline>(ParamInfos.ProjectedHole, 1);
+        private readonly OutputParam<Polyline> _unionRectangle = new OutputParam<Polyline>(ParamInfos.UnionRectangle);
 
         internal (TreeData<GH_Brep> BrepTree, Plane Plane) GetInputValues()
         {
@@ -135,10 +156,11 @@ namespace GTDrawingLink.Components
                     _inPlane.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure outer, IGH_Structure inners)
+        internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure outer, IGH_Structure inners, Polyline unionRectangle)
         {
             _outOuterBorder.Value = outer;
             _outInnerBorder.Value = inners;
+            _unionRectangle.Value = unionRectangle;
 
             return SetOutput(DA);
         }
