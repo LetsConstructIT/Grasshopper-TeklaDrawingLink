@@ -333,6 +333,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DrawingObjectTypes {
+            get {
+                object obj = ResourceManager.GetObject("DrawingObjectTypes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DrawingPart {
             get {
                 object obj = ResourceManager.GetObject("DrawingPart", resourceCulture);
