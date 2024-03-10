@@ -19,7 +19,7 @@ namespace GTDrawingLink.Components
         {
             var (geometries, vector) = _command.GetInputValues();
 
-            var transform = new Projection(new Plane(Point3d.Origin, vector, Vector3d.ZAxis)).ToMatrix();
+            var transform = GetTransformation(vector);
 
             var projected = new List<InitialGeometryWithProjection>();
             for (int i = 0; i < geometries.Count; i++)
@@ -38,6 +38,19 @@ namespace GTDrawingLink.Components
                 indicies.Add(orderedGeometries.IndexOf(geometries[i]));
 
             _command.SetOutputValues(DA, orderedGeometries, indicies);
+        }
+
+        private Transform GetTransformation(Vector3d vector)
+        {
+            return new Projection(GetPlane(vector)).ToMatrix();
+        }
+
+        private Plane GetPlane(Vector3d vector)
+        {
+            if (vector.IsParallelTo(Vector3d.ZAxis) == 1)
+                return new Plane(Point3d.Origin, vector);
+            else
+                return new Plane(Point3d.Origin, vector, Vector3d.ZAxis);
         }
 
         private class InitialGeometryWithProjection

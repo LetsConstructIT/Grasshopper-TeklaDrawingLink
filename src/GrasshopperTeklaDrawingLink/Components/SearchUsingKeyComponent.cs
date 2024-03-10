@@ -27,7 +27,6 @@ namespace GTDrawingLink.Components
             if (matchingIndicies.Count == 0)
             {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
-                return;
             }
 
             var output = new GH_Structure<IGH_Goo>();
