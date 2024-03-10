@@ -114,6 +114,7 @@ namespace GTDrawingLink.Components
                 { typeof(Surface), (param, manager) => AddSurfaceParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(Rhino.Geometry.Line), (param, manager) => AddLineParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(Rhino.Geometry.Polyline), (param, manager) => AddCurveParameter(manager, param.InstanceDescription, param.ParamAccess) },
+                { typeof(IGH_GeometricGoo), (param, manager) => AddGeometryParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(IGH_Goo), (param, manager) => AddGenericParameter(manager, param.InstanceDescription, param.ParamAccess) },
                 { typeof(StraightDimensionSet.StraightDimensionSetAttributes), (param, manager) => pManager.AddParameter(new StraightDimensionSetAttributesParam(param.InstanceDescription, param.ParamAccess))},
                 { typeof(LineTypeAttributes), (param, manager) => pManager.AddParameter(new LineTypeAttributesParam(param.InstanceDescription, param.ParamAccess))},

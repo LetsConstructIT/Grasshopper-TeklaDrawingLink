@@ -926,7 +926,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Geometry
         };
 
-        
+        public static readonly GH_InstanceDescription SortByVectorComponent = new GH_InstanceDescription
+        {
+            Name = "Sort by Vector",
+            NickName = "SortVector",
+            Description = "Arrange geometry objects according to their projection on plane created from specified vector and Z-dir",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
 
     }
 }

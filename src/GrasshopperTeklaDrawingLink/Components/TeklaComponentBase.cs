@@ -166,6 +166,11 @@ namespace GTDrawingLink.Components
             return pManager.AddCurveParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
+        protected int AddGeometryParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddGeometryParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }        
+
         protected int AddBooleanParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddBooleanParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);

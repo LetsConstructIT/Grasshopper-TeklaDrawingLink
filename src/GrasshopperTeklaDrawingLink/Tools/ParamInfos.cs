@@ -1483,5 +1483,26 @@ namespace GTDrawingLink.Tools
             NickName = "L",
             Description = "Dimension lines"
         };
+
+        public static readonly GH_InstanceDescription Geometry = new GH_InstanceDescription
+        {
+            Name = "Geometry",
+            NickName = "G",
+            Description = "Geometry objects"
+        };
+
+        public static readonly GH_InstanceDescription DirectionVector = new GH_InstanceDescription
+        {
+            Name = "Vector",
+            NickName = "V",
+            Description = "Direction vector"
+        };
+
+        public static readonly GH_InstanceDescription OrderIndicies = new GH_InstanceDescription
+        {
+            Name = "Indices",
+            NickName = "I",
+            Description = "Ordering Indices"
+        };
     }
 }
