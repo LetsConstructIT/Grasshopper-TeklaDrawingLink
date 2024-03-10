@@ -455,8 +455,8 @@ namespace GTDrawingLink.Tools
 
     public class InputListParam<T> : InputParam where T : class
     {
-        private bool _properlySet;
-        private List<T> _value;
+        protected bool _properlySet;
+        protected List<T> _value;
         public List<T> Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
 
         public InputListParam(GH_InstanceDescription instanceDescription)
@@ -515,6 +515,49 @@ namespace GTDrawingLink.Tools
             }
 
             return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+    public class InputOptionalListParam<T> : InputListParam<T> where T : class
+    {
+        private List<T> _defaultValue;
+
+        public bool ValueProvidedByUser { get; private set; }
+
+        public InputOptionalListParam(GH_InstanceDescription instanceDescription, List<T> defaultValue)
+            : base(instanceDescription)
+        {
+            IsOptional = true;
+            _defaultValue = defaultValue;
+        }
+
+        public InputOptionalListParam(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
+        {
+            IsOptional = true;
+            _defaultValue = new List<T>();
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+
+            var resultFromUserInput = base.EvaluateInput(DA);
+            if (resultFromUserInput.Success)
+            {
+                ValueProvidedByUser = true;
+            }
+            if (resultFromUserInput.Failure)
+            {
+                _value = _defaultValue;
+                _properlySet = true;
+            }
+
+            return Result.Ok();
+        }
+
+        public List<T>? GetValueFromUserOrNull()
+        {
+            return ValueProvidedByUser ? Value : null;
         }
     }
 
@@ -598,7 +641,7 @@ namespace GTDrawingLink.Tools
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
-            else if(typeOfInput == typeof(IGH_Goo))
+            else if (typeOfInput == typeof(IGH_Goo))
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<IGH_Goo> tree))
                 {
