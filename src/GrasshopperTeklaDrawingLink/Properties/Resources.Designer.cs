@@ -293,6 +293,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DimensionBox {
+            get {
+                object obj = ResourceManager.GetObject("DimensionBox", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DimensionLineAttributes {
             get {
                 object obj = ResourceManager.GetObject("DimensionLineAttributes", resourceCulture);

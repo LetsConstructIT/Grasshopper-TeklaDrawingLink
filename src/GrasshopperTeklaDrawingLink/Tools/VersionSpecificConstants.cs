@@ -530,6 +530,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SearchUsingKeyComponent),
                 "9B5CF5F4-0B09-4E47-A07F-38155EDCBEC8"
+            },
+            {
+                typeof(DimensionBoxComponent),
+                "7B783C3F-FBD3-46A0-84EA-DFAD8044A07E"
             }
         };
 

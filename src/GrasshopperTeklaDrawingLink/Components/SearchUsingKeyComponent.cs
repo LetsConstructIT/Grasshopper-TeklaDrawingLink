@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class SearchUsingKeyComponent : TeklaComponentBaseNew<SearchUsingKeyCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.SearchUsingKey;
         public SearchUsingKeyComponent() : base(ComponentInfos.SearchUsingKeyComponent) { }
 

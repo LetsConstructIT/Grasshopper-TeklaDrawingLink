@@ -917,7 +917,16 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Misc
         };
 
+        public static readonly GH_InstanceDescription DimensionBoxComponent = new GH_InstanceDescription
+        {
+            Name = "Dimension Box",
+            NickName = "DimBox",
+            Description = "Calculates bounding box of initial rectangle and provided planar geometries",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
 
+        
 
     }
 }

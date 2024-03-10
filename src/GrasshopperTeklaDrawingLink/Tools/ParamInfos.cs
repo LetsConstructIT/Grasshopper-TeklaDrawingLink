@@ -1469,5 +1469,19 @@ namespace GTDrawingLink.Tools
             NickName = "M",
             Description = "Matched tree branches"
         };
+
+        public static readonly GH_InstanceDescription DimensionBoxInitialRectangle = new GH_InstanceDescription
+        {
+            Name = "Rectangle",
+            NickName = "R",
+            Description = "Initial rectangle"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLines = new GH_InstanceDescription
+        {
+            Name = "Lines",
+            NickName = "L",
+            Description = "Dimension lines"
+        };
     }
 }
