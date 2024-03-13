@@ -4,17 +4,17 @@ using GTDrawingLink.Extensions;
 using Tekla.Structures.Drawing;
 using T3D = Tekla.Structures.Geometry3d;
 using System.Drawing;
-using GTDrawingLink.Types;
-using Grasshopper.Kernel.Types;
+using System;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class GetViewFrameGeometryComponent : TeklaComponentBase
+    [Obsolete]
+    public class GetViewFrameGeometryComponentOLD : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.ViewFrame;
 
-        public GetViewFrameGeometryComponent() : base(ComponentInfos.GetViewFrameGeometryComponent)
+        public GetViewFrameGeometryComponentOLD() : base(ComponentInfos.GetViewFrameGeometryComponent)
         {
         }
 
