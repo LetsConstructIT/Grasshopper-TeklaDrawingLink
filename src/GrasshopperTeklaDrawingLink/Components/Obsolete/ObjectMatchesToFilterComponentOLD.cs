@@ -1,15 +1,17 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
+using System;
 using System.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ObjectMatchesToFilterComponent : TeklaComponentBase
+    [Obsolete]
+    public class ObjectMatchesToFilterComponentOLD : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.ObjectMatchesToFilter;
 
-        public ObjectMatchesToFilterComponent() : base(ComponentInfos.ObjectMatchesToFilterComponent)
+        public ObjectMatchesToFilterComponentOLD() : base(ComponentInfos.ObjectMatchesToFilterComponent)
         {
         }
 
