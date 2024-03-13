@@ -97,6 +97,10 @@ namespace GTDrawingLink.Tools
                 "7E0CCEDE-6746-44A8-9E48-458AA59F5214"
             },
             {
+                typeof(GetDrawingSizeComponent),
+                "78395593-9996-4E5F-918B-60FA7B88C001"
+            },
+            {
                 typeof(GetDrawingSizeComponentOLD),
                 "99CA7A46-2B6B-4727-AE82-F8489A4E67F3"
             },
