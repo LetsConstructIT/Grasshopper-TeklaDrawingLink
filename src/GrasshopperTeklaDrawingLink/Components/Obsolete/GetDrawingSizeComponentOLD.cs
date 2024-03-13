@@ -1,16 +1,18 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
+using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class GetDrawingSizeComponent : TeklaComponentBaseNew<GetDrawingSizeCommand>
+    [Obsolete]
+    public class GetDrawingSizeComponentOLD : TeklaComponentBaseNew<GetDrawingSizeCommandOld>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.GetDrawingSize;
 
-        public GetDrawingSizeComponent() : base(ComponentInfos.GetDrawingSizeComponent) { }
+        public GetDrawingSizeComponentOLD() : base(ComponentInfos.GetDrawingSizeComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -23,7 +25,7 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class GetDrawingSizeCommand : CommandBase
+    public class GetDrawingSizeCommandOld : CommandBase
     {
         private readonly InputParam<Drawing> _inDrawing = new InputParam<Drawing>(ParamInfos.Drawing);
         private readonly OutputParam<double> _outWidth = new OutputParam<double>(new GH_InstanceDescription("Width", "W", "Drawing width", "", ""));
