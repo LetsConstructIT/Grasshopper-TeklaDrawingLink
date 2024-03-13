@@ -57,6 +57,10 @@ namespace GTDrawingLink.Tools
                 "D6397266-E7A0-41D9-8D93-704F2EB48866"
             },
             {
+                typeof(GetViewFrameGeometryComponent),
+                "C187CE5C-27FE-40AD-8B30-399322FB287E"
+            },
+            {
                 typeof(GetViewFrameGeometryComponentOLD),
                 "7FD6C114-1624-4463-95DD-56FA02862BCC"
             },
