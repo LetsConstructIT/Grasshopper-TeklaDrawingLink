@@ -1504,5 +1504,19 @@ namespace GTDrawingLink.Tools
             NickName = "I",
             Description = "Ordering Indices"
         };
+
+        public static readonly GH_InstanceDescription FilteredModelObjects = new GH_InstanceDescription
+        {
+            Name = "Filtered Object",
+            NickName = "FO",
+            Description = "Tekla model object meeting filter criteria"
+        };
+
+        public static readonly GH_InstanceDescription FilterPattern = new GH_InstanceDescription
+        {
+            Name = "Filter Pattern",
+            NickName = "P",
+            Description = "Filter pattern"
+        };
     }
 }

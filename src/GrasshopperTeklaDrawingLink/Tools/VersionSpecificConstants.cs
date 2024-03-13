@@ -245,6 +245,10 @@ namespace GTDrawingLink.Tools
                 "52322B95-A7CA-4B4E-96B2-4E1B6D239CBA"
             },
             {
+                typeof(ObjectMatchesToFilterComponent),
+                "DD9FC705-1035-42D6-9D63-C169B1DC5A8E"
+            },
+            {
                 typeof(ObjectMatchesToFilterComponentOLD),
                 "37BF7499-39CD-4124-81D4-64BE134418F6"
             },

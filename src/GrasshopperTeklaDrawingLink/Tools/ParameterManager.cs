@@ -508,7 +508,7 @@ namespace GTDrawingLink.Tools
                 var objectsGoo = new List<GH_Goo<T>>();
                 if (DA.GetDataList(InstanceDescription.Name, objectsGoo))
                 {
-                    _value = objectsGoo.Select(v => v.Value).ToList();
+                    _value = objectsGoo.Select(v => v?.Value).ToList();
                     _properlySet = true;
                     return Result.Ok();
                 }
