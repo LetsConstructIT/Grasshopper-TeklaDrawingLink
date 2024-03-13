@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.ModifyComponents
+namespace GTDrawingLink.Components.Obsolete
 {
     [Obsolete]
     public class ModifyPartComponentOLD : TeklaComponentBase

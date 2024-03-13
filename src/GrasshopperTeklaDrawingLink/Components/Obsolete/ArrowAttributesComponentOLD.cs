@@ -4,7 +4,7 @@ using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.AttributesComponents
+namespace GTDrawingLink.Components.Obsolete
 {
     public class ArrowAttributesComponentOLD : TeklaComponentBaseNew<ArrowAttributesCommandOLD>
     {
