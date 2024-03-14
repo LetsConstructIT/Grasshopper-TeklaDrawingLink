@@ -17,26 +17,49 @@ namespace GTDrawingLink.Components
         {
             (TreeData<IGH_Goo> objectsTree, List<string> keys, List<string> search) = _command.GetInputValues();
 
-            if (objectsTree.Paths.Count != keys.Count)
-            {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
+            var listMode = objectsTree.Paths.Count == 1;
+            if (!CheckInputs(objectsTree, keys, listMode))
                 return;
-            }
 
             var matchingIndicies = GetMatchingIndicies(keys, search);
             if (matchingIndicies.Count == 0)
-            {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
-            }
 
             var output = new GH_Structure<IGH_Goo>();
-            foreach (var index in matchingIndicies)
+            if (listMode)
             {
-                var path = new GH_Path(0, index);
-                output.AppendRange(objectsTree.Objects[index], path);
+                foreach (var index in matchingIndicies)
+                    output.Append(objectsTree.Objects[0][index]);
+            }
+            else
+            {
+                foreach (var index in matchingIndicies)
+                {
+                    var path = new GH_Path(0, index);
+                    output.AppendRange(objectsTree.Objects[index], path);
+                }
             }
 
             _command.SetOutputValues(DA, output);
+        }
+
+        private bool CheckInputs(TreeData<IGH_Goo> objectsTree, List<string> keys, bool listMode)
+        {
+            if (listMode)
+            {
+                if (objectsTree.Objects[0].Count != keys.Count)
+                {
+                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
+                    return false;
+                }
+            }
+            else if (objectsTree.Paths.Count != keys.Count)
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
+                return false;
+            }
+
+            return true;
         }
 
         private List<int> GetMatchingIndicies(List<string> keys, List<string> search)
