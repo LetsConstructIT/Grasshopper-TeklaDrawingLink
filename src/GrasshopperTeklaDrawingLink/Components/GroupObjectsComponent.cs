@@ -30,6 +30,7 @@ namespace GTDrawingLink.Components
             GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByClass.Name, ByClassMenuItem_Clicked, true, _mode == GroupingMode.ByClass).ToolTipText = ParamInfos.GroupByClass.Description;
             GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByUDA.Name, ByUdaMenuItem_Clicked, true, _mode == GroupingMode.ByUDA).ToolTipText = ParamInfos.GroupByUDA.Description;
             GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByReport.Name, ByReportMenuItem_Clicked, true, _mode == GroupingMode.ByReport).ToolTipText = ParamInfos.GroupByReport.Description;
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByType.Name, ByTypeMenuItem_Clicked, true, _mode == GroupingMode.ByType).ToolTipText = ParamInfos.GroupByType.Description;
             GH_DocumentObject.Menu_AppendSeparator(menu);
         }
 
@@ -68,6 +69,13 @@ namespace GTDrawingLink.Components
             ExpireSolution(recompute: true);
         }
 
+        private void ByTypeMenuItem_Clicked(object sender, EventArgs e)
+        {
+            _mode = GroupingMode.ByType;
+            SetCustomMessage();
+            ExpireSolution(recompute: true);
+        }
+
         private void SetCustomMessage()
         {
             switch (_mode)
@@ -86,6 +94,9 @@ namespace GTDrawingLink.Components
                     break;
                 case GroupingMode.ByReport:
                     base.Message = "Report";
+                    break;
+                case GroupingMode.ByType:
+                    base.Message = "Type";
                     break;
                 default:
                     break;
@@ -182,6 +193,8 @@ namespace GTDrawingLink.Components
                 case GroupingMode.ByReport:
                     propertyName = inputProperty;
                     break;
+                case GroupingMode.ByType:
+                    return inputObject.GetType().Name;
                 default:
                     return "";
             }
@@ -235,7 +248,8 @@ namespace GTDrawingLink.Components
             ByName = 1,
             ByClass = 2,
             ByUDA = 4,
-            ByReport = 8
+            ByReport = 8,
+            ByType = 16
         }
     }
 }

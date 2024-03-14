@@ -592,6 +592,14 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Group by Report"
         };
+
+        public static readonly GH_InstanceDescription GroupByType = new GH_InstanceDescription
+        {
+            Name = "Group by Type",
+            NickName = "T",
+            Description = "Group by Tekla object Type"
+        };
+        
         public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription
         {
             Name = "Leader line",
