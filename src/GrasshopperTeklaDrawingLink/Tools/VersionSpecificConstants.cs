@@ -551,6 +551,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SortByVectorComponent),
                 "6FD4AC31-DBFE-47FD-8783-24012B476EBE"
+            },
+            {
+                typeof(SortByKeyComponent),
+                "58C34E35-F00F-4339-AAD2-7B80F87CFA83"
             }
         };
 

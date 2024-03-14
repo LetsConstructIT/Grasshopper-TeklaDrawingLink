@@ -1526,5 +1526,20 @@ namespace GTDrawingLink.Tools
             NickName = "P",
             Description = "Filter pattern"
         };
+
+        public static readonly GH_InstanceDescription SortOrder = new GH_InstanceDescription
+        {
+            Name = "Order",
+            NickName = "S",
+            Description = "Order of sorting"
+        };
+
+        public static readonly GH_InstanceDescription SortedValues = new GH_InstanceDescription
+        {
+            Name = "Sorted",
+            NickName = "V",
+            Description = "Sorted objects"
+        };
+
     }
 }

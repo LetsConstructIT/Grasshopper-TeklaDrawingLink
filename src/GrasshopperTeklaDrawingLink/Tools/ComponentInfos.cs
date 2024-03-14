@@ -935,6 +935,13 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Geometry
         };
 
-
+        public static readonly GH_InstanceDescription SortByKeyComponent = new GH_InstanceDescription
+        {
+            Name = "Sort by Key",
+            NickName = "SortKey",
+            Description = "Arrange objects according to provided order",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        }; 
     }
 }

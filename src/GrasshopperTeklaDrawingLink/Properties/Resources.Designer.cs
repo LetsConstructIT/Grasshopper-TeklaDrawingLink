@@ -1003,6 +1003,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SortByKey {
+            get {
+                object obj = ResourceManager.GetObject("SortByKey", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SortByVector {
             get {
                 object obj = ResourceManager.GetObject("SortByVector", resourceCulture);
