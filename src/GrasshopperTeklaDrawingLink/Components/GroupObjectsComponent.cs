@@ -171,7 +171,7 @@ namespace GTDrawingLink.Components
                     propertyName = "ASSEMBLY_POS";
                     break;
                 case GroupingMode.ByName:
-                    propertyName = "NAME";
+                    propertyName = inputObject is Assembly ? "ASSEMBLY_NAME" : "NAME";
                     break;
                 case GroupingMode.ByClass:
                     propertyName = "CLASS_ATTR";
