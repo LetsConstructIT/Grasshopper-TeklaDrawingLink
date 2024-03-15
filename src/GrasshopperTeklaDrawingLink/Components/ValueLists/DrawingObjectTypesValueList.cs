@@ -33,6 +33,7 @@ namespace GTDrawingLink.Components.ValueLists
             ListItems.Add(new GH_ValueListItem("Circle", "\"Circle\""));
             ListItems.Add(new GH_ValueListItem("Cloud", "\"Cloud\""));
             ListItems.Add(new GH_ValueListItem("Connection", "\"Connection\""));
+            ListItems.Add(new GH_ValueListItem("Container View", "\"Container View\""));            
             ListItems.Add(new GH_ValueListItem("Detail Mark", "\"Detail Mark\""));
             ListItems.Add(new GH_ValueListItem("Dwg Object", "\"Dwg Object\""));
             ListItems.Add(new GH_ValueListItem("Grid", "\"Grid\""));
@@ -59,6 +60,7 @@ namespace GTDrawingLink.Components.ValueLists
             ListItems.Add(new GH_ValueListItem("Symbol", "\"Symbol\""));
             ListItems.Add(new GH_ValueListItem("Text", "\"Text\""));
             ListItems.Add(new GH_ValueListItem("Text File", "\"Text File\""));
+            ListItems.Add(new GH_ValueListItem("View", "\"View\""));
             ListItems.Add(new GH_ValueListItem("Weld", "\"Weld\""));
             ListItems.Add(new GH_ValueListItem("Weld Mark", "\"Weld Mark\""));
         }
