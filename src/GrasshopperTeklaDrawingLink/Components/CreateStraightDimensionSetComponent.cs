@@ -224,6 +224,9 @@ namespace GTDrawingLink.Components
                 pointList.Add(teklaPoint);
             }
 
+            location.FromZ = 0;
+            location.ToZ = 0;
+
             var dimLocation = location.ToTekla();
 
             if (_mode == InsertionMode.WhenMoreThan2Points && GetUniqueDimensionPoints(pointList, dimLocation).Count == 2)
