@@ -88,11 +88,17 @@ namespace GTDrawingLink.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as ViewBase;
-            if (view == null)
+            ViewBase viewBase = null;
+            var input = DA.GetGooValue<DatabaseObject>(ParamInfos.View);
+            if (input is ViewBase)
+                viewBase = input as ViewBase;
+            else if (input is Drawing drawing)
+                viewBase = drawing.GetSheet();
+
+            if (viewBase == null)
                 return;
 
-            var childObjectsGroupedByType = GetChildObjectsGroupedByType(view);
+            var childObjectsGroupedByType = GetChildObjectsGroupedByType(viewBase);
 
             DA.SetDataTree(0, GetOutputTree(DA.Iteration, childObjectsGroupedByType));
             DA.SetDataList(ParamInfos.GroupingKeys.Name, childObjectsGroupedByType.Select(c => c.Key));
