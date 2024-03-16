@@ -27,6 +27,7 @@ namespace GTDrawingLink.Components
         {
             base.AppendAdditionalComponentMenuItems(menu);
             Menu_AppendItem(menu, ParamInfos.GroupByPosition.Name, ByPositionMenuItem_Clicked, true, _mode == GroupingMode.ByAssemblyPosition).ToolTipText = ParamInfos.GroupByPosition.Description;
+            Menu_AppendItem(menu, ParamInfos.GroupByPartPosition.Name, ByPartPositionMenuItem_Clicked, true, _mode == GroupingMode.ByPartPosition).ToolTipText = ParamInfos.GroupByPartPosition.Description;
             Menu_AppendItem(menu, ParamInfos.GroupByName.Name, ByNameMenuItem_Clicked, true, _mode == GroupingMode.ByName).ToolTipText = ParamInfos.GroupByName.Description;
             Menu_AppendItem(menu, ParamInfos.GroupByClass.Name, ByClassMenuItem_Clicked, true, _mode == GroupingMode.ByClass).ToolTipText = ParamInfos.GroupByClass.Description;
             Menu_AppendItem(menu, ParamInfos.GroupByUDA.Name, ByUdaMenuItem_Clicked, true, _mode == GroupingMode.ByUDA).ToolTipText = ParamInfos.GroupByUDA.Description;
@@ -38,6 +39,13 @@ namespace GTDrawingLink.Components
         private void ByPositionMenuItem_Clicked(object sender, EventArgs e)
         {
             _mode = GroupingMode.ByAssemblyPosition;
+            SetCustomMessage();
+            ExpireSolution(recompute: true);
+        }
+
+        private void ByPartPositionMenuItem_Clicked(object sender, EventArgs e)
+        {
+            _mode = GroupingMode.ByPartPosition;
             SetCustomMessage();
             ExpireSolution(recompute: true);
         }
@@ -83,6 +91,9 @@ namespace GTDrawingLink.Components
             {
                 case GroupingMode.ByAssemblyPosition:
                     Message = "Assembly Position";
+                    break;
+                case GroupingMode.ByPartPosition:
+                    Message = "Part Position";
                     break;
                 case GroupingMode.ByName:
                     Message = "Name";
@@ -183,6 +194,9 @@ namespace GTDrawingLink.Components
                 case GroupingMode.ByAssemblyPosition:
                     propertyName = "ASSEMBLY_POS";
                     break;
+                case GroupingMode.ByPartPosition:
+                    propertyName = "PART_POS";
+                    break;
                 case GroupingMode.ByName:
                     propertyName = inputObject is Assembly ? "ASSEMBLY_NAME" : "NAME";
                     break;
@@ -251,11 +265,12 @@ namespace GTDrawingLink.Components
         enum GroupingMode
         {
             ByAssemblyPosition = 0,
-            ByName = 1,
-            ByClass = 2,
-            ByUDA = 4,
-            ByReport = 8,
-            ByType = 16
+            ByPartPosition = 1,
+            ByName = 2,
+            ByClass = 4,
+            ByUDA = 8,
+            ByReport = 16,
+            ByType = 32
         }
     }
 }

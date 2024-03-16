@@ -565,6 +565,13 @@ namespace GTDrawingLink.Tools
             Description = "Group by Assembly Position"
         };
 
+        public static readonly GH_InstanceDescription GroupByPartPosition = new GH_InstanceDescription
+        {
+            Name = "Group by Part Position",
+            NickName = "Pos",
+            Description = "Group by Part Position"
+        };
+
         public static readonly GH_InstanceDescription GroupByName = new GH_InstanceDescription
         {
             Name = "Group by Name",
