@@ -112,14 +112,15 @@ namespace GTDrawingLink.Components
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();
             var insertedDimensions = new List<StraightDimensionSet>();
-            foreach (var pointsPath in dimPointsTree.Paths)
+            for (int i = 0; i < dimPointsTree.Paths.Count; i++)
             {
+                var pointsPath = dimPointsTree.Paths[i];
                 var viewIdx = pointsPath.Indices.First();
                 var view = views.ElementAtOrLast(viewIdx);
 
-                var points = GetPoints(dimPointsTree, pointsPath);
-                var location = GetLocation(locationsTree, pointsPath);
-                var attributes = GetAttributes(attributesTree, pointsPath);
+                var points = dimPointsTree[i].Select(p => p.Value).ToList();
+                var location = GetLocation(locationsTree, i);
+                var attributes = GetAttributes(attributesTree, i);
 
                 var dimension = InsertDimensionLine(
                     view,
@@ -138,35 +139,23 @@ namespace GTDrawingLink.Components
             return insertedDimensions;
         }
 
-        private List<Point3d> GetPoints(GH_Structure<GH_Point> dimPointsTree, GH_Path pointsPath)
-        {
-            var points = new List<Point3d>();
-            foreach (var item in dimPointsTree.get_Branch(pointsPath))
-            {
-                if (item is GH_Point point)
-                    points.Add(point.Value);
-            }
-            return points;
-        }
-
-        private Rhino.Geometry.Line GetLocation(GH_Structure<GH_Line> tree, GH_Path sourcePath)
+        private Rhino.Geometry.Line GetLocation(GH_Structure<GH_Line> tree, int index)
         {
             if (tree.Branches.Count == 1)
             {
                 var branch = tree.Branches.First();
-                var locationIdx = sourcePath.Indices.Last();
-                if (locationIdx < branch.Count)
-                    return branch[locationIdx].Value;
+                if (index < branch.Count)
+                    return branch[index].Value;
                 else
                     return branch.Last().Value;
             }
-            else if (tree.PathExists(sourcePath))
-                return ((GH_Line)tree.get_Branch(sourcePath)[0]).Value;
+            else if (index < tree.PathCount)
+                return tree[index].First().Value;
             else
                 return tree.Last().Value;
         }
 
-        private StraightDimensionSet.StraightDimensionSetAttributes GetAttributes(GH_Structure<GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>> tree, GH_Path sourcePath)
+        private StraightDimensionSet.StraightDimensionSetAttributes GetAttributes(GH_Structure<GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>> tree, int index)
         {
             if (tree.Branches.Count == 0)
             {
@@ -175,14 +164,13 @@ namespace GTDrawingLink.Components
             else if (tree.Branches.Count == 1)
             {
                 var branch = tree.Branches.First();
-                var locationIdx = sourcePath.Indices.Last();
-                if (locationIdx < branch.Count)
-                    return branch[locationIdx].Value;
+                if (index < branch.Count)
+                    return branch[index].Value;
                 else
                     return branch.Last().Value;
             }
-            else if (tree.PathExists(sourcePath))
-                return ((GH_Goo<StraightDimensionSet.StraightDimensionSetAttributes>)tree.get_Branch(sourcePath)[0]).Value;
+            else if (index < tree.PathCount)
+                return tree[index].First().Value;
             else
                 return tree.Last().Value;
         }
