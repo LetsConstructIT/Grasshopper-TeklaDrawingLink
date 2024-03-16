@@ -12,13 +12,13 @@ using Tekla.Structures.Model;
 namespace GTDrawingLink.Components.Obsolete
 {
     [Obsolete]
-    public class GroupObjectsComponentOLD : TeklaComponentBase
+    public class GroupObjectsComponentOLD2 : TeklaComponentBase
     {
         private GroupingMode _mode = GroupingMode.ByAssemblyPosition;
         public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.GroupObjects;
 
-        public GroupObjectsComponentOLD() : base(ComponentInfos.GroupObjectsComponent)
+        public GroupObjectsComponentOLD2() : base(ComponentInfos.GroupObjectsComponent)
         {
             SetCustomMessage();
         }
