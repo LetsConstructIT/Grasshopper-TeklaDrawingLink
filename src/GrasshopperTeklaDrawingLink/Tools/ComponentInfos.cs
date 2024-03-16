@@ -191,7 +191,7 @@ namespace GTDrawingLink.Tools
             Description = "Get or set drawing properties",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Drawing
-        };      
+        };
 
         public static readonly GH_InstanceDescription GetDrawingSourceObjectComponent = new GH_InstanceDescription
         {
@@ -942,6 +942,15 @@ namespace GTDrawingLink.Tools
             Description = "Arrange objects according to provided order",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
-        }; 
+        };
+
+        public static readonly GH_InstanceDescription BakeToTeklaComponent = new GH_InstanceDescription
+        {
+            Name = "Bake to Tekla",
+            NickName = "Bake",
+            Description = "Break live link with Tekla for input component",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
     }
 }

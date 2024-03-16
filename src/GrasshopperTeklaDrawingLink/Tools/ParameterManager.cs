@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Tekla.Structures.Dialog.UIControls;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Tools
@@ -615,6 +616,9 @@ namespace GTDrawingLink.Tools
         private IReadOnlyList<GH_Path> _paths;
         public IReadOnlyList<GH_Path> Paths => _properlySet ? _paths : throw new InvalidOperationException(InstanceDescription.Name);
 
+        private IGH_Structure _tree;
+        public IGH_Structure Tree => _properlySet ? _tree : throw new InvalidOperationException(InstanceDescription.Name);
+
         public InputTreeParam(GH_InstanceDescription instanceDescription)
             : base(typeof(T), instanceDescription, GH_ParamAccess.tree)
         {
@@ -629,6 +633,7 @@ namespace GTDrawingLink.Tools
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<DatabaseObject>> tree))
                 {
+                    _tree = tree;
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
@@ -637,6 +642,7 @@ namespace GTDrawingLink.Tools
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Brep> tree))
                 {
+                    _tree = tree;
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
@@ -645,6 +651,7 @@ namespace GTDrawingLink.Tools
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<IGH_Goo> tree))
                 {
+                    _tree = tree;
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }

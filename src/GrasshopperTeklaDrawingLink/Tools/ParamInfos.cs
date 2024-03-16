@@ -1541,5 +1541,11 @@ namespace GTDrawingLink.Tools
             Description = "Sorted objects"
         };
 
+        public static readonly GH_InstanceDescription TeklaComponent = new GH_InstanceDescription
+        {
+            Name = "Component",
+            NickName = "C",
+            Description = "Tekla component (model or drawing) which output should be baked into Tekla"
+        };
     }
 }

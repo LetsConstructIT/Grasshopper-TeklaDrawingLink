@@ -555,6 +555,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SortByKeyComponent),
                 "58C34E35-F00F-4339-AAD2-7B80F87CFA83"
+            },
+            {
+                typeof(BakeToTeklaComponent),
+                "04EFCB01-3336-47AC-BCC1-5F88BD92E075"
             }
         };
 
