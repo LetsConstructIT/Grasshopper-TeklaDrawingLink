@@ -571,6 +571,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SimpleOrientComponent),
                 "BA991EA0-3D32-42C6-94B1-805E929B4EA9"
+            },
+            {
+                typeof(CreateWDrawingComponent),
+                "93A82029-7D54-444B-AF45-FB981DBA00D4"
             }
         };
 

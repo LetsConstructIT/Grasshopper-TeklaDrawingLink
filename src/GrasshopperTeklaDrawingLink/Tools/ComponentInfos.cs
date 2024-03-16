@@ -962,7 +962,13 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Geometry
         };
 
-
-        
+        public static readonly GH_InstanceDescription CreateWDrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Create W Drawing",
+            NickName = "WDrawing",
+            Description = "Create single part drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };
     }
 }
