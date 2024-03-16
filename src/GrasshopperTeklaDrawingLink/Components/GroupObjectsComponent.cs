@@ -1,6 +1,7 @@
 ﻿using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System;
@@ -9,16 +10,15 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components.Obsolete
+namespace GTDrawingLink.Components
 {
-    [Obsolete]
-    public class GroupObjectsComponentOLD : TeklaComponentBase
+    public class GroupObjectsComponent : TeklaComponentBase
     {
         private GroupingMode _mode = GroupingMode.ByAssemblyPosition;
-        public override GH_Exposure Exposure => GH_Exposure.hidden;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.GroupObjects;
 
-        public GroupObjectsComponentOLD() : base(ComponentInfos.GroupObjectsComponent)
+        public GroupObjectsComponent() : base(ComponentInfos.GroupObjectsComponent)
         {
             SetCustomMessage();
         }
@@ -128,7 +128,7 @@ namespace GTDrawingLink.Components.Obsolete
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             AddGenericParameter(pManager, ParamInfos.ModelObject, GH_ParamAccess.tree);
-            AddTextParameter(pManager, ParamInfos.GroupingKeys, GH_ParamAccess.list);
+            AddTextParameter(pManager, ParamInfos.GroupingKeys, GH_ParamAccess.tree);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -170,8 +170,9 @@ namespace GTDrawingLink.Components.Obsolete
 
             var ordered = dictionary.OrderBy(kvp => kvp.Key).ToArray();
 
-            DA.SetDataTree(0, GetOutputTree(DA.Iteration, ordered));
-            DA.SetDataList(1, ordered.Select(d => d.Key));
+            var trees = GetOutputTrees(DA.Iteration, ordered);
+            DA.SetDataTree(0, trees.Objects);
+            DA.SetDataTree(1, trees.Keys);
         }
 
         private string GetPropertyValue(ModelObject inputObject, string inputProperty)
@@ -226,20 +227,24 @@ namespace GTDrawingLink.Components.Obsolete
             return "";
         }
 
-        private IGH_Structure GetOutputTree(int iteration, KeyValuePair<string, List<ModelObject>>[] dictionary)
+        private (IGH_Structure Objects, IGH_Structure Keys) GetOutputTrees(int iteration, KeyValuePair<string, List<ModelObject>>[] dictionary)
         {
-            var output = new GH_Structure<ModelObjectGoo>();
+            var objects = new GH_Structure<ModelObjectGoo>();
+            var keys = new GH_Structure<GH_String>();
 
             var index = 0;
             foreach (var currentObjects in dictionary)
             {
+                var path = new GH_Path(iteration, index);
                 var indicies = currentObjects.Value.Select(o => new ModelObjectGoo(o));
-                output.AppendRange(indicies, new GH_Path(iteration, index));
+
+                objects.AppendRange(indicies, path);
+                keys.Append(new GH_String(currentObjects.Key), path);
 
                 index++;
             }
 
-            return output;
+            return (objects, keys);
         }
 
         [Flags]
