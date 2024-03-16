@@ -50,7 +50,10 @@ namespace GTDrawingLink.Components
             var attributesFileName = string.Empty;
             DA.GetData(ParamInfos.Attributes.Name, ref attributesFileName);
             if (string.IsNullOrEmpty(attributesFileName))
-                attributesFileName = "standard";
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Drawing Attributes filename is missing");
+                return;
+            }
 
             var creationTypeInt = _defaultInt;
             DA.GetData("Creation type", ref creationTypeInt);
