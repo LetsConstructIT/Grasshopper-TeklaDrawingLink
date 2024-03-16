@@ -97,7 +97,7 @@ namespace GTDrawingLink.Components
 
             var teklaPoint = insertionPoint.ToTekla();
 
-            viewType = ParseViewIntIfNeeded(viewType);
+            viewType = ParseViewType(viewType);
 
             View createdView = null;
             switch (viewType.ToUpper())
@@ -136,25 +136,23 @@ namespace GTDrawingLink.Components
             return createdView;
         }
 
-        private string ParseViewIntIfNeeded(string viewType)
+        private string ParseViewType(string viewType)
         {
             if (int.TryParse(viewType, out int viewInt))
             {
-                switch (viewInt)
+                return viewInt switch
                 {
-                    case 0:
-                        return "Front";
-                    case 1:
-                        return "Top";
-                    case 2:
-                        return "Back";
-                    case 3:
-                        return "Bottom";
-                    case 4:
-                        return "3d";
-                    default:
-                        return "";
-                }
+                    0 => "Front",
+                    1 => "Top",
+                    2 => "Back",
+                    3 => "Bottom",
+                    4 => "3d",
+                    _ => "",
+                };
+            }
+            else if (viewType.EndsWith("View"))
+            {
+                return viewType.Substring(0, viewType.IndexOf("View")).TrimStart('_').Trim();
             }
             else
                 return viewType;
