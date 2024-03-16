@@ -27,15 +27,13 @@ namespace GTDrawingLink.Components.ValueLists
         private void PopulateAvailableTypes()
         {
             ListItems.Clear();
-            ListItems.Add(new GH_ValueListItem("Front", "0"));
-            ListItems.Add(new GH_ValueListItem("Top", "1"));
-            ListItems.Add(new GH_ValueListItem("Back", "2"));
-            ListItems.Add(new GH_ValueListItem("Bottom", "3"));
-            ListItems.Add(new GH_ValueListItem("3d", "4"));
+            ListItems.Add(new GH_ValueListItem("Front", "\"FrontView\""));
+            ListItems.Add(new GH_ValueListItem("Top", "\"TopView\""));
+            ListItems.Add(new GH_ValueListItem("Back", "\"BackView\""));
+            ListItems.Add(new GH_ValueListItem("Bottom", "\"BottomView\""));
+            ListItems.Add(new GH_ValueListItem("3d", "\"_3DView\""));
 
             SelectItem(0);
         }
     }
-
-
 }
