@@ -2,6 +2,8 @@
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
+using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.CompilerServices;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -72,7 +74,7 @@ namespace GTDrawingLink.Components
             for (int i = 0; i < keys.Objects.Count; i++)
             {
                 var key = keys.Objects[i].First();
-                if (search.Any(s => s.Equals(key)))
+                if (AnyKeyMeetsCriteria(key, search))
                     paths.Add((i, keys.Paths[i]));
             }
 
@@ -85,11 +87,16 @@ namespace GTDrawingLink.Components
             for (int i = 0; i < keys.Count; i++)
             {
                 var key = keys[i];
-                if (search.Any(s => s.Equals(key)))
+                if (AnyKeyMeetsCriteria(key, search))
                     indicies.Add(i);
             }
 
             return indicies;
+        }
+
+        private bool AnyKeyMeetsCriteria(string key, List<string> searchValues)
+        {
+            return searchValues.Any(s => LikeOperator.LikeString(key, s, CompareMethod.Binary));
         }
     }
 
