@@ -9,15 +9,15 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class GroupObjectsComponent : TeklaComponentBase
+    public class GroupObjectsComponentOLD : TeklaComponentBase
     {
         private GroupingMode _mode = GroupingMode.ByAssemblyPosition;
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Properties.Resources.GroupObjects;
 
-        public GroupObjectsComponent() : base(ComponentInfos.GroupObjectsComponent)
+        public GroupObjectsComponentOLD() : base(ComponentInfos.GroupObjectsComponent)
         {
             SetCustomMessage();
         }
@@ -25,13 +25,13 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByPosition.Name, ByPositionMenuItem_Clicked, true, _mode == GroupingMode.ByAssemblyPosition).ToolTipText = ParamInfos.GroupByPosition.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByName.Name, ByNameMenuItem_Clicked, true, _mode == GroupingMode.ByName).ToolTipText = ParamInfos.GroupByName.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByClass.Name, ByClassMenuItem_Clicked, true, _mode == GroupingMode.ByClass).ToolTipText = ParamInfos.GroupByClass.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByUDA.Name, ByUdaMenuItem_Clicked, true, _mode == GroupingMode.ByUDA).ToolTipText = ParamInfos.GroupByUDA.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByReport.Name, ByReportMenuItem_Clicked, true, _mode == GroupingMode.ByReport).ToolTipText = ParamInfos.GroupByReport.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.GroupByType.Name, ByTypeMenuItem_Clicked, true, _mode == GroupingMode.ByType).ToolTipText = ParamInfos.GroupByType.Description;
-            GH_DocumentObject.Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.GroupByPosition.Name, ByPositionMenuItem_Clicked, true, _mode == GroupingMode.ByAssemblyPosition).ToolTipText = ParamInfos.GroupByPosition.Description;
+            Menu_AppendItem(menu, ParamInfos.GroupByName.Name, ByNameMenuItem_Clicked, true, _mode == GroupingMode.ByName).ToolTipText = ParamInfos.GroupByName.Description;
+            Menu_AppendItem(menu, ParamInfos.GroupByClass.Name, ByClassMenuItem_Clicked, true, _mode == GroupingMode.ByClass).ToolTipText = ParamInfos.GroupByClass.Description;
+            Menu_AppendItem(menu, ParamInfos.GroupByUDA.Name, ByUdaMenuItem_Clicked, true, _mode == GroupingMode.ByUDA).ToolTipText = ParamInfos.GroupByUDA.Description;
+            Menu_AppendItem(menu, ParamInfos.GroupByReport.Name, ByReportMenuItem_Clicked, true, _mode == GroupingMode.ByReport).ToolTipText = ParamInfos.GroupByReport.Description;
+            Menu_AppendItem(menu, ParamInfos.GroupByType.Name, ByTypeMenuItem_Clicked, true, _mode == GroupingMode.ByType).ToolTipText = ParamInfos.GroupByType.Description;
+            Menu_AppendSeparator(menu);
         }
 
         private void ByPositionMenuItem_Clicked(object sender, EventArgs e)
@@ -81,22 +81,22 @@ namespace GTDrawingLink.Components
             switch (_mode)
             {
                 case GroupingMode.ByAssemblyPosition:
-                    base.Message = "Assembly Position";
+                    Message = "Assembly Position";
                     break;
                 case GroupingMode.ByName:
-                    base.Message = "Name";
+                    Message = "Name";
                     break;
                 case GroupingMode.ByClass:
-                    base.Message = "Class";
+                    Message = "Class";
                     break;
                 case GroupingMode.ByUDA:
-                    base.Message = "UDA";
+                    Message = "UDA";
                     break;
                 case GroupingMode.ByReport:
-                    base.Message = "Report";
+                    Message = "Report";
                     break;
                 case GroupingMode.ByType:
-                    base.Message = "Type";
+                    Message = "Type";
                     break;
                 default:
                     break;
