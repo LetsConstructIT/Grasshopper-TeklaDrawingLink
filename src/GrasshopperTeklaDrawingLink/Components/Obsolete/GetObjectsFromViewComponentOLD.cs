@@ -14,16 +14,17 @@ using Tekla.Structures.Geometry3d;
 using TSG = Tekla.Structures.Geometry3d;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class GetObjectsFromViewComponent : TeklaComponentBase
+    [Obsolete]
+    public class GetObjectsFromViewComponentOLD : TeklaComponentBase
     {
         private QueryMode _mode = QueryMode.AllObjects;
 
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.GetObjectsFromView;
 
-        public GetObjectsFromViewComponent() : base(ComponentInfos.GetObjectsFromViewComponent)
+        public GetObjectsFromViewComponentOLD() : base(ComponentInfos.GetObjectsFromViewComponent)
         {
             SetCustomMessage();
         }
@@ -31,9 +32,9 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.AllObjects.Name, AllObjectsMenuItem_Clicked, true, _mode == QueryMode.AllObjects).ToolTipText = ParamInfos.AllObjects.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.OnlyVisibleObjects.Name, OnlyVisibleMenuItem_Clicked, true, _mode == QueryMode.OnlyVisibleObjects).ToolTipText = ParamInfos.OnlyVisibleObjects.Description;
-            GH_DocumentObject.Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.AllObjects.Name, AllObjectsMenuItem_Clicked, true, _mode == QueryMode.AllObjects).ToolTipText = ParamInfos.AllObjects.Description;
+            Menu_AppendItem(menu, ParamInfos.OnlyVisibleObjects.Name, OnlyVisibleMenuItem_Clicked, true, _mode == QueryMode.OnlyVisibleObjects).ToolTipText = ParamInfos.OnlyVisibleObjects.Description;
+            Menu_AppendSeparator(menu);
         }
 
         private void AllObjectsMenuItem_Clicked(object sender, EventArgs e)
@@ -52,7 +53,7 @@ namespace GTDrawingLink.Components
 
         private void SetCustomMessage()
         {
-            base.Message = _mode switch
+            Message = _mode switch
             {
                 QueryMode.AllObjects => "All objects",
                 QueryMode.OnlyVisibleObjects => "Only visible objects",
