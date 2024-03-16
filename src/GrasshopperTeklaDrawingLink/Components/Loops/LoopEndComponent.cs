@@ -88,8 +88,14 @@ namespace GTDrawingLink.Components.Loops
         {
             if (iteration == 0)
                 _mergedData.Clear();
-            
-            _mergedData.AppendRange(dataTree.Branches.First(), new GH_Path(iteration, 0));
+
+            for (int i = 0; i < dataTree.PathCount; i++)
+            {
+                var initialPath = dataTree.Paths[i];
+                var objects = dataTree.Branches[i];
+
+                _mergedData.AppendRange(objects, initialPath.PrependElement(iteration));
+            }
         }
     }
 }
