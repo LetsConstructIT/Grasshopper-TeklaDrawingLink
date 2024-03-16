@@ -656,6 +656,15 @@ namespace GTDrawingLink.Tools
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
+            else if (typeOfInput == typeof(IGH_GeometricGoo))
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<IGH_GeometricGoo> tree))
+                {
+                    _tree = tree;
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
+                }
+            }
             else if (typeOfInput == typeof(string))
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_String> tree))
@@ -826,6 +835,7 @@ namespace GTDrawingLink.Tools
     {
         public List<List<T>> Objects { get; }
         public IReadOnlyList<GH_Path> Paths { get; }
+        public int Count => Paths.Count;
 
         public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths)
         {

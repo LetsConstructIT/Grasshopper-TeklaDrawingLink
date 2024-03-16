@@ -1547,5 +1547,12 @@ namespace GTDrawingLink.Tools
             NickName = "C",
             Description = "Tekla component (model or drawing) which output should be baked into Tekla"
         };
+
+        public static readonly GH_InstanceDescription Plane = new GH_InstanceDescription
+        {
+            Name = "Plane",
+            NickName = "P",
+            Description = "Tekla's plane"
+        };
     }
 }

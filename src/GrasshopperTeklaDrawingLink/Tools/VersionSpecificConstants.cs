@@ -563,6 +563,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(BakeToTeklaComponent),
                 "04EFCB01-3336-47AC-BCC1-5F88BD92E075"
+            },
+            {
+                typeof(SimpleOrientComponent),
+                "BA991EA0-3D32-42C6-94B1-805E929B4EA9"
             }
         };
 

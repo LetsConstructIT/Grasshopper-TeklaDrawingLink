@@ -952,5 +952,17 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
+
+        public static readonly GH_InstanceDescription SimpleOrientComponent = new GH_InstanceDescription
+        {
+            Name = "Simple Orient",
+            NickName = "Orient",
+            Description = "Orient a tree of objects to specified coordinate system. Path convention handles multiple input coordinate systems.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+
+        
     }
 }
