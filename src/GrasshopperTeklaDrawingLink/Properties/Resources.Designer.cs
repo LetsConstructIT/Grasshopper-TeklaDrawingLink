@@ -593,6 +593,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GridProperties {
+            get {
+                object obj = ResourceManager.GetObject("GridProperties", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GroupObjects {
             get {
                 object obj = ResourceManager.GetObject("GroupObjects", resourceCulture);

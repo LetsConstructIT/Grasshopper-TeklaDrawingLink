@@ -1589,5 +1589,54 @@ namespace GTDrawingLink.Tools
             NickName = "N",
             Description = "Number of occurences of the Tekla object"
         };
+
+        public static readonly GH_InstanceDescription Grid = new GH_InstanceDescription
+        {
+            Name = "Grid",
+            NickName = "G",
+            Description = "Tekla Grid object"
+        };
+
+        public static readonly GH_InstanceDescription GridSurface = new GH_InstanceDescription
+        {
+            Name = "Surface",
+            NickName = "S",
+            Description = "Grid surfaces"
+        };
+
+        public static readonly GH_InstanceDescription GridLabel = new GH_InstanceDescription
+        {
+            Name = "Label",
+            NickName = "L",
+            Description = "Grid labels"
+        };
+
+        public static readonly GH_InstanceDescription GridXYSurface = new GH_InstanceDescription
+        {
+            Name = "XY Surface",
+            NickName = "XYS",
+            Description = "Grid surfaces with normal parallel to the Z axis"
+        };
+
+        public static readonly GH_InstanceDescription GridXYLabel = new GH_InstanceDescription
+        {
+            Name = "XY Label",
+            NickName = "XYL",
+            Description = "Grid labels with normal parallel to the Z axis"
+        };
+
+        public static readonly GH_InstanceDescription GridNotXYSurface = new GH_InstanceDescription
+        {
+            Name = "Not XY Surface",
+            NickName = "NXYS",
+            Description = "Grid surfaces with normal NOT parallel to the Z axis"
+        };
+
+        public static readonly GH_InstanceDescription GridNotXYLabel = new GH_InstanceDescription
+        {
+            Name = "Not XY Label",
+            NickName = "NXYL",
+            Description = "Grid labels with normal NOT parallel to the Z axis"
+        };
     }
 }

@@ -978,6 +978,15 @@ namespace GTDrawingLink.Tools
             Description = "Find the occurences of a specific Tekla object in a set.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription GetGridPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Grid Properties",
+            NickName = "GProp",
+            Description = "Deconstruct Tekla Grid object",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
         };        
     }
 }

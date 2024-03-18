@@ -43,6 +43,34 @@
                 plane.YAxis.ToTekla());
         }
 
+        public static Rhino.Geometry.Plane ToRhino(this Tekla.Structures.Model.Plane plane)
+        {
+            return new Rhino.Geometry.Plane(
+                plane.Origin.ToRhino(),
+                plane.AxisX.ToRhino(),
+                plane.AxisY.ToRhino());
+        }
+
+        public static Tekla.Structures.Model.Plane ToTeklaPlane(this Rhino.Geometry.Plane plane)
+        {
+            return new Tekla.Structures.Model.Plane()
+            {
+                Origin = plane.Origin.ToTekla(),
+                AxisX = plane.XAxis.ToTekla(),
+                AxisY = plane.YAxis.ToTekla()
+            };
+        }
+
+        public static Rhino.Geometry.Arc ToRhino(this Tekla.Structures.Geometry3d.Arc arc)
+        {
+            return new Rhino.Geometry.Arc(arc.StartPoint.ToRhino(), arc.ArcMiddlePoint.ToRhino(), arc.EndPoint.ToRhino());
+        }
+
+        public static Tekla.Structures.Geometry3d.Arc ToTekla(this Rhino.Geometry.Arc arc)
+        {
+            return new Tekla.Structures.Geometry3d.Arc(arc.StartPoint.ToTekla(), arc.MidPoint.ToTekla(), arc.EndPoint.ToTekla());
+        }
+
         public static Rhino.Geometry.BoundingBox ToRhino(this Tekla.Structures.Geometry3d.AABB aabb)
         {
             return new Rhino.Geometry.BoundingBox(
