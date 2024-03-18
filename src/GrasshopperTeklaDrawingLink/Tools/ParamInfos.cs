@@ -1561,5 +1561,33 @@ namespace GTDrawingLink.Tools
             NickName = "P",
             Description = "Tekla's plane"
         };
+
+        public static readonly GH_InstanceDescription Set = new GH_InstanceDescription
+        {
+            Name = "Set",
+            NickName = "S",
+            Description = "Tekla objects set to operate on"
+        };
+
+        public static readonly GH_InstanceDescription Member = new GH_InstanceDescription
+        {
+            Name = "Member",
+            NickName = "M",
+            Description = "Tekla object to search for"
+        };
+
+        public static readonly GH_InstanceDescription Index = new GH_InstanceDescription
+        {
+            Name = "Index",
+            NickName = "I",
+            Description = "Indicies of Tekla object"
+        };
+
+        public static readonly GH_InstanceDescription Count = new GH_InstanceDescription
+        {
+            Name = "Count",
+            NickName = "N",
+            Description = "Number of occurences of the Tekla object"
+        };
     }
 }

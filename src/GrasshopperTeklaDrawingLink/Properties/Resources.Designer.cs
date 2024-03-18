@@ -1083,6 +1083,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TeklaIndex {
+            get {
+                object obj = ResourceManager.GetObject("TeklaIndex", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TextAttributes {
             get {
                 object obj = ResourceManager.GetObject("TextAttributes", resourceCulture);

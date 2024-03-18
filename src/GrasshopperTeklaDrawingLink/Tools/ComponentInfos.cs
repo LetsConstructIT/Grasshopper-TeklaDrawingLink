@@ -970,5 +970,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Drawing
         };
+
+        public static readonly GH_InstanceDescription TeklaIndexComponent = new GH_InstanceDescription
+        {
+            Name = "Tekla Index",
+            NickName = "TIndex",
+            Description = "Find the occurences of a specific Tekla object in a set.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };        
     }
 }

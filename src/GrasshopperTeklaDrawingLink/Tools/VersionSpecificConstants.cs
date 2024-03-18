@@ -575,6 +575,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateWDrawingComponent),
                 "93A82029-7D54-444B-AF45-FB981DBA00D4"
+            },
+            {
+                typeof(TeklaIndexComponent),
+                "8F3115FD-0145-4B90-9465-AF6EE3481AEA"
             }
         };
 

@@ -504,6 +504,23 @@ namespace GTDrawingLink.Tools
                     return Result.Ok();
                 }
             }
+            else if (typeOfInput == typeof(IGH_Goo))
+            {
+                var value = new List<IGH_Goo>();
+                if (DA.GetDataList(InstanceDescription.Name, value))
+                {
+                    var castedToExpectedType = value.Select(v => v as T);
+                    if (castedToExpectedType.Any(o => o is null))
+                    {
+                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                    }
+
+                    _value = castedToExpectedType.ToList();
+
+                    _properlySet = true;
+                    return Result.Ok();
+                }
+            }
             else
             {
                 var objectsGoo = new List<GH_Goo<T>>();
