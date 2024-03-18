@@ -31,8 +31,10 @@ namespace GTDrawingLink.Components
             if (trigger)
             {
                 var drawing = DrawingInteractor.GetActiveDrawing();
-
-                DA.SetData(ParamInfos.Drawing.Name, new TeklaDatabaseObjectGoo(drawing));
+                if (drawing is null)
+                    DA.SetData(0, null);
+                else
+                    DA.SetData(ParamInfos.Drawing.Name, new TeklaDatabaseObjectGoo(drawing));
             }
         }
     }
