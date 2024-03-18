@@ -376,11 +376,11 @@ namespace GTDrawingLink.Tools
             Description = "View restriction box"
         };
 
-        public static readonly GH_InstanceDescription RegenerateObjects = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription RecomputeObjects = new GH_InstanceDescription
         {
             Name = "Recompute Component",
             NickName = "Recompute",
-            Description = "Update the objects in Tekla Structures, regenerating any missing ones"
+            Description = "Update the objects in Tekla Structures, regenerating any missing ones. F5 but limited to a single component."
         };
 
         public static readonly GH_InstanceDescription BakeToTekla = new GH_InstanceDescription

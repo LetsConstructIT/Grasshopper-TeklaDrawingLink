@@ -20,15 +20,15 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RegenerateObjects.Name, RegenerateObjectsMenuItem_Clicked).ToolTipText = ParamInfos.RegenerateObjects.Description;
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeObjectsMenuItem_Clicked).ToolTipText = ParamInfos.RecomputeObjects.Description;
             GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.BakeToTekla.Name, BakeMenuItem_Clicked).ToolTipText = ParamInfos.BakeToTekla.Description;
             GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.DeleteTeklaObjects.Name, DeleteMenuItem_Clicked).ToolTipText = ParamInfos.DeleteTeklaObjects.Description;
             GH_DocumentObject.Menu_AppendSeparator(menu);
         }
 
-        private void RegenerateObjectsMenuItem_Clicked(object sender, EventArgs e)
+        private void RecomputeObjectsMenuItem_Clicked(object sender, EventArgs e)
         {
-            RegenerateObjects();
+            base.ExpireSolution(recompute: true);
         }
 
         private void BakeMenuItem_Clicked(object sender, EventArgs e)
@@ -39,11 +39,6 @@ namespace GTDrawingLink.Components
         private void DeleteMenuItem_Clicked(object sender, EventArgs e)
         {
             DeleteObjects();
-        }
-
-        public void RegenerateObjects()
-        {
-            base.ExpireSolution(recompute: true);
         }
 
         public void BakeToTekla()
