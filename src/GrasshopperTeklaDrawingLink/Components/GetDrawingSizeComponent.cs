@@ -25,6 +25,12 @@ namespace GTDrawingLink.Components
 
             _command.SetOutputValues(DA, width, height, rectangle);
         }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
     }
 
     public class GetDrawingSizeCommand : CommandBase

@@ -16,6 +16,11 @@ namespace GTDrawingLink.Components
 
         }
 
+        protected void RecomputeComponent(object sender, EventArgs e)
+        {
+            base.ExpireSolution(recompute: true);
+        }
+
         protected int AddOptionalParameter(GH_InputParamManager pManager, IGH_Param param)
         {
             var index = pManager.AddParameter(param);

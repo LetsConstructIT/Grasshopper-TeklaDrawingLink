@@ -56,5 +56,11 @@ namespace GTDrawingLink.Components.Obsolete
             DA.SetData("Height", viewBase.Height);
             DA.SetData("Origin", viewBase.Origin.ToRhino());
         }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
     }
 }
