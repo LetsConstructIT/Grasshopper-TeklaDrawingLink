@@ -20,8 +20,8 @@ namespace GTDrawingLink.Components
         {
             (TreeData<IGH_Goo> objectsTree, TreeData<string> keys, List<string> sortOrder) = _command.GetInputValues();
 
-            var listMode = objectsTree.Paths.Count == 1;
-            if (!CheckInputs(objectsTree, keys, listMode))
+            var inputType = EstablishInputType(objectsTree, keys);
+            if (!CheckInputs(objectsTree, keys, inputType))
                 return;
 
             var mergedKeyes = keys.Objects.Count == 0 ?
@@ -29,13 +29,7 @@ namespace GTDrawingLink.Components
                 keys.Objects.Select(o => o.First()).ToList();
 
             var output = new GH_Structure<IGH_Goo>();
-            if (listMode)
-            {
-                var indicies = GetOrderedIndicies(mergedKeyes, sortOrder);
-                foreach (var index in indicies)
-                    output.Append(objectsTree.Objects[0][index]);
-            }
-            else
+            if (inputType == InputType.Tree)
             {
                 var indicies = GetOrderedIndicies(mergedKeyes, sortOrder);
                 for (int i = 0; i < indicies.Count; i++)
@@ -44,24 +38,53 @@ namespace GTDrawingLink.Components
                     output.AppendRange(objectsTree.Objects[indicies[i]], path);
                 }
             }
+            else if (inputType == InputType.ListWithCorrespondingKeys)
+            {
+                var indicies = GetOrderedIndicies(mergedKeyes, sortOrder);
+                foreach (var index in indicies)
+                    output.Append(objectsTree.Objects[0][index]);
+            }
+            else
+            {
+                output.AppendRange(objectsTree.Objects[0]);
+            }
 
             _command.SetOutputValues(DA, output);
         }
 
-        private bool CheckInputs(TreeData<IGH_Goo> objectsTree, TreeData<string> keys, bool listMode)
+        private InputType EstablishInputType(TreeData<IGH_Goo> objectsTree, TreeData<string> keys)
         {
-            if (listMode)
+            if (objectsTree.Paths.Count == 1)
             {
-                if (objectsTree.Objects[0].Count != keys.Objects[0].Count)
-                {
-                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
-                    return false;
-                }
+                if (keys.Paths.Count == 1)
+                    return InputType.ListWithSingleKey;
+                else
+                    return InputType.ListWithCorrespondingKeys;
             }
-            else if (objectsTree.Paths.Count != keys.Paths.Count)
+            else
+                return InputType.Tree;
+        }
+
+        private bool CheckInputs(TreeData<IGH_Goo> objectsTree, TreeData<string> keys, InputType inputType)
+        {
+            switch (inputType)
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
-                return false;
+                case InputType.Tree:
+                    if (objectsTree.Paths.Count != keys.Paths.Count)
+                    {
+                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
+                        return false;
+                    }
+                    break;
+                case InputType.ListWithCorrespondingKeys:
+                    if (objectsTree.Objects[0].Count != keys.Objects[0].Count)
+                    {
+                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
             }
 
             return true;
@@ -96,6 +119,13 @@ namespace GTDrawingLink.Components
         private bool MatchCriteria(string key, string pattern)
         {
             return LikeOperator.LikeString(key, pattern, CompareMethod.Binary);
+        }
+
+        enum InputType
+        {
+            Tree,
+            ListWithCorrespondingKeys,
+            ListWithSingleKey
         }
     }
 

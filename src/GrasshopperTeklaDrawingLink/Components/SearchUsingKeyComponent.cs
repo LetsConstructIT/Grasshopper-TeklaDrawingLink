@@ -19,21 +19,12 @@ namespace GTDrawingLink.Components
         {
             (TreeData<IGH_Goo> objectsTree, TreeData<string> keys, List<string> search) = _command.GetInputValues();
 
-            var listMode = objectsTree.Paths.Count == 1;
-            if (!CheckInputs(objectsTree, keys, listMode))
+            var inputType = EstablishInputType(objectsTree, keys);
+            if (!CheckInputs(objectsTree, keys, inputType))
                 return;
 
             var output = new GH_Structure<IGH_Goo>();
-            if (listMode)
-            {
-                var matchingIndicies = GetMatchingIndicies(keys.Objects[0], search);
-                if (matchingIndicies.Count == 0)
-                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
-
-                foreach (var path in matchingIndicies)
-                    output.Append(objectsTree.Objects[0][path]);
-            }
-            else
+            if (inputType == InputType.Tree)
             {
                 var matchingIndicies = GetMatchingPaths(keys, search);
                 if (matchingIndicies.Count == 0)
@@ -44,24 +35,58 @@ namespace GTDrawingLink.Components
                     output.AppendRange(objectsTree.Objects[path.index], path.path);
                 }
             }
+            else if (inputType == InputType.ListWithCorrespondingKeys)
+            {
+                var matchingIndicies = GetMatchingIndicies(keys.Objects[0], search);
+                if (matchingIndicies.Count == 0)
+                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
+
+                foreach (var path in matchingIndicies)
+                    output.Append(objectsTree.Objects[0][path]);
+            }
+            else if (inputType == InputType.ListWithSingleKey)
+            {
+                var key = keys.Objects[0][0];
+                if (AnyKeyMeetsCriteria(key, search))
+                    output.AppendRange(objectsTree.Objects[0]);
+            }
 
             _command.SetOutputValues(DA, output);
         }
 
-        private bool CheckInputs(TreeData<IGH_Goo> objectsTree, TreeData<string> keys, bool listMode)
+        private InputType EstablishInputType(TreeData<IGH_Goo> objectsTree, TreeData<string> keys)
         {
-            if (listMode)
+            if (objectsTree.Paths.Count == 1)
             {
-                if (objectsTree.Objects[0].Count != keys.Objects[0].Count)
-                {
-                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
-                    return false;
-                }
+                if (keys.Paths.Count == 1)
+                    return InputType.ListWithSingleKey;
+                else
+                    return InputType.ListWithCorrespondingKeys;
             }
-            else if (objectsTree.Paths.Count != keys.Paths.Count)
+            else
+                return InputType.Tree;
+        }
+
+        private bool CheckInputs(TreeData<IGH_Goo> objectsTree, TreeData<string> keys, InputType inputType)
+        {
+            switch (inputType)
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
-                return false;
+                case InputType.Tree:
+                    if (objectsTree.Paths.Count != keys.Paths.Count)
+                    {
+                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
+                        return false;
+                    }
+                    break;
+                case InputType.ListWithCorrespondingKeys:
+                    if (objectsTree.Objects[0].Count != keys.Objects[0].Count)
+                    {
+                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
             }
 
             return true;
@@ -97,6 +122,13 @@ namespace GTDrawingLink.Components
         private bool AnyKeyMeetsCriteria(string key, List<string> searchValues)
         {
             return searchValues.Any(s => LikeOperator.LikeString(key, s, CompareMethod.Binary));
+        }
+
+        enum InputType
+        {
+            Tree,
+            ListWithCorrespondingKeys,
+            ListWithSingleKey
         }
     }
 
