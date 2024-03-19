@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class GetDrawingsComponent : TeklaComponentBaseNew<GetDrawingsCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.quinary;
         protected override Bitmap Icon => Properties.Resources.AllDrawings;
 
         public GetDrawingsComponent() : base(ComponentInfos.GetDrawingsComponent) { }

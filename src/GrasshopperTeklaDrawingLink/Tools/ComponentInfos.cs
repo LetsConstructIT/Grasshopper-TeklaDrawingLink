@@ -8,7 +8,6 @@ namespace GTDrawingLink.Tools
         {
             public static readonly string Params = "             Params";
             public static readonly string Drawing = "            Drawing";
-            public static readonly string DrawingList = "           Drawing List";
             public static readonly string View = "          View";
             public static readonly string DrawingParts = "         Parts";
             public static readonly string Attributes = "        Attributes";
@@ -235,7 +234,7 @@ namespace GTDrawingLink.Tools
             NickName = "DrawingFromDrList",
             Description = "Gets the selected drawings from drawing list",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.DrawingList
+            SubCategory = PanelHeadings.Drawing
         };
 
         public static readonly GH_InstanceDescription GetDrawingsComponent = new GH_InstanceDescription
@@ -244,7 +243,7 @@ namespace GTDrawingLink.Tools
             NickName = "AllDrawings",
             Description = "Gets all drawings",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.DrawingList
+            SubCategory = PanelHeadings.Drawing
         };
 
         public static readonly GH_InstanceDescription TransformPointToViewCS = new GH_InstanceDescription
@@ -689,7 +688,7 @@ namespace GTDrawingLink.Tools
             NickName = "Dr",
             Description = "Get Tekla drawings from source model object",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.DrawingList
+            SubCategory = PanelHeadings.Drawing
         };
 
         public static readonly GH_InstanceDescription OrderStraightDimensionSetComponent = new GH_InstanceDescription

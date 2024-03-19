@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class GetSelectedDrawingsOnListComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.quinary;
         protected override Bitmap Icon => Properties.Resources.SelectedDrawingsFromList;
 
         public GetSelectedDrawingsOnListComponent() : base(ComponentInfos.GetSelectedDrawingsOnListComponent)

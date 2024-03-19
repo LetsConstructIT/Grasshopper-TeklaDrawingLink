@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class GetDrawingsFromModelObjectComponent : TeklaComponentBaseNew<GetDrawingsFromModelObjectCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.senary;
         protected override Bitmap Icon => Properties.Resources.GetDrawingsFromModelObject;
 
         public GetDrawingsFromModelObjectComponent() : base(ComponentInfos.GetDrawingsFromModelObjectComponent) { }
