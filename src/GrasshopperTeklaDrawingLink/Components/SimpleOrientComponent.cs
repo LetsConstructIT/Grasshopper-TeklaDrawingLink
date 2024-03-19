@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class SimpleOrientComponent : TeklaComponentBaseNew<SimpleOrientCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.SimpleOrient;
         public SimpleOrientComponent() : base(ComponentInfos.SimpleOrientComponent) { }
 

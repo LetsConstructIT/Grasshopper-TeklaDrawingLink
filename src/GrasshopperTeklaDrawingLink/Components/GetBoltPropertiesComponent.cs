@@ -16,7 +16,7 @@ namespace GTDrawingLink.Components
 {
     public class GetBoltPropertiesComponent : TeklaComponentBaseNew<GetBoltPropertiesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.BoltProperties;
 
         public GetBoltPropertiesComponent() : base(ComponentInfos.GetBoltPropertiesComponent) { }

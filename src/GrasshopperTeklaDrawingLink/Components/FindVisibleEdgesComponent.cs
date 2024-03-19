@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
     {
         private const double _tolerance = 0.0001;
 
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.FindVisibleEdges;
 
         public FindVisibleEdgesComponent() : base(ComponentInfos.FindVisibleEdgesComponent)

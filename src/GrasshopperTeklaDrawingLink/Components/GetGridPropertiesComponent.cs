@@ -12,7 +12,7 @@ namespace GTDrawingLink.Components
 {
     public class GetGridPropertiesComponent : TeklaComponentBaseNew<GetGridPropertiesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.GridProperties;
         public GetGridPropertiesComponent() : base(ComponentInfos.GetGridPropertiesComponent) { }
 

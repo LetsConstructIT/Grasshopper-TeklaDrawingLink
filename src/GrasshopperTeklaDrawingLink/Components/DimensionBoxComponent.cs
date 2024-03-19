@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class DimensionBoxComponent : TeklaComponentBaseNew<DimensionBoxCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.DimensionBox;
         public DimensionBoxComponent() : base(ComponentInfos.DimensionBoxComponent) { }
 

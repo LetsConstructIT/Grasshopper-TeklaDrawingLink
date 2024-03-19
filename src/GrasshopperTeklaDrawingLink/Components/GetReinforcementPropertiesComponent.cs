@@ -13,7 +13,7 @@ namespace GTDrawingLink.Components
 {
     public class GetReinforcementPropertiesComponent : TeklaComponentBaseNew<GetReinforcementPropertiesCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.ReinforcementProperties;
 
         public GetReinforcementPropertiesComponent() : base(ComponentInfos.GetReinforcementPropertiesComponent) { }

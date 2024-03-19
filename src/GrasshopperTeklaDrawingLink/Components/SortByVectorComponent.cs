@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
 {
     public class SortByVectorComponent : TeklaComponentBaseNew<SortByVectorCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.SortByVector;
         public SortByVectorComponent() : base(ComponentInfos.SortByVectorComponent) { }
 
