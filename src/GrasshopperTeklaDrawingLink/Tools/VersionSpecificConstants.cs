@@ -583,6 +583,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetGridPropertiesComponent),
                 "2F003252-EB97-4606-9F4C-EAA8FEB7BE7A"
+            },
+            {
+                typeof(GetEditModeComponent),
+                "0AFEE462-9765-4668-89FD-64C489EF51C1"
             }
         };
 

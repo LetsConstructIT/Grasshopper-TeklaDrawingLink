@@ -513,6 +513,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GetEditMode {
+            get {
+                object obj = ResourceManager.GetObject("GetEditMode", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GetExtremes {
             get {
                 object obj = ResourceManager.GetObject("GetExtremes", resourceCulture);

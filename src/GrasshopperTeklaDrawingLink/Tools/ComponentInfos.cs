@@ -987,6 +987,15 @@ namespace GTDrawingLink.Tools
             Description = "Deconstruct Tekla Grid object",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Geometry
-        };        
+        };
+
+        public static readonly GH_InstanceDescription GetEditModeComponent = new GH_InstanceDescription
+        {
+            Name = "Edit Mode",
+            NickName = "EMode",
+            Description = "Tekla edit mode (model or drawing)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };
     }
 }

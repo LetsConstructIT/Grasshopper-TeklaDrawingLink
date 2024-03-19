@@ -1638,5 +1638,19 @@ namespace GTDrawingLink.Tools
             NickName = "NXYL",
             Description = "Grid labels with normal NOT parallel to the Z axis"
         };
+
+        public static readonly GH_InstanceDescription ModelMode = new GH_InstanceDescription
+        {
+            Name = "Model",
+            NickName = "M",
+            Description = "Tekla is in Model area"
+        };
+
+        public static readonly GH_InstanceDescription DrawingMode = new GH_InstanceDescription
+        {
+            Name = "Drawing",
+            NickName = "D",
+            Description = "Tekla is in Drawing area"
+        };
     }
 }
