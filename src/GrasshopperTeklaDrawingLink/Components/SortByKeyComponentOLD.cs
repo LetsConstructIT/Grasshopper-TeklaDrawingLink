@@ -4,17 +4,18 @@ using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 
 namespace GTDrawingLink.Components
 {
-    public class SortByKeyComponent : TeklaComponentBaseNew<SortByKeyCommand>
+    [Obsolete]
+    public class SortByKeyComponentOLD : TeklaComponentBaseNew<SortByKeyCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.SortByKey;
-        public SortByKeyComponent() : base(ComponentInfos.SortByKeyComponent) { }
+        public SortByKeyComponentOLD() : base(ComponentInfos.SortByKeyComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -129,7 +130,7 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class SortByKeyCommand : CommandBase
+    public class SortByKeyCommandOLD : CommandBase
     {
         private readonly InputTreeParam<IGH_Goo> _inObjects = new InputTreeParam<IGH_Goo>(ParamInfos.Values);
         private readonly InputTreeParam<string> _inKeys = new InputTreeParam<string>(ParamInfos.GroupingKeys);
