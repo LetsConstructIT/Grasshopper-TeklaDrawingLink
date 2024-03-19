@@ -587,6 +587,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetEditModeComponent),
                 "0AFEE462-9765-4668-89FD-64C489EF51C1"
+            },
+            {
+                typeof(DeconstructPluginComponent),
+                "9FE80ACE-E012-4445-A09E-9D8520E7DE42"
             }
         };
 

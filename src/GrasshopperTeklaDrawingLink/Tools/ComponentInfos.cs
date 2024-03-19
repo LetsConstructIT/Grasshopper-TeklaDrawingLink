@@ -997,5 +997,16 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Drawing
         };
+
+        public static readonly GH_InstanceDescription DeconstructPluginComponent = new GH_InstanceDescription
+        {
+            Name = "Deconstruct Plugin",
+            NickName = "DP",
+            Description = "Deconstruct Tekla Drawing Plugin",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Plugins
+        };
+
+        
     }
 }

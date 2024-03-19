@@ -283,6 +283,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DeconstructPlugin {
+            get {
+                object obj = ResourceManager.GetObject("DeconstructPlugin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DeleteDrawing {
             get {
                 object obj = ResourceManager.GetObject("DeleteDrawing", resourceCulture);
