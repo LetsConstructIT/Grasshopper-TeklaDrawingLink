@@ -56,7 +56,7 @@ namespace GTDrawingLink.Components
         {
             if (objectsTree.Paths.Count == 1)
             {
-                if (keys.Paths.Count == 1)
+                if (keys.Paths.Count == 1 && keys.Objects.First().Count == 1)
                     return InputType.ListWithSingleKey;
                 else
                     return InputType.ListWithCorrespondingKeys;
