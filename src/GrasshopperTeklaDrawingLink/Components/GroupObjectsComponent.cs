@@ -201,7 +201,7 @@ namespace GTDrawingLink.Components
                     propertyName = inputObject is Assembly ? "ASSEMBLY_NAME" : "NAME";
                     break;
                 case GroupingMode.ByClass:
-                    propertyName = "CLASS_ATTR";
+                    propertyName = inputObject is Assembly ? "MAINPART.CLASS_ATTR" : "CLASS_ATTR";
                     break;
                 case GroupingMode.ByUDA:
                     propertyName = $"USERDEFINED.{inputProperty}";
