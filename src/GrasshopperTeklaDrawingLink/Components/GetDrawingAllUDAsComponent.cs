@@ -1,11 +1,9 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -35,54 +33,11 @@ namespace GTDrawingLink.Components
             if (databaseObjects == null || !databaseObjects.Any())
                 return;
 
-            List<Attributes> attributes = new List<Attributes>();
+            var attributes = new List<Attributes>();
             foreach (DatabaseObject modelObject in databaseObjects)
             {
-                Dictionary<string, string> stringDict;
-                Dictionary<string, int> intDict;
-                Dictionary<string, double> dblDict;
-
-                if (modelObject is Plugin plugin)
-                {
-                    stringDict = typeof(Plugin).GetField("LocalStringValues", BindingFlags.NonPublic | BindingFlags.Instance)
-                        .GetValue(plugin) as Dictionary<string, string>;
-
-                    if (stringDict.Any())
-                    {
-                        var attribute = Tools.Attributes.Parse(stringDict);
-                        attributes.Add(attribute);
-                    }
-
-                    intDict = typeof(Plugin).GetField("LocalIntValues", BindingFlags.NonPublic | BindingFlags.Instance)
-                        .GetValue(plugin) as Dictionary<string, int>;
-
-                    if (intDict.Any())
-                    {
-                        var attribute = Tools.Attributes.Parse(intDict);
-                        attributes.Add(attribute);
-                    }
-
-                    dblDict = typeof(Plugin).GetField("LocalDoubleValues", BindingFlags.NonPublic | BindingFlags.Instance)
-                        .GetValue(plugin) as Dictionary<string, double>;
-
-                    if (dblDict.Any())
-                    {
-                        var attribute = Tools.Attributes.Parse(dblDict);
-                        if (attribute.Count > 0)
-                            attributes.Add(attribute);
-                    }
-                }
-                else
-                {
-                    if (modelObject.GetStringUserProperties(out stringDict) && stringDict.Any())
-                        attributes.Add(Tools.Attributes.Parse(stringDict));
-
-                    if (modelObject.GetIntegerUserProperties(out intDict) && intDict.Any())
-                        attributes.Add(Tools.Attributes.Parse(intDict));
-
-                    if (modelObject.GetDoubleUserProperties(out dblDict) && dblDict.Any())
-                        attributes.Add(Tools.Attributes.Parse(dblDict));
-                }
+                var localAttributes = AttributesIO.GetAll(modelObject);
+                attributes.AddRange(localAttributes);
             }
 
             DA.SetDataList(ParamInfos.UDAsOutput.Name, attributes);
