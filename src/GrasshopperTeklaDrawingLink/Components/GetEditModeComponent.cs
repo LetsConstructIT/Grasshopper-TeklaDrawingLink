@@ -6,7 +6,7 @@ namespace GTDrawingLink.Components
 {
     public class GetEditModeComponent : TeklaComponentBaseNew<GetEditModeCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.quinary;
         protected override Bitmap Icon => Properties.Resources.GetEditMode;
 
         public GetEditModeComponent() : base(ComponentInfos.GetEditModeComponent) { }
