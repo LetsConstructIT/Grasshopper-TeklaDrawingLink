@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class ConvertDrawingToModelObjectComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.ConvertDrawingToModelObject;
 
         public ConvertDrawingToModelObjectComponent() : base(ComponentInfos.ConvertDrawingToModelObjectComponent)
