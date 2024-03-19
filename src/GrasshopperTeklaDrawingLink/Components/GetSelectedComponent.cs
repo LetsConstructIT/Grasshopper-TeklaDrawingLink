@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class GetSelectedComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.SelectedObjects;
 
         public GetSelectedComponent() : base(ComponentInfos.GetSelectedComponent)

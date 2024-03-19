@@ -12,7 +12,7 @@ namespace GTDrawingLink.Components
 {
     public class GetRelatedObjectsComponent : TeklaComponentBaseNew<GetRelatedObjectsCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.GetRelatedObjects;
 
         public GetRelatedObjectsComponent() : base(ComponentInfos.GetRelatedObjectsComponent) { }
