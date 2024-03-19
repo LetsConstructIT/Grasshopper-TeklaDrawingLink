@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
     [Obsolete]
     public class SortByKeyComponentOLD : TeklaComponentBaseNew<SortByKeyCommandOLD>
@@ -73,14 +73,14 @@ namespace GTDrawingLink.Components
                 case InputType.Tree:
                     if (objectsTree.Paths.Count != keys.Paths.Count)
                     {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
+                        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
                         return false;
                     }
                     break;
                 case InputType.ListWithCorrespondingKeys:
                     if (objectsTree.Objects[0].Count != keys.Objects[0].Count)
                     {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
+                        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
                         return false;
                     }
                     break;
