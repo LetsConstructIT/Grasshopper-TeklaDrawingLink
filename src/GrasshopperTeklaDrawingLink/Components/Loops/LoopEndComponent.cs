@@ -13,7 +13,7 @@ namespace GTDrawingLink.Components.Loops
 {
     public class LoopEndComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.LoopEnd;
 
         private LoopStartComponent _loopStart;

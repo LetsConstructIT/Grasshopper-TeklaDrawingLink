@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components
 {
     public class SelectModelObjectComponent : TeklaComponentBaseNew<SelectModelObjectCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.SelectModelObject;
 
         public SelectModelObjectComponent() : base(ComponentInfos.SelectModelObjectComponent) { }

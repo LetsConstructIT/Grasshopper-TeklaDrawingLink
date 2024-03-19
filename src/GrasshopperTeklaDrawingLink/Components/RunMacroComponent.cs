@@ -10,7 +10,7 @@ namespace GTDrawingLink.Components
     public class RunMacroComponent : TeklaComponentBase
     {
         private MacroMode _mode = MacroMode.Model;
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.RunMacro;
 
         public RunMacroComponent() : base(ComponentInfos.RunMacroComponent)

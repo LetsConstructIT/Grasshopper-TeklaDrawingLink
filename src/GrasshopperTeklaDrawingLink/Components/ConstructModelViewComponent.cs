@@ -8,7 +8,7 @@ namespace GTDrawingLink.Components
 {
     public class ConstructModelViewComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.ConstructModelView;
 
         public ConstructModelViewComponent() : base(ComponentInfos.ConstructModelViewComponent)

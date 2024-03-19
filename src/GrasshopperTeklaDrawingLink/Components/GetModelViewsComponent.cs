@@ -15,7 +15,7 @@ namespace GTDrawingLink.Components
     public class GetModelViewsComponent : TeklaComponentBase
     {
         private GetViewMode _mode = GetViewMode.All;
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
         protected override Bitmap Icon => Properties.Resources.GetModelViews;
 
         public GetModelViewsComponent() : base(ComponentInfos.GetModelViewsComponent)

@@ -11,7 +11,7 @@ namespace GTDrawingLink.Components
     {
         private NumberingMode _mode = NumberingMode.AllModified;
 
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.PerformNumbering;
 
         public PerformNumberingComponent() : base(ComponentInfos.PerformNumberingComponent)

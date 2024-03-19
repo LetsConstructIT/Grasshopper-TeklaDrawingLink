@@ -14,7 +14,7 @@ namespace GTDrawingLink.Components.Loops
 {
     public class LoopStartComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
         protected override Bitmap Icon => Properties.Resources.LoopStart;
 
         private bool _isActive;

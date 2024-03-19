@@ -7,7 +7,7 @@ namespace GTDrawingLink.Components
 {
     public class BakeToTeklaComponent : TeklaComponentBaseNew<BakeToTeklaCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quinary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.BakeToTekla;
         public BakeToTeklaComponent() : base(ComponentInfos.BakeToTeklaComponent) { }
 
