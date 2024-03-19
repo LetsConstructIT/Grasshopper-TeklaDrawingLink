@@ -66,6 +66,12 @@ namespace GTDrawingLink.Components
         {
             SelectObjects(mos, new ArrayList { modelObject });
         }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
     }
 
     public class GetDrawingsFromModelObjectCommand : CommandBase

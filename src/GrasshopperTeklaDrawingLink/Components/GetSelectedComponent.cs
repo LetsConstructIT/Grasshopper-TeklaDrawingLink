@@ -46,5 +46,11 @@ namespace GTDrawingLink.Components
 
             DA.SetDataList(ComponentInfos.DrawingObjectParam.Name, selected);
         }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
     }
 }

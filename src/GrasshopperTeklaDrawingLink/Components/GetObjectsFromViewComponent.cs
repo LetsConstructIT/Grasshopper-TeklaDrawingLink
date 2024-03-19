@@ -35,6 +35,7 @@ namespace GTDrawingLink.Components
             Menu_AppendItem(menu, ParamInfos.AllObjects.Name, AllObjectsMenuItem_Clicked, true, _mode == QueryMode.AllObjects).ToolTipText = ParamInfos.AllObjects.Description;
             Menu_AppendItem(menu, ParamInfos.OnlyVisibleObjects.Name, OnlyVisibleMenuItem_Clicked, true, _mode == QueryMode.OnlyVisibleObjects).ToolTipText = ParamInfos.OnlyVisibleObjects.Description;
             Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
         }
 
         private void AllObjectsMenuItem_Clicked(object sender, EventArgs e)
