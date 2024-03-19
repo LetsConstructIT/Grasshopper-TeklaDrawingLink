@@ -12,7 +12,7 @@ namespace GTDrawingLink.Components
 {
     public class CreatePolylineComponent : CreateDatabaseObjectComponentBaseNew<CreatePolylineCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.Polyline;
 
         public CreatePolylineComponent() : base(ComponentInfos.CreatePolylineComponent) { }

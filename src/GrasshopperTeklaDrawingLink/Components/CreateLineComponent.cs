@@ -12,7 +12,7 @@ namespace GTDrawingLink.Components
 {
     public class CreateLineComponent : CreateDatabaseObjectComponentBaseNew<CreateLineCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.Line;
 
         public CreateLineComponent() : base(ComponentInfos.CreateLineComponent) { }
