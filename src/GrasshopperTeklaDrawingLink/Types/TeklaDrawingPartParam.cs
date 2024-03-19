@@ -7,7 +7,7 @@ namespace GTDrawingLink.Types
 {
     public class TeklaDrawingPartParam : TeklaDatabaseObjectFloatingParam
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.DrawingPart;
 
         public TeklaDrawingPartParam() : base(ComponentInfos.DrawingPartParam, typeof(Part))

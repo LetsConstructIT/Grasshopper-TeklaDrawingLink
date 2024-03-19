@@ -12,7 +12,7 @@ namespace GTDrawingLink.Types
     public class TeklaDatabaseObjectParam : TeklaParamBase<DatabaseObject>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
-        protected override Bitmap Icon => Properties.Resources.DrawingObject;
+        protected override Bitmap Icon => Properties.Resources.DrawingPart;
 
         private IEnumerable<Type> _types;
         protected bool _isFloatingParam;
