@@ -1744,5 +1744,40 @@ namespace GTDrawingLink.Tools
             Description = "Section mark attributes file name"
         };
 
+
+        public static readonly GH_InstanceDescription SplitPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "Split point"
+        };
+
+        public static readonly GH_InstanceDescription GeometryA = new GH_InstanceDescription
+        {
+            Name = "Geometry A",
+            NickName = "GA",
+            Description = "Geometries to the left of specified split point"
+        };
+
+        public static readonly GH_InstanceDescription DirectionA = new GH_InstanceDescription
+        {
+            Name = "Direction A",
+            NickName = "DA",
+            Description = "Intial direction"
+        };
+
+        public static readonly GH_InstanceDescription GeometryB = new GH_InstanceDescription
+        {
+            Name = "Geometry B",
+            NickName = "GB",
+            Description = "Geometries to the right of specified split point"
+        };
+
+        public static readonly GH_InstanceDescription DirectionB = new GH_InstanceDescription
+        {
+            Name = "Direction B",
+            NickName = "DB",
+            Description = "Negative direction"
+        };
     }
 }

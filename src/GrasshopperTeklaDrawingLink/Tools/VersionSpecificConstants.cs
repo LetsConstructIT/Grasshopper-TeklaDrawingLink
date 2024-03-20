@@ -603,6 +603,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateSectionMarkComponent),
                 "DC8679D0-4117-404D-AF86-F7B21009AC47"
+            },
+            {
+                typeof(SplitGeometryComponent),
+                "484C79D1-1884-4AEC-A1F0-0330C50B58BB"
             }
         };
 

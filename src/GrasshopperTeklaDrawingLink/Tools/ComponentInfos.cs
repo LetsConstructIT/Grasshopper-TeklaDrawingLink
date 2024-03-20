@@ -1024,6 +1024,13 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Annotations
         };
 
-
+        public static readonly GH_InstanceDescription SplitGeometryComponent = new GH_InstanceDescription
+        {
+            Name = "Split Geometry",
+            NickName = "Split",
+            Description = "Split the provided geometry list based on the location associated with a specified point and direction.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
     }
 }
