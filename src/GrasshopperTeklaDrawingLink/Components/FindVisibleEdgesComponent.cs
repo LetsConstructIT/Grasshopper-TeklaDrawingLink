@@ -82,7 +82,7 @@ namespace GTDrawingLink.Components
                 }
             }
 
-            return points;
+            return points.OrderBy(p => p.X).ThenBy(p => p.Y).ToList();
         }
 
         private bool CheckInitialAssumptions(Curve curve, out Polyline? polyline)
