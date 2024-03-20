@@ -24,14 +24,14 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
-            pManager.AddPointParameter("Start point", "P1", "Start point of section line", GH_ParamAccess.list);
-            pManager.AddPointParameter("End point", "P2", "End point of section line", GH_ParamAccess.list);
-            pManager.AddPointParameter("Insertion point", "IP", "Detail view insertion point", GH_ParamAccess.list);
+            AddPointParameter(pManager, ParamInfos.SectionStartPoint, GH_ParamAccess.list);
+            AddPointParameter(pManager, ParamInfos.SectionEndPoint, GH_ParamAccess.list);
+            AddPointParameter(pManager, ParamInfos.SectionInsertionPoint, GH_ParamAccess.list);
 
-            pManager.AddIntegerParameter("Depth up", "DU", "Section depth up", GH_ParamAccess.list, _defaultDepth);
-            pManager.AddIntegerParameter("Depth down", "DD", "Sectino depth down", GH_ParamAccess.list, _defaultDepth);
-            pManager.AddTextParameter("View attributes", "VA", "View attributes file name", GH_ParamAccess.list, "standard");
-            pManager.AddTextParameter("Mark attributes", "MA", "Detail mark attributes file name", GH_ParamAccess.list, "standard");
+            AddIntegerParameter(pManager, ParamInfos.SectionDepthUp, GH_ParamAccess.list, _defaultDepth);
+            AddIntegerParameter(pManager, ParamInfos.SectionDepthDown, GH_ParamAccess.list, _defaultDepth);
+            AddTextParameter(pManager, ParamInfos.SectionViewAttributes, GH_ParamAccess.list, "standard");
+            AddTextParameter(pManager, ParamInfos.SectionMarkAttributes, GH_ParamAccess.list, "standard");
             AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.list, true);
             AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.list, true);
         }

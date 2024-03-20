@@ -1694,5 +1694,55 @@ namespace GTDrawingLink.Tools
             NickName = "MA",
             Description = "Detail mark attributes file name"
         };
+
+        public static readonly GH_InstanceDescription SectionStartPoint = new GH_InstanceDescription
+        {
+            Name = "Start point",
+            NickName = "P1",
+            Description = "Start point of section line"
+        };
+
+        public static readonly GH_InstanceDescription SectionEndPoint = new GH_InstanceDescription
+        {
+            Name = "End point",
+            NickName = "P2",
+            Description = "End point of section line"
+        };
+
+        public static readonly GH_InstanceDescription SectionInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion point",
+            NickName = "IP",
+            Description = "Detail view insertion point"
+        };
+
+        public static readonly GH_InstanceDescription SectionDepthUp = new GH_InstanceDescription
+        {
+            Name = "Depth up",
+            NickName = "DU",
+            Description = "Section depth up"
+        };
+
+        public static readonly GH_InstanceDescription SectionDepthDown = new GH_InstanceDescription
+        {
+            Name = "Depth down",
+            NickName = "DD",
+            Description = "Section depth down"
+        };
+
+        public static readonly GH_InstanceDescription SectionViewAttributes = new GH_InstanceDescription
+        {
+            Name = "View attributes",
+            NickName = "VA",
+            Description = "View attributes file name"
+        };
+
+        public static readonly GH_InstanceDescription SectionMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Mark attributes",
+            NickName = "MA",
+            Description = "Section mark attributes file name"
+        };
+
     }
 }
