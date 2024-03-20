@@ -463,4 +463,10 @@
   <data name="DeconstructPlugin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\DeconstructPlugin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DetailMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\DetailMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SectionMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SectionMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

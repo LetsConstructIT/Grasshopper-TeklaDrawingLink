@@ -313,6 +313,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DetailMark {
+            get {
+                object obj = ResourceManager.GetObject("DetailMark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DetailView {
             get {
                 object obj = ResourceManager.GetObject("DetailView", resourceCulture);
@@ -986,6 +996,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap SearchUsingKey {
             get {
                 object obj = ResourceManager.GetObject("SearchUsingKey", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SectionMark {
+            get {
+                object obj = ResourceManager.GetObject("SectionMark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

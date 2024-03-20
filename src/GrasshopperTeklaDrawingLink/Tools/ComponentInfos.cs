@@ -1006,6 +1006,24 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Plugins
         };
 
-        
+        public static readonly GH_InstanceDescription CreateDetailMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Detail Mark",
+            NickName = "DM",
+            Description = "Create detail mark",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription CreateSectionMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Section Mark",
+            NickName = "SM",
+            Description = "Create section mark",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+
     }
 }

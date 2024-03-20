@@ -595,6 +595,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(DeconstructPluginComponent),
                 "9FE80ACE-E012-4445-A09E-9D8520E7DE42"
+            },
+            {
+                typeof(CreateDetailMarkComponent),
+                "C409A121-516F-4322-8684-605CC9CD1A5C"
             }
         };
 
