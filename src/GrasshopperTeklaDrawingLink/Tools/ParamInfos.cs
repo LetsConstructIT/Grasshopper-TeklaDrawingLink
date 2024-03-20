@@ -606,7 +606,7 @@ namespace GTDrawingLink.Tools
             NickName = "T",
             Description = "Group by Tekla object Type"
         };
-        
+
         public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription
         {
             Name = "Leader line",
@@ -1651,6 +1651,48 @@ namespace GTDrawingLink.Tools
             Name = "Drawing",
             NickName = "D",
             Description = "Tekla is in Drawing area"
+        };
+
+        public static readonly GH_InstanceDescription DetailCenterPoint = new GH_InstanceDescription
+        {
+            Name = "Center point",
+            NickName = "CP",
+            Description = "Center point of detail"
+        };
+
+        public static readonly GH_InstanceDescription DetailLabelPoint = new GH_InstanceDescription
+        {
+            Name = "Label point",
+            NickName = "LP",
+            Description = "Label location"
+        };
+
+        public static readonly GH_InstanceDescription DetailInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion point",
+            NickName = "IP",
+            Description = "Detail view insertion point"
+        };
+
+        public static readonly GH_InstanceDescription DetailRadius = new GH_InstanceDescription
+        {
+            Name = "Radius",
+            NickName = "R",
+            Description = "Detail range"
+        };
+
+        public static readonly GH_InstanceDescription DetailViewAttributes = new GH_InstanceDescription
+        {
+            Name = "View attributes",
+            NickName = "VA",
+            Description = "View attributes file name"
+        };
+
+        public static readonly GH_InstanceDescription DetailMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Mark attributes",
+            NickName = "MA",
+            Description = "Detail mark attributes file name"
         };
     }
 }

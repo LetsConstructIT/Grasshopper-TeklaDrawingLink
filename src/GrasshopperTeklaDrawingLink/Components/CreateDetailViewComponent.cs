@@ -22,13 +22,12 @@ namespace GTDrawingLink.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             AddTeklaDbObjectParameter(pManager, ParamInfos.View, GH_ParamAccess.item);
-            pManager.AddPointParameter("Center point", "CP", "Center point of detail", GH_ParamAccess.list);
-            pManager.AddPointParameter("Label point", "LP", "Label location", GH_ParamAccess.list);
-            pManager.AddPointParameter("Insertion point", "IP", "Detail view insertion point", GH_ParamAccess.list);
-
-            pManager.AddIntegerParameter("Radius", "R", "Detail range", GH_ParamAccess.list, _defaultRadius);
-            pManager.AddTextParameter("View attributes", "VA", "View attributes file name", GH_ParamAccess.list, "standard");
-            pManager.AddTextParameter("Mark attributes", "MA", "Detail mark attributes file name", GH_ParamAccess.list, "standard");
+            AddPointParameter(pManager, ParamInfos.DetailCenterPoint, GH_ParamAccess.list);
+            AddPointParameter(pManager, ParamInfos.DetailLabelPoint, GH_ParamAccess.list);
+            AddPointParameter(pManager, ParamInfos.DetailInsertionPoint, GH_ParamAccess.list);
+            AddIntegerParameter(pManager, ParamInfos.DetailRadius, GH_ParamAccess.list, _defaultRadius);
+            AddTextParameter(pManager, ParamInfos.DetailViewAttributes, GH_ParamAccess.list, "standard");
+            AddTextParameter(pManager, ParamInfos.DetailMarkAttributes, GH_ParamAccess.list, "standard");
             AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.list, true);
             AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.list, true);
         }
