@@ -3,6 +3,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using Rhino.Geometry;
+using Rhino.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -623,6 +624,15 @@ namespace GTDrawingLink.Tools
         }
     }
 
+    public class InputOptionalTreeParam<T> : InputTreeParam<T> where T : class
+    {
+        public InputOptionalTreeParam(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
+        {
+            IsOptional = true;
+        }
+    }
+
     public class InputTreeParam<T> : InputParam where T : class
     {
         private bool _properlySet;
@@ -666,6 +676,24 @@ namespace GTDrawingLink.Tools
             else if (typeOfInput == typeof(GH_Brep))
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Brep> tree))
+                {
+                    _tree = tree;
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
+                }
+            }
+            else if (typeOfInput == typeof(GH_Point))
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Point> tree))
+                {
+                    _tree = tree;
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
+                }
+            }
+            else if (typeOfInput == typeof(GH_Number))
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Number> tree))
                 {
                     _tree = tree;
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
@@ -856,16 +884,54 @@ namespace GTDrawingLink.Tools
         }
     }
 
-    public class TreeData<T>
+    public abstract class TreeData
+    {
+        public IReadOnlyList<GH_Path> Paths { get; }
+        public int PathCount => Paths.Count;
+
+        private readonly int _firstBranchCount;
+
+        public TreeData(IReadOnlyList<GH_Path> paths, int firstBranchCount)
+        {
+            Paths = paths ?? throw new ArgumentNullException(nameof(paths));
+            _firstBranchCount = firstBranchCount;
+        }
+
+        public int GetMaxCount(Components.InputMode inputMode)
+        {
+            return inputMode switch
+            {
+                Components.InputMode.ListMode => _firstBranchCount,
+                Components.InputMode.TreeMode => PathCount,
+                _ => throw new ArgumentOutOfRangeException(nameof(inputMode)),
+            };
+        }
+    }
+
+    public class TreeData<T> : TreeData
     {
         public List<List<T>> Objects { get; }
-        public IReadOnlyList<GH_Path> Paths { get; }
-        public int Count => Paths.Count;
 
-        public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths)
+        public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths) : base(paths, objects[0].Count)
         {
             Objects = objects ?? throw new ArgumentNullException(nameof(objects));
-            Paths = paths ?? throw new ArgumentNullException(nameof(paths));
+        }
+
+        public T Get(int index, Components.InputMode inputMode)
+        {
+            switch (inputMode)
+            {
+                case Components.InputMode.ListMode:
+                    return Objects[0].ElementAtOrLast(index);
+                case Components.InputMode.TreeMode:
+                    var branch = Objects.ElementAtOrLast(index);
+                    if (branch.Count == 0)
+                        return default;
+                    else
+                        return branch[0];
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(inputMode));
+            }
         }
     }
 }

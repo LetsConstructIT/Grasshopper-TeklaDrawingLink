@@ -1,4 +1,6 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
@@ -107,6 +109,69 @@ namespace GTDrawingLink.Components
         public void UnHighlightObjects()
         {
             DrawingInteractor.UnHighlight();
+        }
+
+        protected SolverStrategy GetSolverStrategy(params TreeData[] trees)
+        {
+            var pathCounts = trees.Select(t => t.PathCount).ToList();
+            var mode = pathCounts.All(c => c == 1) ? InputMode.ListMode : InputMode.TreeMode;
+
+            var highestCount = trees.Max(t => t.GetMaxCount(mode));
+            var templateTree = trees.First(t => t.GetMaxCount(mode) == highestCount);
+
+            return new SolverStrategy(mode, templateTree);
+        }
+
+        protected class SolverStrategy
+        {
+            public InputMode Mode { get; }
+            public TreeData TemplateTree { get; }
+            public int Iterations { get; }
+
+            public SolverStrategy(InputMode mode, TreeData templateTree)
+            {
+                Mode = mode;
+                TemplateTree = templateTree ?? throw new ArgumentNullException(nameof(templateTree));
+
+                Iterations = templateTree.GetMaxCount(Mode);
+            }
+
+            public GH_Path GetPath(int iteration)
+            {
+                return Mode switch
+                {
+                    InputMode.ListMode => TemplateTree.Paths.First(),
+                    InputMode.TreeMode => TemplateTree.Paths[iteration],
+                    _ => throw new ArgumentOutOfRangeException(nameof(Mode)),
+                };
+            }
+        }
+    }
+
+    public enum InputMode
+    {
+        ListMode,
+        TreeMode
+    }
+
+    public class ViewCollection
+    {
+        private readonly List<Tekla.Structures.Drawing.View> _views;
+
+        public ViewCollection(List<Tekla.Structures.Drawing.View> views)
+        {
+            _views = views ?? throw new ArgumentNullException(nameof(views));
+        }
+
+        public Tekla.Structures.Drawing.View Get(GH_Path path)
+        {
+            var index = path.Indices.First();
+            return Get(index);
+        }
+
+        private Tekla.Structures.Drawing.View Get(int index)
+        {
+            return _views.ElementAtOrLast(index);
         }
     }
 }

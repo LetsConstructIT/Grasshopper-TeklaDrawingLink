@@ -22,7 +22,7 @@ namespace GTDrawingLink.Components
             var transformations = planes.Select(p => new Orientation(p, Plane.WorldXY).ToMatrix()).ToList();
 
             var output = new GH_Structure<IGH_GeometricGoo>();
-            for (int i = 0; i < geometries.Count; i++)
+            for (int i = 0; i < geometries.PathCount; i++)
             {
                 var objects = geometries.Objects[i];
                 var path = geometries.Paths[i];
