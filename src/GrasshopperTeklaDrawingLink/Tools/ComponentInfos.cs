@@ -820,9 +820,9 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetRelatedObjectsComponent = new GH_InstanceDescription
         {
-            Name = "Related object",
+            Name = "Related Objects",
             NickName = "RelatedObjects",
-            Description = "Get related objects",
+            Description = "Get related drawing objects",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };
