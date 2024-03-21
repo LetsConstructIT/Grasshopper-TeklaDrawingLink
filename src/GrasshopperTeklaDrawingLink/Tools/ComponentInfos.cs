@@ -230,7 +230,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetSelectedDrawingsOnListComponent = new GH_InstanceDescription
         {
-            Name = "Selected Drawings on List",
+            Name = "Selected Drawings",
             NickName = "DrawingFromDrList",
             Description = "Gets the selected drawings from drawing list",
             Category = VersionSpecificConstants.TabHeading,
@@ -684,7 +684,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetDrawingsFromModelObjectComponent = new GH_InstanceDescription
         {
-            Name = "Get Drawings From Model Object",
+            Name = "Drawings From Model Object",
             NickName = "Dr",
             Description = "Get Tekla drawings from source model object",
             Category = VersionSpecificConstants.TabHeading,
