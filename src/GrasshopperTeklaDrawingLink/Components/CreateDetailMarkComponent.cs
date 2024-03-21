@@ -1,6 +1,8 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,46 +19,79 @@ namespace GTDrawingLink.Components
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (View view, Point3d centerPoint, double radius, Point3d labelPoint, string attributes, string name) = _command.GetInputValues();
+            (var views, var centerPoints, var radiuses, var labelPoints, var attributes, var names) = _command.GetInputValues();
 
+            var strategy = GetSolverStrategy(centerPoints, radiuses, labelPoints, attributes, names);
+            var inputMode = strategy.Mode;
+
+            var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();
+            var outputObjects = new List<DatabaseObject>();
+
+            for (int i = 0; i < strategy.Iterations; i++)
+            {
+                var path = strategy.GetPath(i);
+
+                var view = views.Get(path);
+                var centerPoint = centerPoints.Get(i, inputMode);
+                var radius = radiuses.Get(i, inputMode);
+                var labelPoint = labelPoints.Get(i, inputMode);
+                var attribute = attributes.Get(i, inputMode);
+                var name = names.Get(i, inputMode);
+
+                var mark = InsertDetailMark(view, centerPoint, radius, labelPoint, attribute, name);
+
+                outputObjects.Add(mark);
+                outputTree.Append(new TeklaDatabaseObjectGoo(mark), path);
+            }
+
+            _command.SetOutputValues(DA, outputTree);
+
+            DrawingInteractor.CommitChanges();
+            return outputObjects;
+        }
+
+        private static DetailMark InsertDetailMark(View view, Point3d centerPoint, double radius, Point3d labelPoint, string attribute, string name)
+        {
             var boundaryPoint = centerPoint + new Point3d(radius, 0, 0);
-            var detailAttributes = new DetailMark.DetailMarkAttributes(attributes);
-            detailAttributes.MarkName = name;
+            var detailAttributes = new DetailMark.DetailMarkAttributes(attribute)
+            {
+                MarkName = name
+            };
 
             var mark = new DetailMark(view, centerPoint.ToTekla(), boundaryPoint.ToTekla(), labelPoint.ToTekla(), detailAttributes);
             mark.Insert();
-
-            _command.SetOutputValues(DA, mark);
-
-            DrawingInteractor.CommitChanges();
-            return new List<DatabaseObject>() { mark };
+            return mark;
         }
     }
 
     public class CreateDetailMarkCommand : CommandBase
     {
-        private readonly InputParam<View> _inView = new InputParam<View>(ParamInfos.View);
-        private readonly InputPoint _inCenterPoint = new InputPoint(ParamInfos.DetailCenterPoint);
-        private readonly InputOptionalStructParam<double> _inRadius = new InputOptionalStructParam<double>(ParamInfos.DetailRadius, 500);
-        private readonly InputPoint _inLabelPoint = new InputPoint(ParamInfos.DetailLabelPoint);
-        private readonly InputOptionalParam<string> _inAttributes = new InputOptionalParam<string>(ParamInfos.DetailMarkAttributes, "standard");
-        private readonly InputParam<string> _inName = new InputParam<string>(ParamInfos.Name);
+        private const double _defaultRadius = 500;
+        private const string _defaultAttributes = "standard";
 
-        private readonly OutputParam<DatabaseObject> _outMark = new OutputParam<DatabaseObject>(ParamInfos.Mark);
+        private readonly InputListParam<View> _inView = new InputListParam<View>(ParamInfos.View);
 
-        internal (View view, Point3d centerPoint, double radius, Point3d labelPoint, string attributes, string name) GetInputValues()
+        private readonly InputTreePoint _inCenterPoint = new InputTreePoint(ParamInfos.DetailCenterPoint);
+        private readonly InputTreeNumber _inRadius = new InputTreeNumber(ParamInfos.DetailRadius, isOptional: true);
+        private readonly InputTreePoint _inLabelPoint = new InputTreePoint(ParamInfos.DetailLabelPoint);
+        private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.DetailMarkAttributes, isOptional: true);
+        private readonly InputTreeParam<string> _inName = new InputTreeParam<string>(ParamInfos.Name);
+
+        private readonly OutputTreeParam<DatabaseObject> _outMark = new OutputTreeParam<DatabaseObject>(ParamInfos.Mark, 0);
+
+        internal (ViewCollection views, TreeData<Point3d> centerPoint, TreeData<double> radius, TreeData<Point3d> labelPoint, TreeData<string> attributes, TreeData<string> name) GetInputValues()
         {
-            return (_inView.Value,
-                    _inCenterPoint.Value,
-                    _inRadius.Value,
-                    _inLabelPoint.Value,
-                    _inAttributes.Value,
-                    _inName.Value);
+            return (new ViewCollection(_inView.Value),
+                    _inCenterPoint.AsTreeData(),
+                    _inRadius.IsEmpty() ? _inRadius.GetDefault(_defaultRadius) : _inRadius.AsTreeData(),
+                    _inLabelPoint.AsTreeData(),
+                    _inAttributes.IsEmpty() ? _inAttributes.GetDefault(_defaultAttributes) : _inAttributes.AsTreeData(),
+                    _inName.AsTreeData());
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, DetailMark mark)
+        internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure marks)
         {
-            _outMark.Value = mark;
+            _outMark.Value = marks;
 
             return SetOutput(DA);
         }

@@ -633,20 +633,132 @@ namespace GTDrawingLink.Tools
         }
     }
 
-    public class InputTreeParam<T> : InputParam where T : class
+    public abstract class InputTreeBaseParam<T> : InputParam
     {
-        private bool _properlySet;
-        private List<List<T>> _value;
+        protected bool _properlySet;
+        protected List<List<T>> _value;
         public List<List<T>> Value => _properlySet ? _value : throw new InvalidOperationException(InstanceDescription.Name);
 
-        private IReadOnlyList<GH_Path> _paths;
+        protected IReadOnlyList<GH_Path> _paths;
         public IReadOnlyList<GH_Path> Paths => _properlySet ? _paths : throw new InvalidOperationException(InstanceDescription.Name);
 
-        private IGH_Structure _tree;
+        protected IGH_Structure _tree;
         public IGH_Structure Tree => _properlySet ? _tree : throw new InvalidOperationException(InstanceDescription.Name);
 
-        public InputTreeParam(GH_InstanceDescription instanceDescription)
+        public InputTreeBaseParam(GH_InstanceDescription instanceDescription)
             : base(typeof(T), instanceDescription, GH_ParamAccess.tree)
+        {
+        }
+
+        protected Result ProcessResults(Type typeOfInput, IGH_Structure tree, IEnumerable<List<T>> castedToExpectedType)
+        {
+            if (castedToExpectedType.Any(o => o.Any(e => e is null)))
+            {
+                return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+            }
+
+            _value = castedToExpectedType.ToList();
+            _paths = tree.Paths.ToList();
+
+            _properlySet = true;
+            return Result.Ok();
+        }
+
+        internal TreeData<T> AsTreeData()
+        {
+            return new TreeData<T>(Value, Paths);
+        }
+
+        internal bool IsEmpty()
+            => _paths.Count == 0;
+    }
+
+    public class InputTreePoint : InputTreeBaseParam<Point3d>
+    {
+        public InputTreePoint(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
+        {
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+            var typeOfInput = typeof(Point3d);
+            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Point> tree))
+            {
+                _tree = tree;
+                var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value).ToList());
+                return ProcessResults(typeOfInput, tree, castedToExpectedType);
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+
+    public class InputTreeString : InputTreeBaseParam<string>
+    {
+        public InputTreeString(GH_InstanceDescription instanceDescription, bool isOptional = false)
+            : base(instanceDescription)
+        {
+            IsOptional = isOptional;
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+            var typeOfInput = typeof(string);
+            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_String> tree))
+            {
+                _tree = tree;
+                var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value).ToList());
+                return ProcessResults(typeOfInput, tree, castedToExpectedType);
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+
+        public TreeData<string> GetDefault(string defaultValue)
+        {
+            return new TreeData<string>(
+                new List<List<string>> { new List<string> { defaultValue } },
+                new List<GH_Path> { new GH_Path(0) });
+        }
+    }
+
+    public class InputTreeNumber : InputTreeBaseParam<double>
+    {
+        public InputTreeNumber(GH_InstanceDescription instanceDescription, bool isOptional = false)
+            : base(instanceDescription)
+        {
+            IsOptional = isOptional;
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+            var typeOfInput = typeof(double);
+            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Number> tree))
+            {
+                _tree = tree;
+                var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value).ToList());
+                return ProcessResults(typeOfInput, tree, castedToExpectedType);
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+
+        public TreeData<double> GetDefault(double defaultValue)
+        {
+            return new TreeData<double>(
+                new List<List<double>> { new List<double> { defaultValue } },
+                new List<GH_Path> { new GH_Path(0) });
+        }
+    }
+
+    public class InputTreeParam<T> : InputTreeBaseParam<T> where T : class
+    {
+        public InputTreeParam(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
         {
         }
 
@@ -730,26 +842,8 @@ namespace GTDrawingLink.Tools
 
             return GetWrongInputMessage(InstanceDescription.Name);
         }
-
-        private Result ProcessResults(Type typeOfInput, IGH_Structure tree, IEnumerable<List<T>> castedToExpectedType)
-        {
-            if (castedToExpectedType.Any(o => o.Any(e => e is null)))
-            {
-                return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
-            }
-
-            _value = castedToExpectedType.ToList();
-            _paths = tree.Paths.ToList();
-
-            _properlySet = true;
-            return Result.Ok();
-        }
-
-        internal TreeData<T> AsTreeData()
-        {
-            return new TreeData<T>(Value, Paths);
-        }
     }
+
     public class OutputTreeParam<T> : OutputParam
     {
         private readonly int _index;
@@ -818,7 +912,16 @@ namespace GTDrawingLink.Tools
 
             return parameters;
         }
+
+        protected TreeData<GH_Number> GetDefaultGH_Number(double defaultValue)
+        {
+            return new TreeData<GH_Number>(
+                new List<List<GH_Number>> { new List<GH_Number> { new GH_Number(defaultValue) } },
+                new List<GH_Path> { new GH_Path(0) });
+        }
+
     }
+
     public class Result
     {
         public bool Success { get; private set; }
@@ -922,13 +1025,18 @@ namespace GTDrawingLink.Tools
             switch (inputMode)
             {
                 case Components.InputMode.ListMode:
-                    return Objects[0].ElementAtOrLast(index);
+                    if (Objects[0].Count == 0)
+                        return default;
+                    else
+                        return Objects[0].ElementAtOrLast(index);
+
                 case Components.InputMode.TreeMode:
                     var branch = Objects.ElementAtOrLast(index);
                     if (branch.Count == 0)
                         return default;
                     else
                         return branch[0];
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(inputMode));
             }
