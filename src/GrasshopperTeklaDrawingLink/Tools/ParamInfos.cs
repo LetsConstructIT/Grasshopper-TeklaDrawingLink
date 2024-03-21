@@ -1759,13 +1759,6 @@ namespace GTDrawingLink.Tools
             Description = "Geometries to the left of specified split point"
         };
 
-        public static readonly GH_InstanceDescription DirectionA = new GH_InstanceDescription
-        {
-            Name = "Direction A",
-            NickName = "DA",
-            Description = "Intial direction"
-        };
-
         public static readonly GH_InstanceDescription GeometryB = new GH_InstanceDescription
         {
             Name = "Geometry B",
@@ -1773,11 +1766,18 @@ namespace GTDrawingLink.Tools
             Description = "Geometries to the right of specified split point"
         };
 
-        public static readonly GH_InstanceDescription DirectionB = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription AllViews = new GH_InstanceDescription
         {
-            Name = "Direction B",
-            NickName = "DB",
-            Description = "Negative direction"
+            Name = "All views",
+            NickName = "All",
+            Description = "Gets all the views that are placed on the container view and their children views."
+        };
+
+        public static readonly GH_InstanceDescription OnlyTopMostViews = new GH_InstanceDescription
+        {
+            Name = "Top most views",
+            NickName = "Top",
+            Description = "Gets all the views that are placed directly in the drawing container."
         };
     }
 }

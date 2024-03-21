@@ -128,6 +128,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Drawing
         };
 
+        public static readonly GH_InstanceDescription GetViewsInDrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Views in Drawing",
+            NickName = "Views",
+            Description = "Get views in drawing. Right click to change mode from the top most to all.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };
+
         public static readonly GH_InstanceDescription GetViewPropertiesComponent = new GH_InstanceDescription
         {
             Name = "View properties",
