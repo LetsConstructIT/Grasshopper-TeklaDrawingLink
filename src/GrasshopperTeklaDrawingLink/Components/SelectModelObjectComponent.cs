@@ -16,27 +16,37 @@ namespace GTDrawingLink.Components
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var modelObjects = _command.GetInputValues();
-            if (modelObjects.Count == 0)
+            var input = _command.GetInputValues();
+            if (input.Count == 0)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input object could not be casted to Tekla Model Object");
                 return;
             }
 
+            var modelObjects = new List<TSM.ModelObject>();
+            foreach (var item in input)
+                modelObjects.AddRange(item);
+
             ModelInteractor.SelectModelObjects(modelObjects);
 
             _command.SetOutputValue(DA, true);
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
         }
     }
 
     public class SelectModelObjectCommand : CommandBase
     {
-        private readonly InputListParam<TSM.ModelObject> _inModelObjects = new InputListParam<TSM.ModelObject>(ParamInfos.ModelObject);
+        private readonly InputTreeParam<TSM.ModelObject> _inModelObjects = new InputTreeParam<TSM.ModelObject>(ParamInfos.ModelObject);
 
         private readonly OutputParam<bool> _outStatus = new OutputParam<bool>(ParamInfos.SelectionResult);
 
 
-        internal List<TSM.ModelObject> GetInputValues()
+        internal List<List<TSM.ModelObject>> GetInputValues()
         {
             return _inModelObjects.Value;
         }

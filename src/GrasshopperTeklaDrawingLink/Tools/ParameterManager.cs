@@ -2,14 +2,13 @@
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
-using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Tekla.Structures.Dialog.UIControls;
 using Tekla.Structures.Drawing;
+using TSM = Tekla.Structures.Model;
 
 namespace GTDrawingLink.Tools
 {
@@ -652,6 +651,15 @@ namespace GTDrawingLink.Tools
                 {
                     _tree = tree;
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
+                }
+            }
+            else if (typeOfInput.InheritsFrom(typeof(TSM.ModelObject)))
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<IGH_Goo> tree))
+                {
+                    _tree = tree;
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => (i as GH_Goo<TSM.ModelObject>).Value as T).ToList());
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
