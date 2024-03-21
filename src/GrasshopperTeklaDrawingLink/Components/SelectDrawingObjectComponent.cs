@@ -1,9 +1,9 @@
 ﻿using Grasshopper.Kernel;
-using GTDrawingLink.Extensions;
+using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
@@ -18,23 +18,38 @@ namespace GTDrawingLink.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.list);
+            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.tree);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.list);
+            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.tree);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var drawingObjects = DA.GetGooListValue<DatabaseObject>(ComponentInfos.DrawingObjectParam).Cast<DrawingObject>();
-            if (drawingObjects == null)
+            if (!DA.GetDataTree(0, out GH_Structure<GH_Goo<DatabaseObject>> tree))
                 return;
+
+            var drawingObjects = new List<DrawingObject>();
+            foreach (var branch in tree.Branches)
+            {
+                foreach (var item in branch)
+                {
+                    if (item.Value is DrawingObject drawingObject) 
+                        drawingObjects.Add(drawingObject);
+                }
+            }
 
             DrawingInteractor.Highlight(drawingObjects);
 
-            DA.SetDataList(ComponentInfos.DrawingObjectParam.Name, drawingObjects.Select(d => new TeklaDatabaseObjectGoo(d)));
+            DA.SetDataTree(0, tree);
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
         }
     }
 }
