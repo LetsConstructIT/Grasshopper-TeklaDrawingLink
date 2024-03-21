@@ -1043,6 +1043,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SelectededModelObjects {
+            get {
+                object obj = ResourceManager.GetObject("SelectededModelObjects", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SelectedObjects {
             get {
                 object obj = ResourceManager.GetObject("SelectedObjects", resourceCulture);

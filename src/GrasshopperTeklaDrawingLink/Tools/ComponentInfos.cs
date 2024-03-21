@@ -331,7 +331,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Selected Objects",
             NickName = "Selected",
-            Description = "Get selected objects",
+            Description = "Get selected drawing objects",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };
@@ -781,6 +781,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Misc
         };
 
+        public static readonly GH_InstanceDescription GetSelectedModelObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Selected Model Objects",
+            NickName = "SelectedMO",
+            Description = "Get selected model objects",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+        
         public static readonly GH_InstanceDescription PerformNumberingComponent = new GH_InstanceDescription
         {
             Name = "Perform Numbering",

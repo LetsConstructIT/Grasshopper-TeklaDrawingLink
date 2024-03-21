@@ -607,6 +607,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SplitGeometryComponent),
                 "484C79D1-1884-4AEC-A1F0-0330C50B58BB"
+            },
+            {
+                typeof(GetSelectedModelObjectComponent),
+                "4A4F31A7-66AC-422D-8239-71CAC78EA899"
             }
         };
 
