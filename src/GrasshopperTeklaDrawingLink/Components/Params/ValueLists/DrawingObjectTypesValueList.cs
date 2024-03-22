@@ -5,7 +5,7 @@ using Grasshopper.Kernel.Special;
 using GTDrawingLink.Tools;
 using static GTDrawingLink.Tools.ComponentInfos;
 
-namespace GTDrawingLink.Components.ValueLists
+namespace GTDrawingLink.Components.Params.ValueLists
 {
     public class DrawingObjectTypesValueList : GH_ValueList
     {
@@ -33,7 +33,7 @@ namespace GTDrawingLink.Components.ValueLists
             ListItems.Add(new GH_ValueListItem("Circle", "\"Circle\""));
             ListItems.Add(new GH_ValueListItem("Cloud", "\"Cloud\""));
             ListItems.Add(new GH_ValueListItem("Connection", "\"Connection\""));
-            ListItems.Add(new GH_ValueListItem("Container View", "\"Container View\""));            
+            ListItems.Add(new GH_ValueListItem("Container View", "\"Container View\""));
             ListItems.Add(new GH_ValueListItem("Detail Mark", "\"Detail Mark\""));
             ListItems.Add(new GH_ValueListItem("Dwg Object", "\"Dwg Object\""));
             ListItems.Add(new GH_ValueListItem("Grid", "\"Grid\""));

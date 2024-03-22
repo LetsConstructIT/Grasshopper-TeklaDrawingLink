@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Annotations
 {
     public class CreateSectionMarkComponent : CreateDatabaseObjectComponentBaseNew<CreateSectionMarkCommand>
     {
@@ -49,7 +49,7 @@ namespace GTDrawingLink.Components
 
         private static SectionMark InsertSectionMark(View view, Point3d startPoint, Point3d endPoint, string attributes, string name)
         {
-            var sectionAttributes = new SectionMark.SectionMarkAttributes(attributes)
+            var sectionAttributes = new SectionMarkBase.SectionMarkAttributes(attributes)
             {
                 MarkName = name
             };

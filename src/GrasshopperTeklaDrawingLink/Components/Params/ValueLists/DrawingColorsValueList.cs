@@ -5,7 +5,7 @@ using Grasshopper.Kernel.Special;
 using GTDrawingLink.Tools;
 using static GTDrawingLink.Tools.ComponentInfos;
 
-namespace GTDrawingLink.Components.ValueLists
+namespace GTDrawingLink.Components.Params.ValueLists
 {
     public class DrawingColorsValueList : GH_ValueList
     {
