@@ -68,7 +68,7 @@ namespace GTDrawingLink.Components.Annotations
 
         private readonly OutputTreeParam<Mark> _outMark = new OutputTreeParam<Mark>(ParamInfos.AssociativeNote, 0);
 
-        internal (TreeData<ModelObject> modelObjects, TreeData<Mark.MarkAttributes> attributes, TreeData<Point3d> basePoints, TreeData<PlacingBase> leaderLinePoints) GetInputValues()
+        internal (TreeData<ModelObject> modelObjects, TreeData<Mark.MarkAttributes> attributes, TreeData<Point3d> basePoints, TreeData<PlacingBase> placingBases) GetInputValues()
         {
             return (
                 _inModel.AsTreeData(),
