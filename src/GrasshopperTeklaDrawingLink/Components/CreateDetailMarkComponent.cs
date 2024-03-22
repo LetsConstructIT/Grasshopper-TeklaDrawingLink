@@ -31,14 +31,12 @@ namespace GTDrawingLink.Components
             {
                 var path = strategy.GetPath(i);
 
-                var view = views.Get(path);
-                var centerPoint = centerPoints.Get(i, inputMode);
-                var radius = radiuses.Get(i, inputMode);
-                var labelPoint = labelPoints.Get(i, inputMode);
-                var attribute = attributes.Get(i, inputMode);
-                var name = names.Get(i, inputMode);
-
-                var mark = InsertDetailMark(view, centerPoint, radius, labelPoint, attribute, name);
+                var mark = InsertDetailMark(views.Get(path),
+                                            centerPoints.Get(i, inputMode),
+                                            radiuses.Get(i, inputMode),
+                                            labelPoints.Get(i, inputMode),
+                                            attributes.Get(i, inputMode),
+                                            names.Get(i, inputMode));
 
                 outputObjects.Add(mark);
                 outputTree.Append(new TeklaDatabaseObjectGoo(mark), path);
