@@ -8,7 +8,7 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using TSG = Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Views
 {
     public class CreateModelViewComponent : CreateViewBaseComponent
     {

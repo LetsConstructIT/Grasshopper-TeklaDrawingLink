@@ -4,7 +4,7 @@ using GTDrawingLink.Tools;
 using System;
 using System.Windows.Forms;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Views
 {
     public abstract class CreateViewBaseComponent : CreateDatabaseObjectComponentBase
     {
@@ -41,9 +41,9 @@ namespace GTDrawingLink.Components
         private void SetCustomMessage()
         {
             if (_loadAttributesWithMacro)
-                base.Message = "use macro for attributes";
+                Message = "use macro for attributes";
             else
-                base.Message = "";
+                Message = "";
         }
 
         private void DoNotUseMacroMenuItem_Clicked(object sender, EventArgs e)
@@ -109,9 +109,9 @@ namespace GTDrawingLink.Components
         private void SetCustomMessage()
         {
             if (_loadAttributesWithMacro)
-                base.Message = "use macro for attributes";
+                Message = "use macro for attributes";
             else
-                base.Message = "";
+                Message = "";
         }
 
         private void DoNotUseMacroMenuItem_Clicked(object sender, EventArgs e)

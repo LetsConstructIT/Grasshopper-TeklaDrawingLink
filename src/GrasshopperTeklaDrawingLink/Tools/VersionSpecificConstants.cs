@@ -4,6 +4,7 @@ using GTDrawingLink.Components.AttributesComponents;
 using GTDrawingLink.Components.Loops;
 using GTDrawingLink.Components.ModifyComponents;
 using GTDrawingLink.Components.Obsolete;
+using GTDrawingLink.Components.Views;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;

@@ -15,7 +15,7 @@ using TSG = Tekla.Structures.Geometry3d;
 using TSD = Tekla.Structures.Drawing;
 using Grasshopper.Kernel.Types;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Views
 {
     public class GetObjectsFromViewComponent : TeklaComponentBase
     {

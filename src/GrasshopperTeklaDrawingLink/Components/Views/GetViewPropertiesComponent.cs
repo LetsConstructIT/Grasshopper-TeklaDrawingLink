@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Windows.Documents;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Views
 {
     public class GetViewPropertiesComponent : TeklaComponentBase
     {
@@ -61,8 +61,8 @@ namespace GTDrawingLink.Components
                 EscapeCurlyBraces(tagsAttributes.TagA4.TagContent.GetUnformattedString()),
                 EscapeCurlyBraces(tagsAttributes.TagA5.TagContent.GetUnformattedString()),
             };
-            
-                return tags;
+
+            return tags;
 
             string EscapeCurlyBraces(string text)
             {
