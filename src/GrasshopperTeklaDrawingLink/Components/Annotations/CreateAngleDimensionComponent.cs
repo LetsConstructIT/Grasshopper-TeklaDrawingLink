@@ -75,7 +75,7 @@ namespace GTDrawingLink.Components.Annotations
         private readonly InputTreePoint _inDimPoints1 = new InputTreePoint(ParamInfos.AngleDimensionPoint1);
         private readonly InputTreePoint _inDimPoints2 = new InputTreePoint(ParamInfos.AngleDimensionPoint2);
         private readonly InputTreeNumber _inDistances = new InputTreeNumber(ParamInfos.AngleDimensionDistance);
-        private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.AngleDimensionAttributes);
+        private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.AngleDimensionAttributes, isOptional: true);
 
         private readonly OutputTreeParam<AngleDimension> _outDimensions = new OutputTreeParam<AngleDimension>(ParamInfos.AngleDimension, 0);
 
@@ -86,7 +86,7 @@ namespace GTDrawingLink.Components.Annotations
                 _inDimPoints1.AsTreeData(),
                 _inDimPoints2.AsTreeData(),
                 _inDistances.AsTreeData(),
-                _inAttributes.AsTreeData());
+                _inAttributes.IsEmpty() ? _inAttributes.GetDefault("standard") : _inAttributes.AsTreeData());
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure dimensions)
