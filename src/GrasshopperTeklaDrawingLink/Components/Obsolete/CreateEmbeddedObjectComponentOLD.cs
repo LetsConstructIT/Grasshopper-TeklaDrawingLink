@@ -2,18 +2,20 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateEmbeddedObjectComponent : CreateDatabaseObjectComponentBaseNew<CreateEmbeddedObjectCommand>
+    [Obsolete]
+    public class CreateEmbeddedObjectComponentOLD : CreateDatabaseObjectComponentBaseNew<CreateEmbeddedObjectCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.Dwgdxf;
 
-        public CreateEmbeddedObjectComponent() : base(ComponentInfos.CreateEmbeddedObjectComponent) { }
+        public CreateEmbeddedObjectComponentOLD() : base(ComponentInfos.CreateEmbeddedObjectComponent) { }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
@@ -29,7 +31,7 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class CreateEmbeddedObjectCommand : CommandBase
+    public class CreateEmbeddedObjectCommandOLD : CommandBase
     {
         private readonly InputParam<ViewBase> _inView = new InputParam<ViewBase>(ParamInfos.ViewBase);
         private readonly InputPoint _inPoint = new InputPoint(ParamInfos.InsertionPoint);
