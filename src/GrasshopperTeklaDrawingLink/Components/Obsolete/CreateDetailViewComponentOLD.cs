@@ -1,21 +1,24 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Components.Views;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Views
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateDetailViewComponent : CreateViewBaseComponent
+    [Obsolete]
+    public class CreateDetailViewComponentOLD : CreateViewBaseComponent
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.DetailView;
         private int _defaultRadius = 500;
 
-        public CreateDetailViewComponent()
+        public CreateDetailViewComponentOLD()
             : base(ComponentInfos.CreateDetailViewComponent)
         {
         }
