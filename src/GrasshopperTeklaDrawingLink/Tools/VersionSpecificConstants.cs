@@ -218,6 +218,10 @@ namespace GTDrawingLink.Tools
                 "782CBD7C-4844-4EAF-AFAB-6C2ADC33BE73"
             },
             {
+                typeof(CreatePluginComponent),
+                "1220E4FC-606E-4DCF-B131-E478817CEA25"
+            },
+            {
                 typeof(CreatePluginComponentOLD),
                 "81D25C54-4C0B-4724-B79D-02C836C16C60"
             },
