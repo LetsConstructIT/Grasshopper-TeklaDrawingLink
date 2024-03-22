@@ -1,21 +1,22 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
-using TSD = Tekla.Structures.Drawing;
 using TSG = Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreatePolylineComponent : CreateDatabaseObjectComponentBaseNew<CreatePolylineCommand>
+    [Obsolete]
+    public class CreatePolylineComponentOLD : CreateDatabaseObjectComponentBaseNew<CreatePolylineCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.Polyline;
 
-        public CreatePolylineComponent() : base(ComponentInfos.CreatePolylineComponent) { }
+        public CreatePolylineComponentOLD() : base(ComponentInfos.CreatePolylineComponent) { }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
@@ -46,13 +47,13 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class CreatePolylineCommand : CommandBase
+    public class CreatePolylineCommandOLD : CommandBase
     {
         private readonly InputParam<ViewBase> _inView = new InputParam<ViewBase>(ParamInfos.ViewBase);
         private readonly InputListParam<IGH_GeometricGoo> _inGeometricGoo = new InputListParam<IGH_GeometricGoo>(ParamInfos.Curve);
         private readonly InputParam<Polyline.PolylineAttributes> _inAttributes = new InputParam<Polyline.PolylineAttributes>(ParamInfos.PolylineAttributes);
 
-        private readonly OutputListParam<TSD.Polyline> _outLines = new OutputListParam<TSD.Polyline>(ParamInfos.Polyline);
+        private readonly OutputListParam<Polyline> _outLines = new OutputListParam<Polyline>(ParamInfos.Polyline);
 
         internal (ViewBase View, List<List<TSG.Point>> GroupOfPoints, Polyline.PolylineAttributes Attributes) GetInputValues()
         {
@@ -61,7 +62,7 @@ namespace GTDrawingLink.Components
                     _inAttributes.Value);
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, List<TSD.Polyline> lines)
+        internal Result SetOutputValues(IGH_DataAccess DA, List<Polyline> lines)
         {
             _outLines.Value = lines;
 
