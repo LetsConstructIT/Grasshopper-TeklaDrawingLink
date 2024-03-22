@@ -13,16 +13,17 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateStraightDimensionSetComponent : CreateDatabaseObjectComponentBase
+    [Obsolete]
+    public class CreateStraightDimensionSetComponentOLD : CreateDatabaseObjectComponentBase
     {
         private InsertionMode _mode = InsertionMode.Always;
         private StraightDimensionSetHandler _sdsHandler = new StraightDimensionSetHandler();
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.CreateStraightDimensionSet;
 
-        public CreateStraightDimensionSetComponent() : base(ComponentInfos.CreateStraightDimensionSetComponent)
+        public CreateStraightDimensionSetComponentOLD() : base(ComponentInfos.CreateStraightDimensionSetComponent)
         {
             SetCustomMessage();
         }
@@ -30,9 +31,9 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.DimensionLineAlwaysMode.Name, AlwaysModeMenuItem_Clicked, true, _mode == InsertionMode.Always).ToolTipText = ParamInfos.DimensionLineAlwaysMode.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.DimensionLineMoreThan2PointsMode.Name, ProjectionLimitModeMenuItem_Clicked, true, _mode == InsertionMode.WhenMoreThan2Points).ToolTipText = ParamInfos.DimensionLineMoreThan2PointsMode.Description;
-            GH_DocumentObject.Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.DimensionLineAlwaysMode.Name, AlwaysModeMenuItem_Clicked, true, _mode == InsertionMode.Always).ToolTipText = ParamInfos.DimensionLineAlwaysMode.Description;
+            Menu_AppendItem(menu, ParamInfos.DimensionLineMoreThan2PointsMode.Name, ProjectionLimitModeMenuItem_Clicked, true, _mode == InsertionMode.WhenMoreThan2Points).ToolTipText = ParamInfos.DimensionLineMoreThan2PointsMode.Description;
+            Menu_AppendSeparator(menu);
         }
 
         private void AlwaysModeMenuItem_Clicked(object sender, EventArgs e)
@@ -54,13 +55,13 @@ namespace GTDrawingLink.Components
             switch (_mode)
             {
                 case InsertionMode.Always:
-                    base.Message = "";
+                    Message = "";
                     break;
                 case InsertionMode.WhenMoreThan2Points:
-                    base.Message = "Only when more than 2 projected points";
+                    Message = "Only when more than 2 projected points";
                     break;
                 default:
-                    base.Message = "";
+                    Message = "";
                     break;
             }
         }

@@ -238,7 +238,7 @@ namespace GTDrawingLink.Tools
                 "9EE842B8-EA60-4B5F-A123-86640387E410"
             },
             {
-                typeof(CreateStraightDimensionSetComponent),
+                typeof(CreateStraightDimensionSetComponentOLD),
                 "BCB39278-F65B-4F14-92C2-6D371E22ECE4"
             },
             {
