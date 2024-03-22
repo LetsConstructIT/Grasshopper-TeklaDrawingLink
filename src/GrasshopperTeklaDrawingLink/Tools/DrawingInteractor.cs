@@ -153,7 +153,7 @@ namespace GTDrawingLink.Tools
             }
             else
             {
-                var statuses = drawingObjects.Select(d => d.Delete());
+                var statuses = drawingObjects.Select(d => d.Delete()).ToList();
                 return statuses.All(s => s);
             }
         }
