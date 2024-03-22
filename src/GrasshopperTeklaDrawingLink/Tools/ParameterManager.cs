@@ -3,7 +3,6 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using Rhino.Geometry;
-using Rhino.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -475,13 +474,24 @@ namespace GTDrawingLink.Tools
                 var value = new List<GH_Goo<DatabaseObject>>();
                 if (DA.GetDataList(InstanceDescription.Name, value))
                 {
-                    var castedToExpectedType = value.Select(v => v.Value as T);
-                    if (castedToExpectedType.Any(o => o is null))
+                    if (typeOfInput == typeof(ViewBase) && value.First().Value.GetType().InheritsFrom(typeof(Drawing)))
                     {
-                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                        var castedToExpectedType = value.Select(v => (v.Value as Drawing).GetSheet() as T);
+                        if (castedToExpectedType.Any(o => o is null))
+                        {
+                            return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                        }
+                        _value = castedToExpectedType.ToList();
                     }
-
-                    _value = castedToExpectedType.ToList();
+                    else
+                    {
+                        var castedToExpectedType = value.Select(v => v.Value as T);
+                        if (castedToExpectedType.Any(o => o is null))
+                        {
+                            return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                        }
+                        _value = castedToExpectedType.ToList();
+                    }
 
                     _properlySet = true;
                     return Result.Ok();
@@ -695,6 +705,28 @@ namespace GTDrawingLink.Tools
         }
     }
 
+    public class InputTreeGeometry : InputTreeBaseParam<IGH_GeometricGoo>
+    {
+        public InputTreeGeometry(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
+        {
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+            var typeOfInput = typeof(Point3d);
+            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<IGH_GeometricGoo> tree))
+            {
+                _tree = tree;
+                var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i).ToList());
+                return ProcessResults(typeOfInput, tree, castedToExpectedType);
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+
     public class InputTreeString : InputTreeBaseParam<string>
     {
         public InputTreeString(GH_InstanceDescription instanceDescription, bool isOptional = false)
@@ -833,6 +865,15 @@ namespace GTDrawingLink.Tools
             else if (typeOfInput == typeof(string))
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_String> tree))
+                {
+                    _tree = tree;
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
+                }
+            }
+            else
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
                 {
                     _tree = tree;
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
