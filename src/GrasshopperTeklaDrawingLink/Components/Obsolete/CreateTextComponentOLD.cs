@@ -3,19 +3,21 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateTextComponent : CreateDatabaseObjectComponentBaseNew<CreateTextCommand>
+    [Obsolete]
+    public class CreateTextComponentOLD : CreateDatabaseObjectComponentBaseNew<CreateTextCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.CreateText;
 
-        public CreateTextComponent() : base(ComponentInfos.CreateTextComponent) { }
+        public CreateTextComponentOLD() : base(ComponentInfos.CreateTextComponent) { }
 
         protected override IEnumerable<TSD.DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
@@ -67,7 +69,7 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class CreateTextCommand : CommandBase
+    public class CreateTextCommandOLD : CommandBase
     {
         private readonly InputParam<TSD.ViewBase> _inView = new InputParam<TSD.ViewBase>(ParamInfos.ViewBase);
         private readonly InputListParam<string> _inText = new InputListParam<string>(ParamInfos.Text);

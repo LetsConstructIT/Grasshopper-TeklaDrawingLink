@@ -282,7 +282,7 @@ namespace GTDrawingLink.Tools
                 "CF46774B-064B-485C-A95D-E862768B0161"
             },
             {
-                typeof(CreateTextComponent),
+                typeof(CreateTextComponentOLD),
                 "BB95F20B-A8AB-4CB6-A1B6-972AA0E1ED87"
             },
             {
