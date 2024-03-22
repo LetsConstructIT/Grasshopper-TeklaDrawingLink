@@ -1,6 +1,8 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,41 +19,71 @@ namespace GTDrawingLink.Components
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (View view, Point3d startPoint, Point3d endPoint, string attributes, string name) = _command.GetInputValues();
+            (var views, var startPoints, var endPoints, var attributes, var names) = _command.GetInputValues();
 
-            var sectionAttributes = new SectionMark.SectionMarkAttributes(attributes);
-            sectionAttributes.MarkName = name;
+            var strategy = GetSolverStrategy(startPoints, endPoints, attributes, names);
+            var inputMode = strategy.Mode;
+
+            var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();
+            var outputObjects = new List<DatabaseObject>();
+
+            for (int i = 0; i < strategy.Iterations; i++)
+            {
+                var path = strategy.GetPath(i);
+
+                var mark = InsertSectionMark(views.Get(path),
+                                             startPoints.Get(i, inputMode),
+                                             endPoints.Get(i, inputMode),
+                                             attributes.Get(i, inputMode),
+                                             names.Get(i, inputMode));
+
+                outputObjects.Add(mark);
+                outputTree.Append(new TeklaDatabaseObjectGoo(mark), path);
+            }
+
+            _command.SetOutputValues(DA, outputTree);
+
+            DrawingInteractor.CommitChanges();
+            return outputObjects;
+        }
+
+        private static SectionMark InsertSectionMark(View view, Point3d startPoint, Point3d endPoint, string attributes, string name)
+        {
+            var sectionAttributes = new SectionMark.SectionMarkAttributes(attributes)
+            {
+                MarkName = name
+            };
 
             var mark = new SectionMark(view, startPoint.ToTekla(), endPoint.ToTekla(), sectionAttributes);
             mark.Insert();
 
-            _command.SetOutputValues(DA, mark);
-
-            DrawingInteractor.CommitChanges();
-            return new List<DatabaseObject>() { mark };
+            return mark;
         }
     }
 
     public class CreateSectionMarkCommand : CommandBase
     {
-        private readonly InputParam<View> _inView = new InputParam<View>(ParamInfos.View);
-        private readonly InputPoint _inStartPoint = new InputPoint(ParamInfos.SectionStartPoint);
-        private readonly InputPoint _inEndPoint = new InputPoint(ParamInfos.SectionEndPoint);
-        private readonly InputOptionalParam<string> _inAttributes = new InputOptionalParam<string>(ParamInfos.DetailMarkAttributes, "standard");
-        private readonly InputParam<string> _inName = new InputParam<string>(ParamInfos.Name);
+        private const string _defaultAttributes = "standard";
 
-        private readonly OutputParam<DatabaseObject> _outMark = new OutputParam<DatabaseObject>(ParamInfos.Mark);
+        private readonly InputListParam<View> _inView = new InputListParam<View>(ParamInfos.View);
 
-        internal (View view, Point3d startPoint, Point3d endPoint, string attributes, string name) GetInputValues()
+        private readonly InputTreePoint _inStartPoint = new InputTreePoint(ParamInfos.SectionStartPoint);
+        private readonly InputTreePoint _inEndPoint = new InputTreePoint(ParamInfos.SectionEndPoint);
+        private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.DetailMarkAttributes, isOptional: true);
+        private readonly InputTreeString _inName = new InputTreeString(ParamInfos.Name);
+
+        private readonly OutputTreeParam<DatabaseObject> _outMark = new OutputTreeParam<DatabaseObject>(ParamInfos.Mark, 0);
+
+        internal (ViewCollection view, TreeData<Point3d> startPoint, TreeData<Point3d> endPoint, TreeData<string> attributes, TreeData<string> name) GetInputValues()
         {
-            return (_inView.Value,
-                    _inStartPoint.Value,
-                    _inEndPoint.Value,
-                    _inAttributes.Value,
-                    _inName.Value);
+            return (new ViewCollection(_inView.Value),
+                    _inStartPoint.AsTreeData(),
+                    _inEndPoint.AsTreeData(),
+                    _inAttributes.IsEmpty() ? _inAttributes.GetDefault(_defaultAttributes) : _inAttributes.AsTreeData(),
+                    _inName.AsTreeData());
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, SectionMark mark)
+        internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure mark)
         {
             _outMark.Value = mark;
 
