@@ -641,6 +641,13 @@ namespace GTDrawingLink.Tools
         {
             IsOptional = true;
         }
+
+        public TreeData<T> GetDefault(T defaultValue)
+        {
+            return new TreeData<T>(
+                new List<List<T>> { new List<T> { defaultValue } },
+                new List<GH_Path> { new GH_Path(0) });
+        }
     }
 
     public abstract class InputTreeBaseParam<T> : InputParam
@@ -695,6 +702,28 @@ namespace GTDrawingLink.Tools
             _properlySet = false;
             var typeOfInput = typeof(Point3d);
             if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Point> tree))
+            {
+                _tree = tree;
+                var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value).ToList());
+                return ProcessResults(typeOfInput, tree, castedToExpectedType);
+            }
+
+            return GetWrongInputMessage(InstanceDescription.Name);
+        }
+    }
+
+    public class InputTreeLine : InputTreeBaseParam<Rhino.Geometry.Line>
+    {
+        public InputTreeLine(GH_InstanceDescription instanceDescription)
+            : base(instanceDescription)
+        {
+        }
+
+        public override Result EvaluateInput(IGH_DataAccess DA)
+        {
+            _properlySet = false;
+            var typeOfInput = typeof(Point3d);
+            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Line> tree))
             {
                 _tree = tree;
                 var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value).ToList());
@@ -1081,6 +1110,11 @@ namespace GTDrawingLink.Tools
                 default:
                     throw new ArgumentOutOfRangeException(nameof(inputMode));
             }
+        }
+
+        public List<T> GetBranch(int index)
+        {
+            return Objects.ElementAtOrLast(index);
         }
     }
 }
