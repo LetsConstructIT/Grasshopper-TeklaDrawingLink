@@ -154,22 +154,22 @@ namespace GTDrawingLink.Components
         TreeMode
     }
 
-    public class ViewCollection
+    public class ViewCollection<T> where T : ViewBase
     {
-        private readonly List<Tekla.Structures.Drawing.View> _views;
+        private readonly List<T> _views;
 
-        public ViewCollection(List<Tekla.Structures.Drawing.View> views)
+        public ViewCollection(List<T> views)
         {
             _views = views ?? throw new ArgumentNullException(nameof(views));
         }
 
-        public Tekla.Structures.Drawing.View Get(GH_Path path)
+        public T Get(GH_Path path)
         {
             var index = path.Indices.First();
             return Get(index);
         }
 
-        private Tekla.Structures.Drawing.View Get(int index)
+        private T Get(int index)
         {
             return _views.ElementAtOrLast(index);
         }

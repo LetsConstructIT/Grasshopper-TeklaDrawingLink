@@ -77,9 +77,9 @@ namespace GTDrawingLink.Components.Annotations
 
         private readonly OutputTreeParam<DatabaseObject> _outMark = new OutputTreeParam<DatabaseObject>(ParamInfos.Mark, 0);
 
-        internal (ViewCollection views, TreeData<Point3d> centerPoint, TreeData<double> radius, TreeData<Point3d> labelPoint, TreeData<string> attributes, TreeData<string> name) GetInputValues()
+        internal (ViewCollection<View> views, TreeData<Point3d> centerPoint, TreeData<double> radius, TreeData<Point3d> labelPoint, TreeData<string> attributes, TreeData<string> name) GetInputValues()
         {
-            return (new ViewCollection(_inView.Value),
+            return (new ViewCollection<View>(_inView.Value),
                     _inCenterPoint.AsTreeData(),
                     _inRadius.IsEmpty() ? _inRadius.GetDefault(_defaultRadius) : _inRadius.AsTreeData(),
                     _inLabelPoint.AsTreeData(),
