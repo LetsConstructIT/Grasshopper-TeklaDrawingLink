@@ -10,15 +10,16 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreatePluginComponent : CreateDatabaseObjectComponentBase
+    [Obsolete]
+    public class CreatePluginComponentOLD : CreateDatabaseObjectComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.Plugin;
 
 
-        public CreatePluginComponent() : base(ComponentInfos.CreatePluginComponent)
+        public CreatePluginComponentOLD() : base(ComponentInfos.CreatePluginComponent)
         {
         }
 
