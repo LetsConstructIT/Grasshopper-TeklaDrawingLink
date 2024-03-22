@@ -20,7 +20,7 @@ namespace GTDrawingLink.Components.Annotations
         {
             (var views, var points, var fileNames, var attributes) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(points, attributes);
+            var strategy = GetSolverStrategy(points, fileNames, attributes);
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();
