@@ -85,7 +85,7 @@ namespace GTDrawingLink.Components.Obsolete
     {
         private const double _defaultScale = 1;
 
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inPoint = new InputTreePoint(ParamInfos.InsertionPoint);
         private readonly InputTreeString _inFilePath = new InputTreeString(ParamInfos.DetailPath);
         private readonly InputTreeNumber _inScale = new InputTreeNumber(ParamInfos.DetailScale, isOptional: true);

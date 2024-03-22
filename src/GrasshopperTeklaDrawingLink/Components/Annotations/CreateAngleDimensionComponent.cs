@@ -70,7 +70,7 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateAngleDimensionCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inOriginPoints = new InputTreePoint(ParamInfos.AngleDimensionOriginPoint);
         private readonly InputTreePoint _inDimPoints1 = new InputTreePoint(ParamInfos.AngleDimensionPoint1);
         private readonly InputTreePoint _inDimPoints2 = new InputTreePoint(ParamInfos.AngleDimensionPoint2);

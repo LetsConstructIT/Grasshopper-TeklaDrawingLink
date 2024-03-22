@@ -63,7 +63,7 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateTextCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreeString _inText = new InputTreeString(ParamInfos.Text);
         private readonly InputTreePoint _inInsertionPoints = new InputTreePoint(ParamInfos.MarkInsertionPoint);
         private readonly InputTreeParam<PlacingBase> _inPlacingTypes = new InputTreeParam<PlacingBase>(ParamInfos.PlacingType);

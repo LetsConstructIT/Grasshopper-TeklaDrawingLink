@@ -57,7 +57,7 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateSymbolCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inPoints = new InputTreePoint(ParamInfos.InsertionPoint);
         private readonly InputTreeParam<SymbolAttributes> _inAttributes = new InputTreeParam<SymbolAttributes>(ParamInfos.SymbolAtributes);
 

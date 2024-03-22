@@ -59,7 +59,7 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateEmbeddedCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inPoints = new InputTreePoint(ParamInfos.InsertionPoint);
         private readonly InputTreeString _inFileNames = new InputTreeString(ParamInfos.DwgFileName);
         private readonly InputTreeParam<EmbeddedObjectAttributes> _inAttributes = new InputTreeParam<EmbeddedObjectAttributes>(ParamInfos.DwgAttributes);

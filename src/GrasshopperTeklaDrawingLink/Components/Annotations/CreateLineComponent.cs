@@ -71,7 +71,7 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateLineCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreeGeometry _inGeometricGoo = new InputTreeGeometry(ParamInfos.Curve);
         private readonly InputTreeParam<Line.LineAttributes> _inAttributes = new InputTreeParam<Line.LineAttributes>(ParamInfos.LineAttributes);
 

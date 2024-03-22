@@ -62,7 +62,7 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreatePolylineCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.ViewBase);
+        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreeGeometry _inGeometricGoo = new InputTreeGeometry(ParamInfos.Curve);
         private readonly InputTreeParam<Polyline.PolylineAttributes> _inAttributes = new InputTreeParam<Polyline.PolylineAttributes>(ParamInfos.PolylineAttributes);
 
