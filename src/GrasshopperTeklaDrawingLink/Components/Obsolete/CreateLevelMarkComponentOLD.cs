@@ -2,21 +2,23 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateLevelMarkComponent : CreateDatabaseObjectComponentBase
+    [Obsolete]
+    public class CreateLevelMarkComponentOLD : CreateDatabaseObjectComponentBase
     {
         private const string _defaultAttributes = "standard";
 
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.LevelMark;
 
-        public CreateLevelMarkComponent() : base(ComponentInfos.CreateLevelMarkComponent)
+        public CreateLevelMarkComponentOLD() : base(ComponentInfos.CreateLevelMarkComponent)
         {
         }
 
