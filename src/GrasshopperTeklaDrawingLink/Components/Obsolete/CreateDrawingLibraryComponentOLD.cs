@@ -7,14 +7,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateDrawingLibraryComponent : CreateDatabaseObjectComponentBaseNew<CreateDrawingLibraryCommand>
+    [Obsolete]
+    public class CreateDrawingLibraryComponentOLD : CreateDatabaseObjectComponentBaseNew<CreateDrawingLibraryCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.DrawingLibrary;
 
-        public CreateDrawingLibraryComponent() : base(ComponentInfos.CreateDrawingLibraryComponent) { }
+        public CreateDrawingLibraryComponentOLD() : base(ComponentInfos.CreateDrawingLibraryComponent) { }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
@@ -42,9 +43,9 @@ namespace GTDrawingLink.Components
 
             string text = directoryName.TrimEnd('\\');
             plugin.SetAttribute("WorkingDirectory1", text.Substring(0, Math.Min(text.Length, 79)));
-            plugin.SetAttribute("WorkingDirectory2", (text.Length > 79) ? text.Substring(79, Math.Min(text.Length - 79, 79)) : "");
-            plugin.SetAttribute("WorkingDirectory3", (text.Length > 158) ? text.Substring(158, Math.Min(text.Length - 158, 79)) : "");
-            plugin.SetAttribute("WorkingDirectory4", (text.Length > 237) ? text.Substring(237, Math.Min(text.Length - 237, 79)) : "");
+            plugin.SetAttribute("WorkingDirectory2", text.Length > 79 ? text.Substring(79, Math.Min(text.Length - 79, 79)) : "");
+            plugin.SetAttribute("WorkingDirectory3", text.Length > 158 ? text.Substring(158, Math.Min(text.Length - 158, 79)) : "");
+            plugin.SetAttribute("WorkingDirectory4", text.Length > 237 ? text.Substring(237, Math.Min(text.Length - 237, 79)) : "");
 
             plugin.Insert();
             return plugin;
@@ -62,7 +63,7 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class CreateDrawingLibraryCommand : CommandBase
+    public class CreateDrawingLibraryCommandOLD : CommandBase
     {
         private readonly InputParam<ViewBase> _inView = new InputParam<ViewBase>(ParamInfos.ViewBase);
         private readonly InputPoint _inPoint = new InputPoint(ParamInfos.InsertionPoint);
