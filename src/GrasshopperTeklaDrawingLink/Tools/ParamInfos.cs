@@ -1822,6 +1822,12 @@ namespace GTDrawingLink.Tools
             Description = "Leader line starting point"
         };
 
-        
+        public static readonly GH_InstanceDescription AngleDimension = new GH_InstanceDescription
+        {
+            Name = "Angle Dimension",
+            NickName = "Dim",
+            Description = "Angle Dimension"
+        };
+
     }
 }
