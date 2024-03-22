@@ -390,6 +390,10 @@ namespace GTDrawingLink.Tools
                 "368A230A-B959-40FE-B360-7578418E3243"
             },
             {
+                typeof(CreateSymbolComponent),
+                "26FF9BF1-01D3-465E-82FA-823FDE1EDCC5"
+            },
+            {
                 typeof(CreateSymbolComponentOLD),
                 "6B4A446F-BE7D-4267-974A-40F5B16FC483"
             },
