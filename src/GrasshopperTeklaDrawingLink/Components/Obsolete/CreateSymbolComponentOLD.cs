@@ -4,19 +4,21 @@ using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateSymbolComponent : CreateDatabaseObjectComponentBaseNew<CreateSymbolCommand>
+    [Obsolete]
+    public class CreateSymbolComponentOLD : CreateDatabaseObjectComponentBaseNew<CreateSymbolCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.Symbol;
 
-        public CreateSymbolComponent() : base(ComponentInfos.CreateSymbolComponent) { }
+        public CreateSymbolComponentOLD() : base(ComponentInfos.CreateSymbolComponent) { }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
@@ -48,7 +50,7 @@ namespace GTDrawingLink.Components
         }
     }
 
-    public class CreateSymbolCommand : CommandBase
+    public class CreateSymbolCommandOLD : CommandBase
     {
         private readonly InputParam<ViewBase> _inView = new InputParam<ViewBase>(ParamInfos.ViewBase);
         private readonly InputListPoint _inPoints = new InputListPoint(ParamInfos.InsertionPoint);
