@@ -1,21 +1,22 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateAngleDimensionComponent : CreateDatabaseObjectComponentBase
+    [Obsolete]
+    public class CreateAngleDimensionComponentOLD : CreateDatabaseObjectComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.CreateAngleDimension;
 
-        public CreateAngleDimensionComponent() : base(ComponentInfos.CreateAngleDimensionComponent)
+        public CreateAngleDimensionComponentOLD() : base(ComponentInfos.CreateAngleDimensionComponent)
         {
         }
 
