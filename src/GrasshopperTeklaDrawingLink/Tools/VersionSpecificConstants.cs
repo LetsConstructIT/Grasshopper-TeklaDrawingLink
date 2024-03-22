@@ -470,6 +470,10 @@ namespace GTDrawingLink.Tools
                 "7DB6A0CB-4D87-47FA-A7E9-FA34DD908BEE"
             },
             {
+                typeof(CreateAssociativeNoteComponent),
+                "CA0BD263-FD65-4145-A31E-F8740A3C12C1"
+            },
+            {
                 typeof(CreateAssociativeNoteComponentOLD),
                 "7D4A48E0-1CB9-4D49-BAD6-8B04494C532E"
             },
