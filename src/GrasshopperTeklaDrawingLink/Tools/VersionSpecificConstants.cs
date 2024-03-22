@@ -510,6 +510,10 @@ namespace GTDrawingLink.Tools
                 "17ADE8BF-8120-43F4-9822-95E05E875428"
             },
             {
+                typeof(CreatePolylineComponent),
+                "620639B5-25F4-4636-835C-E5EDE57803BB"
+            },
+            {
                 typeof(CreatePolylineComponentOLD),
                 "EF81C339-5E7D-4D35-A8D5-2E1FEF1C4ACF"
             },
