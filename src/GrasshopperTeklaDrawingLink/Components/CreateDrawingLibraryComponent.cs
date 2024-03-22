@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
-using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components
 {
@@ -21,6 +20,16 @@ namespace GTDrawingLink.Components
         {
             (ViewBase View, Point3d Point, string FilePath, double scale) = _command.GetInputValues();
 
+            var plugin = InsertPlugin(View, Point, FilePath, scale);
+
+            _command.SetOutputValues(DA, plugin);
+
+            DrawingInteractor.CommitChanges();
+            return new List<DatabaseObject>() { plugin };
+        }
+
+        private Plugin InsertPlugin(ViewBase View, Point3d Point, string FilePath, double scale)
+        {
             var (fileName, directoryName) = ParsePath(FilePath);
 
             var newPluginInput = new PluginPickerInput();
@@ -38,11 +47,7 @@ namespace GTDrawingLink.Components
             plugin.SetAttribute("WorkingDirectory4", (text.Length > 237) ? text.Substring(237, Math.Min(text.Length - 237, 79)) : "");
 
             plugin.Insert();
-
-            _command.SetOutputValues(DA, plugin);
-
-            DrawingInteractor.CommitChanges();
-            return new List<DatabaseObject>() { plugin };
+            return plugin;
         }
 
         private (string FileName, string DirectoryName) ParsePath(string filePath)
