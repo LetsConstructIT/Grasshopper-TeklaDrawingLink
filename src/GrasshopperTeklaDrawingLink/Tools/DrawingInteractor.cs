@@ -139,7 +139,7 @@ namespace GTDrawingLink.Tools
 
         internal static bool DeleteObjects(IEnumerable<DrawingObject> drawingObjects)
         {
-            if (drawingObjects.Any(o => o is Mark))
+            if (HasAnyTrueMarks(drawingObjects))
             {
                 Highlight(drawingObjects);
 
@@ -157,5 +157,8 @@ namespace GTDrawingLink.Tools
                 return statuses.All(s => s);
             }
         }
+
+        private static bool HasAnyTrueMarks(IEnumerable<DrawingObject> drawingObjects)
+            => drawingObjects.Any(o => o is Mark && !(o as Mark).IsAssociativeNote);
     }
 }
