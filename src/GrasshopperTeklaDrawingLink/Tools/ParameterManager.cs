@@ -485,7 +485,7 @@ namespace GTDrawingLink.Tools
                     }
                     else
                     {
-                        var castedToExpectedType = value.Select(v => v.Value as T);
+                        var castedToExpectedType = value.Select(v => v?.Value as T);
                         if (castedToExpectedType.Any(o => o is null))
                         {
                             return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
