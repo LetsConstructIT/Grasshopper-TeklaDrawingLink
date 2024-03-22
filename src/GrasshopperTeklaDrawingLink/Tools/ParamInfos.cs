@@ -1744,7 +1744,6 @@ namespace GTDrawingLink.Tools
             Description = "Section mark attributes file name"
         };
 
-
         public static readonly GH_InstanceDescription SplitPoint = new GH_InstanceDescription
         {
             Name = "Point",
@@ -1778,6 +1777,27 @@ namespace GTDrawingLink.Tools
             Name = "Top most views",
             NickName = "Top",
             Description = "Gets all the views that are placed directly in the drawing container."
+        };
+
+        public static readonly GH_InstanceDescription LevelMarkInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion point",
+            NickName = "IP",
+            Description = "Insertion point of the Level Mark"
+        };
+
+        public static readonly GH_InstanceDescription LevelMarkBasePoint = new GH_InstanceDescription
+        {
+            Name = "Base point",
+            NickName = "BP",
+            Description = "Base point of the Level Mark"
+        };
+
+        public static readonly GH_InstanceDescription LevelMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Mark attributes",
+            NickName = "MA",
+            Description = "Level mark attributes file name"
         };
     }
 }
