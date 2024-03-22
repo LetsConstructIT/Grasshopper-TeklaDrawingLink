@@ -73,7 +73,7 @@ namespace GTDrawingLink.Components.Annotations
         private readonly InputTreeNumber _inRadius = new InputTreeNumber(ParamInfos.DetailRadius, isOptional: true);
         private readonly InputTreePoint _inLabelPoint = new InputTreePoint(ParamInfos.DetailLabelPoint);
         private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.DetailMarkAttributes, isOptional: true);
-        private readonly InputTreeParam<string> _inName = new InputTreeParam<string>(ParamInfos.Name);
+        private readonly InputTreeString _inName = new InputTreeString(ParamInfos.Name);
 
         private readonly OutputTreeParam<DatabaseObject> _outMark = new OutputTreeParam<DatabaseObject>(ParamInfos.Mark, 0);
 
