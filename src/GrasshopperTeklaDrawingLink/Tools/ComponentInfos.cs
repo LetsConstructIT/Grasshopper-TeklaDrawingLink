@@ -1050,5 +1050,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Geometry
         };
+
+        public static readonly GH_InstanceDescription PlacingBaseComponent = new GH_InstanceDescription
+        {
+            Name = "Placing Type",
+            NickName = "Placing",
+            Description = "Placing type for Tekla drawing Marks/Texts",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };        
     }
 }

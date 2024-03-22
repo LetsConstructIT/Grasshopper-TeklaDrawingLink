@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Components.AttributesComponents;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Tools
@@ -1799,5 +1800,28 @@ namespace GTDrawingLink.Tools
             NickName = "MA",
             Description = "Level mark attributes file name"
         };
+
+        public static readonly GH_InstanceDescription PlacingType = new GH_InstanceDescription
+        {
+            Name = "Placing Type",
+            NickName = "PT",
+            Description = "Placing type for the drawing object"
+        };
+
+        public static readonly GH_InstanceDescription LeaderLineType = new GH_InstanceDescription
+        {
+            Name = "Leader Type",
+            NickName = "LT",
+            Description = $"Leader line type:\n{EnumHelpers.EnumToString<LeaderLineType>()}\nRight-click to set"
+        };
+
+        public static readonly GH_InstanceDescription LeaderLineStartingPoint = new GH_InstanceDescription
+        {
+            Name = "Starting Point",
+            NickName = "P",
+            Description = "Leader line starting point"
+        };
+
+        
     }
 }

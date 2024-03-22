@@ -644,6 +644,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetSelectedModelObjectComponent),
                 "4A4F31A7-66AC-422D-8239-71CAC78EA899"
+            },
+            {
+                typeof(PlacingBaseParam),
+                "DB23821E-C5D1-48CC-AA1F-DF4D4BCE0FAC"
+            },
+            {
+                typeof(PlacingBaseComponent),
+                "6A659AE3-3DE0-4B36-950C-2D90E56636B0"
             }
         };
 
