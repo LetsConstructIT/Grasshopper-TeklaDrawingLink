@@ -1843,5 +1843,18 @@ namespace GTDrawingLink.Tools
             Description = "Polygon attributes"
         };
 
+        public static readonly GH_InstanceDescription PolygonMode = new GH_InstanceDescription
+        {
+            Name = "Insert as polygon",
+            NickName = "Polygon",
+            Description = "Polygon object will be created"
+        };
+
+        public static readonly GH_InstanceDescription CloudMode = new GH_InstanceDescription
+        {
+            Name = "Insert as cloud",
+            NickName = "Cloud",
+            Description = "Cloud object will be created"
+        };
     }
 }

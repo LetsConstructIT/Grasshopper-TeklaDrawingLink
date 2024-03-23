@@ -1,4 +1,5 @@
-﻿using Grasshopper.Kernel;
+﻿using GH_IO.Serialization;
+using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
@@ -12,10 +13,14 @@ namespace GTDrawingLink.Components.Annotations
 {
     public class CreatePolygonComponent : CreateDatabaseObjectComponentBaseNew<CreatePolygonCommand>
     {
+        private InsertionMode _mode = InsertionMode.Polygon;
         public override GH_Exposure Exposure => GH_Exposure.quarternary;
         protected override Bitmap Icon => Properties.Resources.Polygon;
 
-        public CreatePolygonComponent() : base(ComponentInfos.CreatePolygonComponent) { }
+        public CreatePolygonComponent() : base(ComponentInfos.CreatePolygonComponent)
+        {
+            SetCustomMessage();
+        }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
@@ -25,13 +30,13 @@ namespace GTDrawingLink.Components.Annotations
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();
-            var outputObjects = new List<Polygon>();
+            var outputObjects = new List<ClosedGraphicObject>();
 
             for (int i = 0; i < strategy.Iterations; i++)
             {
                 var path = strategy.GetPath(i);
 
-                var polyline = InsertPolygon(views.Get(path),
+                var polyline = InsertClosedObject(views.Get(path),
                                               geometries.Get(i, inputMode).GetMergedBoundaryPoints(false),
                                               attributes.Get(i, inputMode));
 
@@ -45,18 +50,91 @@ namespace GTDrawingLink.Components.Annotations
             return outputObjects;
         }
 
-        private static Polygon InsertPolygon(ViewBase view,
-                                               IEnumerable<TSG.Point> points,
-                                               Polygon.PolygonAttributes attributes)
+        private ClosedGraphicObject InsertClosedObject(ViewBase view,
+                                                              IEnumerable<TSG.Point> points,
+                                                              ClosedGraphicObject.ClosedGraphicObjectAttributes attributes)
         {
             var pointList = new PointList();
             foreach (var point in points)
                 pointList.Add(point);
-           
-            var line = new Polygon(view, pointList, attributes);
-            line.Insert();
-            
-            return line;
+
+            ClosedGraphicObject closedObject = null;
+            switch (_mode)
+            {
+                case InsertionMode.Polygon:
+                    closedObject = new Polygon(view, pointList, new Polygon.PolygonAttributes()
+                    {
+                        Hatch = attributes.Hatch,
+                        Line = attributes.Line,
+                    });
+                    closedObject.Insert();
+                    break;
+                case InsertionMode.Cloud:
+                    closedObject = new Cloud(view, pointList, new Cloud.CloudAttributes()
+                    {
+                        Hatch = attributes.Hatch,
+                        Line = attributes.Line,
+                    });
+                    closedObject.Insert();
+                    break;
+                default:
+                    break;
+            }
+
+            return closedObject;
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, ParamInfos.PolygonMode.Name, PolygonMenuItem_Clicked, true, _mode == InsertionMode.Polygon).ToolTipText = ParamInfos.PolygonMode.Description;
+            Menu_AppendItem(menu, ParamInfos.CloudMode.Name, CloudMenuItem_Clicked, true, _mode == InsertionMode.Cloud).ToolTipText = ParamInfos.CloudMode.Description;
+            Menu_AppendSeparator(menu);
+        }
+
+        private void PolygonMenuItem_Clicked(object sender, System.EventArgs e)
+        {
+            _mode = InsertionMode.Polygon;
+            SetCustomMessage();
+            ExpireSolution(recompute: true);
+        }
+
+        private void CloudMenuItem_Clicked(object sender, System.EventArgs e)
+        {
+            _mode = InsertionMode.Cloud;
+            SetCustomMessage();
+            ExpireSolution(recompute: true);
+        }
+
+        private void SetCustomMessage()
+        {
+            Message = _mode switch
+            {
+                InsertionMode.Polygon => "Polygon",
+                InsertionMode.Cloud => "Cloud",
+                _ => "",
+            };
+        }
+
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32(ParamInfos.DimensionLineAlwaysMode.Name, (int)_mode);
+            return base.Write(writer);
+        }
+
+        public override bool Read(GH_IReader reader)
+        {
+            var serializedInt = 0;
+            reader.TryGetInt32(ParamInfos.DimensionLineAlwaysMode.Name, ref serializedInt);
+            _mode = (InsertionMode)serializedInt;
+            SetCustomMessage();
+            return base.Read(reader);
+        }
+
+        enum InsertionMode
+        {
+            Polygon,
+            Cloud
         }
     }
 
