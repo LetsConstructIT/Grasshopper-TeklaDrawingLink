@@ -1,22 +1,25 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Components.Views;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Views
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateSectionViewComponent : CreateViewBaseComponent
+    [Obsolete]
+    public class CreateSectionViewComponentOLD : CreateViewBaseComponent
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.SectionView;
 
         private int _defaultDepth = 500;
 
-        public CreateSectionViewComponent()
+        public CreateSectionViewComponentOLD()
             : base(ComponentInfos.CreateSectionViewComponent)
         {
         }
