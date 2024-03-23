@@ -1829,5 +1829,19 @@ namespace GTDrawingLink.Tools
             Description = "Angle Dimension"
         };
 
+        public static readonly GH_InstanceDescription Polygon = new GH_InstanceDescription
+        {
+            Name = "Polygon",
+            NickName = "PL",
+            Description = "Tekla Polygon"
+        };
+
+        public static readonly GH_InstanceDescription PolygonAttributes = new GH_InstanceDescription
+        {
+            Name = "Polygon attributes",
+            NickName = "PLAttr",
+            Description = "Polygon attributes"
+        };
+
     }
 }

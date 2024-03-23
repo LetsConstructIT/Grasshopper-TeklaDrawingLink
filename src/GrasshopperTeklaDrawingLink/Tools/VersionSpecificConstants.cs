@@ -677,6 +677,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(PlacingBaseComponent),
                 "6A659AE3-3DE0-4B36-950C-2D90E56636B0"
+            },
+            {
+                typeof(CreatePolygonComponent),
+                "3E0A47DF-CE72-45CD-8237-C396632D1D7A"
+            },
+            {
+                typeof(PolygonAttributesParam),
+                "3B8E033D-5364-44EF-B216-1AFB0AF3F1B2"
+            },
+            {
+                typeof(PolygonAttributesComponent),
+                "3F9C1B97-1895-41C5-8C73-DD1E98430433"
             }
         };
 

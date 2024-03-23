@@ -798,7 +798,7 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
-        
+
         public static readonly GH_InstanceDescription PerformNumberingComponent = new GH_InstanceDescription
         {
             Name = "Perform Numbering",
@@ -1058,6 +1058,24 @@ namespace GTDrawingLink.Tools
             Description = "Placing type for Tekla drawing Marks/Texts",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
-        };        
+        };
+
+        public static readonly GH_InstanceDescription CreatePolygonComponent = new GH_InstanceDescription
+        {
+            Name = "Polygon",
+            NickName = "POLY",
+            Description = "Draw Polygon in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription PolygonAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Polygon Attributes",
+            NickName = "POLYAttr",
+            Description = "Create polygon attribute.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
     }
 }
