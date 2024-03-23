@@ -83,11 +83,11 @@ namespace GTDrawingLink.Components.Views
             SetCustomMessage();
         }
 
-        protected void LoadAttributesWithMacroIfNecessary(Tekla.Structures.Drawing.View view, string attributesName)
+        protected bool LoadAttributesWithMacroIfNecessary(Tekla.Structures.Drawing.View view, string attributesName)
         {
             if (!_loadAttributesWithMacro ||
                 string.IsNullOrEmpty(attributesName))
-                return;
+                return false;
 
             DrawingInteractor.Highlight(view);
 
@@ -96,6 +96,8 @@ namespace GTDrawingLink.Components.Views
                         .SaveMacroAndReturnRelativePath(macroContent);
 
             Tekla.Structures.Model.Operations.Operation.RunMacro(macroPath);
+            return true;
+
         }
 
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
