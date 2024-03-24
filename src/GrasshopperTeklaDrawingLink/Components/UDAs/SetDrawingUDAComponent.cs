@@ -1,17 +1,13 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.UDAs
 {
     public class SetDrawingUDAComponent : TeklaComponentBase
     {

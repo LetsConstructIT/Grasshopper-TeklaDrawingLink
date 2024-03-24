@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.UDAs
 {
     public class GetDrawingUDAValueComponent : TeklaComponentBase
     {
