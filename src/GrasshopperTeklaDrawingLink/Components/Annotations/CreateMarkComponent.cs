@@ -7,7 +7,7 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.DrawingInternal;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Annotations
 {
     public class CreateMarkComponent : CreateDatabaseObjectComponentBaseNew<CreateMarkCommand>
     {

@@ -10,7 +10,7 @@ using System.Drawing;
 using Tekla.Structures.Drawing;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Annotations
+namespace GTDrawingLink.Components.Dimensions
 {
     public class CreateAngleDimensionComponent : CreateDatabaseObjectComponentBaseNew<CreateAngleDimensionCommand>
     {
@@ -19,7 +19,7 @@ namespace GTDrawingLink.Components.Annotations
 
         public CreateAngleDimensionComponent() : base(ComponentInfos.CreateAngleDimensionComponent) { }
 
-        protected override IEnumerable<TSD.DatabaseObject> InsertObjects(IGH_DataAccess DA)
+        protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             (var views, var originPts, var pts1, var pts2, var distances, var attributes) = _command.GetInputValues();
 

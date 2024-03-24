@@ -8,7 +8,7 @@ using TSD = Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 using Grasshopper.Kernel.Types;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Dimensions
 {
     public class DeconstructDimensionSetComponent : DeconstructDatabaseObjectComponentBase
     {

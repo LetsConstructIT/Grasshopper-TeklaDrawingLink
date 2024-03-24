@@ -15,7 +15,7 @@ namespace GTDrawingLink.Tools
             public static readonly string Misc = "      Misc";
             public static readonly string Udas = "    UDAs";
             public static readonly string Plugins = "   Plugins";
-            public static readonly string Dimensions = "  Dimensioning";
+            public static readonly string Dimensions = "  Dimensions";
             public static readonly string Annotations = " Annotations";
             public static readonly string Modify = "Modify";
         }

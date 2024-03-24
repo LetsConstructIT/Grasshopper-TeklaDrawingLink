@@ -7,7 +7,7 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Dimensions
 {
     public class OrderStraightDimensionSetComponent : TeklaComponentBaseNew<OrderStraightDimensionSetCommand>
     {
@@ -106,7 +106,7 @@ namespace GTDrawingLink.Components
             {
                 var delta = 30;
                 var angleToVertical = perpVector.GetAngleBetween(new Vector(0, 1, 0)) * 180 / Math.PI;
-                return angleToVertical < delta || angleToVertical > (180 - delta);
+                return angleToVertical < delta || angleToVertical > 180 - delta;
             }
         }
     }

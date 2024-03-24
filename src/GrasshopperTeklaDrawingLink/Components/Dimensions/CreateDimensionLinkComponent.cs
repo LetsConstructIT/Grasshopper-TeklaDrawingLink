@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Dimensions
 {
     public class CreateDimensionLinkComponent : CreateDatabaseObjectComponentBase
     {
@@ -61,7 +61,7 @@ namespace GTDrawingLink.Components
 
         private bool AreParallel(StraightDimensionSet straightDimensionSet1, StraightDimensionSet straightDimensionSet2)
         {
-            var angle = (180 / Math.PI) * straightDimensionSet1.GetUpDirection().GetAngleBetween(straightDimensionSet2.GetUpDirection());
+            var angle = 180 / Math.PI * straightDimensionSet1.GetUpDirection().GetAngleBetween(straightDimensionSet2.GetUpDirection());
 
             var tol = 0.5;
             return angle < tol || angle > 180 - tol;

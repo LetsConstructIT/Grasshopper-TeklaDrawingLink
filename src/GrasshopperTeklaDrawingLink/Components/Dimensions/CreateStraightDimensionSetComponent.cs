@@ -13,7 +13,7 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components.Annotations
+namespace GTDrawingLink.Components.Dimensions
 {
     public class CreateStraightDimensionSetComponent : CreateDatabaseObjectComponentBaseNew<CreateStraightDimensionSetCommand>
     {
@@ -120,14 +120,14 @@ namespace GTDrawingLink.Components.Annotations
             Menu_AppendSeparator(menu);
         }
 
-        private void AlwaysModeMenuItem_Clicked(object sender, System.EventArgs e)
+        private void AlwaysModeMenuItem_Clicked(object sender, EventArgs e)
         {
             _mode = InsertionMode.Always;
             SetCustomMessage();
             ExpireSolution(recompute: true);
         }
 
-        private void ProjectionLimitModeMenuItem_Clicked(object sender, System.EventArgs e)
+        private void ProjectionLimitModeMenuItem_Clicked(object sender, EventArgs e)
         {
             _mode = InsertionMode.WhenMoreThan2Points;
             SetCustomMessage();

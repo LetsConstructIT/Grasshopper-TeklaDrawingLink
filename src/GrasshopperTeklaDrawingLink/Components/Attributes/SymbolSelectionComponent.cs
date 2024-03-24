@@ -4,7 +4,7 @@ using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Attributes
 {
     public class SymbolSelectionComponent : TeklaComponentBaseNew<SymbolSelectionCommand>
     {
