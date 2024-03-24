@@ -8,6 +8,7 @@ using GTDrawingLink.Components.Miscs.Loops;
 using GTDrawingLink.Components.ModifyComponents;
 using GTDrawingLink.Components.Obsolete;
 using GTDrawingLink.Components.Parts;
+using GTDrawingLink.Components.Plugins;
 using GTDrawingLink.Components.UDAs;
 using GTDrawingLink.Components.Views;
 using GTDrawingLink.Types;

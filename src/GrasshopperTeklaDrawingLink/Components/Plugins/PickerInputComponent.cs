@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Plugins
 {
     public class PickerInputComponent : TeklaComponentBase, IGH_VariableParameterComponent
     {
@@ -35,7 +35,7 @@ namespace GTDrawingLink.Components
         public bool CanRemoveParameter(GH_ParameterSide side, int index)
         {
             return side == GH_ParameterSide.Input &&
-                base.Params.Input.Count > 1;
+                Params.Input.Count > 1;
         }
 
         public IGH_Param CreateParameter(GH_ParameterSide side, int index)
@@ -64,8 +64,8 @@ namespace GTDrawingLink.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            PickerInputGoo[][] pickerInputInputs = new PickerInputGoo[base.Params.Input.Count][];
-            for (int j = 0; j < base.Params.Input.Count; j++)
+            PickerInputGoo[][] pickerInputInputs = new PickerInputGoo[Params.Input.Count][];
+            for (int j = 0; j < Params.Input.Count; j++)
             {
                 List<PickerInputGoo> pickerInput = new List<PickerInputGoo>();
                 if (!DA.GetDataList(j, pickerInput))

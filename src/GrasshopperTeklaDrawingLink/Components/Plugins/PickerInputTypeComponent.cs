@@ -10,7 +10,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Plugins
 {
     public class PickerInputTypeComponent : TeklaComponentBase
     {
@@ -25,14 +25,14 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, "Drawing object input", ObjectType_Clicked, true, _type == InputTypeMode.Object);
-            GH_DocumentObject.Menu_AppendItem(menu, "Drawing object and point input", ObjectAndPointType_Clicked, true, _type == InputTypeMode.ObjectAndPoint);
-            GH_DocumentObject.Menu_AppendItem(menu, "View and One point", OnePointType_Clicked, true, _type == InputTypeMode.OnePoint);
-            GH_DocumentObject.Menu_AppendItem(menu, "View and Two points", TwoPointsType_Clicked, true, _type == InputTypeMode.TwoPoints);
-            GH_DocumentObject.Menu_AppendItem(menu, "View and Three points", ThreePointsType_Clicked, true, _type == InputTypeMode.ThreePoints);
-            GH_DocumentObject.Menu_AppendItem(menu, "View and N points", NPointsType_Clicked, true, _type == InputTypeMode.NPoints);
-            GH_DocumentObject.Menu_AppendItem(menu, "Interrupt", InterruptType_Clicked, true, _type == InputTypeMode.Interrupt);
-            GH_DocumentObject.Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, "Drawing object input", ObjectType_Clicked, true, _type == InputTypeMode.Object);
+            Menu_AppendItem(menu, "Drawing object and point input", ObjectAndPointType_Clicked, true, _type == InputTypeMode.ObjectAndPoint);
+            Menu_AppendItem(menu, "View and One point", OnePointType_Clicked, true, _type == InputTypeMode.OnePoint);
+            Menu_AppendItem(menu, "View and Two points", TwoPointsType_Clicked, true, _type == InputTypeMode.TwoPoints);
+            Menu_AppendItem(menu, "View and Three points", ThreePointsType_Clicked, true, _type == InputTypeMode.ThreePoints);
+            Menu_AppendItem(menu, "View and N points", NPointsType_Clicked, true, _type == InputTypeMode.NPoints);
+            Menu_AppendItem(menu, "Interrupt", InterruptType_Clicked, true, _type == InputTypeMode.Interrupt);
+            Menu_AppendSeparator(menu);
         }
 
         private void ObjectType_Clicked(object sender, EventArgs e)
@@ -195,7 +195,7 @@ namespace GTDrawingLink.Components
 
         private void SetCustomMessage()
         {
-            base.Message = _type.ToString();
+            Message = _type.ToString();
         }
 
         enum InputTypeMode

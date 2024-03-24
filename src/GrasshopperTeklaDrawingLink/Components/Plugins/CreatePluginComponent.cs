@@ -10,7 +10,7 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Annotations
+namespace GTDrawingLink.Components.Plugins
 {
     public class CreatePluginComponent : CreateDatabaseObjectComponentBaseNew<CreatePluginCommand>
     {
