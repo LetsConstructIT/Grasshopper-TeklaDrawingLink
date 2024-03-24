@@ -73,7 +73,7 @@ namespace GTDrawingLink.Components.Obsolete
             var attributeFileNames = new List<string>();
             DA.GetDataList(ParamInfos.Attributes.Name, attributeFileNames);
 
-            var attributes = new List<Attributes>();
+            var attributes = new List<Tools.Attributes>();
             var inputAttributes = new List<string>();
             if (DA.GetDataList(ParamInfos.PluginAttributes.Name, inputAttributes))
             {
@@ -124,7 +124,7 @@ namespace GTDrawingLink.Components.Obsolete
                                     ViewBase viewBase,
                                     PluginPickerInput pickerInput,
                                     string attributeFileNames,
-                                    Attributes attributes,
+                                    Tools.Attributes attributes,
                                     List<GH_Goo<DatabaseObject>> objectsToSelect)
         {
             var plugin = new Plugin(viewBase, pluginName);
@@ -153,7 +153,7 @@ namespace GTDrawingLink.Components.Obsolete
             return plugin;
         }
 
-        private void ApplyAttributes(Plugin plugin, Attributes attributes)
+        private void ApplyAttributes(Plugin plugin, Tools.Attributes attributes)
         {
             if (attributes == null)
                 return;

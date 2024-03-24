@@ -36,7 +36,7 @@ namespace GTDrawingLink.Components.Plugins
                 var path = strategy.GetPath(i);
 
                 var rawPluginAttribute = pluginAttributes.Get(i, inputMode);
-                var pluginAttribute = new Attributes();
+                var pluginAttribute = new Tools.Attributes();
                 try
                 {
                     pluginAttribute = Tools.Attributes.Parse(rawPluginAttribute);
@@ -68,7 +68,7 @@ namespace GTDrawingLink.Components.Plugins
                                     string pluginName,
                                     PluginPickerInput pickerInput,
                                     string attributeFileName,
-                                    Attributes attributes,
+                                    Tools.Attributes attributes,
                                     List<DrawingObject> objectsToSelect)
         {
             var plugin = new Plugin(viewBase, pluginName);
@@ -88,7 +88,7 @@ namespace GTDrawingLink.Components.Plugins
             return plugin;
         }
 
-        private void ApplyAttributes(Plugin plugin, Attributes attributes)
+        private void ApplyAttributes(Plugin plugin, Tools.Attributes attributes)
         {
             if (attributes == null)
                 return;

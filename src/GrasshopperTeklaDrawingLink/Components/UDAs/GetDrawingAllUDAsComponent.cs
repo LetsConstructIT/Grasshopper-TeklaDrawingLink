@@ -33,7 +33,7 @@ namespace GTDrawingLink.Components.UDAs
             if (databaseObjects == null || !databaseObjects.Any())
                 return;
 
-            var attributes = new List<Attributes>();
+            var attributes = new List<Tools.Attributes>();
             foreach (DatabaseObject modelObject in databaseObjects)
             {
                 var localAttributes = AttributesIO.GetAll(modelObject);

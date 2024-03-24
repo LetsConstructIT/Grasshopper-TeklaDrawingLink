@@ -40,10 +40,10 @@ namespace GTDrawingLink.Components.UDAs
             if (udas == null || !udas.Any())
                 return;
 
-            List<Attributes> attributes = new List<Attributes>();
+            var attributes = new List<Tools.Attributes>();
             foreach (string uda in udas)
             {
-                Attributes item = null;
+                Tools.Attributes item = null;
                 if (!string.IsNullOrWhiteSpace(uda))
                     item = Tools.Attributes.Parse(uda);
 
@@ -53,7 +53,7 @@ namespace GTDrawingLink.Components.UDAs
             for (int i = 0; i < databaseObjects.Count; i++)
             {
                 var databaseObject = databaseObjects[i];
-                Attributes uDAs = attributes[Math.Min(i, attributes.Count - 1)];
+                var uDAs = attributes[Math.Min(i, attributes.Count - 1)];
                 AttributesIO.SetUDAs(databaseObject, uDAs);
             }
 
