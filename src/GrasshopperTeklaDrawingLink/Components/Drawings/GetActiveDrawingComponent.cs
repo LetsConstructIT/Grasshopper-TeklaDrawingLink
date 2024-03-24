@@ -3,7 +3,7 @@ using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Drawings
 {
     public class GetActiveDrawingComponent : TeklaComponentBase
     {

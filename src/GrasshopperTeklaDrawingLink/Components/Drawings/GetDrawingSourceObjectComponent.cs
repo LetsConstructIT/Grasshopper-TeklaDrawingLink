@@ -6,7 +6,7 @@ using System.Drawing;
 using Tekla.Structures;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Drawings
 {
     public class GetDrawingSourceObjectComponent : TeklaComponentBase
     {

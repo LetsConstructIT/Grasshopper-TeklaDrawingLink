@@ -7,7 +7,7 @@ using Tekla.Structures.Model;
 using TSMUI = Tekla.Structures.Model.UI;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Drawings
 {
     public class GetDrawingsFromModelObjectComponent : TeklaComponentBaseNew<GetDrawingsFromModelObjectCommand>
     {
@@ -70,7 +70,7 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
         }
     }
 

@@ -3,21 +3,22 @@ using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
+using TSM = Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Drawings
 {
-    public class CreateADrawingComponent : TeklaComponentBase
+    public class CreateWDrawingComponent : TeklaComponentBase
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
-        protected override Bitmap Icon => Properties.Resources.CreateADrawing;
+        protected override Bitmap Icon => Properties.Resources.CreateWDrawing;
 
         private int _defaultInt = -1;
-        public CreateADrawingComponent() : base(ComponentInfos.CreateADrawingComponent)
+        public CreateWDrawingComponent() : base(ComponentInfos.CreateWDrawingComponent)
         {
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Assembly", "A", "Assembly", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Part", "P", "Model part", GH_ParamAccess.item);
             AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.item, true);
 
             pManager.AddIntegerParameter("Sheet number", "SheetNumber", "The sheet number of the drawing.", GH_ParamAccess.item);
@@ -32,14 +33,14 @@ namespace GTDrawingLink.Components
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             dynamic dynamicObject = null;
-            var parameterSet = DA.GetData("Assembly", ref dynamicObject);
+            var parameterSet = DA.GetData("Part", ref dynamicObject);
             if (!parameterSet)
                 return;
 
-            var assembly = DynamicModelObjectConverter.GetAssembly(dynamicObject);
-            if (assembly == null)
+            var part = dynamicObject.Value as TSM.Part;
+            if (part == null)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided input could not be converted to Assembly");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided input could not be converted to Model Object");
                 return;
             }
 
@@ -54,11 +55,11 @@ namespace GTDrawingLink.Components
             var sheetNumber = _defaultInt;
             DA.GetData("Sheet number", ref sheetNumber);
 
-            var identifier = assembly.Identifier;
+            var identifier = part.Identifier;
 
-            AssemblyDrawing createdDrawing = sheetNumber == _defaultInt ?
-                new AssemblyDrawing(identifier, attributesFileName) :
-                new AssemblyDrawing(identifier, sheetNumber, attributesFileName);
+            SinglePartDrawing createdDrawing = sheetNumber == _defaultInt ?
+                new SinglePartDrawing(identifier, attributesFileName) :
+                new SinglePartDrawing(identifier, sheetNumber, attributesFileName);
 
             if (createdDrawing != null)
             {

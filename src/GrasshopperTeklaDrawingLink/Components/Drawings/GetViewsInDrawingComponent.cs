@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using Tekla.Structures.Drawing;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Drawings
 {
     public class GetViewsInDrawingComponent : TeklaComponentBase
     {
