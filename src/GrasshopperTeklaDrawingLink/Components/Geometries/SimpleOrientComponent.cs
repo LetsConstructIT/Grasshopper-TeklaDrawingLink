@@ -7,7 +7,7 @@ using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class SimpleOrientComponent : TeklaComponentBaseNew<SimpleOrientCommand>
     {

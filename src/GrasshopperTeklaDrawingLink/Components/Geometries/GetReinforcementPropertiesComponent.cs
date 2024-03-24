@@ -9,7 +9,7 @@ using Tekla.Structures.Drawing;
 using TSG = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class GetReinforcementPropertiesComponent : TeklaComponentBaseNew<GetReinforcementPropertiesCommand>
     {
@@ -150,7 +150,7 @@ namespace GTDrawingLink.Components
         {
             if (inputObject is GH_Goo<TSM.ModelObject> modelGoo)
             {
-                return (modelGoo.Value) as TSM.Reinforcement;
+                return modelGoo.Value as TSM.Reinforcement;
             }
             else if (inputObject is TSM.ModelObject modelObject)
             {

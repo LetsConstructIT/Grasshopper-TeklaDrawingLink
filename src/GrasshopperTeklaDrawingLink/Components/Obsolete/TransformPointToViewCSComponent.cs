@@ -7,7 +7,7 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using T3D = Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Obsolete
 {
     public class TransformPointToViewCSComponent : TeklaComponentBase
     {

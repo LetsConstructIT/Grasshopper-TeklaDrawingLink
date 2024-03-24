@@ -5,7 +5,7 @@ using System.Linq;
 using Rhino.Geometry;
 using Rhino;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class FindVisibleEdgesComponent : TeklaComponentBaseNew<FindVisibleEdgesCommand>
     {

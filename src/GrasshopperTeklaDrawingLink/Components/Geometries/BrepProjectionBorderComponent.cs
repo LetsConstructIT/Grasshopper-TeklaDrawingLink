@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class BrepProjectionBorderComponent : TeklaComponentBaseNew<BrepProjectionBorderCommand>
     {

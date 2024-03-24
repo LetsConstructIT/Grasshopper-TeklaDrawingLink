@@ -12,7 +12,7 @@ using Tekla.Structures.Geometry3d;
 using TSG = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class GetBoltPropertiesComponent : TeklaComponentBaseNew<GetBoltPropertiesCommand>
     {
@@ -90,7 +90,7 @@ namespace GTDrawingLink.Components
         {
             if (inputObject is GH_Goo<TSM.ModelObject> modelGoo)
             {
-                return (modelGoo.Value) as TSM.BoltGroup;
+                return modelGoo.Value as TSM.BoltGroup;
             }
             else if (inputObject is TSM.ModelObject modelObject)
             {

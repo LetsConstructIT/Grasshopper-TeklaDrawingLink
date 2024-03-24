@@ -5,7 +5,7 @@ using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class GetCOGComponent : TeklaComponentBase
     {

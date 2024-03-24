@@ -4,7 +4,7 @@ using GTDrawingLink.Tools;
 using Rhino.Geometry;
 using System.Collections.Generic;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class DimensionBoxComponent : TeklaComponentBaseNew<DimensionBoxCommand>
     {

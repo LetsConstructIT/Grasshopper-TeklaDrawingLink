@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Geometries
 {
     public class GetGridPropertiesComponent : TeklaComponentBaseNew<GetGridPropertiesCommand>
     {
@@ -22,7 +22,7 @@ namespace GTDrawingLink.Components
 
             if (!(input is GridBase gridBase))
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided object is not a Tekla Grid");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided object is not a Tekla Grid");
                 return;
             }
 
