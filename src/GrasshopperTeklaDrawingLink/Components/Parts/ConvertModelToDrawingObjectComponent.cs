@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Tekla.Structures.Drawing;
 using TSM = Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Parts
 {
     public class ConvertModelToDrawingObjectComponent : TeklaComponentBaseNew<ConvertModelToDrawingObjectCommand>
     {
@@ -26,7 +26,7 @@ namespace GTDrawingLink.Components
             }
 
             _command.SetOutputValues(DA, drawingObjects);
-        } 
+        }
     }
 
     public class ConvertModelToDrawingObjectCommand : CommandBase

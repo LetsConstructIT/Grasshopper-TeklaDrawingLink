@@ -4,7 +4,7 @@ using GTDrawingLink.Types;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Parts
 {
     public class ConvertDrawingToModelObjectComponent : TeklaComponentBase
     {

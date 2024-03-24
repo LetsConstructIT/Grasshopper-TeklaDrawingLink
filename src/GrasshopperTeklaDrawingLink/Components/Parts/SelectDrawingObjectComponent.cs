@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Parts
 {
     public class SelectDrawingObjectComponent : TeklaComponentBase
     {
@@ -36,7 +36,7 @@ namespace GTDrawingLink.Components
             {
                 foreach (var item in branch)
                 {
-                    if (item.Value is DrawingObject drawingObject) 
+                    if (item.Value is DrawingObject drawingObject)
                         drawingObjects.Add(drawingObject);
                 }
             }

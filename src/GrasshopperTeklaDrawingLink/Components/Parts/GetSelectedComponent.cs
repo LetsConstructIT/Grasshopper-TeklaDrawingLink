@@ -4,7 +4,7 @@ using GTDrawingLink.Types;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Parts
 {
     public class GetSelectedComponent : TeklaComponentBase
     {
@@ -32,7 +32,7 @@ namespace GTDrawingLink.Components
 
             if (!trigger)
                 return;
-            
+
             var selected = new List<TeklaDatabaseObjectGoo>();
 
             var doe = DrawingInteractor.DrawingHandler
@@ -50,7 +50,7 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
         }
     }
 }
