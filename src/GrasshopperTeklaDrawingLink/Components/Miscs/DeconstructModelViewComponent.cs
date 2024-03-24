@@ -4,7 +4,7 @@ using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class DeconstructModelViewComponent : TeklaComponentBase
     {

@@ -5,7 +5,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class RunMacroComponent : TeklaComponentBase
     {
@@ -21,10 +21,10 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.ModelMacro.Name, ModelMacroMenuItem_Clicked, true, _mode == MacroMode.Model).ToolTipText = ParamInfos.ModelMacro.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.DrawingMacro.Name, DrawingMacroMenuItem_Clicked, true, _mode == MacroMode.Drawing).ToolTipText = ParamInfos.DrawingMacro.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.DynamicMacro.Name, DynamicMacroMenuItem_Clicked, true, _mode == MacroMode.Dynamic).ToolTipText = ParamInfos.DynamicMacro.Description;
-            GH_DocumentObject.Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.ModelMacro.Name, ModelMacroMenuItem_Clicked, true, _mode == MacroMode.Model).ToolTipText = ParamInfos.ModelMacro.Description;
+            Menu_AppendItem(menu, ParamInfos.DrawingMacro.Name, DrawingMacroMenuItem_Clicked, true, _mode == MacroMode.Drawing).ToolTipText = ParamInfos.DrawingMacro.Description;
+            Menu_AppendItem(menu, ParamInfos.DynamicMacro.Name, DynamicMacroMenuItem_Clicked, true, _mode == MacroMode.Dynamic).ToolTipText = ParamInfos.DynamicMacro.Description;
+            Menu_AppendSeparator(menu);
         }
 
         private void ModelMacroMenuItem_Clicked(object sender, EventArgs e)
@@ -53,16 +53,16 @@ namespace GTDrawingLink.Components
             switch (_mode)
             {
                 case MacroMode.Model:
-                    base.Message = "'modeling' directory";
+                    Message = "'modeling' directory";
                     break;
                 case MacroMode.Drawing:
-                    base.Message = "'drawing' directory";
+                    Message = "'drawing' directory";
                     break;
                 case MacroMode.Dynamic:
-                    base.Message = "on-fly macro";
+                    Message = "on-fly macro";
                     break;
                 default:
-                    base.Message = "";
+                    Message = "";
                     break;
             }
         }

@@ -7,7 +7,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class SortByKeyComponent : TeklaComponentBaseNew<SortByKeyCommand>
     {

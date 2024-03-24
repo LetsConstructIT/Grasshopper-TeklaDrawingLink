@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using TSM = Tekla.Structures.Model;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class TeklaIndexComponent : TeklaComponentBaseNew<TeklaIndexCommand>
     {
@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components
             var id = GetId(member);
             if (id == 0)
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided member is not Tekla type");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided member is not Tekla type");
                 return;
             }
 

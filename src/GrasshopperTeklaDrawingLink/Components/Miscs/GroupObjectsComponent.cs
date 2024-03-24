@@ -10,7 +10,7 @@ using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class GroupObjectsComponent : TeklaComponentBase
     {

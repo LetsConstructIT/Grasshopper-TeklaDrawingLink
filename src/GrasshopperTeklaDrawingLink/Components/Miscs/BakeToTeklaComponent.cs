@@ -3,7 +3,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class BakeToTeklaComponent : TeklaComponentBaseNew<BakeToTeklaCommand>
     {

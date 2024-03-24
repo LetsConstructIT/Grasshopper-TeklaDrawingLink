@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TSM = Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class ObjectMatchesToFilterComponent : TeklaComponentBaseNew<ObjectMatchesToFilterCommand>
     {

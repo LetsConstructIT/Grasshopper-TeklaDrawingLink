@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using GTDrawingLink.Tools;
 using System.Drawing;
 
-namespace GTDrawingLink.Components.Loops
+namespace GTDrawingLink.Components.Miscs.Loops
 {
     public class LinkParameter : GH_Param<GH_String>
     {
@@ -21,12 +21,12 @@ namespace GTDrawingLink.Components.Loops
         {
             base.AppendAdditionalMenuItems(menu);
             menu.Items.Clear();
-            this.Menu_AppendObjectName(menu);
-            GH_DocumentObject.Menu_AppendSeparator(menu);
-            this.Menu_AppendRuntimeMessages(menu);
-            GH_DocumentObject.Menu_AppendSeparator(menu);
-            this.Menu_AppendWireDisplay(menu);
-            this.Menu_AppendDisconnectWires(menu);
+            Menu_AppendObjectName(menu);
+            Menu_AppendSeparator(menu);
+            Menu_AppendRuntimeMessages(menu);
+            Menu_AppendSeparator(menu);
+            Menu_AppendWireDisplay(menu);
+            Menu_AppendDisconnectWires(menu);
         }
     }
 }

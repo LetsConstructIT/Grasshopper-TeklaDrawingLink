@@ -4,7 +4,7 @@ using GTDrawingLink.Types;
 using System.Drawing;
 using Rhino.Geometry;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class ConstructModelViewComponent : TeklaComponentBase
     {

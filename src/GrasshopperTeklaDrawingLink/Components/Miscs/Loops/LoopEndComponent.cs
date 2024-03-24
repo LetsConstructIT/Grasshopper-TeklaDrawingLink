@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GTDrawingLink.Components.Loops
+namespace GTDrawingLink.Components.Miscs.Loops
 {
     public class LoopEndComponent : TeklaComponentBase
     {

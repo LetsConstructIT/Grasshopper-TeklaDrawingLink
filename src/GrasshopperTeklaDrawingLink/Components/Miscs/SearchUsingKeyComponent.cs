@@ -7,7 +7,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class SearchUsingKeyComponent : TeklaComponentBaseNew<SearchUsingKeyCommand>
     {
@@ -28,7 +28,7 @@ namespace GTDrawingLink.Components
             {
                 var matchingIndicies = GetMatchingPaths(keys, search);
                 if (matchingIndicies.Count == 0)
-                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
 
                 foreach (var path in matchingIndicies)
                 {
@@ -39,7 +39,7 @@ namespace GTDrawingLink.Components
             {
                 var matchingIndicies = GetMatchingIndicies(keys.Objects[0], search);
                 if (matchingIndicies.Count == 0)
-                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
 
                 foreach (var path in matchingIndicies)
                     output.Append(objectsTree.Objects[0][path]);
@@ -74,14 +74,14 @@ namespace GTDrawingLink.Components
                 case InputType.Tree:
                     if (objectsTree.Paths.Count != keys.Paths.Count)
                     {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
+                        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of branches must match the number of keys");
                         return false;
                     }
                     break;
                 case InputType.ListWithCorrespondingKeys:
                     if (objectsTree.Objects[0].Count != keys.Objects[0].Count)
                     {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
+                        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The number of elements must match the number of keys");
                         return false;
                     }
                     break;

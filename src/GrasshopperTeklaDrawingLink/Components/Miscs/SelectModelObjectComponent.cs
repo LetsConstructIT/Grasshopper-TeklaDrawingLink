@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using TSM = Tekla.Structures.Model;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class SelectModelObjectComponent : TeklaComponentBaseNew<SelectModelObjectCommand>
     {

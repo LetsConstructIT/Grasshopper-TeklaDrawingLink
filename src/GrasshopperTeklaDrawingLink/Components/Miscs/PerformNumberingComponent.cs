@@ -5,7 +5,7 @@ using GTDrawingLink.Types;
 using System;
 using System.Drawing;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class PerformNumberingComponent : TeklaComponentBaseNew<PerformNumberingCommand>
     {
@@ -47,9 +47,9 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.NumberAllModified.Name, AllModifiedMenuItem_Clicked, true, _mode == NumberingMode.AllModified).ToolTipText = ParamInfos.NumberAllModified.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.NumberSelected.Name, SelectedMenuItem_Clicked, true, _mode == NumberingMode.Selected).ToolTipText = ParamInfos.NumberSelected.Description;
-            GH_DocumentObject.Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.NumberAllModified.Name, AllModifiedMenuItem_Clicked, true, _mode == NumberingMode.AllModified).ToolTipText = ParamInfos.NumberAllModified.Description;
+            Menu_AppendItem(menu, ParamInfos.NumberSelected.Name, SelectedMenuItem_Clicked, true, _mode == NumberingMode.Selected).ToolTipText = ParamInfos.NumberSelected.Description;
+            Menu_AppendSeparator(menu);
         }
 
         private void AllModifiedMenuItem_Clicked(object sender, EventArgs e)
@@ -71,10 +71,10 @@ namespace GTDrawingLink.Components
             switch (_mode)
             {
                 case NumberingMode.AllModified:
-                    base.Message = "All modified";
+                    Message = "All modified";
                     break;
                 case NumberingMode.Selected:
-                    base.Message = "Selected";
+                    Message = "Selected";
                     break;
                 default:
                     break;

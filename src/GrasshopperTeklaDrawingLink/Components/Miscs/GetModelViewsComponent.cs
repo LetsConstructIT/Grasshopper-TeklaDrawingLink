@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using TSMUI = Tekla.Structures.Model.UI;
 
-namespace GTDrawingLink.Components
+namespace GTDrawingLink.Components.Miscs
 {
     public class GetModelViewsComponent : TeklaComponentBase
     {
@@ -26,9 +26,9 @@ namespace GTDrawingLink.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.AllModelViews.Name, GetViewModeAllMenuItem_Clicked, true, _mode == GetViewMode.All).ToolTipText = ParamInfos.AllModelViews.Description;
-            GH_DocumentObject.Menu_AppendItem(menu, ParamInfos.VisibleModelViews.Name, GetViewModeVisibleMenuItem_Clicked, true, _mode == GetViewMode.Visible).ToolTipText = ParamInfos.VisibleModelViews.Description;
-            GH_DocumentObject.Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.AllModelViews.Name, GetViewModeAllMenuItem_Clicked, true, _mode == GetViewMode.All).ToolTipText = ParamInfos.AllModelViews.Description;
+            Menu_AppendItem(menu, ParamInfos.VisibleModelViews.Name, GetViewModeVisibleMenuItem_Clicked, true, _mode == GetViewMode.Visible).ToolTipText = ParamInfos.VisibleModelViews.Description;
+            Menu_AppendSeparator(menu);
         }
 
         private void GetViewModeAllMenuItem_Clicked(object sender, EventArgs e)
@@ -50,13 +50,13 @@ namespace GTDrawingLink.Components
             switch (_mode)
             {
                 case GetViewMode.All:
-                    base.Message = "All model views";
+                    Message = "All model views";
                     break;
                 case GetViewMode.Visible:
-                    base.Message = "Only visible model views";
+                    Message = "Only visible model views";
                     break;
                 default:
-                    base.Message = "";
+                    Message = "";
                     break;
             }
         }
