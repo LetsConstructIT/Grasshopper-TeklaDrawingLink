@@ -22,7 +22,7 @@ namespace GTDrawingLink.Components.Obsolete
         {
             (var views, var points, var filePaths, var scales) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(points, filePaths, scales);
+            var strategy = GetSolverStrategy(false, points, filePaths, scales);
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();

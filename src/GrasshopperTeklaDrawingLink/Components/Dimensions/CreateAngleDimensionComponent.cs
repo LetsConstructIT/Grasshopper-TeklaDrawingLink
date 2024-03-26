@@ -23,7 +23,7 @@ namespace GTDrawingLink.Components.Dimensions
         {
             (var views, var originPts, var pts1, var pts2, var distances, var attributes) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(originPts, pts1, pts2, distances, attributes);
+            var strategy = GetSolverStrategy(false, originPts, pts1, pts2, distances, attributes);
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();

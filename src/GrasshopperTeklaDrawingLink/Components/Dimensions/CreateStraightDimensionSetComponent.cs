@@ -32,7 +32,7 @@ namespace GTDrawingLink.Components.Dimensions
         {
             (var views, var dimPts, var locations, var attributes) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(dimPts, locations, attributes);
+            var strategy = GetSolverStrategy(true, dimPts, locations, attributes);
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();

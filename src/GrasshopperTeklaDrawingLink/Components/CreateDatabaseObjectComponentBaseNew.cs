@@ -111,10 +111,12 @@ namespace GTDrawingLink.Components
             DrawingInteractor.UnHighlight();
         }
 
-        protected SolverStrategy GetSolverStrategy(params TreeData[] trees)
+        protected SolverStrategy GetSolverStrategy(bool alwaysAsTree, params TreeData[] trees)
         {
             var pathCounts = trees.Select(t => t.PathCount).ToList();
-            var mode = pathCounts.All(c => c == 1) ? InputMode.ListMode : InputMode.TreeMode;
+            var mode = InputMode.TreeMode;
+            if (!alwaysAsTree)
+                mode = pathCounts.All(c => c == 1) ? InputMode.ListMode : InputMode.TreeMode;
 
             var highestCount = trees.Max(t => t.GetMaxCount(mode));
             var templateTree = trees.First(t => t.GetMaxCount(mode) == highestCount);

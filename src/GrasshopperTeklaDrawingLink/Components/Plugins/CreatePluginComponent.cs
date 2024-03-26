@@ -25,7 +25,7 @@ namespace GTDrawingLink.Components.Plugins
         {
             var (views, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect);
+            var strategy = GetSolverStrategy(true, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect);
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();

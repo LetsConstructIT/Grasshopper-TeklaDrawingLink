@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components.Annotations
         {
             (var views, var centerPoints, var radiuses, var labelPoints, var attributes, var names) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(centerPoints, radiuses, labelPoints, attributes, names);
+            var strategy = GetSolverStrategy(false, centerPoints, radiuses, labelPoints, attributes, names);
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();

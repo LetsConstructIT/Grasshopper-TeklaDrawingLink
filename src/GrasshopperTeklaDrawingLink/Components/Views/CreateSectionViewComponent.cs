@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components.Views
         {
             var (views, startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names);
+            var strategy = GetSolverStrategy(false, startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names);
             var inputMode = strategy.Mode;
 
             var outputViewTree = new GH_Structure<TeklaDatabaseObjectGoo>();

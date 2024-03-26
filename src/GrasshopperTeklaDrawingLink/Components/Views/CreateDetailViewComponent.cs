@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components.Views
         {
             var (views, centerPoints, radiuses, labelPoints, insertPoints, viewAttributes, markAttributes, scales, names) = _command.GetInputValues();
 
-            var strategy = GetSolverStrategy(centerPoints, radiuses, labelPoints, insertPoints, viewAttributes, markAttributes, scales, names);
+            var strategy = GetSolverStrategy(false, centerPoints, radiuses, labelPoints, insertPoints, viewAttributes, markAttributes, scales, names);
             var inputMode = strategy.Mode;
 
             var outputViewTree = new GH_Structure<TeklaDatabaseObjectGoo>();
