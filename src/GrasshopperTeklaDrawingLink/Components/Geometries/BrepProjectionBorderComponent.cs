@@ -122,7 +122,8 @@ namespace GTDrawingLink.Components.Geometries
 
         private (Polyline, IEnumerable<Polyline>) GetShadowOutlines(Mesh mesh)
         {
-            var outlines = mesh.GetOutlines(Plane.WorldXY);
+            var plane = new Plane(Plane.WorldXY.Origin, new Vector3d(0, 0, -1));
+            var outlines = mesh.GetOutlines(plane);
             return (outlines.First(), outlines.Skip(1));
         }
 
