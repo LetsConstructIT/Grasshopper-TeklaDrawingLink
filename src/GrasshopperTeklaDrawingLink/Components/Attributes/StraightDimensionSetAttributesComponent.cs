@@ -40,8 +40,10 @@ namespace GTDrawingLink.Components.AttributesComponents
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var attributes = DA.GetGooValue<StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
-             
+
             var drawingPart = DA.GetGooValue<DatabaseObject>(ParamInfos.TeklaDatabaseObject) as ModelObject;
+            drawingPart?.Select();
+
             var attributesFileName = string.Empty;
             DA.GetData(ParamInfos.Attributes.Name, ref attributesFileName);
 
