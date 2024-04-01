@@ -1,17 +1,19 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.ModifyComponents
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ModifyRebarComponent : TeklaComponentBaseNew<ModifyRebarCommand>
+    [Obsolete]
+    public class ModifyRebarComponentOLD : TeklaComponentBaseNew<ModifyRebarCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.ModifyRebar;
-        public ModifyRebarComponent() : base(ComponentInfos.ModifyRebarComponent) { }
+        public ModifyRebarComponentOLD() : base(ComponentInfos.ModifyRebarComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -98,7 +100,7 @@ namespace GTDrawingLink.Components.ModifyComponents
         }
     }
 
-    public class ModifyRebarCommand : CommandBase
+    public class ModifyRebarCommandOLD : CommandBase
     {
         private readonly InputListParam<ReinforcementBase> _inReinforcements = new InputListParam<ReinforcementBase>(ParamInfos.Reinforcement);
         private readonly InputListParam<ReinforcementBase.ReinforcementSingleAttributes> _inAttributes = new InputListParam<ReinforcementBase.ReinforcementSingleAttributes>(ParamInfos.RebarAtributes);
