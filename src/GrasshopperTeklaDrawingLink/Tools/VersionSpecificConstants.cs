@@ -398,6 +398,10 @@ namespace GTDrawingLink.Tools
                 "41DEF423-BD56-4826-A5C0-ECF4A6E32DD9"
             },
             {
+                typeof(ModifyRebarComponent),
+                "63505EF2-6255-4414-B9FA-CC29D413616E"
+            },
+            {
                 typeof(ModifyRebarComponentOLD),
                 "0D6B1B6D-D2AE-4CFE-96B8-72CC0D9995F4"
             },

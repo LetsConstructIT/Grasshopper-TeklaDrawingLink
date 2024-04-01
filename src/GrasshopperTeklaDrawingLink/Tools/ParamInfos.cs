@@ -1856,5 +1856,12 @@ namespace GTDrawingLink.Tools
             NickName = "Cloud",
             Description = "Cloud object will be created"
         };
+
+        public static readonly GH_InstanceDescription RebarCustomPosition = new GH_InstanceDescription
+        {
+            Name = "Custom Position",
+            NickName = "Pos",
+            Description = "Defines the location of the reinforcement bar when you want to show only single rebar.\nThis location is a value between 0.0 and 1.0 and it defines the proportion from the reinforcement's start point."
+        };
     }
 }
