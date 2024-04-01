@@ -57,6 +57,7 @@ namespace GTDrawingLink.Components
                 { typeof(Plane), (param, manager) => AddPlaneParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(BoundingBox), (param, manager) => AddBoxParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Rhino.Geometry.Curve), (param, manager) => AddCurveParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(Rhino.Geometry.Brep), (param, manager) => AddBrepParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Vector3d), (param, manager) => AddVectorParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Rectangle3d), (param, manager) => AddRectangleParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(IGH_GeometricGoo), (param, manager) => AddGeometryParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
