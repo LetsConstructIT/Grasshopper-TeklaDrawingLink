@@ -34,37 +34,37 @@ namespace GTDrawingLink.Components.ModifyComponents
             if (reinforcementBase is ReinforcementSingle single)
             {
                 single.Attributes = attributes;
-                if (customPosition.HasValue)
+                if (RebarCustomPositionChecker.IsValid(customPosition))
                 {
                     single.Attributes.ReinforcementVisibility = ReinforcementBase.ReinforcementVisibilityTypes.Customized;
-                    single.ReinforcementCustomPosition = customPosition.Value;
+                    single.ReinforcementCustomPosition = customPosition;
                 }
             }
             else if (reinforcementBase is ReinforcementGroup group)
             {
                 group.Attributes = CastToGroupAttributes(attributes);
-                if (customPosition.HasValue)
+                if (RebarCustomPositionChecker.IsValid(customPosition))
                 {
                     group.Attributes.ReinforcementVisibility = ReinforcementBase.ReinforcementVisibilityTypes.Customized;
-                    group.ReinforcementCustomPosition = customPosition.Value;
+                    group.ReinforcementCustomPosition = customPosition;
                 }
             }
             else if (reinforcementBase is ReinforcementSetGroup set)
             {
                 set.Attributes = CastToSetAttributes(attributes);
-                if (customPosition.HasValue)
+                if (RebarCustomPositionChecker.IsValid(customPosition))
                 {
                     set.Attributes.ReinforcementVisibility = ReinforcementBase.ReinforcementVisibilityTypes.Customized;
-                    set.ReinforcementCustomPosition = customPosition.Value;
+                    set.ReinforcementCustomPosition = customPosition;
                 }
             }
             else if (reinforcementBase is ReinforcementStrand strand)
             {
                 strand.Attributes = CastToStrandAttributes(attributes);
-                if (customPosition.HasValue)
+                if (RebarCustomPositionChecker.IsValid(customPosition))
                 {
                     strand.Attributes.ReinforcementVisibility = ReinforcementBase.ReinforcementVisibilityTypes.Customized;
-                    strand.ReinforcementCustomPosition = customPosition.Value;
+                    strand.ReinforcementCustomPosition = customPosition;
                 }
             }
 

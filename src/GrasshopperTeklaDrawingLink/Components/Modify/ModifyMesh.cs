@@ -2,7 +2,6 @@
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -21,7 +20,6 @@ namespace GTDrawingLink.Components.Obsolete
 
             for (int i = 0; i < reinforcements.Count; i++)
             {
-
                 var longitudinal = customLongitudinal.HasItems() ? customLongitudinal.ElementAtOrLast(i).Value : -1;
                 var cross = customCross.HasItems() ? customCross.ElementAtOrLast(i).Value : -1;
                 ApplyAttributes(reinforcements[i], attributes.ElementAtOrLast(i), longitudinal, cross);
@@ -35,12 +33,12 @@ namespace GTDrawingLink.Components.Obsolete
         private void ApplyAttributes(ReinforcementMesh reinforcementBase, ReinforcementBase.ReinforcementMeshAttributes attributes, double longitudinalPosition, double crossPosition)
         {
             reinforcementBase.Attributes = attributes;
-            if (longitudinalPosition >= 0 && longitudinalPosition <= 1)
+            if (RebarCustomPositionChecker.IsValid(longitudinalPosition))
             {
                 reinforcementBase.Attributes.MeshReinforcementVisibilityLongitudinal = ReinforcementBase.ReinforcementVisibilityTypes.Customized;
                 reinforcementBase.ReinforcementCustomPositionLongitudinal = longitudinalPosition;
             }
-            if (crossPosition >= 0 && crossPosition <= 1)
+            if (RebarCustomPositionChecker.IsValid(crossPosition))
             {
                 reinforcementBase.Attributes.MeshReinforcementVisibilityCrossing = ReinforcementBase.ReinforcementVisibilityTypes.Customized;
                 reinforcementBase.ReinforcementCustomPositionCrossing = crossPosition;
