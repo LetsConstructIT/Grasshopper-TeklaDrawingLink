@@ -1,5 +1,8 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
@@ -13,16 +16,20 @@ namespace GTDrawingLink.Components.ModifyComponents
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            (ReinforcementBase reinforcement, ReinforcementBase.ReinforcementSingleAttributes attributes, double? customPosition) = _command.GetInputValues();
+            (List<ReinforcementBase> reinforcements, List<ReinforcementBase.ReinforcementSingleAttributes> attributes, List<GH_Number>? customPosition) = _command.GetInputValues();
 
-            ApplyAttributes(reinforcement, attributes, customPosition);
+            for (int i = 0; i < reinforcements.Count; i++)
+            {
+                var position = customPosition.HasItems() ? customPosition.ElementAtOrLast(i).Value : -1;
+                ApplyAttributes(reinforcements[i], attributes.ElementAtOrLast(i), position);
+            }
 
             DrawingInteractor.CommitChanges();
 
-            _command.SetOutputValues(DA, reinforcement);
+            _command.SetOutputValues(DA, reinforcements);
         }
 
-        private void ApplyAttributes(ReinforcementBase reinforcementBase, ReinforcementBase.ReinforcementSingleAttributes attributes, double? customPosition)
+        private void ApplyAttributes(ReinforcementBase reinforcementBase, ReinforcementBase.ReinforcementSingleAttributes attributes, double customPosition)
         {
             if (reinforcementBase is ReinforcementSingle single)
             {
@@ -115,18 +122,18 @@ namespace GTDrawingLink.Components.ModifyComponents
 
     public class ModifyRebarCommand : CommandBase
     {
-        private readonly InputParam<ReinforcementBase> _inReinforcements = new InputParam<ReinforcementBase>(ParamInfos.Reinforcement);
-        private readonly InputParam<ReinforcementBase.ReinforcementSingleAttributes> _inAttributes = new InputParam<ReinforcementBase.ReinforcementSingleAttributes>(ParamInfos.RebarAtributes);
-        private readonly InputOptionalStructParam<double> _inCustomPosition = new InputOptionalStructParam<double>(ParamInfos.RebarCustomPosition);
+        private readonly InputListParam<ReinforcementBase> _inReinforcements = new InputListParam<ReinforcementBase>(ParamInfos.Reinforcement);
+        private readonly InputListParam<ReinforcementBase.ReinforcementSingleAttributes> _inAttributes = new InputListParam<ReinforcementBase.ReinforcementSingleAttributes>(ParamInfos.RebarAtributes);
+        private readonly InputOptionalListParam<GH_Number> _inCustomPosition = new InputOptionalListParam<GH_Number>(ParamInfos.RebarCustomPosition);
 
-        private readonly OutputParam<ReinforcementBase> _outReinforcements = new OutputParam<ReinforcementBase>(ParamInfos.Reinforcement);
+        private readonly OutputListParam<ReinforcementBase> _outReinforcements = new OutputListParam<ReinforcementBase>(ParamInfos.Reinforcement);
 
-        internal (ReinforcementBase reinforcement, ReinforcementBase.ReinforcementSingleAttributes attributes, double? customPosition) GetInputValues()
+        internal (List<ReinforcementBase> reinforcements, List<ReinforcementBase.ReinforcementSingleAttributes> attributes, List<GH_Number>? customPosition) GetInputValues()
         {
             return (_inReinforcements.Value, _inAttributes.Value, _inCustomPosition.GetValueFromUserOrNull());
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, ReinforcementBase reinforcements)
+        internal Result SetOutputValues(IGH_DataAccess DA, List<ReinforcementBase> reinforcements)
         {
             _outReinforcements.Value = reinforcements;
 
