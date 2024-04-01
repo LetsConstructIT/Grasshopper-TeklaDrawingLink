@@ -1,17 +1,19 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.ModifyComponents
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ModifyMeshComponent : TeklaComponentBaseNew<ModifyMeshCommand>
+    [Obsolete]
+    public class ModifyMeshComponentOLD : TeklaComponentBaseNew<ModifyMeshCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.ModifyMesh;
-        public ModifyMeshComponent() : base(ComponentInfos.ModifyMeshComponent) { }
+        public ModifyMeshComponentOLD() : base(ComponentInfos.ModifyMeshComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -35,7 +37,7 @@ namespace GTDrawingLink.Components.ModifyComponents
         }
     }
 
-    public class ModifyMeshCommand : CommandBase
+    public class ModifyMeshCommandOLD : CommandBase
     {
         private readonly InputListParam<ReinforcementMesh> _inReinforcements = new InputListParam<ReinforcementMesh>(ParamInfos.Mesh);
         private readonly InputListParam<ReinforcementBase.ReinforcementMeshAttributes> _inAttributes = new InputListParam<ReinforcementBase.ReinforcementMeshAttributes>(ParamInfos.MeshAttributes);
