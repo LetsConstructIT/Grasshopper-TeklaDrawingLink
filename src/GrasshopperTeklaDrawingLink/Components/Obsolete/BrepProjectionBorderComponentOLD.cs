@@ -7,15 +7,15 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
-namespace GTDrawingLink.Components.Geometries
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class BrepProjectionBorderComponent : TeklaComponentBaseNew<BrepProjectionBorderCommand>
+    [Obsolete]
+    public class BrepProjectionBorderComponentOLD : TeklaComponentBaseNew<BrepProjectionBorderCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.BrepProjectionBorder;
-        public BrepProjectionBorderComponent() : base(ComponentInfos.BrepProjectionBorderComponent) { }
+        public BrepProjectionBorderComponentOLD() : base(ComponentInfos.BrepProjectionBorderComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -142,7 +142,7 @@ namespace GTDrawingLink.Components.Geometries
         }
     }
 
-    public class BrepProjectionBorderCommand : CommandBase
+    public class BrepProjectionBorderCommandOLD : CommandBase
     {
         private readonly InputTreeParam<GH_Brep> _inBrep = new InputTreeParam<GH_Brep>(ParamInfos.Brep);
         private readonly InputOptionalStructParam<Plane> _inPlane = new InputOptionalStructParam<Plane>(ParamInfos.ProjectionPlane, Plane.WorldXY);
