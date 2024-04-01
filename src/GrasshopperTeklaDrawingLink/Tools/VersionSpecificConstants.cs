@@ -406,6 +406,10 @@ namespace GTDrawingLink.Tools
                 "0D6B1B6D-D2AE-4CFE-96B8-72CC0D9995F4"
             },
             {
+                typeof(ModifyMeshComponent),
+                "416D93DB-96EF-4957-A76B-D34E48829133"
+            },
+            {
                 typeof(ModifyMeshComponentOLD),
                 "A007E703-1979-4BB3-8404-B9F916D2DA4D"
             },

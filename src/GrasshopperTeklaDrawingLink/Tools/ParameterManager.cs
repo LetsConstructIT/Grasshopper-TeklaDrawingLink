@@ -531,6 +531,16 @@ namespace GTDrawingLink.Tools
                     return Result.Ok();
                 }
             }
+            else if (typeOfInput == typeof(GH_Number))
+            {
+                var objectsGoo = new List<T>();
+                if (DA.GetDataList(InstanceDescription.Name, objectsGoo))
+                {
+                    _value = objectsGoo.Select(v => v).ToList();
+                    _properlySet = true;
+                    return Result.Ok();
+                }
+            }
             else
             {
                 var objectsGoo = new List<GH_Goo<T>>();
