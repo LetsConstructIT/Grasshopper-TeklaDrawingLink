@@ -42,6 +42,7 @@ namespace GTDrawingLink.Components.Params.ValueLists
             ListItems.Add(new GH_ValueListItem("Level Mark", "\"Level Mark\""));
             ListItems.Add(new GH_ValueListItem("Line", "\"Line\""));
             ListItems.Add(new GH_ValueListItem("Mark", "\"Mark\""));
+            ListItems.Add(new GH_ValueListItem("Mark Set", "\"Mark Set\""));
             ListItems.Add(new GH_ValueListItem("Part", "\"Part\""));
             ListItems.Add(new GH_ValueListItem("Plugin", "\"Plugin\""));
             ListItems.Add(new GH_ValueListItem("Polygon", "\"Polygon\""));
