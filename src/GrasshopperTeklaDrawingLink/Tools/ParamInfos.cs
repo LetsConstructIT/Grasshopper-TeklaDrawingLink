@@ -1395,6 +1395,13 @@ namespace GTDrawingLink.Tools
             Description = "Drawing title 3"
         };
 
+        public static readonly GH_InstanceDescription DrawingMark = new GH_InstanceDescription
+        {
+            Name = "Mark",
+            NickName = "M",
+            Description = "Drawing mark"
+        };        
+
         public static readonly GH_InstanceDescription DrawingSheetNumber = new GH_InstanceDescription
         {
             Name = "Sheet number",

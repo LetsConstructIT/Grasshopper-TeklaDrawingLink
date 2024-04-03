@@ -606,6 +606,10 @@ namespace GTDrawingLink.Tools
                 LoopEnd
             },
             {
+                typeof(ModifyDrawingPropertiesComponent),
+                "18752DF6-6F62-4ECB-9E91-2D54BEE801EF"
+            },
+            {
                 typeof(ModifyDrawingPropertiesComponentOLD),
                 "F8CED9AF-8543-435E-B0D1-AB29F5A65CEE"
             },
