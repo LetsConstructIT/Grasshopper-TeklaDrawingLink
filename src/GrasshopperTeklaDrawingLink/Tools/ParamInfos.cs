@@ -1891,5 +1891,14 @@ namespace GTDrawingLink.Tools
             NickName = "Long",
             Description = "Defines the location of the reinforcement bar when you want to show only single rebar.\nThis location is a value between 0.0 and 1.0 and it defines the proportion from the reinforcement's start point."
         };
+
+        public static readonly GH_InstanceDescription MarkType = new GH_InstanceDescription
+        {
+            Name = "Mark Type",
+            NickName = "Type",
+            Description = "Returns mark type. It can be AssociativeNote, Mark or MarkSet."
+        };
+
+        
     }
 }

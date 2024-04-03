@@ -716,6 +716,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(DeconstructTextComponent),
                 "F69B96B3-D6E1-4C11-AA32-D57AE327E7AD"
+            },
+            {
+                typeof(DeconstructMarkComponent),
+                "C8EB899E-A0B0-4D38-AA6C-D39C4660D1E2"
+            },
+            {
+                typeof(MarkBaseAttributesParam),
+                "B0C88802-151D-4683-BCFA-6C311366F03C"
             }
         };
 

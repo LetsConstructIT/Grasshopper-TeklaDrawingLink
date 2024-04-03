@@ -1081,10 +1081,21 @@ namespace GTDrawingLink.Tools
         public static readonly GH_InstanceDescription DeconstructTextComponent = new GH_InstanceDescription
         {
             Name = "Deconstruct Text",
-            NickName = "DeconstructText",
-            Description = "Get data from Tekla Text object.",
+            NickName = "DeconText",
+            Description = "Get the data from Tekla Text object.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Annotations
         };
+
+        public static readonly GH_InstanceDescription DeconstructMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Deconstruct Mark",
+            NickName = "DeconMark",
+            Description = "Get the data from Tekla Mark object.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        
     }
 }
