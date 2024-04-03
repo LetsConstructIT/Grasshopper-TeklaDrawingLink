@@ -26,6 +26,8 @@ namespace GTDrawingLink.Components.Annotations
             AddPointParameter(pManager, ParamInfos.MarkInsertionPoint, GH_ParamAccess.item);
             AddParameter(pManager, new PlacingBaseParam(ParamInfos.PlacingType, GH_ParamAccess.item));
             AddParameter(pManager, new TextAttributesParam(ParamInfos.TextAttributes, GH_ParamAccess.item));
+            AddCurveParameter(pManager, ParamInfos.AxisAlignedBoundingBox, GH_ParamAccess.item);
+            AddCurveParameter(pManager, ParamInfos.ObjectAlignedBoundingBox, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -42,6 +44,8 @@ namespace GTDrawingLink.Components.Annotations
             DA.SetData(ParamInfos.MarkInsertionPoint.Name, text.InsertionPoint.ToRhino());
             DA.SetData(ParamInfos.PlacingType.Name, new PlacingBaseGoo(text.Placing));
             DA.SetData(ParamInfos.TextAttributes.Name, new TextAttributesGoo(text.Attributes));
+            DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, text.GetAxisAlignedBoundingBox().ToRhino());
+            DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, text.GetObjectAlignedBoundingBox().ToRhino());
         }
     }
 }

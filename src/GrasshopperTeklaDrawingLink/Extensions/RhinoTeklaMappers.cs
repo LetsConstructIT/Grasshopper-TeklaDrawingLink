@@ -1,4 +1,6 @@
-﻿namespace GTDrawingLink.Extensions
+﻿using System.Collections.Generic;
+
+namespace GTDrawingLink.Extensions
 {
     public static class RhinoTeklaMappers
     {
@@ -88,6 +90,19 @@
         public static Tekla.Structures.Geometry3d.Line ToTekla(this Rhino.Geometry.Line line)
         {
             return new Tekla.Structures.Geometry3d.Line(line.From.ToTekla(), line.To.ToTekla());
+        }
+
+        public static Rhino.Geometry.PolylineCurve ToRhino(this Tekla.Structures.Drawing.RectangleBoundingBox boundingBox)
+        {
+            var points = new List<Rhino.Geometry.Point3d>()
+            {
+                boundingBox.LowerLeft.ToRhino(),
+                boundingBox.UpperLeft.ToRhino(),
+                boundingBox.UpperRight.ToRhino(),
+                boundingBox.LowerRight.ToRhino(),
+                boundingBox.LowerLeft.ToRhino(),
+            };
+            return new Rhino.Geometry.PolylineCurve(points);
         }
     }
 }

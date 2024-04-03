@@ -31,6 +31,9 @@ namespace GTDrawingLink.Components.Annotations
             AddParameter(pManager, new PlacingBaseParam(ParamInfos.PlacingType, GH_ParamAccess.item));
             AddParameter(pManager, new MarkAttributesParam(ParamInfos.MarkAttributes, GH_ParamAccess.item));
             AddTextParameter(pManager, ParamInfos.MarkType, GH_ParamAccess.item);
+            AddCurveParameter(pManager, ParamInfos.AxisAlignedBoundingBox, GH_ParamAccess.item);
+            AddCurveParameter(pManager, ParamInfos.ObjectAlignedBoundingBox, GH_ParamAccess.item);
+            AddLineParameter(pManager, ParamInfos.LeaderLineType, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -51,6 +54,8 @@ namespace GTDrawingLink.Components.Annotations
             DA.SetData(ParamInfos.PlacingType.Name, new PlacingBaseGoo(mark.Placing));
             DA.SetData(ParamInfos.MarkAttributes.Name, new MarkAttributesGoo(internalMarks.First().Attributes));
             DA.SetData(ParamInfos.MarkType.Name, GetMarkType(mark));
+            DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, mark.GetAxisAlignedBoundingBox().ToRhino());
+            DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, mark.GetObjectAlignedBoundingBox().ToRhino());
         }
 
         private List<TSD.Mark> FindInternalMarks(MarkBase mark)
