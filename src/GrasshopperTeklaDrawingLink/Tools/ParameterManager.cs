@@ -632,7 +632,7 @@ namespace GTDrawingLink.Tools
             else
             {
                 var objectGoos = new List<GH_Goo<T>>();
-                if (DA.GetDataList(InstanceDescription.Name, objectGoos))
+                if (DA.GetDataList(InstanceDescription.Name, objectGoos) && objectGoos.All(o => o != null))
                 {
                     _value = objectGoos.Select(o => o.Value).ToList();
                     _properlySet = true;
