@@ -1899,6 +1899,26 @@ namespace GTDrawingLink.Tools
             Description = "Returns mark type. It can be AssociativeNote, Mark or MarkSet."
         };
 
-        
+        public static readonly GH_InstanceDescription AxisAlignedBoundingBox = new GH_InstanceDescription
+        {
+            Name = "Axis Box",
+            NickName = "ABox",
+            Description = "Returns the axis aligned bounding box of the object (rectangle format)."
+        };
+
+        public static readonly GH_InstanceDescription ObjectAlignedBoundingBox = new GH_InstanceDescription
+        {
+            Name = "Object Box",
+            NickName = "OBox",
+            Description = "Returns the object aligned bounding box of the object (rectangle format)."
+        };
+
+
+        public static readonly GH_InstanceDescription LeaderLine = new GH_InstanceDescription
+        {
+            Name = "Leader Line",
+            NickName = "LL",
+            Description = "Leader line"
+        };
     }
 }

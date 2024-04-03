@@ -1,11 +1,14 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.Geometry3d;
 using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Annotations
@@ -33,7 +36,7 @@ namespace GTDrawingLink.Components.Annotations
             AddTextParameter(pManager, ParamInfos.MarkType, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.AxisAlignedBoundingBox, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.ObjectAlignedBoundingBox, GH_ParamAccess.item);
-            AddLineParameter(pManager, ParamInfos.LeaderLineType, GH_ParamAccess.item);
+            AddLineParameter(pManager, ParamInfos.LeaderLine, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -48,6 +51,7 @@ namespace GTDrawingLink.Components.Annotations
 
             var internalMarks = FindInternalMarks(mark);
             var sources = FindMarkSource(internalMarks);
+            var objectBoundingBox = mark.GetObjectAlignedBoundingBox();
 
             DA.SetDataList(ParamInfos.DrawingModelObject.Name, sources);
             DA.SetData(ParamInfos.MarkInsertionPoint.Name, mark.InsertionPoint.ToRhino());
@@ -55,7 +59,8 @@ namespace GTDrawingLink.Components.Annotations
             DA.SetData(ParamInfos.MarkAttributes.Name, new MarkAttributesGoo(internalMarks.First().Attributes));
             DA.SetData(ParamInfos.MarkType.Name, GetMarkType(mark));
             DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, mark.GetAxisAlignedBoundingBox().ToRhino());
-            DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, mark.GetObjectAlignedBoundingBox().ToRhino());
+            DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
+            DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(mark, objectBoundingBox));
         }
 
         private List<TSD.Mark> FindInternalMarks(MarkBase mark)
@@ -102,6 +107,15 @@ namespace GTDrawingLink.Components.Annotations
             }
             else
                 return "Unknown";
+        }
+
+        private GH_Line GuessLeaderLine(MarkBase mark, RectangleBoundingBox objectBoundingBox)
+        {
+            var placingBase = mark.Placing;
+            var insertionPt = mark.InsertionPoint;
+            var frameType = mark.Attributes.Frame.Type;
+            var angle = mark.Attributes.Angle;
+            return LeaderLineCalculator.GuessLeaderLine(objectBoundingBox, placingBase, insertionPt, frameType, angle);
         }
     }
 }

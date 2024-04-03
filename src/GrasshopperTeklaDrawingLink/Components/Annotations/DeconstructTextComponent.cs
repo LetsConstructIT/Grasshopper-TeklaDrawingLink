@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -28,6 +29,7 @@ namespace GTDrawingLink.Components.Annotations
             AddParameter(pManager, new TextAttributesParam(ParamInfos.TextAttributes, GH_ParamAccess.item));
             AddCurveParameter(pManager, ParamInfos.AxisAlignedBoundingBox, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.ObjectAlignedBoundingBox, GH_ParamAccess.item);
+            AddLineParameter(pManager, ParamInfos.LeaderLine, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -39,13 +41,24 @@ namespace GTDrawingLink.Components.Annotations
             }
 
             text.Select();
+            var objectBoundingBox = text.GetObjectAlignedBoundingBox();
 
             DA.SetData(ParamInfos.TextContents.Name, text.TextString);
             DA.SetData(ParamInfos.MarkInsertionPoint.Name, text.InsertionPoint.ToRhino());
             DA.SetData(ParamInfos.PlacingType.Name, new PlacingBaseGoo(text.Placing));
             DA.SetData(ParamInfos.TextAttributes.Name, new TextAttributesGoo(text.Attributes));
             DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, text.GetAxisAlignedBoundingBox().ToRhino());
-            DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, text.GetObjectAlignedBoundingBox().ToRhino());
+            DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
+            DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(text, objectBoundingBox));
+        }
+
+        private GH_Line GuessLeaderLine(TSD.Text text, TSD.RectangleBoundingBox objectBoundingBox)
+        {
+            var placingBase = text.Placing;
+            var insertionPt = text.InsertionPoint;
+            var frameType = text.Attributes.Frame.Type;
+            var angle = text.Attributes.Angle;
+            return LeaderLineCalculator.GuessLeaderLine(objectBoundingBox, placingBase, insertionPt, frameType, angle);
         }
     }
 }
