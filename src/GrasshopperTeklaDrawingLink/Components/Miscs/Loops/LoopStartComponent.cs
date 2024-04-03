@@ -119,7 +119,14 @@ namespace GTDrawingLink.Components.Miscs.Loops
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, LoopRecompute).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
+        protected void LoopRecompute(object sender, EventArgs e)
+        {
+            _loopCount = 0;
+            _currentLoop = 0;
+            _isActive = false;
+            base.ExpireSolution(recompute: true);
         }
     }
 }
