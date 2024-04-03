@@ -3,10 +3,7 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Linq;
-using System.Reflection;
 using TSD = Tekla.Structures.Drawing;
-using Tekla.Structures.Geometry3d;
-using Grasshopper.Kernel.Types;
 
 namespace GTDrawingLink.Components.Dimensions
 {
