@@ -1,16 +1,18 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
+using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Drawings
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ModifyDrawingPropertiesComponent : TeklaComponentBaseNew<ModifyDrawingPropertiesCommand>
+    [Obsolete]
+    public class ModifyDrawingPropertiesComponentOLD : TeklaComponentBaseNew<ModifyDrawingPropertiesCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.GetDrawingProperties;
 
-        public ModifyDrawingPropertiesComponent() : base(ComponentInfos.ModifyDrawingPropertiesComponent) { }
+        public ModifyDrawingPropertiesComponentOLD() : base(ComponentInfos.ModifyDrawingPropertiesComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -57,7 +59,7 @@ namespace GTDrawingLink.Components.Drawings
         }
     }
 
-    public class ModifyDrawingPropertiesCommand : CommandBase
+    public class ModifyDrawingPropertiesCommandOLD : CommandBase
     {
         private readonly InputParam<Drawing> _inDrawing = new InputParam<Drawing>(ParamInfos.Drawing);
         private readonly InputOptionalParam<string> _inName = new InputOptionalParam<string>(ParamInfos.DrawingName);
