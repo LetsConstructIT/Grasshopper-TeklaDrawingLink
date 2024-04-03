@@ -1077,5 +1077,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+
+        public static readonly GH_InstanceDescription DeconstructTextComponent = new GH_InstanceDescription
+        {
+            Name = "Deconstruct Text",
+            NickName = "DeconstructText",
+            Description = "Get data from Tekla Text object.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
     }
 }

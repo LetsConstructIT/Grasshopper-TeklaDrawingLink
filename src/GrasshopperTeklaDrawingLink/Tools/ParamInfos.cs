@@ -622,6 +622,13 @@ namespace GTDrawingLink.Tools
             Description = "Tekla Text"
         };
 
+        public static readonly GH_InstanceDescription TextContents = new GH_InstanceDescription
+        {
+            Name = "Content",
+            NickName = "C",
+            Description = "The contents of the text."
+        };
+
         public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription
         {
             Name = "BoundingBox",

@@ -155,6 +155,11 @@ namespace GTDrawingLink.Components
             return pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
+        protected int AddParameter(GH_OutputParamManager pManager, IGH_Param parameter)
+        {
+            return pManager.AddParameter(parameter);
+        }
+
         protected int AddPlaneParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddPlaneParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);

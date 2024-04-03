@@ -712,6 +712,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(PolygonAttributesComponent),
                 "3F9C1B97-1895-41C5-8C73-DD1E98430433"
+            },
+            {
+                typeof(DeconstructTextComponent),
+                "F69B96B3-D6E1-4C11-AA32-D57AE327E7AD"
             }
         };
 
