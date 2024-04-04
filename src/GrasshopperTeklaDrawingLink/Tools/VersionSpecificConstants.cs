@@ -530,7 +530,7 @@ namespace GTDrawingLink.Tools
                 "F0939985-9E2E-4677-957F-F56C07AE6BEF"
             },
             {
-                typeof(GetRelatedObjectsComponent),
+                typeof(GetRelatedObjectsComponentOLD),
                 "597CE529-4306-4F4E-BF80-01C93E3613A5"
             },
             {

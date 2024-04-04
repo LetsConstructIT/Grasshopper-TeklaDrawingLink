@@ -3,19 +3,21 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Parts
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class GetRelatedObjectsComponent : TeklaComponentBaseNew<GetRelatedObjectsCommand>
+    [Obsolete]
+    public class GetRelatedObjectsComponentOLD : TeklaComponentBaseNew<GetRelatedObjectsCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.GetRelatedObjects;
 
-        public GetRelatedObjectsComponent() : base(ComponentInfos.GetRelatedObjectsComponent) { }
+        public GetRelatedObjectsComponentOLD() : base(ComponentInfos.GetRelatedObjectsComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -64,7 +66,7 @@ namespace GTDrawingLink.Components.Parts
         }
     }
 
-    public class GetRelatedObjectsCommand : CommandBase
+    public class GetRelatedObjectsCommandOLD : CommandBase
     {
         private readonly InputTreeParam<DrawingObject> _inDrawingObject = new InputTreeParam<DrawingObject>(ParamInfos.DrawingObject);
 
