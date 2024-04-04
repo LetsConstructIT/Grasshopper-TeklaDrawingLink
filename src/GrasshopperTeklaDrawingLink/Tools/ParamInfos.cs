@@ -1,5 +1,5 @@
 ﻿using Grasshopper.Kernel;
-using GTDrawingLink.Components.AttributesComponents;
+using GTDrawingLink.Components.Obsolete;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Tools
@@ -1822,7 +1822,7 @@ namespace GTDrawingLink.Tools
             Description = "Placing type for the drawing object"
         };
 
-        public static readonly GH_InstanceDescription LeaderLineType = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription LeaderLineTypeOld = new GH_InstanceDescription
         {
             Name = "Leader Type",
             NickName = "LT",

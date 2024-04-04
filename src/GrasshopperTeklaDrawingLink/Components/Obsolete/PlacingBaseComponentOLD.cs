@@ -4,17 +4,19 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using Rhino.Geometry;
+using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.AttributesComponents
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class PlacingBaseComponent : TeklaComponentBaseNew<PlacingBaseCommand>
+    [Obsolete]
+    public class PlacingBaseComponentOLD : TeklaComponentBaseNew<PlacingBaseCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.PlacingBase;
 
-        public PlacingBaseComponent() : base(ComponentInfos.PlacingBaseComponent) { }
+        public PlacingBaseComponentOLD() : base(ComponentInfos.PlacingBaseComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -30,9 +32,9 @@ namespace GTDrawingLink.Components.AttributesComponents
         }
     }
 
-    public class PlacingBaseCommand : CommandBase
+    public class PlacingBaseCommandOLD : CommandBase
     {
-        private readonly InputOptionalStructParam<LeaderLineType> _inLeaderLine = new InputOptionalStructParam<LeaderLineType>(ParamInfos.LeaderLineType, LeaderLineType.NoLeaderLine);
+        private readonly InputOptionalStructParam<LeaderLineType> _inLeaderLine = new InputOptionalStructParam<LeaderLineType>(ParamInfos.LeaderLineTypeOld, LeaderLineType.NoLeaderLine);
         private readonly InputOptionalParam<GH_Point> _inPoint = new InputOptionalParam<GH_Point>(ParamInfos.LeaderLineStartingPoint, new GH_Point(new Point3d()));
 
         private readonly OutputParam<PlacingBase> _outPlacing = new OutputParam<PlacingBase>(ParamInfos.PlacingType);
