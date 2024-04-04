@@ -3,6 +3,8 @@ using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
+using Tekla.Structures.Drawing;
 using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Annotations
@@ -29,7 +31,7 @@ namespace GTDrawingLink.Components.Annotations
             AddParameter(pManager, new TextAttributesParam(ParamInfos.TextAttributes, GH_ParamAccess.item));
             AddCurveParameter(pManager, ParamInfos.AxisAlignedBoundingBox, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.ObjectAlignedBoundingBox, GH_ParamAccess.item);
-            AddLineParameter(pManager, ParamInfos.LeaderLine, GH_ParamAccess.item);
+            AddCurveParameter(pManager, ParamInfos.LeaderLine, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -49,16 +51,17 @@ namespace GTDrawingLink.Components.Annotations
             DA.SetData(ParamInfos.TextAttributes.Name, new TextAttributesGoo(text.Attributes));
             DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, text.GetAxisAlignedBoundingBox().ToRhino());
             DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
-            DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(text, objectBoundingBox));
+            DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(text));
         }
 
-        private GH_Line GuessLeaderLine(TSD.Text text, TSD.RectangleBoundingBox objectBoundingBox)
+        private GH_Curve GuessLeaderLine(TSD.Text text)
         {
-            var placingBase = text.Placing;
-            var insertionPt = text.InsertionPoint;
-            var frameType = text.Attributes.Frame.Type;
-            var angle = text.Attributes.Angle;
-            return LeaderLineCalculator.GuessLeaderLine(objectBoundingBox, placingBase, insertionPt, frameType, angle);
+            var moe = text.GetObjects(new Type[] { typeof(LeaderLine) });
+            while (moe.MoveNext())
+                if (moe.Current is LeaderLine leaderLine)
+                    return LeaderLineCalculator.GetCurve(leaderLine);
+
+            return new GH_Curve();
         }
     }
 }

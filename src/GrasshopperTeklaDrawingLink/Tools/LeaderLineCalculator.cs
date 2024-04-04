@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
@@ -32,6 +33,17 @@ namespace GTDrawingLink.Tools
             }
             else
                 return new GH_Line();
+        }
+
+        public static GH_Curve GetCurve(LeaderLine leaderLine)
+        {
+            var points = new List<Point> { leaderLine.StartPoint };
+            foreach (Point elbowPoint in leaderLine.ElbowPoints)
+                points.Add(elbowPoint);
+
+            points.Add(leaderLine.EndPoint);
+
+            return new GH_Curve(new Rhino.Geometry.PolylineCurve(points.Select(p => p.ToRhino())));
         }
     }
 }

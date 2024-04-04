@@ -36,7 +36,7 @@ namespace GTDrawingLink.Components.Annotations
             AddTextParameter(pManager, ParamInfos.MarkType, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.AxisAlignedBoundingBox, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.ObjectAlignedBoundingBox, GH_ParamAccess.item);
-            AddLineParameter(pManager, ParamInfos.LeaderLine, GH_ParamAccess.item);
+            AddCurveParameter(pManager, ParamInfos.LeaderLine, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -48,10 +48,10 @@ namespace GTDrawingLink.Components.Annotations
             }
 
             mark.Select();
+            var objectBoundingBox = mark.GetObjectAlignedBoundingBox();
 
             var internalMarks = FindInternalMarks(mark);
             var sources = FindMarkSource(internalMarks);
-            var objectBoundingBox = mark.GetObjectAlignedBoundingBox();
 
             DA.SetDataList(ParamInfos.DrawingModelObject.Name, sources);
             DA.SetData(ParamInfos.MarkInsertionPoint.Name, mark.InsertionPoint.ToRhino());
@@ -60,7 +60,7 @@ namespace GTDrawingLink.Components.Annotations
             DA.SetData(ParamInfos.MarkType.Name, GetMarkType(mark));
             DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, mark.GetAxisAlignedBoundingBox().ToRhino());
             DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
-            DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(mark, objectBoundingBox));
+            DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(mark));
         }
 
         private List<TSD.Mark> FindInternalMarks(MarkBase mark)
@@ -109,13 +109,14 @@ namespace GTDrawingLink.Components.Annotations
                 return "Unknown";
         }
 
-        private GH_Line GuessLeaderLine(MarkBase mark, RectangleBoundingBox objectBoundingBox)
+        private GH_Curve GuessLeaderLine(MarkBase mark)
         {
-            var placingBase = mark.Placing;
-            var insertionPt = mark.InsertionPoint;
-            var frameType = mark.Attributes.Frame.Type;
-            var angle = mark.Attributes.Angle;
-            return LeaderLineCalculator.GuessLeaderLine(objectBoundingBox, placingBase, insertionPt, frameType, angle);
+            var moe = mark.GetObjects(new Type[] { typeof(LeaderLine) });
+            while (moe.MoveNext())
+                if (moe.Current is LeaderLine leaderLine)
+                    return LeaderLineCalculator.GetCurve(leaderLine);
+
+            return new GH_Curve();
         }
     }
 }
