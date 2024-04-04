@@ -1407,7 +1407,7 @@ namespace GTDrawingLink.Tools
             Name = "Mark",
             NickName = "M",
             Description = "Drawing mark"
-        };        
+        };
 
         public static readonly GH_InstanceDescription DrawingSheetNumber = new GH_InstanceDescription
         {
@@ -1822,17 +1822,37 @@ namespace GTDrawingLink.Tools
             Description = "Placing type for the drawing object"
         };
 
+        public static readonly GH_InstanceDescription LeaderLineType = new GH_InstanceDescription
+        {
+            Name = "Leader Type",
+            NickName = "LT",
+            Description = $"Leader line type:\n{EnumHelpers.EnumToString<GTDrawingLink.Components.AttributesComponents.LeaderLineType>()}\nRight-click to set"
+        };
+
         public static readonly GH_InstanceDescription LeaderLineTypeOld = new GH_InstanceDescription
         {
             Name = "Leader Type",
             NickName = "LT",
-            Description = $"Leader line type:\n{EnumHelpers.EnumToString<LeaderLineType>()}\nRight-click to set"
+            Description = $"Leader line type:\n{EnumHelpers.EnumToString<GTDrawingLink.Components.Obsolete.LeaderLineType>()}\nRight-click to set"
         };
 
         public static readonly GH_InstanceDescription LeaderLineStartingPoint = new GH_InstanceDescription
         {
             Name = "Starting Point",
             NickName = "P",
+            Description = "Leader line starting point"
+        };
+
+        public static readonly GH_InstanceDescription LeaderLineStartPoint = new GH_InstanceDescription
+        {
+            Name = "Start Point",
+            NickName = "S",
+            Description = "Leader line starting point"
+        };
+        public static readonly GH_InstanceDescription LeaderLineEndPoint = new GH_InstanceDescription
+        {
+            Name = "End Point",
+            NickName = "E",
             Description = "Leader line starting point"
         };
 

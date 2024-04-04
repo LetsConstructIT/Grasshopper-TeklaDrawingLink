@@ -702,6 +702,10 @@ namespace GTDrawingLink.Tools
                 "DB23821E-C5D1-48CC-AA1F-DF4D4BCE0FAC"
             },
             {
+                typeof(PlacingBaseComponent),
+                "0E801D6E-6E73-4BDC-A769-1308FDEFBED3"
+            },
+            {
                 typeof(PlacingBaseComponentOLD),
                 "6A659AE3-3DE0-4B36-950C-2D90E56636B0"
             },
