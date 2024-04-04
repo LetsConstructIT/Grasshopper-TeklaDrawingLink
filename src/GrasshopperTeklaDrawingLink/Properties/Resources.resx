@@ -490,4 +490,10 @@
   <data name="DeconstructMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\DeconstructMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ModifyMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ModifyMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ModifyText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ModifyText.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

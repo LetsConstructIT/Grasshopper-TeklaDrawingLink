@@ -1096,6 +1096,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Annotations
         };
 
+
+        public static readonly GH_InstanceDescription ModifyTextComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Text",
+            NickName = "MText",
+            Description = "Modifies a drawing text in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
+        };
         
     }
 }

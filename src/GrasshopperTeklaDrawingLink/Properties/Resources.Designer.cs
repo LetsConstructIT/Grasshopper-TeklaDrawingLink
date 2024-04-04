@@ -793,6 +793,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ModifyMark {
+            get {
+                object obj = ResourceManager.GetObject("ModifyMark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ModifyMesh {
             get {
                 object obj = ResourceManager.GetObject("ModifyMesh", resourceCulture);
@@ -816,6 +826,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap ModifyRebar {
             get {
                 object obj = ResourceManager.GetObject("ModifyRebar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ModifyText {
+            get {
+                object obj = ResourceManager.GetObject("ModifyText", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
