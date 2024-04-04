@@ -13,6 +13,11 @@ namespace GTDrawingLink.Components.Plugins
         protected override Bitmap Icon => Properties.Resources.DeconstructPlugin;
 
         public DeconstructPluginComponent() : base(ComponentInfos.DeconstructPluginComponent) { }
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {

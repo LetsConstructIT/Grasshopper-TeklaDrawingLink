@@ -19,6 +19,11 @@ namespace GTDrawingLink.Components.Annotations
         public DeconstructMarkComponent() : base(ComponentInfos.DeconstructMarkComponent)
         {
         }
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
