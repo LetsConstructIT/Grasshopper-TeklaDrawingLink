@@ -37,6 +37,7 @@ namespace GTDrawingLink.Components.Annotations
             AddCurveParameter(pManager, ParamInfos.AxisAlignedBoundingBox, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.ObjectAlignedBoundingBox, GH_ParamAccess.item);
             AddCurveParameter(pManager, ParamInfos.LeaderLine, GH_ParamAccess.item);
+            AddBooleanParameter(pManager, ParamInfos.IsValid, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -61,6 +62,7 @@ namespace GTDrawingLink.Components.Annotations
             DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, mark.GetAxisAlignedBoundingBox().ToRhino());
             DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
             DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(mark));
+            DA.SetData(ParamInfos.IsValid.Name, objectBoundingBox.Height > 0.1);
         }
 
         private List<TSD.Mark> FindInternalMarks(MarkBase mark)
