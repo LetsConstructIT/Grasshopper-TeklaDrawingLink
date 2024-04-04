@@ -6,9 +6,7 @@ using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using Tekla.Structures.Drawing;
-using Tekla.Structures.Geometry3d;
 using TSD = Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Annotations
@@ -29,7 +27,7 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            AddTextParameter(pManager, ParamInfos.DrawingModelObject, GH_ParamAccess.list);
+            AddTeklaDbObjectParameter(pManager, ParamInfos.DrawingModelObject, GH_ParamAccess.list);
             AddPointParameter(pManager, ParamInfos.MarkInsertionPoint, GH_ParamAccess.item);
             AddParameter(pManager, new PlacingBaseParam(ParamInfos.PlacingType, GH_ParamAccess.item));
             AddParameter(pManager, new MarkAttributesParam(ParamInfos.MarkAttributes, GH_ParamAccess.item));
@@ -54,7 +52,7 @@ namespace GTDrawingLink.Components.Annotations
             var internalMarks = FindInternalMarks(mark);
             var sources = FindMarkSource(internalMarks);
 
-            DA.SetDataList(ParamInfos.DrawingModelObject.Name, sources);
+            DA.SetDataList(ParamInfos.DrawingModelObject.Name, sources.Select(s => new TeklaDatabaseObjectGoo(s)));
             DA.SetData(ParamInfos.MarkInsertionPoint.Name, mark.InsertionPoint.ToRhino());
             DA.SetData(ParamInfos.PlacingType.Name, new PlacingBaseGoo(mark.Placing));
             DA.SetData(ParamInfos.MarkAttributes.Name, new MarkAttributesGoo(internalMarks.First().Attributes));
