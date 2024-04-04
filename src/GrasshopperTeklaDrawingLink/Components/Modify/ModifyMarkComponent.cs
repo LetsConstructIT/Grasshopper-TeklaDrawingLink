@@ -21,6 +21,7 @@ namespace GTDrawingLink.Components.ModifyComponents
             for (int i = 0; i < marks.Count; i++)
             {
                 var mark = marks[i];
+                mark.Select();
 
                 if (attributes.HasItems())
                 {
@@ -67,7 +68,7 @@ namespace GTDrawingLink.Components.ModifyComponents
 
         private readonly OutputListParam<Mark> _outMarks = new OutputListParam<Mark>(ParamInfos.Mark);
 
-        internal (List<Mark> marks,  List<GH_Point>? insertionPoints, List<PlacingBase>? placings, List<Mark.MarkAttributes>? attributes) GetInputValues()
+        internal (List<Mark> marks, List<GH_Point>? insertionPoints, List<PlacingBase>? placings, List<Mark.MarkAttributes>? attributes) GetInputValues()
         {
             return (
                 _inMarks.Value,

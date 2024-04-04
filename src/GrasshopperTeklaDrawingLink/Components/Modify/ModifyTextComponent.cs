@@ -21,6 +21,7 @@ namespace GTDrawingLink.Components.ModifyComponents
             for (int i = 0; i < texts.Count; i++)
             {
                 var text = texts[i];
+                text.Select();
 
                 if (contents.HasItems())
                 {
