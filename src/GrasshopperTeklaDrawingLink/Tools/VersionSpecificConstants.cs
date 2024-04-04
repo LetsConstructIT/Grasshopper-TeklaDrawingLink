@@ -728,6 +728,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyTextComponent),
                 "EB3EF470-7B6B-44DA-A9B1-64F4C2907A32"
+            },
+            {
+                typeof(ModifyMarkComponent),
+                "73A32948-D730-428A-8429-30BC12F97397"
             }
         };
 

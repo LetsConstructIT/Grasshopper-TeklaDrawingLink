@@ -1096,7 +1096,6 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Annotations
         };
 
-
         public static readonly GH_InstanceDescription ModifyTextComponent = new GH_InstanceDescription
         {
             Name = "Modify Text",
@@ -1105,6 +1104,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
-        
+
+        public static readonly GH_InstanceDescription ModifyMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Mark",
+            NickName = "MMark",
+            Description = "Modifies a drawing mark in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
+        };
     }
 }
