@@ -31,7 +31,10 @@ namespace GTDrawingLink.Components.Views
         {
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
                 return;
+            }
 
             Rhino.Geometry.Vector3d vector = new Rhino.Geometry.Vector3d();
             var parameterSet = DA.GetData("Vector", ref vector);

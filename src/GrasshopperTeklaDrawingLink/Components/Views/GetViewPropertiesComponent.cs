@@ -39,7 +39,11 @@ namespace GTDrawingLink.Components.Views
         {
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
                 return;
+            }
+
             view.Select();
 
             DA.SetData(ParamInfos.ViewType.Name, view.ViewType.ToString());

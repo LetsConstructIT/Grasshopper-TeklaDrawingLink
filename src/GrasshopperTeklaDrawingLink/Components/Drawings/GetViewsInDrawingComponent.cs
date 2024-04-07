@@ -38,7 +38,10 @@ namespace GTDrawingLink.Components.Drawings
         {
             var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
             if (drawing == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided Drawing is null");
                 return;
+            }
 
             var viewsAtDrawing = new List<TeklaDatabaseObjectGoo>();
 

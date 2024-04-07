@@ -98,7 +98,10 @@ namespace GTDrawingLink.Components.Views
                 viewBase = drawing.GetSheet();
 
             if (viewBase == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
                 return;
+            }
 
             var childObjectsGroupedByType = GetChildObjectsGroupedByType(viewBase);
 
