@@ -743,7 +743,8 @@ namespace GTDrawingLink.Tools
         {
             _properlySet = false;
             var typeOfInput = typeof(Point3d);
-            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Line> tree))
+            if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Line> tree) &&
+                tree.Branches.SelectMany(b => b).All(i => i != null))
             {
                 _tree = tree;
                 var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value).ToList());
