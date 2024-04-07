@@ -110,6 +110,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.View
         };
 
+        public static readonly GH_InstanceDescription CreateCurvedSectionViewComponent = new GH_InstanceDescription
+        {
+            Name = "Curved Section View",
+            NickName = "CurvedSection",
+            Description = "Create curved section view",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
+
         public static readonly GH_InstanceDescription GetViewFrameGeometryComponent = new GH_InstanceDescription
         {
             Name = "View frame geometry",

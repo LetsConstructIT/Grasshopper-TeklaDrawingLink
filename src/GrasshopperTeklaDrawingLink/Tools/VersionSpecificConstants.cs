@@ -154,6 +154,10 @@ namespace GTDrawingLink.Tools
                 "F33C9387-8C89-468D-A7CC-E259A1FE695B"
             },
             {
+                typeof(CreateCurvedSectionViewComponent),
+                "8874FCCA-285B-4ED3-A293-14560A12E1CA"
+            },
+            {
                 typeof(TransformPointToViewCSComponent),
                 "2AADAF3C-8CDF-4D06-8C76-8DCA2C6DF5B9"
             },

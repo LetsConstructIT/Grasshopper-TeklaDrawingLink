@@ -41,6 +41,13 @@ namespace GTDrawingLink.Tools
             Description = "Tekla Mark"
         };
 
+        public static readonly GH_InstanceDescription CurvedSectionMark = new GH_InstanceDescription
+        {
+            Name = "Mark",
+            NickName = "M",
+            Description = "Curved Section Mark"
+        };
+
         public static readonly GH_InstanceDescription ViewType = new GH_InstanceDescription
         {
             Name = "Type",
@@ -1722,6 +1729,13 @@ namespace GTDrawingLink.Tools
             Name = "End point",
             NickName = "P2",
             Description = "End point of section line"
+        };
+
+        public static readonly GH_InstanceDescription CurvedSectionMidPoint = new GH_InstanceDescription
+        {
+            Name = "Mid point",
+            NickName = "MidPt",
+            Description = "Mid point of curved section line"
         };
 
         public static readonly GH_InstanceDescription SectionInsertionPoint = new GH_InstanceDescription

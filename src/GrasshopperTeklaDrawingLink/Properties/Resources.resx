@@ -496,4 +496,7 @@
   <data name="ModifyText" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\ModifyText.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CurvedSectionView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\CurvedSectionView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
