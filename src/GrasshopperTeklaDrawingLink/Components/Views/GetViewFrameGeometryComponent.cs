@@ -38,7 +38,10 @@ namespace GTDrawingLink.Components.Views
         {
             var viewBase = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (viewBase == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
                 return;
+            }
 
             viewBase.Select();
             var lowerLeft = viewBase.Origin + viewBase.FrameOrigin;

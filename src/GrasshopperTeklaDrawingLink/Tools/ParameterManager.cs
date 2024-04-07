@@ -474,7 +474,7 @@ namespace GTDrawingLink.Tools
                 var value = new List<GH_Goo<DatabaseObject>>();
                 if (DA.GetDataList(InstanceDescription.Name, value))
                 {
-                    if (typeOfInput == typeof(ViewBase) && value.First().Value.GetType().InheritsFrom(typeof(Drawing)))
+                    if (typeOfInput == typeof(ViewBase) && value.First() != null && value.First().Value.GetType().InheritsFrom(typeof(Drawing)))
                     {
                         var castedToExpectedType = value.Select(v => (v.Value as Drawing).GetSheet() as T);
                         if (castedToExpectedType.Any(o => o is null))

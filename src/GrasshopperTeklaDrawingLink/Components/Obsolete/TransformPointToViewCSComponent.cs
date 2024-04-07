@@ -34,11 +34,17 @@ namespace GTDrawingLink.Components.Obsolete
             List<Rhino.Geometry.Point3d> points = new List<Rhino.Geometry.Point3d>();
             var parameterSet = DA.GetDataList("Point", points);
             if (!parameterSet)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided Points are null");
                 return;
+            }
 
             var view = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
             if (view == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
                 return;
+            }
 
             view.Select();
 

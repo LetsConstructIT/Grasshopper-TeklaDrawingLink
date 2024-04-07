@@ -39,6 +39,12 @@ namespace GTDrawingLink.Components.Views
                     views.Add(item as View);
             }
 
+            if (!views.HasItems())
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
+                return;
+            }
+
             var initialFilters = GetInitialFilters(views);
 
             SetDummyFilter(views);

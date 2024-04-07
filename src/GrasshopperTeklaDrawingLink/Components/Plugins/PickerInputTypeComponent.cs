@@ -114,7 +114,10 @@ namespace GTDrawingLink.Components.Plugins
         {
             var viewInput = DA.GetGooValue<DatabaseObject>(ParamInfos.View);
             if (viewInput == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
                 return;
+            }
 
             ViewBase viewBase = null;
             if (viewInput is ViewBase)
