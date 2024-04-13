@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using TSMUI = Tekla.Structures.Model.UI;
 
@@ -29,6 +28,7 @@ namespace GTDrawingLink.Components.Miscs
             Menu_AppendItem(menu, ParamInfos.AllModelViews.Name, GetViewModeAllMenuItem_Clicked, true, _mode == GetViewMode.All).ToolTipText = ParamInfos.AllModelViews.Description;
             Menu_AppendItem(menu, ParamInfos.VisibleModelViews.Name, GetViewModeVisibleMenuItem_Clicked, true, _mode == GetViewMode.Visible).ToolTipText = ParamInfos.VisibleModelViews.Description;
             Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
         }
 
         private void GetViewModeAllMenuItem_Clicked(object sender, EventArgs e)
