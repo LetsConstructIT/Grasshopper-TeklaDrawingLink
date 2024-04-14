@@ -68,9 +68,10 @@ namespace GTDrawingLink.Components
         {
             if (_insertedObjects.Any())
             {
-                DrawingInteractor.DeleteObjects(_insertedObjects.OfType<DrawingObject>());
+                if (DrawingInteractor.DeleteObjects(_insertedObjects.OfType<DrawingObject>()))
+                    DrawingInteractor.CommitChanges();
+
                 _insertedObjects.Clear();
-                DrawingInteractor.CommitChanges();
             }
             base.ExpireDownStreamObjects();
         }
