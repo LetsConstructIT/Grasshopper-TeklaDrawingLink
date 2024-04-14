@@ -5,6 +5,7 @@ using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System.Collections.Generic;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Annotations
@@ -19,6 +20,11 @@ namespace GTDrawingLink.Components.Annotations
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var (modelObjects, attributes, basePoints, placings) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(modelObjects.Objects?.First()?.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(false, modelObjects, attributes, basePoints, placings);
             var inputMode = strategy.Mode;

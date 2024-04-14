@@ -20,6 +20,11 @@ namespace GTDrawingLink.Components.Views
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var (views, startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(false, startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names);
             var inputMode = strategy.Mode;

@@ -173,6 +173,9 @@ namespace GTDrawingLink.Tools
 
         public static bool IsInTheActiveDrawing(DrawingObject drawingObject)
         {
+            if (drawingObject is null)
+                return false;
+
             var sourceId = drawingObject.GetDrawingIdentifier();
             var currentId = GetActiveDrawing().GetId();
 

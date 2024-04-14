@@ -172,6 +172,9 @@ namespace GTDrawingLink.Components
             return Get(index);
         }
 
+        public T First()
+            => Get(0);
+
         private T Get(int index)
         {
             return _views.ElementAtOrLast(index);

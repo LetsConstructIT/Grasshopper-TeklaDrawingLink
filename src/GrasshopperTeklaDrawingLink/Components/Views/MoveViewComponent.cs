@@ -36,6 +36,12 @@ namespace GTDrawingLink.Components.Views
                 return;
             }
 
+            if (!DrawingInteractor.IsInTheActiveDrawing(view))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return;
+            }
+
             Rhino.Geometry.Vector3d vector = new Rhino.Geometry.Vector3d();
             var parameterSet = DA.GetData("Vector", ref vector);
             if (!parameterSet)

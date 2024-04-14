@@ -21,6 +21,11 @@ namespace GTDrawingLink.Components.Obsolete
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             (var views, var points, var filePaths, var scales) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(false, points, filePaths, scales);
             var inputMode = strategy.Mode;

@@ -24,6 +24,11 @@ namespace GTDrawingLink.Components.Plugins
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var (views, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(true, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect);
             var inputMode = strategy.Mode;
