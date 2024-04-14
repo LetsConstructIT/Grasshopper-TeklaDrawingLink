@@ -24,7 +24,13 @@ namespace GTDrawingLink.Tools
         }
 
         public static Drawing GetActiveDrawing() => DrawingHandler.GetActiveDrawing();
-        public static bool CommitChanges() => GetActiveDrawing().CommitChanges();
+        public static bool CommitChanges()
+        {
+            if (Tekla.Structures.DrawingInternal.Operation.GetEditMode() != Tekla.Structures.DrawingInternal.EditMode.DrawingEditMode)
+                return false;
+
+            return GetActiveDrawing().CommitChanges();
+        }
 
         public static DrawingObject PickObject()
         {
@@ -139,6 +145,9 @@ namespace GTDrawingLink.Tools
 
         internal static bool DeleteObjects(IEnumerable<DrawingObject> drawingObjects)
         {
+            if (!drawingObjects.Any())
+                return true;
+
             if (HasAnyTrueMarks(drawingObjects))
             {
                 Highlight(drawingObjects);
