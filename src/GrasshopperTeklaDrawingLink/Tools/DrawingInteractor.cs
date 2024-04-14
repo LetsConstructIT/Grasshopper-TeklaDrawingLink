@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GTDrawingLink.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -145,8 +146,8 @@ namespace GTDrawingLink.Tools
 
         internal static bool DeleteObjects(IEnumerable<DrawingObject> drawingObjects)
         {
-            if (!drawingObjects.Any())
-                return true;
+            if (!drawingObjects.Any() || !IsInTheActiveDrawing(drawingObjects.First()))
+                return false;
 
             if (HasAnyTrueMarks(drawingObjects))
             {
@@ -169,5 +170,13 @@ namespace GTDrawingLink.Tools
 
         private static bool HasAnyTrueMarks(IEnumerable<DrawingObject> drawingObjects)
             => drawingObjects.Any(o => o is Mark && !(o as Mark).IsAssociativeNote);
+
+        private static bool IsInTheActiveDrawing(DrawingObject drawingObject)
+        {
+            var sourceId = drawingObject.GetDrawingIdentifier();
+            var currentId = GetActiveDrawing().GetId();
+
+            return sourceId == currentId;
+        }
     }
 }
