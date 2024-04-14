@@ -38,7 +38,16 @@ namespace GTDrawingLink.Components.Views
         {
             var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
             if (drawing == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input drawing not specified");
                 return null;
+            }
+
+            if (!DrawingInteractor.IsTheActiveDrawing(drawing))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The supplied drawing is not currently opened");
+                return null;
+            }
 
             var viewTypes = new List<string>();
             var parameterSet = DA.GetDataList(ParamInfos.ViewType.Name, viewTypes);

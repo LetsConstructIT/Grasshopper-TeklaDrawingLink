@@ -171,9 +171,17 @@ namespace GTDrawingLink.Tools
         private static bool HasAnyTrueMarks(IEnumerable<DrawingObject> drawingObjects)
             => drawingObjects.Any(o => o is Mark && !(o as Mark).IsAssociativeNote);
 
-        private static bool IsInTheActiveDrawing(DrawingObject drawingObject)
+        public static bool IsInTheActiveDrawing(DrawingObject drawingObject)
         {
             var sourceId = drawingObject.GetDrawingIdentifier();
+            var currentId = GetActiveDrawing().GetId();
+
+            return sourceId == currentId;
+        }
+
+        public static bool IsTheActiveDrawing(Drawing drawing)
+        {
+            var sourceId = drawing.GetId();
             var currentId = GetActiveDrawing().GetId();
 
             return sourceId == currentId;

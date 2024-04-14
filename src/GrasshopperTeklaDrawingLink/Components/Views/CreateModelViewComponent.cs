@@ -42,6 +42,12 @@ namespace GTDrawingLink.Components.Views
                 return null;
             }
 
+            if (!DrawingInteractor.IsTheActiveDrawing(drawing))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The supplied drawing is not currently opened");
+                return null;
+            }
+
             var modelViews = DA.GetGooListValue<TeklaView>(ParamInfos.ModelView);
             if (modelViews == null)
             {
