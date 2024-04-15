@@ -33,6 +33,12 @@ namespace GTDrawingLink.Components.Drawings
             if (drawing == null)
                 return;
 
+            if (!DrawingInteractor.CanDrawingBeOpened(drawing, out string message))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, message);
+                return;
+            }
+
             var show = true;
             DA.GetData("Show", ref show);
 

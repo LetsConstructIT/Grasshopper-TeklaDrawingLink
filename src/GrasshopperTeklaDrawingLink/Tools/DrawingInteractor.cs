@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
+using TSM = Tekla.Structures.Model;
 
 namespace GTDrawingLink.Tools
 {
@@ -14,7 +15,7 @@ namespace GTDrawingLink.Tools
 
         static DrawingInteractor()
         {
-            var modelStatus = new Tekla.Structures.Model.Model().GetConnectionStatus();
+            var modelStatus = new TSM.Model().GetConnectionStatus();
             DrawingHandler = new DrawingHandler();
             var drawingStatus = DrawingHandler.GetConnectionStatus();
         }
@@ -188,6 +189,39 @@ namespace GTDrawingLink.Tools
             var currentId = GetActiveDrawing().GetId();
 
             return sourceId == currentId;
+        }
+
+        internal static bool CanDrawingBeOpened(Drawing drawing, out string message)
+        {
+            if (drawing is null)
+            {
+                message = "Provided drawing is empty";
+                return false;
+            }
+
+            drawing.Select();
+            if (drawing.IsLocked)
+            {
+                message = "Cannot edit a locked drawing";
+                return false;
+            }
+
+            var identifier = (Tekla.Structures.Identifier)drawing.GetPropertyValue("ModelObjectIdentifier");
+            if (identifier.ID > 0)
+            {
+                var modelObject = new TSM.Model().SelectModelObject(identifier);
+                if (modelObject != null)
+                {
+                    if (!TSM.Operations.Operation.IsNumberingUpToDate(modelObject))
+                    {
+                        message = "The position numbers of modified objects need to be updated";
+                        return false;
+                    }
+                }
+            }
+
+            message = string.Empty;
+            return true;
         }
     }
 }
