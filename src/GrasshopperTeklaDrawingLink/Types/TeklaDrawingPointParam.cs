@@ -61,7 +61,8 @@ namespace GTDrawingLink.Types
 
             foreach (var point in this.VolatileData.AllData(true).Select(d => ((GH_Goo<TSG.Point>)d).Value))
             {
-                args.Display.DrawPoint(point.ToRhino(), PointStyle.X, 5, this.Attributes.Selected ? args.WireColour_Selected : args.WireColour);
+                if (point != null)
+                    args.Display.DrawPoint(point.ToRhino(), PointStyle.X, 5, this.Attributes.Selected ? args.WireColour_Selected : args.WireColour);
             }
         }
 
