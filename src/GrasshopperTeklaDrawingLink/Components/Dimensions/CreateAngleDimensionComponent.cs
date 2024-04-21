@@ -22,6 +22,11 @@ namespace GTDrawingLink.Components.Dimensions
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             (var views, var originPts, var pts1, var pts2, var distances, var attributes) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(false, originPts, pts1, pts2, distances, attributes);
             var inputMode = strategy.Mode;

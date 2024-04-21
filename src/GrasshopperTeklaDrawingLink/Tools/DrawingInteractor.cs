@@ -1,9 +1,11 @@
-﻿using System;
+﻿using GTDrawingLink.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
+using TSM = Tekla.Structures.Model;
 
 namespace GTDrawingLink.Tools
 {
@@ -13,7 +15,7 @@ namespace GTDrawingLink.Tools
 
         static DrawingInteractor()
         {
-            var modelStatus = new Tekla.Structures.Model.Model().GetConnectionStatus();
+            var modelStatus = new TSM.Model().GetConnectionStatus();
             DrawingHandler = new DrawingHandler();
             var drawingStatus = DrawingHandler.GetConnectionStatus();
         }
@@ -24,7 +26,13 @@ namespace GTDrawingLink.Tools
         }
 
         public static Drawing GetActiveDrawing() => DrawingHandler.GetActiveDrawing();
-        public static bool CommitChanges() => GetActiveDrawing().CommitChanges();
+        public static bool CommitChanges()
+        {
+            if (Tekla.Structures.DrawingInternal.Operation.GetEditMode() != Tekla.Structures.DrawingInternal.EditMode.DrawingEditMode)
+                return false;
+
+            return GetActiveDrawing().CommitChanges();
+        }
 
         public static DrawingObject PickObject()
         {
@@ -139,6 +147,9 @@ namespace GTDrawingLink.Tools
 
         internal static bool DeleteObjects(IEnumerable<DrawingObject> drawingObjects)
         {
+            if (!drawingObjects.Any() || !IsInTheActiveDrawing(drawingObjects.First()))
+                return false;
+
             if (HasAnyTrueMarks(drawingObjects))
             {
                 Highlight(drawingObjects);
@@ -160,5 +171,57 @@ namespace GTDrawingLink.Tools
 
         private static bool HasAnyTrueMarks(IEnumerable<DrawingObject> drawingObjects)
             => drawingObjects.Any(o => o is Mark && !(o as Mark).IsAssociativeNote);
+
+        public static bool IsInTheActiveDrawing(DrawingObject drawingObject)
+        {
+            if (drawingObject is null)
+                return false;
+
+            var sourceId = drawingObject.GetDrawingIdentifier();
+            var currentId = GetActiveDrawing().GetId();
+
+            return sourceId == currentId;
+        }
+
+        public static bool IsTheActiveDrawing(Drawing drawing)
+        {
+            var sourceId = drawing.GetId();
+            var currentId = GetActiveDrawing().GetId();
+
+            return sourceId == currentId;
+        }
+
+        internal static bool CanDrawingBeOpened(Drawing drawing, out string message)
+        {
+            if (drawing is null)
+            {
+                message = "Provided drawing is empty";
+                return false;
+            }
+
+            drawing.Select();
+            if (drawing.IsLocked)
+            {
+                message = "Cannot edit a locked drawing";
+                return false;
+            }
+
+            var identifier = (Tekla.Structures.Identifier)drawing.GetPropertyValue("ModelObjectIdentifier");
+            if (identifier.ID > 0)
+            {
+                var modelObject = new TSM.Model().SelectModelObject(identifier);
+                if (modelObject != null)
+                {
+                    if (!TSM.Operations.Operation.IsNumberingUpToDate(modelObject))
+                    {
+                        message = "The position numbers of modified objects need to be updated";
+                        return false;
+                    }
+                }
+            }
+
+            message = string.Empty;
+            return true;
+        }
     }
 }

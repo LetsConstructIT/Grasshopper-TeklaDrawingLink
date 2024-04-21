@@ -22,6 +22,11 @@ namespace GTDrawingLink.Components.Annotations
         protected override IEnumerable<TSD.DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             (var views, var texts, var insertionPoints, var placings, var textAttributes) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(false, texts, insertionPoints, placings, textAttributes);
             var inputMode = strategy.Mode;

@@ -55,8 +55,8 @@ namespace GTDrawingLink.Components.Views
             DA.SetData("Lower left", lowerLeft.ToRhino());
             DA.SetData("Lower right", lowerRight.ToRhino());
             DA.SetData("Rectangle", new Rectangle3d(Plane.WorldXY, lowerLeft.ToRhino(), upperRight.ToRhino()));
-            DA.SetData("Width", viewBase.Width);
-            DA.SetData("Height", viewBase.Height);
+            DA.SetData("Width", viewBase.Width.ToRhino());
+            DA.SetData("Height", viewBase.Height.ToRhino());
             DA.SetData("Origin", viewBase.Origin.ToRhino());
         }
 

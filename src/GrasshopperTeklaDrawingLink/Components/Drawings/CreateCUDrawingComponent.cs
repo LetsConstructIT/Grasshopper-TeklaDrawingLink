@@ -68,11 +68,10 @@ namespace GTDrawingLink.Components.Drawings
                 new CastUnitDrawing(identifier, creationType, attributesFileName) :
                 new CastUnitDrawing(identifier, creationType, sheetNumber, attributesFileName);
 
-            if (createdDrawing != null)
-            {
-                createdDrawing.Insert();
+            if (createdDrawing != null && createdDrawing.Insert())
                 DA.SetData(ParamInfos.Drawing.Name, new TeklaDatabaseObjectGoo(createdDrawing));
-            }
+            else
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Drawing was not created");
         }
     }
 }

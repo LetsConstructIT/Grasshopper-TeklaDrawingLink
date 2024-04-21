@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.DrawingInternal;
 
 namespace GTDrawingLink.Components.Plugins
 {
@@ -24,6 +25,11 @@ namespace GTDrawingLink.Components.Plugins
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var (views, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(true, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect);
             var inputMode = strategy.Mode;
@@ -54,8 +60,16 @@ namespace GTDrawingLink.Components.Plugins
                                           pluginAttribute,
                                           objectsToSelect.GetBranch(i));
 
-                outputObjects.Add(plugin);
-                outputTree.Append(new TeklaDatabaseObjectGoo(plugin), path);
+                if (plugin.GetIdentifier().ID == 0)
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Drawing plugin was not properly inserted");
+                    outputTree.Append(new TeklaDatabaseObjectGoo(null), path);
+                }
+                else
+                {
+                    outputObjects.Add(plugin);
+                    outputTree.Append(new TeklaDatabaseObjectGoo(plugin), path);
+                }
             }
 
             _command.SetOutputValues(DA, outputTree);

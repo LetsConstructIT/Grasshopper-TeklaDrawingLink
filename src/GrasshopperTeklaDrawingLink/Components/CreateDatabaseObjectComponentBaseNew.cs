@@ -68,9 +68,10 @@ namespace GTDrawingLink.Components
         {
             if (_insertedObjects.Any())
             {
-                DrawingInteractor.DeleteObjects(_insertedObjects.OfType<DrawingObject>());
+                if (DrawingInteractor.DeleteObjects(_insertedObjects.OfType<DrawingObject>()))
+                    DrawingInteractor.CommitChanges();
+
                 _insertedObjects.Clear();
-                DrawingInteractor.CommitChanges();
             }
             base.ExpireDownStreamObjects();
         }
@@ -170,6 +171,9 @@ namespace GTDrawingLink.Components
             var index = path.Indices.First();
             return Get(index);
         }
+
+        public T First()
+            => Get(0);
 
         private T Get(int index)
         {

@@ -7,13 +7,14 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components.Dimensions
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class OrderStraightDimensionSetComponent : TeklaComponentBaseNew<OrderStraightDimensionSetCommand>
+    [Obsolete]
+    public class OrderStraightDimensionSetComponentOLD : TeklaComponentBaseNew<OrderStraightDimensionSetCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.OrderStraightDimensionSets;
-        public OrderStraightDimensionSetComponent() : base(ComponentInfos.OrderStraightDimensionSetComponent) { }
+        public OrderStraightDimensionSetComponentOLD() : base(ComponentInfos.OrderStraightDimensionSetComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -34,7 +35,7 @@ namespace GTDrawingLink.Components.Dimensions
         private void OrderDimensions(List<StraightDimensionSet> dimensionLines, int offset)
         {
             var dimLinesWithDistances = CalculateDimensionLinePositions(dimensionLines);
-            var orderVector = GetOrderVector(dimensionLines.First());            
+            var orderVector = GetOrderVector(dimensionLines.First().GetDimensionLocation()).GetNormal();
 
             var orderedDimLines = dimLinesWithDistances.OrderBy(d => d.distance).ToList();
 
@@ -47,12 +48,10 @@ namespace GTDrawingLink.Components.Dimensions
 
                 var (dimension, points, location, _) = orderedDimLines[i];
 
-                var flattenedPt = new Point(points.First().X, points.First().Y);
-                var newDistance = Distance.PointToLine(flattenedPt, new Tekla.Structures.Geometry3d.Line(expectedLocationStartPt, locationDirection));
-                if (new Vector(expectedLocationStartPt - flattenedPt).Dot(dimension.GetUpDirection()) < 0)
+                var newDistance = Distance.PointToLine(points.First(), new Tekla.Structures.Geometry3d.Line(expectedLocationStartPt, locationDirection));
+                if (new Vector(expectedLocationStartPt - points.First()).Dot(dimension.GetUpDirection()) < 0)
                     newDistance *= -1;
                 dimension.Distance = newDistance;
-                dimension.Attributes.Placing.Placing = DimensionSetBaseAttributes.Placings.Fixed;
                 dimension.Modify();
             }
 
@@ -71,7 +70,7 @@ namespace GTDrawingLink.Components.Dimensions
                 (initialDim, initialPoints, initialSegment, 0)
             };
 
-            var orderVector = GetOrderVector(initialDim);
+            var orderVector = GetOrderVector(initialSegment);
             for (int i = 1; i < dimensionLines.Count; i++)
             {
                 var dimLine = dimensionLines[i];
@@ -88,10 +87,29 @@ namespace GTDrawingLink.Components.Dimensions
             return dimLinesWithDistances;
         }
 
-        private Vector GetOrderVector(StraightDimensionSet sds)
+        private Vector GetOrderVector(LineSegment segment)
         {
-            var signOfDistnace = Math.Sign(sds.Distance);
-            return signOfDistnace*sds.GetUpDirection().GetNormal();
+            var perpVector = segment.GetDirectionVector().Cross(new Vector(0, 0, 1));
+            if (IsVerticalVector(perpVector))
+            {
+                if (perpVector.Y < 0)
+                {
+                    perpVector *= -1;
+                }
+            }
+            else if (perpVector.X < 0)
+            {
+                perpVector *= -1;
+            }
+
+            return perpVector;
+
+            static bool IsVerticalVector(Vector perpVector)
+            {
+                var delta = 30;
+                var angleToVertical = perpVector.GetAngleBetween(new Vector(0, 1, 0)) * 180 / Math.PI;
+                return angleToVertical < delta || angleToVertical > 180 - delta;
+            }
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using Rhino.Geometry;
 using System.Drawing;
@@ -19,8 +20,8 @@ namespace GTDrawingLink.Components.Drawings
             drawing.Select();
 
             var sheetSize = drawing.Layout.SheetSize;
-            var width = sheetSize.Width;
-            var height = sheetSize.Height;
+            var width = sheetSize.Width.ToRhino();
+            var height = sheetSize.Height.ToRhino();
             var rectangle = new Rectangle3d(Plane.WorldXY, width, height);
 
             _command.SetOutputValues(DA, width, height, rectangle);

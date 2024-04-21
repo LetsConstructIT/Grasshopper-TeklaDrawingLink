@@ -17,6 +17,12 @@ namespace GTDrawingLink.Components.Views
             (View view, double angle) = _command.GetInputValues();
             view.Select();
 
+            if (!DrawingInteractor.IsInTheActiveDrawing(view))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return;
+            }
+
             view.RotateViewOnDrawingPlane(angle);
 
             _command.SetOutputValues(DA, view);

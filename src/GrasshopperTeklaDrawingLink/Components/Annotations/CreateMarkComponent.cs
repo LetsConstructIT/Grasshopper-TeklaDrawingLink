@@ -19,6 +19,11 @@ namespace GTDrawingLink.Components.Annotations
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var (modelObjectsTree, attributeFiles) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(modelObjectsTree.First()?.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var createdMarks = new List<Mark>();
 

@@ -45,6 +45,12 @@ namespace GTDrawingLink.Components.Views
                 return;
             }
 
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return;
+            }
+
             var initialFilters = GetInitialFilters(views);
 
             SetDummyFilter(views);

@@ -13,6 +13,13 @@ namespace GTDrawingLink.Components.Drawings
         public GetActiveDrawingComponent() : base(ComponentInfos.GetActiveDrawingComponent)
         {
         }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
+
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             AddBooleanParameter(pManager, ParamInfos.BooleanToogle, GH_ParamAccess.item);

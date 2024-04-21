@@ -20,6 +20,11 @@ namespace GTDrawingLink.Components.Views
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var (views, startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names) = _command.GetInputValues();
+            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
+                return null;
+            }
 
             var strategy = GetSolverStrategy(false, startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names);
             var inputMode = strategy.Mode;
@@ -91,13 +96,16 @@ namespace GTDrawingLink.Components.Views
                 markAttributes,
                 out View createdView,
                 out SectionMark createdMark);
-
+                       
             var macroApplied = LoadAttributesWithMacroIfNecessary(createdView, viewAttributesFileName);
-
-            if (macroApplied && !string.IsNullOrEmpty(viewName))
+            
+            if (!string.IsNullOrEmpty(viewName))
             {
                 createdMark.Attributes.MarkName = viewName;
                 createdMark.Modify();
+
+                createdView.Name = viewName;
+                createdView.Modify();
             }
 
             return (createdView, createdMark);
