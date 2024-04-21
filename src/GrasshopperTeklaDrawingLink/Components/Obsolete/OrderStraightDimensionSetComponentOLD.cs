@@ -7,13 +7,14 @@ using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 
-namespace GTDrawingLink.Components.Dimensions
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class OrderStraightDimensionSetComponent : TeklaComponentBaseNew<OrderStraightDimensionSetCommand>
+    [Obsolete]
+    public class OrderStraightDimensionSetComponentOLD : TeklaComponentBaseNew<OrderStraightDimensionSetCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.OrderStraightDimensionSets;
-        public OrderStraightDimensionSetComponent() : base(ComponentInfos.OrderStraightDimensionSetComponent) { }
+        public OrderStraightDimensionSetComponentOLD() : base(ComponentInfos.OrderStraightDimensionSetComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {

@@ -470,7 +470,7 @@ namespace GTDrawingLink.Tools
                 "7F316FBD-CCAF-425F-AB4E-DAD134E9F492"
             },
             {
-                typeof(OrderStraightDimensionSetComponent),
+                typeof(OrderStraightDimensionSetComponentOLD),
                 "22FD71AB-4520-4A0A-BDAE-A73E9C12B1BE"
             },
             {
