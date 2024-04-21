@@ -24,6 +24,7 @@ namespace GTDrawingLink.Components.Dimensions
             }
             else
             {
+                dimensionLines.ForEach(d => d.Select());
                 OrderDimensions(dimensionLines, distance);
             }
 
