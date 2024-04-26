@@ -22,7 +22,8 @@ namespace GTDrawingLink.Components.Obsolete
             {
                 var longitudinal = customLongitudinal.HasItems() ? customLongitudinal.ElementAtOrLast(i).Value : -1;
                 var cross = customCross.HasItems() ? customCross.ElementAtOrLast(i).Value : -1;
-                ApplyAttributes(reinforcements[i], attributes.ElementAtOrLast(i), longitudinal, cross);
+                var attribute = attributes.HasItems() ? attributes.ElementAtOrLast(i) : null;
+                ApplyAttributes(reinforcements[i], attribute, longitudinal, cross);
             }
 
             DrawingInteractor.CommitChanges();
@@ -30,9 +31,11 @@ namespace GTDrawingLink.Components.Obsolete
             _command.SetOutputValues(DA, reinforcements);
         }
 
-        private void ApplyAttributes(ReinforcementMesh reinforcementBase, ReinforcementBase.ReinforcementMeshAttributes attributes, double longitudinalPosition, double crossPosition)
+        private void ApplyAttributes(ReinforcementMesh reinforcementBase, ReinforcementBase.ReinforcementMeshAttributes? attributes, double longitudinalPosition, double crossPosition)
         {
-            reinforcementBase.Attributes = attributes;
+            if (attributes != null)
+                reinforcementBase.Attributes = attributes;
+
             if (RebarCustomPositionChecker.IsValid(longitudinalPosition))
             {
                 reinforcementBase.Attributes.MeshReinforcementVisibilityLongitudinal = ReinforcementBase.ReinforcementVisibilityTypes.Customized;
@@ -51,15 +54,15 @@ namespace GTDrawingLink.Components.Obsolete
     public class ModifyMeshCommand : CommandBase
     {
         private readonly InputListParam<ReinforcementMesh> _inReinforcements = new InputListParam<ReinforcementMesh>(ParamInfos.Mesh);
-        private readonly InputListParam<ReinforcementBase.ReinforcementMeshAttributes> _inAttributes = new InputListParam<ReinforcementBase.ReinforcementMeshAttributes>(ParamInfos.MeshAttributes);
+        private readonly InputOptionalListParam<ReinforcementBase.ReinforcementMeshAttributes> _inAttributes = new InputOptionalListParam<ReinforcementBase.ReinforcementMeshAttributes>(ParamInfos.MeshAttributes);
         private readonly InputOptionalListParam<GH_Number> _inCustomLongitudinal = new InputOptionalListParam<GH_Number>(ParamInfos.RebarCustomPositionLongitudinal);
         private readonly InputOptionalListParam<GH_Number> _inCustomCross = new InputOptionalListParam<GH_Number>(ParamInfos.RebarCustomPositionCross);
 
         private readonly OutputListParam<ReinforcementMesh> _outReinforcements = new OutputListParam<ReinforcementMesh>(ParamInfos.Mesh);
 
-        internal (List<ReinforcementMesh> reinforcements, List<ReinforcementBase.ReinforcementMeshAttributes> attributes, List<GH_Number>? customLongitudinal, List<GH_Number>? customCross) GetInputValues()
+        internal (List<ReinforcementMesh> reinforcements, List<ReinforcementBase.ReinforcementMeshAttributes>? attributes, List<GH_Number>? customLongitudinal, List<GH_Number>? customCross) GetInputValues()
         {
-            return (_inReinforcements.Value, _inAttributes.Value, _inCustomLongitudinal.GetValueFromUserOrNull(), _inCustomCross.GetValueFromUserOrNull());
+            return (_inReinforcements.Value, _inAttributes.GetValueFromUserOrNull(), _inCustomLongitudinal.GetValueFromUserOrNull(), _inCustomCross.GetValueFromUserOrNull());
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, List<ReinforcementMesh> reinforcements)
