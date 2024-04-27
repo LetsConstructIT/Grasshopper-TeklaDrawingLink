@@ -7,16 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
-using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Annotations
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class DeconstructMarkComponent : DeconstructDatabaseObjectComponentBase
+    [Obsolete]
+    public class DeconstructMarkComponentOLD : DeconstructDatabaseObjectComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.quinary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.DeconstructMark;
 
-        public DeconstructMarkComponent() : base(ComponentInfos.DeconstructMarkComponent)
+        public DeconstructMarkComponentOLD() : base(ComponentInfos.DeconstructMarkComponent)
         {
         }
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
@@ -45,7 +45,7 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            if (!(DA.GetGooValue<TSD.DatabaseObject>(ParamInfos.Mark) is TSD.MarkBase mark))
+            if (!(DA.GetGooValue<DatabaseObject>(ParamInfos.Mark) is MarkBase mark))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided input could not be converted to MarkBase");
                 return;
@@ -68,31 +68,31 @@ namespace GTDrawingLink.Components.Annotations
             DA.SetData(ParamInfos.IsValid.Name, objectBoundingBox.Height > 0.1);
         }
 
-        private List<TSD.Mark> FindInternalMarks(MarkBase mark)
+        private List<Mark> FindInternalMarks(MarkBase mark)
         {
-            var internalMarks = new List<TSD.Mark>();
+            var internalMarks = new List<Mark>();
             if (mark is MarkSet)
             {
-                var innerMarks = mark.GetObjects(new Type[] { typeof(TSD.Mark) });
+                var innerMarks = mark.GetObjects(new Type[] { typeof(Mark) });
                 while (innerMarks.MoveNext())
-                    internalMarks.Add(innerMarks.Current as TSD.Mark);
+                    internalMarks.Add(innerMarks.Current as Mark);
             }
             else if (mark is Mark)
             {
-                internalMarks.Add(mark as TSD.Mark);
+                internalMarks.Add(mark as Mark);
             }
 
             return internalMarks;
         }
 
-        private List<TSD.ModelObject> FindMarkSource(List<TSD.Mark> marks)
+        private List<ModelObject> FindMarkSource(List<Mark> marks)
         {
-            var sourceObjects = new List<TSD.ModelObject>();
+            var sourceObjects = new List<ModelObject>();
             foreach (var mark in marks)
             {
-                var doe = mark.GetRelatedObjects(new Type[] { typeof(TSD.ModelObject) });
+                var doe = mark.GetRelatedObjects(new Type[] { typeof(ModelObject) });
                 while (doe.MoveNext())
-                    sourceObjects.Add(doe.Current as TSD.ModelObject);
+                    sourceObjects.Add(doe.Current as ModelObject);
             }
 
             return sourceObjects;
