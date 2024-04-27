@@ -142,6 +142,9 @@ namespace GTDrawingLink.Tools
 
         private static bool IsAnyDrawingOpened()
         {
+            if (!DrawingHandler.GetConnectionStatus())
+                return false;
+
             return DrawingHandler.GetActiveDrawing() != null;
         }
 
