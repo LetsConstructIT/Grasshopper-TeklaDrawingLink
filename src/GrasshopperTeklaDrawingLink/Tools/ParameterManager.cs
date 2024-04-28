@@ -917,7 +917,7 @@ namespace GTDrawingLink.Tools
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_String> tree))
                 {
                     _tree = tree;
-                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i?.Value as T).ToList());
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
