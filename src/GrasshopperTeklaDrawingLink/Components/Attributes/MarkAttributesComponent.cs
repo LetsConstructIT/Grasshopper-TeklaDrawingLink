@@ -24,7 +24,7 @@ namespace GTDrawingLink.Components.AttributesComponents
                     AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Drawing object is obligatory to properly read marks' content");
                     return;
                 }
-
+                modelObject.Select();
                 markAttributes = new Mark.MarkAttributes(modelObject);
             }
 
