@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using System.Drawing;
@@ -27,6 +28,8 @@ namespace GTDrawingLink.Components.AttributesComponents
                 modelObject.Select();
                 markAttributes = new Mark.MarkAttributes(modelObject);
             }
+            else
+                markAttributes = markAttributes.Copy();
 
             if (!string.IsNullOrEmpty(fileName))
                 markAttributes.LoadAttributes(fileName);

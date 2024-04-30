@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -15,6 +16,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         {
             var (partAttributes, fileName, visibileLines, hiddenLines, referenceLines, faceHatch, sectionFaceHatch, representation) = _command.GetInputValues();
 
+            partAttributes = partAttributes.Copy();
             if (!string.IsNullOrEmpty(fileName))
                 partAttributes.LoadAttributes(fileName);
 

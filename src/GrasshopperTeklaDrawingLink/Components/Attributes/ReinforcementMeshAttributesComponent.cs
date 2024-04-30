@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -16,6 +17,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         {
             (ReinforcementMeshAttributes meshAttributes, string fileName, ReinforcementVisibilityTypes? visibilityCross, ReinforcementVisibilityTypes? visibilityLongitudinal, int? symbolIndex, double? symbolSize, ReinforcementRepresentationTypes? representation, LineTypeAttributes? visibileLines, LineTypeAttributes? hiddenLines, bool? hiddenByPart, bool? hiddenByRebars) = _command.GetInputValues();
 
+            meshAttributes = meshAttributes.Copy();
             if (!string.IsNullOrEmpty(fileName))
                 meshAttributes.LoadAttributes(fileName);
 

@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -15,6 +16,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         {
             var (weldAttributes, fileName, representation, visibleLines, hiddenLines, drawHiddenLines, drawOwnHiddenLines) = _command.GetInputValues();
 
+            weldAttributes = weldAttributes.Copy();
             if (!string.IsNullOrEmpty(fileName))
                 weldAttributes.LoadAttributes(fileName);
 
