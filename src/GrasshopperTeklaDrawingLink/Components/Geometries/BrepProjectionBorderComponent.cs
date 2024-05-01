@@ -1,7 +1,7 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Types.Transforms;
 using GTDrawingLink.Tools;
+using Rhino;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +32,7 @@ namespace GTDrawingLink.Components.Geometries
 
         private Polyline SimplifyPolyline(Polyline polyline)
         {
-            var angleTolerance = 0;
-
+            var angleTolerance = RhinoDoc.ActiveDoc.ModelAngleToleranceRadians;
             var segmentCount = polyline.SegmentCount;
             var cornerPts = new List<Point3d>();
 
