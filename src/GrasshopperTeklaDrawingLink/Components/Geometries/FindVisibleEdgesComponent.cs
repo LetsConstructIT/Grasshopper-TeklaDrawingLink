@@ -39,9 +39,12 @@ namespace GTDrawingLink.Components.Geometries
             var perpVector = GetPerpendicularVector(curve.ClosedCurveOrientation());
             foreach (var segment in polyline.GetSegments())
             {
-                var cross = Vector3d.CrossProduct(segment.Direction, perpVector);
+                var segDir = segment.Direction;
+                segDir.Unitize();
+                var cross = Vector3d.CrossProduct(segDir, perpVector);
+                cross.Unitize();
                 var dot = Vector3d.Multiply(cross, direction);
-                if (dot < -1 * _tolerance)
+                if (dot < -1 * RhinoDoc.ActiveDoc.ModelRelativeTolerance)
                     visibleSegments.Add(segment);
             }
 
