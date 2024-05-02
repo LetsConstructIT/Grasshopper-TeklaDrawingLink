@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Rhino.Geometry;
 using Rhino;
+using System;
 
 namespace GTDrawingLink.Components.Geometries
 {
     public class FindVisibleEdgesComponent : TeklaComponentBaseNew<FindVisibleEdgesCommand>
     {
-        private const double _tolerance = 0.0001;
-
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.FindVisibleEdges;
 
@@ -68,24 +67,16 @@ namespace GTDrawingLink.Components.Geometries
             if (!visiblePoints.Any())
                 return new List<Point3d>();
 
-            var line = new Line(visiblePoints.First(), Vector3d.CrossProduct(direction, Vector3d.ZAxis), 1);
+            var sortDir = Vector3d.CrossProduct(direction, Vector3d.ZAxis);
+            var points = new GeometrySorter().OrderGeometries(visiblePoints, sortDir);
 
-            var ptsWithProjection = visiblePoints.ToDictionary(p => p, p => line.ClosestPoint(p, false));
-            if (!Line.TryFitLineToPoints(ptsWithProjection.Values, out Line fitLine))
-                return new List<Point3d>();
-
-            var tolerance = _tolerance;
-            var points = new List<Point3d>();
-            foreach (var ptWithProjection in ptsWithProjection)
+            var extremes = new List<Point3d>()
             {
-                if (fitLine.From.EpsilonEquals(ptWithProjection.Value, tolerance) ||
-                    fitLine.To.EpsilonEquals(ptWithProjection.Value, tolerance))
-                {
-                    points.Add(ptWithProjection.Key);
-                }
-            }
+                points.First(),
+                points.Last()
+            };
 
-            return points.OrderBy(p => p.X).ThenBy(p => p.Y).ToList();
+            return extremes.OrderBy(p => p.X).ThenBy(p => p.Y).ToList();
         }
 
         private bool CheckInitialAssumptions(Curve curve, out Polyline? polyline)
