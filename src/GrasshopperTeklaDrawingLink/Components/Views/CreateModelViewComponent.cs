@@ -87,8 +87,8 @@ namespace GTDrawingLink.Components.Views
         private View InsertView(Drawing drawing, TeklaView teklaView, string attributesFileName, int? scale, Rhino.Geometry.Point3d? insertionPoint)
         {
             var aabb = new TSG.AABB(
-                new TSG.Point(teklaView.RestrictionBox.X.Min, teklaView.RestrictionBox.Y.Min, teklaView.RestrictionBox.Z.Min),
-                new TSG.Point(teklaView.RestrictionBox.X.Max, teklaView.RestrictionBox.Y.Max, teklaView.RestrictionBox.Z.Max));
+                new TSG.Point(teklaView.RestrictionBox.X.Min.ToTekla(), teklaView.RestrictionBox.Y.Min.ToTekla(), teklaView.RestrictionBox.Z.Min.ToTekla()),
+                new TSG.Point(teklaView.RestrictionBox.X.Max.ToTekla(), teklaView.RestrictionBox.Y.Max.ToTekla(), teklaView.RestrictionBox.Z.Max.ToTekla()));
 
             var attributesToUse = attributesFileName ?? "standard";
             var view = new View(
