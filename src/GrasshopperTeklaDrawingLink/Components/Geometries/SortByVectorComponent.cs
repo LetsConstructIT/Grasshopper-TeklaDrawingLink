@@ -19,8 +19,8 @@ namespace GTDrawingLink.Components.Geometries
             var orderedGeometries = new GeometrySorter().OrderGeometries(geometries, vector);
 
             var indicies = new List<int>();
-            for (int i = 0; i < geometries.Count; i++)
-                indicies.Add(orderedGeometries.IndexOf(geometries[i]));
+            for (int i = 0; i < orderedGeometries.Count; i++)
+                indicies.Add(geometries.IndexOf(orderedGeometries[i]));
 
             _command.SetOutputValues(DA, orderedGeometries, indicies);
         }
