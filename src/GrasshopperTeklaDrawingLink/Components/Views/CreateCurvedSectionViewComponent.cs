@@ -102,10 +102,13 @@ namespace GTDrawingLink.Components.Views
 
             var macroApplied = LoadAttributesWithMacroIfNecessary(createdView, viewAttributesFileName);
 
-            if (macroApplied && !string.IsNullOrEmpty(viewName))
+            if (!string.IsNullOrEmpty(viewName))
             {
                 createdMark.Attributes.MarkName = viewName;
                 createdMark.Modify();
+
+                createdView.Name = viewName;
+                createdView.Modify();
             }
 
             return (createdView, createdMark);
