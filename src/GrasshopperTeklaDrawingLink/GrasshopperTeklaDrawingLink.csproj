@@ -11,7 +11,7 @@
     <RootNamespace>GTDrawingLink</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Deterministic>false</Deterministic>
-    <Configurations>Debug;Release;_2019;_2020;_2021;_2022;_2023;_2024</Configurations>
+    <Configurations>Debug;Release;_2019;_2019i;_2020;_2021;_2022;_2023;_2024</Configurations>
     <AssemblyName>$(MSBuildProjectName)$(Configuration)</AssemblyName>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -53,6 +53,13 @@
     <When Condition="'$(Configuration)'=='_2020'">
         <ItemGroup>
 			<PackageReference Include="TeklaOpenAPI" Version="2020.0.*">
+			  <IncludeAssets>compile;build</IncludeAssets>
+			</PackageReference>
+        </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='_2019i'">
+        <ItemGroup>
+			<PackageReference Include="TeklaOpenAPI" Version="2019.1.*">
 			  <IncludeAssets>compile;build</IncludeAssets>
 			</PackageReference>
         </ItemGroup>
@@ -110,6 +117,10 @@
   </PropertyGroup>
     
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2019|AnyCPU'">
+    <DefineConstants>$(DefineConstants);API2020</DefineConstants>
+  </PropertyGroup>
+    
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2019i|AnyCPU'">
     <DefineConstants>$(DefineConstants);API2020</DefineConstants>
   </PropertyGroup>
     
