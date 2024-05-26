@@ -1996,5 +1996,26 @@ namespace GTDrawingLink.Tools
             NickName = "Behind",
             Description = "Flag indiciating whether the closed graphic object is drawn behind model objects"
         };
+
+        public static readonly GH_InstanceDescription Arc = new GH_InstanceDescription
+        {
+            Name = "Arc",
+            NickName = "A",
+            Description = "Arc"
+        };
+
+        public static readonly GH_InstanceDescription TeklaArc = new GH_InstanceDescription
+        {
+            Name = "Arc",
+            NickName = "A",
+            Description = "Tekla Arc"
+        };
+
+        public static readonly GH_InstanceDescription ArcAttributes = new GH_InstanceDescription
+        {
+            Name = "Arc attributes",
+            NickName = "AAttr",
+            Description = "Arc attributes"
+        };
     }
 }

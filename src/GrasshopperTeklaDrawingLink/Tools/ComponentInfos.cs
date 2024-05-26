@@ -1140,5 +1140,23 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+
+        public static readonly GH_InstanceDescription CreateArcComponent = new GH_InstanceDescription
+        {
+            Name = "Arc",
+            NickName = "A",
+            Description = "Draw Arc in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription ArcAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Arc Attributes",
+            NickName = "AAttr",
+            Description = "Create arc attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
     }
 }

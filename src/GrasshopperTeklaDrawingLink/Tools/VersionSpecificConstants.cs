@@ -764,6 +764,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CircleAttributesComponent),
                 "64C1E6E4-8C57-47FB-9AB1-829949BBEEBB"
+            },
+            {
+                typeof(CreateArcComponent),
+                "B644BD37-9581-4402-87E8-8AB9222C92C6"
+            },
+            {
+                typeof(ArcAttributesParam),
+                "B98F6DC3-FE9F-44E7-AF52-92BC194B192A"
+            },
+            {
+                typeof(ArcAttributesComponent),
+                "7B80DFB8-47A1-40D5-A6DA-1E46513424EF"
             }
         };
 
