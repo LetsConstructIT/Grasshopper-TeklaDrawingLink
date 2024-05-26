@@ -28,20 +28,7 @@ namespace GTDrawingLink.Components.AttributesComponents
                 lineAttributes.Line = lineType;
 
             if (hatch != null)
-            {
-                var hatchAttributes = (GraphicObjectHatchAttributes)typeof(GraphicObjectHatchAttributes).GetConstructor(
-                  BindingFlags.NonPublic | BindingFlags.Instance,
-                  null, Type.EmptyTypes, null).Invoke(null);
-
-                hatchAttributes.Name = hatch.Name;
-                hatchAttributes.Color = hatch.Color;
-                hatchAttributes.BackgroundColor = hatch.BackgroundColor;
-                hatchAttributes.DrawBackgroundColor = hatch.DrawBackgroundColor;
-                hatchAttributes.ScaleX = hatch.ScaleX;
-                hatchAttributes.ScaleY = hatch.ScaleY;
-
-                lineAttributes.Hatch = hatchAttributes;
-            }
+                lineAttributes.Hatch = hatch.ToGraphicObjectHatch();
 
             _command.SetOutputValues(DA, lineAttributes);
         }
