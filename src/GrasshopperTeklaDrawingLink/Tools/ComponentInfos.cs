@@ -1122,5 +1122,23 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
+
+        public static readonly GH_InstanceDescription CreateCircleComponent = new GH_InstanceDescription
+        {
+            Name = "Circle",
+            NickName = "C",
+            Description = "Draw Circle in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription CircleAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Circle Attributes",
+            NickName = "CAttr",
+            Description = "Create circle attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
     }
 }

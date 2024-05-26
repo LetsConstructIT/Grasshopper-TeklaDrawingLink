@@ -1968,5 +1968,33 @@ namespace GTDrawingLink.Tools
             NickName = "C",
             Description = "Returns mark content if available."
         };
+
+        public static readonly GH_InstanceDescription Circle = new GH_InstanceDescription
+        {
+            Name = "Circle",
+            NickName = "C",
+            Description = "Circle"
+        };
+
+        public static readonly GH_InstanceDescription CircleAttributes = new GH_InstanceDescription
+        {
+            Name = "Circle attributes",
+            NickName = "CAttr",
+            Description = "Circle attributes"
+        };
+
+        public static readonly GH_InstanceDescription TeklaCircle = new GH_InstanceDescription
+        {
+            Name = "Circle",
+            NickName = "C",
+            Description = "Tekla Circle"
+        };
+
+        public static readonly GH_InstanceDescription BehindModelObject = new GH_InstanceDescription
+        {
+            Name = "Behind objects",
+            NickName = "Behind",
+            Description = "Flag indiciating whether the closed graphic object is drawn behind model objects"
+        };
     }
 }

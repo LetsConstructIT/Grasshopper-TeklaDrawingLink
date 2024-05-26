@@ -752,6 +752,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyMarkComponent),
                 "73A32948-D730-428A-8429-30BC12F97397"
+            },
+            {
+                typeof(CreateCircleComponent),
+                "CCC24CE2-2522-4431-A6E1-6D276B202458"
+            },
+            {
+                typeof(CircleAttributesParam),
+                "36E7487C-FF03-4AB4-8B56-ADC1DB4DC23F"
+            },
+            {
+                typeof(CircleAttributesComponent),
+                "64C1E6E4-8C57-47FB-9AB1-829949BBEEBB"
             }
         };
 
