@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using System.Drawing;
@@ -24,9 +25,11 @@ namespace GTDrawingLink.Components.AttributesComponents
                     AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Drawing object is obligatory to properly read marks' content");
                     return;
                 }
-
+                modelObject.Select();
                 markAttributes = new Mark.MarkAttributes(modelObject);
             }
+            else
+                markAttributes = markAttributes.Copy();
 
             if (!string.IsNullOrEmpty(fileName))
                 markAttributes.LoadAttributes(fileName);

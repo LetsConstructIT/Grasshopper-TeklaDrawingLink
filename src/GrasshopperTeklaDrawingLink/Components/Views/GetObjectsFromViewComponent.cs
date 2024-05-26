@@ -103,6 +103,7 @@ namespace GTDrawingLink.Components.Views
                 return;
             }
 
+            viewBase.Select();
             var childObjectsGroupedByType = GetChildObjectsGroupedByType(viewBase);
 
             var trees = GetOutputTrees(DA.Iteration, childObjectsGroupedByType);

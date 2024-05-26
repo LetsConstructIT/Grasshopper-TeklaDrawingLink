@@ -93,8 +93,8 @@ namespace GTDrawingLink.Components.Views
                 midPoint.ToTekla(),
                 endPoint.ToTekla(),
                 insertionPoint.ToTekla(),
-                depthUp,
-                depthDown,
+                depthUp.ToTekla(),
+                depthDown.ToTekla(),
                 viewAttributes,
                 markAttributes,
                 out View createdView,
@@ -102,10 +102,13 @@ namespace GTDrawingLink.Components.Views
 
             var macroApplied = LoadAttributesWithMacroIfNecessary(createdView, viewAttributesFileName);
 
-            if (macroApplied && !string.IsNullOrEmpty(viewName))
+            if (!string.IsNullOrEmpty(viewName))
             {
                 createdMark.Attributes.MarkName = viewName;
                 createdMark.Modify();
+
+                createdView.Name = viewName;
+                createdView.Modify();
             }
 
             return (createdView, createdMark);
@@ -114,7 +117,7 @@ namespace GTDrawingLink.Components.Views
 
     public class CreateCurvedSectionViewCommand : CommandBase
     {
-        private const double _defaultDepth = 500;
+        private double _defaultDepth = 500;
         private const string _defaultAttributes = "standard";
 
         private readonly InputListParam<View> _inView = new InputListParam<View>(ParamInfos.View);
@@ -133,6 +136,12 @@ namespace GTDrawingLink.Components.Views
 
         private readonly OutputTreeParam<DatabaseObject> _outView = new OutputTreeParam<DatabaseObject>(ParamInfos.View, 0);
         private readonly OutputTreeParam<DatabaseObject> _outMark = new OutputTreeParam<DatabaseObject>(ParamInfos.CurvedSectionMark, 1);
+
+        public CreateCurvedSectionViewCommand()
+        {
+            var depthInMm = 500.0;
+            _defaultDepth = depthInMm.ToRhino();
+        }
 
         internal (ViewCollection<View> views, TreeData<Point3d> startPoints, TreeData<Point3d> midPoints, TreeData<Point3d> endPoints, TreeData<Point3d> insertPoints, TreeData<double> depthsUp, TreeData<double> depthsDown, TreeData<string> viewAttributes, TreeData<string> markAttributes, TreeData<double> scales, TreeData<string> names) GetInputValues()
         {

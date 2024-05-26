@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         {
             var (dwgAttributes, fileName, scaling, scaleX, scaleY, frame) = _command.GetInputValues();
 
+            dwgAttributes = dwgAttributes.Copy();
             if (!string.IsNullOrEmpty(fileName))
                 dwgAttributes.LoadAttributes(fileName);
 

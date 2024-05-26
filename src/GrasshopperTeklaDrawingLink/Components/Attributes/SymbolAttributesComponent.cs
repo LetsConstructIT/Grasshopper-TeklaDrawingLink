@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -18,6 +19,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         {
             (SymbolAttributes symbolAttributes, string fileName, SymbolInfo symbolInfo, DrawingColors? color, double? height, double? angle, Frame? frame) = _command.GetInputValues();
 
+            symbolAttributes = symbolAttributes.Copy();
             var attributes = symbolAttributes.Attributes;
             if (!string.IsNullOrEmpty(fileName))
                 attributes.LoadAttributes(fileName);

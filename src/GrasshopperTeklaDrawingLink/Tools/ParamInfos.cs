@@ -1961,5 +1961,12 @@ namespace GTDrawingLink.Tools
             NickName = "V",
             Description = "Tekla Marks can belong to the ghost category. This boolean flag will return false if mark bounding box is invalid."
         };
+
+        public static readonly GH_InstanceDescription MarkContent = new GH_InstanceDescription
+        {
+            Name = "Content",
+            NickName = "C",
+            Description = "Returns mark content if available."
+        };
     }
 }

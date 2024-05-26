@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         {
             var (lineAttributes, fileName, lineType, arrowhead) = _command.GetInputValues();
 
+            lineAttributes = lineAttributes.Copy();
             if (!string.IsNullOrEmpty(fileName))
                 lineAttributes.LoadAttributes(fileName);
 
