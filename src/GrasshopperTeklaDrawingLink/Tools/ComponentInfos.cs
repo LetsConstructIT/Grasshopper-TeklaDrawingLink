@@ -1158,5 +1158,22 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Attributes
         };
+
+        public static readonly GH_InstanceDescription TextFileAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Rich Text Attributes",
+            NickName = "RAttr",
+            Description = "Create rich text attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+        public static readonly GH_InstanceDescription CreateTextFileComponent = new GH_InstanceDescription
+        {
+            Name = "RichText",
+            NickName = "RTxt",
+            Description = "Create Tekla rich text.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };        
     }
 }

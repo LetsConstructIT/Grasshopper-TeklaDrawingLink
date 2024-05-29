@@ -2017,5 +2017,26 @@ namespace GTDrawingLink.Tools
             NickName = "AAttr",
             Description = "Arc attributes"
         };
+
+        public static readonly GH_InstanceDescription TextFileAttributes = new GH_InstanceDescription
+        {
+            Name = "Rich Text attributes",
+            NickName = "RAttr",
+            Description = "Rich Text attributes"
+        };
+
+        public static readonly GH_InstanceDescription TextFile = new GH_InstanceDescription
+        {
+            Name = "Rich Text",
+            NickName = "RTxt",
+            Description = "Rich Text"
+        };
+
+        public static readonly GH_InstanceDescription Path = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Path to text file (.txt, .rtf)"
+        };
     }
 }

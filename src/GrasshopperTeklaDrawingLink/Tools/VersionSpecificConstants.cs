@@ -776,6 +776,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ArcAttributesComponent),
                 "7B80DFB8-47A1-40D5-A6DA-1E46513424EF"
+            },
+            {
+                typeof(TextFileAttributesParam),
+                "4685727E-575A-4415-9320-67415F2FD9CA"
+            },
+            {
+                typeof(TextFileAttributesComponent),
+                "E143A03D-6DB7-4D3C-92E6-D080B65BF5CC"
+            },
+            {
+                typeof(CreateTextFileComponent),
+                "7F9364FD-90C1-47B2-BF18-64E0C6A69F1D"
             }
         };
 
