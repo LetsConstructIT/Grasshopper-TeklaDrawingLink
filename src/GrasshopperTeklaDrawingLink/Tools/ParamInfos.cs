@@ -2038,5 +2038,47 @@ namespace GTDrawingLink.Tools
             NickName = "P",
             Description = "Path to text file (.txt, .rtf)"
         };
+
+        public static readonly GH_InstanceDescription ArcPoint1 = new GH_InstanceDescription
+        {
+            Name = "Point 1",
+            NickName = "P1",
+            Description = "The first arc point to be used."
+        };
+
+        public static readonly GH_InstanceDescription ArcPoint2 = new GH_InstanceDescription
+        {
+            Name = "Point 2",
+            NickName = "P2",
+            Description = "The second arc point to be used."
+        };
+
+        public static readonly GH_InstanceDescription ArcPoint3 = new GH_InstanceDescription
+        {
+            Name = "Point 3",
+            NickName = "P3",
+            Description = "The third arc point to be used."
+        };
+
+        public static readonly GH_InstanceDescription RadialDimensionDistance = new GH_InstanceDescription
+        {
+            Name = "Distance",
+            NickName = "D",
+            Description = "The distance to be used."
+        };
+
+        public static readonly GH_InstanceDescription RadialDimensionAttributes = new GH_InstanceDescription
+        {
+            Name = "Attributes",
+            NickName = "A",
+            Description = "Radial Dimension Attributes"
+        };
+
+        public static readonly GH_InstanceDescription RadialDimension = new GH_InstanceDescription
+        {
+            Name = "Radial Dimension",
+            NickName = "Dim",
+            Description = "Radial Dimension"
+        };
     }
 }

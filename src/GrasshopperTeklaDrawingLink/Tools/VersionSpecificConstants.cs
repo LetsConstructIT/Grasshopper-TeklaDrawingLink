@@ -788,6 +788,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateTextFileComponent),
                 "7F9364FD-90C1-47B2-BF18-64E0C6A69F1D"
+            },
+            {
+                typeof(CreateRadialDimensionComponent),
+                "A70FE01F-0179-44DD-93F7-767848D29D20"
             }
         };
 

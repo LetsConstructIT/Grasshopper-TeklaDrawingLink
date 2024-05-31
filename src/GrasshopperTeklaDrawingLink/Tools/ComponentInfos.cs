@@ -1174,6 +1174,15 @@ namespace GTDrawingLink.Tools
             Description = "Create Tekla rich text.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Annotations
-        };        
+        };
+
+        public static readonly GH_InstanceDescription CreateRadialDimensionComponent = new GH_InstanceDescription
+        {
+            Name = "Radial Dimension",
+            NickName = "RadDim",
+            Description = "Create Tekla radial dimension.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
     }
 }
