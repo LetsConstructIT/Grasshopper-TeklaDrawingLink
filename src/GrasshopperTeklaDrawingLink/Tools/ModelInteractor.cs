@@ -52,6 +52,11 @@ namespace GTDrawingLink.Types
             return Model.GetConnectionStatus();
         }
 
+        internal static string ModelPath()
+        {
+            return Model.GetInfo().ModelPath;
+        }
+
         internal static AABB? GetAabb(Identifier modelIdentifier)
         {
             var modelObject = GetModelObject(modelIdentifier);
