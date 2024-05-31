@@ -1184,5 +1184,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
+
+        public static readonly GH_InstanceDescription CreateCurvedDimensionSetComponent = new GH_InstanceDescription
+        {
+            Name = "Curved Dimension",
+            NickName = "CurDim",
+            Description = "Create Tekla curved dimension.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
     }
 }

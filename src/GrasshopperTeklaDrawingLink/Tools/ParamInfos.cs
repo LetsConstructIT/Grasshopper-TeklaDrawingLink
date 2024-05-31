@@ -2080,5 +2080,26 @@ namespace GTDrawingLink.Tools
             NickName = "Dim",
             Description = "Radial Dimension"
         };
+
+        public static readonly GH_InstanceDescription CurvedRadialMode = new GH_InstanceDescription
+        {
+            Name = "Radial mode",
+            NickName = "Radial",
+            Description = "Radial reference lines will be used"
+        };
+
+        public static readonly GH_InstanceDescription CurvedOrthogonalMode = new GH_InstanceDescription
+        {
+            Name = "Orthogonal mode",
+            NickName = "Orthogonal",
+            Description = "Orthogonal reference lines will be used"
+        };
+
+        public static readonly GH_InstanceDescription CurvedDimensionSet = new GH_InstanceDescription
+        {
+            Name = "Curved Dimension",
+            NickName = "Dim",
+            Description = "Curved Dimension"
+        };
     }
 }

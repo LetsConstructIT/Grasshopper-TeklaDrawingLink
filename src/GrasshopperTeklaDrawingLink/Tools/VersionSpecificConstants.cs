@@ -792,6 +792,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateRadialDimensionComponent),
                 "A70FE01F-0179-44DD-93F7-767848D29D20"
+            },
+            {
+                typeof(CreateCurvedDimensionSetComponent),
+                "DE7CE574-2A7E-48CA-96BC-521E776B508A"
             }
         };
 
