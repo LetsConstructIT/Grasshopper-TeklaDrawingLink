@@ -796,6 +796,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateCurvedDimensionSetComponent),
                 "DE7CE574-2A7E-48CA-96BC-521E776B508A"
+            },
+            {
+                typeof(ModifyViewComponent),
+                "07317AF8-FCA3-41FF-8F7A-63B8BE0CC729"
             }
         };
 

@@ -55,6 +55,8 @@ namespace GTDrawingLink.Components
                 { typeof(GH_Point), (param, manager) => AddPointParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(GH_Brep), (param, manager) => AddBrepParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(GH_Circle), (param, manager) => AddCurveParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(GH_Box), (param, manager) => AddBoxParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
+                { typeof(GH_Plane), (param, manager) => AddPlaneParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Plane), (param, manager) => AddPlaneParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(BoundingBox), (param, manager) => AddBoxParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },
                 { typeof(Rhino.Geometry.Curve), (param, manager) => AddCurveParameter(manager, param.InstanceDescription, param.ParamAccess, param.IsOptional) },

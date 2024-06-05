@@ -1193,5 +1193,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Dimensions
         };
+
+        public static readonly GH_InstanceDescription ModifyViewComponent = new GH_InstanceDescription
+        {
+            Name = "Modify View",
+            NickName = "MView",
+            Description = "Modifies a view in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
+        };
     }
 }

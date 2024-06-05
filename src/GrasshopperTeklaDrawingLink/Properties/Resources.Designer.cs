@@ -933,6 +933,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ModifyView {
+            get {
+                object obj = ResourceManager.GetObject("ModifyView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ModifyWeld {
             get {
                 object obj = ResourceManager.GetObject("ModifyWeld", resourceCulture);
