@@ -19,8 +19,8 @@ namespace GTDrawingLink.Components.Geometries
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            (Curve curve, Vector3d direction) = _command.GetInputValues();
-            curve = curve.Simplify(CurveSimplifyOptions.All, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance, RhinoDoc.ActiveDoc.ModelAngleToleranceRadians);
+            (Curve inputCurve, Vector3d direction) = _command.GetInputValues();
+            var curve = SimplifyCurve(inputCurve);
             if (!CheckInitialAssumptions(curve, out Polyline polyline))
                 return;
 
@@ -30,6 +30,15 @@ namespace GTDrawingLink.Components.Geometries
             var extremes = GetExtremePoints(visiblePoints, direction);
 
             _command.SetOutputValues(DA, visiblePoints, visibleSegments, extremes);
+        }
+
+        private Curve SimplifyCurve(Curve curve)
+        {
+            var simplified = curve.Simplify(CurveSimplifyOptions.All, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance, RhinoDoc.ActiveDoc.ModelAngleToleranceRadians);
+            if (simplified != null)
+                return simplified;
+            else
+                return curve;
         }
 
         private List<Line> FindVisibleSegments(Curve curve, Vector3d direction, Polyline polyline)
