@@ -16,6 +16,11 @@ namespace GTDrawingLink.Components
 
         }
 
+        protected void RecomputeComponent(object sender, EventArgs e)
+        {
+            base.ExpireSolution(recompute: true);
+        }
+
         protected int AddOptionalParameter(GH_InputParamManager pManager, IGH_Param param)
         {
             var index = pManager.AddParameter(param);
@@ -44,6 +49,12 @@ namespace GTDrawingLink.Components
             return index;
         }
 
+        protected int AddTextParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, string defaultValue)
+        {
+            var index = pManager.AddTextParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access, defaultValue);
+            return index;
+        }
+
         protected int AddTeklaDbObjectParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             var index = pManager.AddParameter(new TeklaDatabaseObjectParam(paramInfo, access));
@@ -55,6 +66,12 @@ namespace GTDrawingLink.Components
         {
             var index = pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
             SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
+        protected int AddIntegerParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, int defaultValue)
+        {
+            var index = pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access, defaultValue);
             return index;
         }
 
@@ -72,6 +89,13 @@ namespace GTDrawingLink.Components
             return index;
         }
 
+        protected int AddBrepParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddBrepParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
         protected int AddGeometryParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             var index = pManager.AddGeometryParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
@@ -79,9 +103,23 @@ namespace GTDrawingLink.Components
             return index;
         }
 
+        protected int AddCurveParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddCurveParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
         protected int AddVectorParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
             var index = pManager.AddVectorParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
+        protected int AddRectangleParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddRectangleParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
             SetLastParameterAsOptional(pManager, optional);
             return index;
         }
@@ -117,6 +155,11 @@ namespace GTDrawingLink.Components
             return pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
+        protected int AddParameter(GH_OutputParamManager pManager, IGH_Param parameter)
+        {
+            return pManager.AddParameter(parameter);
+        }
+
         protected int AddPlaneParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddPlaneParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
@@ -125,6 +168,11 @@ namespace GTDrawingLink.Components
         protected int AddBoxParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddBoxParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
+        protected int AddSurfaceParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddSurfaceParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
         protected int AddPointParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
@@ -137,14 +185,24 @@ namespace GTDrawingLink.Components
             return pManager.AddVectorParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
+        protected int AddRectangleParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddRectangleParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
         protected int AddLineParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddLineParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
-        }        
+        }
 
         protected int AddCurveParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {
             return pManager.AddCurveParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
+        protected int AddGeometryParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddGeometryParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
 
         protected int AddBooleanParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)

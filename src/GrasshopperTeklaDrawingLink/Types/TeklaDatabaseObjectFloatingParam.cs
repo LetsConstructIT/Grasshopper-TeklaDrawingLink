@@ -1,11 +1,9 @@
-﻿using System;
-using System.Drawing;
-using Grasshopper.Kernel;
+﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 
 namespace GTDrawingLink.Types
 {
-	public class TeklaDatabaseObjectFloatingParam : TeklaDatabaseObjectParam
+    public class TeklaDatabaseObjectFloatingParam : TeklaDatabaseObjectParam
 	{
 
 		public TeklaDatabaseObjectFloatingParam()
@@ -13,8 +11,8 @@ namespace GTDrawingLink.Types
 		{
 		}
 
-		public TeklaDatabaseObjectFloatingParam(GH_InstanceDescription tag, params Type[] types)
-			: base(tag, types)
+		public TeklaDatabaseObjectFloatingParam(GH_InstanceDescription tag)
+			: base(tag)
 		{
 			_isFloatingParam = true;
 		}

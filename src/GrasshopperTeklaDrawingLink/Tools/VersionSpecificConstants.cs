@@ -1,7 +1,17 @@
-﻿using GTDrawingLink.Components;
+﻿using GTDrawingLink.Components.Annotations;
+using GTDrawingLink.Components.Attributes;
 using GTDrawingLink.Components.AttributesComponents;
-using GTDrawingLink.Components.Loops;
+using GTDrawingLink.Components.Dimensions;
+using GTDrawingLink.Components.Drawings;
+using GTDrawingLink.Components.Geometries;
+using GTDrawingLink.Components.Miscs;
+using GTDrawingLink.Components.Miscs.Loops;
 using GTDrawingLink.Components.ModifyComponents;
+using GTDrawingLink.Components.Obsolete;
+using GTDrawingLink.Components.Parts;
+using GTDrawingLink.Components.Plugins;
+using GTDrawingLink.Components.UDAs;
+using GTDrawingLink.Components.Views;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
@@ -57,18 +67,30 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(GetViewFrameGeometryComponent),
+                "C187CE5C-27FE-40AD-8B30-399322FB287E"
+            },
+            {
+                typeof(GetViewFrameGeometryComponentOLD),
                 "7FD6C114-1624-4463-95DD-56FA02862BCC"
             },
             {
-                typeof(GetViewsAtDrawingComponent),
+                typeof(GetViewsAtDrawingComponentOLD),
                 "7F169461-6085-4A15-ABDA-12F4ABC714A5"
             },
             {
+                typeof(GetViewsInDrawingComponent),
+                "13F621E6-C50B-4677-94AC-DDB8F8309635"
+            },
+            {
                 typeof(GetViewPropertiesComponent),
-                "01D3A4EF-043E-4149-A7FF-02398F010476"
+                "CBB7E9B7-963D-42B4-B063-A8C7AEDF909C"
             },
             {
                 typeof(GetViewPropertiesComponentOLD),
+                "01D3A4EF-043E-4149-A7FF-02398F010476"
+            },
+            {
+                typeof(GetViewPropertiesComponentOLD2),
                 "659B5B28-ADB8-41B4-B19F-E68F77023EA4"
             },
             {
@@ -89,6 +111,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(GetDrawingSizeComponent),
+                "78395593-9996-4E5F-918B-60FA7B88C001"
+            },
+            {
+                typeof(GetDrawingSizeComponentOLD),
                 "99CA7A46-2B6B-4727-AE82-F8489A4E67F3"
             },
             {
@@ -113,11 +139,23 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateDetailViewComponent),
+                "1C7229BA-2D6B-443D-803C-FD5E9D3E1DD6"
+            },
+            {
+                typeof(CreateDetailViewComponentOLD),
                 "FAAF7EF8-F686-46C9-9605-6D8056D41383"
             },
             {
                 typeof(CreateSectionViewComponent),
+                "E1D80B6C-76EB-4689-9E30-BF2F84F3339D"
+            },
+            {
+                typeof(CreateSectionViewComponentOLD),
                 "F33C9387-8C89-468D-A7CC-E259A1FE695B"
+            },
+            {
+                typeof(CreateCurvedSectionViewComponent),
+                "8874FCCA-285B-4ED3-A293-14560A12E1CA"
             },
             {
                 typeof(TransformPointToViewCSComponent),
@@ -165,6 +203,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateLevelMarkComponent),
+                "B63115EE-18D0-4996-860C-D4EB2D144F7A"
+            },
+            {
+                typeof(CreateLevelMarkComponentOLD),
                 "B197DF40-56B5-43EE-AFB9-141FE70BC4B9"
             },
             {
@@ -197,6 +239,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreatePluginComponent),
+                "1220E4FC-606E-4DCF-B131-E478817CEA25"
+            },
+            {
+                typeof(CreatePluginComponentOLD),
                 "81D25C54-4C0B-4724-B79D-02C836C16C60"
             },
             {
@@ -217,6 +263,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateStraightDimensionSetComponent),
+                "9001FA9B-C60A-4919-BEFD-59E8DC5B309F"
+            },
+            {
+                typeof(CreateStraightDimensionSetComponentOLD),
                 "BCB39278-F65B-4F14-92C2-6D371E22ECE4"
             },
             {
@@ -237,26 +287,46 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateAngleDimensionComponent),
+                "A3C2779C-9C5F-4468-9F53-25FCF19781D4"
+            },
+            {
+                typeof(CreateAngleDimensionComponentOLD),
                 "52322B95-A7CA-4B4E-96B2-4E1B6D239CBA"
             },
             {
                 typeof(ObjectMatchesToFilterComponent),
+                "DD9FC705-1035-42D6-9D63-C169B1DC5A8E"
+            },
+            {
+                typeof(ObjectMatchesToFilterComponentOLD),
                 "37BF7499-39CD-4124-81D4-64BE134418F6"
             },
             {
                 typeof(GroupObjectsComponent),
-                "D77A11DA-27EC-4CC1-A7B7-F3521D7783D7"
+                "4717D364-FD0F-4A59-953B-F0123A831166"
             },
             {
                 typeof(GroupObjectsComponentOLD),
+                "D77A11DA-27EC-4CC1-A7B7-F3521D7783D7"
+            },
+            {
+                typeof(GroupObjectsComponentOLD2),
                 "CF46774B-064B-485C-A95D-E862768B0161"
             },
             {
                 typeof(CreateTextComponent),
+                "CEB5B9BF-6AA1-41E6-87B5-A177BA472B5E"
+            },
+            {
+                typeof(CreateTextComponentOLD),
                 "BB95F20B-A8AB-4CB6-A1B6-972AA0E1ED87"
             },
             {
                 typeof(TextAttributesComponent),
+                "2B9593A2-8F23-47E3-9156-82FF3A206C67"
+            },
+            {
+                typeof(TextAttributesComponentOLD),
                 "4C1BEABA-E671-488E-B20F-8A4FDD0B2A5F"
             },
             {
@@ -285,6 +355,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(GetObjectsFromViewComponent),
+                "B8BF5B8F-F577-4543-8B39-E3F1B84AC2E0"
+            },
+            {
+                typeof(GetObjectsFromViewComponentOLD),
                 "D340933C-5C78-4052-A986-777FAE8241B0"
             },
             {
@@ -329,10 +403,18 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(ModifyRebarComponent),
+                "63505EF2-6255-4414-B9FA-CC29D413616E"
+            },
+            {
+                typeof(ModifyRebarComponentOLD),
                 "0D6B1B6D-D2AE-4CFE-96B8-72CC0D9995F4"
             },
             {
                 typeof(ModifyMeshComponent),
+                "416D93DB-96EF-4957-A76B-D34E48829133"
+            },
+            {
+                typeof(ModifyMeshComponentOLD),
                 "A007E703-1979-4BB3-8404-B9F916D2DA4D"
             },
             {
@@ -353,6 +435,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateSymbolComponent),
+                "26FF9BF1-01D3-465E-82FA-823FDE1EDCC5"
+            },
+            {
+                typeof(CreateSymbolComponentOLD),
                 "6B4A446F-BE7D-4267-974A-40F5B16FC483"
             },
             {
@@ -385,6 +471,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(OrderStraightDimensionSetComponent),
+                "B02DB2B9-B5A3-43FC-AA54-2AF8AEAA643A"
+            },
+            {
+                typeof(OrderStraightDimensionSetComponentOLD),
                 "22FD71AB-4520-4A0A-BDAE-A73E9C12B1BE"
             },
             {
@@ -429,6 +519,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateAssociativeNoteComponent),
+                "CA0BD263-FD65-4145-A31E-F8740A3C12C1"
+            },
+            {
+                typeof(CreateAssociativeNoteComponentOLD),
                 "7D4A48E0-1CB9-4D49-BAD6-8B04494C532E"
             },
             {
@@ -445,6 +539,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(GetRelatedObjectsComponent),
+                "C053740C-C6DC-4D64-BDA0-0DB69E33C765"
+            },
+            {
+                typeof(GetRelatedObjectsComponentOLD),
                 "597CE529-4306-4F4E-BF80-01C93E3613A5"
             },
             {
@@ -457,6 +555,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateLineComponent),
+                "94A8AC95-14FF-477F-99F0-6A2F1C9C9E09"
+            },
+            {
+                typeof(CreateLineComponentOLD),
                 "4D6C495A-FE2F-4990-9CBC-51B5BBEBBEA4"
             },
             {
@@ -469,6 +571,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreatePolylineComponent),
+                "620639B5-25F4-4636-835C-E5EDE57803BB"
+            },
+            {
+                typeof(CreatePolylineComponentOLD),
                 "EF81C339-5E7D-4D35-A8D5-2E1FEF1C4ACF"
             },
             {
@@ -489,10 +595,18 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateEmbeddedObjectComponent),
+                "098B017F-FCD9-4DCE-BE22-BF797072B574"
+            },
+            {
+                typeof(CreateEmbeddedObjectComponentOLD),
                 "215A4809-255C-4D74-B19F-E6CF20B8F4AF"
             },
             {
                 typeof(CreateDrawingLibraryComponent),
+                "2563B865-F742-4BCD-B10C-97E27F3F3E44"
+            },
+            {
+                typeof(CreateDrawingLibraryComponentOLD),
                 "C896EED1-A8E9-412E-927B-1E2E80A0C046"
             },
             {
@@ -505,7 +619,139 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(ModifyDrawingPropertiesComponent),
+                "18752DF6-6F62-4ECB-9E91-2D54BEE801EF"
+            },
+            {
+                typeof(ModifyDrawingPropertiesComponentOLD),
                 "F8CED9AF-8543-435E-B0D1-AB29F5A65CEE"
+            },
+            {
+                typeof(RotateViewComponent),
+                "3CFBE786-A757-4700-94F3-3CF0976C421C"
+            },
+            {
+                typeof(FindVisibleEdgesComponent),
+                "CB585309-AE84-45AD-BA49-236237548D6E"
+            },
+            {
+                typeof(BrepProjectionBorderComponent),
+                "57A2A0AE-263B-46FB-A9BD-1A2DF19376A8"
+            },
+            {
+                typeof(BrepProjectionBorderComponentOLD),
+                "CAF205C7-EB01-454B-97DF-A79DD04B7442"
+            },
+            {
+                typeof(SearchUsingKeyComponent),
+                "9B5CF5F4-0B09-4E47-A07F-38155EDCBEC8"
+            },
+            {
+                typeof(DimensionBoxComponent),
+                "7B783C3F-FBD3-46A0-84EA-DFAD8044A07E"
+            },
+            {
+                typeof(SortByVectorComponent),
+                "6FD4AC31-DBFE-47FD-8783-24012B476EBE"
+            },
+            {
+                typeof(SortByKeyComponent),
+                "882B40E3-4380-44CA-8343-94C88F21DD7B"
+            },
+            {
+                typeof(SortByKeyComponentOLD),
+                "58C34E35-F00F-4339-AAD2-7B80F87CFA83"
+            },
+            {
+                typeof(BakeToTeklaComponent),
+                "04EFCB01-3336-47AC-BCC1-5F88BD92E075"
+            },
+            {
+                typeof(SimpleOrientComponent),
+                "BA991EA0-3D32-42C6-94B1-805E929B4EA9"
+            },
+            {
+                typeof(CreateWDrawingComponent),
+                "93A82029-7D54-444B-AF45-FB981DBA00D4"
+            },
+            {
+                typeof(TeklaIndexComponent),
+                "8F3115FD-0145-4B90-9465-AF6EE3481AEA"
+            },
+            {
+                typeof(GetGridPropertiesComponent),
+                "2F003252-EB97-4606-9F4C-EAA8FEB7BE7A"
+            },
+            {
+                typeof(GetEditModeComponent),
+                "0AFEE462-9765-4668-89FD-64C489EF51C1"
+            },
+            {
+                typeof(DeconstructPluginComponent),
+                "9FE80ACE-E012-4445-A09E-9D8520E7DE42"
+            },
+            {
+                typeof(CreateDetailMarkComponent),
+                "C409A121-516F-4322-8684-605CC9CD1A5C"
+            },
+            {
+                typeof(CreateSectionMarkComponent),
+                "DC8679D0-4117-404D-AF86-F7B21009AC47"
+            },
+            {
+                typeof(SplitGeometryComponent),
+                "484C79D1-1884-4AEC-A1F0-0330C50B58BB"
+            },
+            {
+                typeof(GetSelectedModelObjectComponent),
+                "4A4F31A7-66AC-422D-8239-71CAC78EA899"
+            },
+            {
+                typeof(PlacingBaseParam),
+                "DB23821E-C5D1-48CC-AA1F-DF4D4BCE0FAC"
+            },
+            {
+                typeof(PlacingBaseComponent),
+                "0E801D6E-6E73-4BDC-A769-1308FDEFBED3"
+            },
+            {
+                typeof(PlacingBaseComponentOLD),
+                "6A659AE3-3DE0-4B36-950C-2D90E56636B0"
+            },
+            {
+                typeof(CreatePolygonComponent),
+                "3E0A47DF-CE72-45CD-8237-C396632D1D7A"
+            },
+            {
+                typeof(PolygonAttributesParam),
+                "3B8E033D-5364-44EF-B216-1AFB0AF3F1B2"
+            },
+            {
+                typeof(PolygonAttributesComponent),
+                "3F9C1B97-1895-41C5-8C73-DD1E98430433"
+            },
+            {
+                typeof(DeconstructTextComponent),
+                "F69B96B3-D6E1-4C11-AA32-D57AE327E7AD"
+            },
+            {
+                typeof(DeconstructMarkComponent),
+                "D8B94C29-6FC0-4923-A87A-ADC19E2AB601"
+            },
+            {
+                typeof(DeconstructMarkComponentOLD),
+                "C8EB899E-A0B0-4D38-AA6C-D39C4660D1E2"
+            },
+            {
+                typeof(MarkBaseAttributesParam),
+                "B0C88802-151D-4683-BCFA-6C311366F03C"
+            },
+            {
+                typeof(ModifyTextComponent),
+                "EB3EF470-7B6B-44DA-A9B1-64F4C2907A32"
+            },
+            {
+                typeof(ModifyMarkComponent),
+                "73A32948-D730-428A-8429-30BC12F97397"
             }
         };
 

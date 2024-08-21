@@ -415,4 +415,88 @@
   <data name="GetDrawingProperties" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\GetDrawingProperties.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RotateView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\RotateView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ViewingDirection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ViewingDirection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindVisibleEdges" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\FindVisibleEdges.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BrepProjectionBorder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\BrepProjectionBorder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DrawingObjectTypes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\DrawingObjectTypes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SearchUsingKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SearchUsingKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DimensionBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\DimensionBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SortByVector" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SortByVector.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SortByKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SortByKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BakeToTekla" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\BakeToTekla.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SimpleOrient" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SimpleOrient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CreateWDrawing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\CreateWDrawing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TeklaIndex" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\TeklaIndex.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GridProperties" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\GridProperties.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GetEditMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\GetEditMode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DeconstructPlugin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\DeconstructPlugin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DetailMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\DetailMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SectionMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SectionMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SplitGeometry" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SplitGeometry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SelectededModelObjects" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SelectededModelObjects.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlacingBase" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\PlacingBase.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\Polygon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PolygonAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\PolygonAttributes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DeconstructText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\DeconstructText.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DeconstructMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\DeconstructMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ModifyMark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ModifyMark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ModifyText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ModifyText.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CurvedSectionView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\CurvedSectionView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

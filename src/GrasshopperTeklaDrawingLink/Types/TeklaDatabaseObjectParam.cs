@@ -1,7 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -12,38 +11,17 @@ namespace GTDrawingLink.Types
     public class TeklaDatabaseObjectParam : TeklaParamBase<DatabaseObject>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
-        protected override Bitmap Icon => Properties.Resources.DrawingObject;
+        protected override Bitmap Icon => Properties.Resources.DrawingPart;
 
-        private IEnumerable<Type> _types;
         protected bool _isFloatingParam;
 
-        public override string TypeName
-        {
-            get
-            {
-                if (_types != null)
-                {
-                    return _types.First().ToShortString();
-                }
-                return typeof(DrawingObject).ToShortString();
-            }
-        }
-
-        public TeklaDatabaseObjectParam(GH_InstanceDescription tag, params Type[] types)
+        public TeklaDatabaseObjectParam(GH_InstanceDescription tag)
             : base(tag)
         {
-            if (types.Any())
-            {
-                _types = types;
-            }
-            else
-            {
-                _types = null;
-            }
         }
 
-        public TeklaDatabaseObjectParam(GH_InstanceDescription tag, GH_ParamAccess access, params Type[] types)
-            : this(tag, types)
+        public TeklaDatabaseObjectParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : this(tag)
         {
             Access = access;
         }

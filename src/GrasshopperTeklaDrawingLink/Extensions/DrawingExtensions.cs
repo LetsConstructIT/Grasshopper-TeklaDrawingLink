@@ -10,6 +10,12 @@ namespace GTDrawingLink.Extensions
 {
     internal static class DrawingExtensions
     {
+        internal static int GetDrawingIdentifier(this DatabaseObject drawingObject)
+        {
+            var identifier = (Tekla.Structures.Identifier)drawingObject.GetPropertyValue("DrawingIdentifier");
+            return identifier.ID;
+        }
+
         internal static int GetId(this DatabaseObject drawingObject)
         {
             var identifier = (Tekla.Structures.Identifier)drawingObject.GetPropertyValue("Identifier");

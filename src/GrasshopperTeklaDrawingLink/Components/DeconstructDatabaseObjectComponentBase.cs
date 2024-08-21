@@ -5,7 +5,7 @@ namespace GTDrawingLink.Components
 {
     public abstract class DeconstructDatabaseObjectComponentBase : TeklaComponentBase
 	{
-		private TeklaDatabaseObjectParam _modelObjectInputParam;
+		private TeklaDatabaseObjectParam _databaseObjectInputParam;
 
 		public DeconstructDatabaseObjectComponentBase(GH_InstanceDescription info)
 			: base(info)
@@ -14,8 +14,8 @@ namespace GTDrawingLink.Components
 
 		protected virtual void RegisterDatabaseObjectInputParam(GH_InputParamManager pManager, GH_InstanceDescription inputDescription)
 		{
-			_modelObjectInputParam = new TeklaDatabaseObjectParam(inputDescription, GH_ParamAccess.item);
-			pManager.AddParameter(_modelObjectInputParam);
+			_databaseObjectInputParam = new TeklaDatabaseObjectParam(inputDescription, GH_ParamAccess.item);
+			pManager.AddParameter(_databaseObjectInputParam);
 		}
 
 		public override void CreateAttributes()
@@ -25,12 +25,12 @@ namespace GTDrawingLink.Components
 
 		public virtual void HighlightObjects()
 		{
-			_modelObjectInputParam.HighlightObjects();
+			_databaseObjectInputParam.HighlightObjects();
 		}
 
 		public virtual void UnHighlightObjects()
 		{
-			_modelObjectInputParam.UnHighlightObjects();
+			_databaseObjectInputParam.UnHighlightObjects();
 		}
 	}
 }

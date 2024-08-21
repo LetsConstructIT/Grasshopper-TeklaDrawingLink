@@ -8,7 +8,6 @@ namespace GTDrawingLink.Tools
         {
             public static readonly string Params = "             Params";
             public static readonly string Drawing = "            Drawing";
-            public static readonly string DrawingList = "           Drawing List";
             public static readonly string View = "          View";
             public static readonly string DrawingParts = "         Parts";
             public static readonly string Attributes = "        Attributes";
@@ -16,7 +15,7 @@ namespace GTDrawingLink.Tools
             public static readonly string Misc = "      Misc";
             public static readonly string Udas = "    UDAs";
             public static readonly string Plugins = "   Plugins";
-            public static readonly string Dimensions = "  Dimensioning";
+            public static readonly string Dimensions = "  Dimensions";
             public static readonly string Annotations = " Annotations";
             public static readonly string Modify = "Modify";
         }
@@ -111,6 +110,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.View
         };
 
+        public static readonly GH_InstanceDescription CreateCurvedSectionViewComponent = new GH_InstanceDescription
+        {
+            Name = "Curved Section View",
+            NickName = "CurvedSection",
+            Description = "Create curved section view",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
+
         public static readonly GH_InstanceDescription GetViewFrameGeometryComponent = new GH_InstanceDescription
         {
             Name = "View frame geometry",
@@ -125,6 +133,15 @@ namespace GTDrawingLink.Tools
             Name = "Views at Drawing",
             NickName = "GetViewsAtDrawing",
             Description = "Get views at current drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };
+
+        public static readonly GH_InstanceDescription GetViewsInDrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Views in Drawing",
+            NickName = "Views",
+            Description = "Get views in drawing. Right click to change mode from the top most to all.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Drawing
         };
@@ -191,7 +208,7 @@ namespace GTDrawingLink.Tools
             Description = "Get or set drawing properties",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Drawing
-        };      
+        };
 
         public static readonly GH_InstanceDescription GetDrawingSourceObjectComponent = new GH_InstanceDescription
         {
@@ -231,11 +248,11 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetSelectedDrawingsOnListComponent = new GH_InstanceDescription
         {
-            Name = "Selected Drawings on List",
+            Name = "Selected Drawings",
             NickName = "DrawingFromDrList",
             Description = "Gets the selected drawings from drawing list",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.DrawingList
+            SubCategory = PanelHeadings.Drawing
         };
 
         public static readonly GH_InstanceDescription GetDrawingsComponent = new GH_InstanceDescription
@@ -244,7 +261,7 @@ namespace GTDrawingLink.Tools
             NickName = "AllDrawings",
             Description = "Gets all drawings",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.DrawingList
+            SubCategory = PanelHeadings.Drawing
         };
 
         public static readonly GH_InstanceDescription TransformPointToViewCS = new GH_InstanceDescription
@@ -332,7 +349,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Selected Objects",
             NickName = "Selected",
-            Description = "Get selected objects",
+            Description = "Get selected drawing objects",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };
@@ -685,11 +702,11 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetDrawingsFromModelObjectComponent = new GH_InstanceDescription
         {
-            Name = "Get Drawings From Model Object",
+            Name = "Drawings From Model Object",
             NickName = "Dr",
             Description = "Get Tekla drawings from source model object",
             Category = VersionSpecificConstants.TabHeading,
-            SubCategory = PanelHeadings.DrawingList
+            SubCategory = PanelHeadings.Drawing
         };
 
         public static readonly GH_InstanceDescription OrderStraightDimensionSetComponent = new GH_InstanceDescription
@@ -782,6 +799,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Misc
         };
 
+        public static readonly GH_InstanceDescription GetSelectedModelObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Selected Model Objects",
+            NickName = "SelectedMO",
+            Description = "Get selected model objects",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
         public static readonly GH_InstanceDescription PerformNumberingComponent = new GH_InstanceDescription
         {
             Name = "Perform Numbering",
@@ -803,9 +829,9 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription GetRelatedObjectsComponent = new GH_InstanceDescription
         {
-            Name = "Related object",
+            Name = "Related Objects",
             NickName = "RelatedObjects",
-            Description = "Get related objects",
+            Description = "Get related drawing objects",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };
@@ -881,6 +907,220 @@ namespace GTDrawingLink.Tools
             Description = "End of foreach loop",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
+        };
+        public static readonly GH_InstanceDescription RotateViewComponent = new GH_InstanceDescription
+        {
+            Name = "Rotate View",
+            NickName = "R",
+            Description = "Rotate drawing view on the drawing plane",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };
+        public static readonly GH_InstanceDescription FindVisibleEdgesComponent = new GH_InstanceDescription
+        {
+            Name = "Find Visible Edges",
+            NickName = "F",
+            Description = "Find edges visible from side",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription BrepProjectionBorderComponent = new GH_InstanceDescription
+        {
+            Name = "Brep Projection Border",
+            NickName = "Border",
+            Description = "Gets the outer border and all inner borders of brep projection",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription SearchUsingKeyComponent = new GH_InstanceDescription
+        {
+            Name = "Search using Key",
+            NickName = "Search",
+            Description = "Find branch with provided key",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription DimensionBoxComponent = new GH_InstanceDescription
+        {
+            Name = "Dimension Box",
+            NickName = "DimBox",
+            Description = "Calculates bounding box of initial rectangle and provided planar geometries",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription SortByVectorComponent = new GH_InstanceDescription
+        {
+            Name = "Sort by Vector",
+            NickName = "SortVector",
+            Description = "Arrange geometry objects according to their projection on plane created from specified vector and Z-dir",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription SortByKeyComponent = new GH_InstanceDescription
+        {
+            Name = "Sort by Key",
+            NickName = "SortKey",
+            Description = "Arrange objects according to provided order",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription BakeToTeklaComponent = new GH_InstanceDescription
+        {
+            Name = "Bake to Tekla",
+            NickName = "Bake",
+            Description = "Break live link with Tekla for input component",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription SimpleOrientComponent = new GH_InstanceDescription
+        {
+            Name = "Simple Orient",
+            NickName = "Orient",
+            Description = "Orient a tree of objects to specified coordinate system. Path convention handles multiple input coordinate systems.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription CreateWDrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Create W Drawing",
+            NickName = "WDrawing",
+            Description = "Create single part drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };
+
+        public static readonly GH_InstanceDescription TeklaIndexComponent = new GH_InstanceDescription
+        {
+            Name = "Tekla Index",
+            NickName = "TIndex",
+            Description = "Find the occurences of a specific Tekla object in a set.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription GetGridPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Grid Properties",
+            NickName = "GProp",
+            Description = "Deconstruct Tekla Grid object",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription GetEditModeComponent = new GH_InstanceDescription
+        {
+            Name = "Edit Mode",
+            NickName = "EMode",
+            Description = "Tekla edit mode (model or drawing)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };
+
+        public static readonly GH_InstanceDescription DeconstructPluginComponent = new GH_InstanceDescription
+        {
+            Name = "Deconstruct Plugin",
+            NickName = "DP",
+            Description = "Deconstruct Tekla Drawing Plugin",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Plugins
+        };
+
+        public static readonly GH_InstanceDescription CreateDetailMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Detail Mark",
+            NickName = "DM",
+            Description = "Create detail mark",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription CreateSectionMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Section Mark",
+            NickName = "SM",
+            Description = "Create section mark",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription SplitGeometryComponent = new GH_InstanceDescription
+        {
+            Name = "Split Geometry",
+            NickName = "Split",
+            Description = "Split the provided geometry list based on the location associated with a specified point and direction.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };
+
+        public static readonly GH_InstanceDescription PlacingBaseComponent = new GH_InstanceDescription
+        {
+            Name = "Placing Type",
+            NickName = "Placing",
+            Description = "Placing type for Tekla drawing Marks/Texts",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
+        public static readonly GH_InstanceDescription CreatePolygonComponent = new GH_InstanceDescription
+        {
+            Name = "Polygon",
+            NickName = "POLY",
+            Description = "Draw Polygon in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription PolygonAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Polygon Attributes",
+            NickName = "POLYAttr",
+            Description = "Create polygon attribute.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
+        public static readonly GH_InstanceDescription DeconstructTextComponent = new GH_InstanceDescription
+        {
+            Name = "Deconstruct Text",
+            NickName = "DeconText",
+            Description = "Get the data from Tekla Text object.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription DeconstructMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Deconstruct Mark",
+            NickName = "DeconMark",
+            Description = "Get the data from Tekla Mark object.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription ModifyTextComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Text",
+            NickName = "MText",
+            Description = "Modifies a drawing text in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
+        };
+
+        public static readonly GH_InstanceDescription ModifyMarkComponent = new GH_InstanceDescription
+        {
+            Name = "Modify Mark",
+            NickName = "MMark",
+            Description = "Modifies a drawing mark in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
         };
     }
 }

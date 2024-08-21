@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Components.Obsolete;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Tools
@@ -40,6 +41,13 @@ namespace GTDrawingLink.Tools
             Description = "Tekla Mark"
         };
 
+        public static readonly GH_InstanceDescription CurvedSectionMark = new GH_InstanceDescription
+        {
+            Name = "Mark",
+            NickName = "M",
+            Description = "Curved Section Mark"
+        };
+
         public static readonly GH_InstanceDescription ViewType = new GH_InstanceDescription
         {
             Name = "Type",
@@ -73,6 +81,13 @@ namespace GTDrawingLink.Tools
             Name = "Scale",
             NickName = "S",
             Description = "View scale (integer value after the colon mark)"
+        };
+
+        public static readonly GH_InstanceDescription ViewTags = new GH_InstanceDescription
+        {
+            Name = "Tags",
+            NickName = "T",
+            Description = "View Tags (A1, A2, ... A5)"
         };
 
         public static readonly GH_InstanceDescription GravityObject = new GH_InstanceDescription
@@ -369,11 +384,11 @@ namespace GTDrawingLink.Tools
             Description = "View restriction box"
         };
 
-        public static readonly GH_InstanceDescription RegenerateObjects = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription RecomputeObjects = new GH_InstanceDescription
         {
             Name = "Recompute Component",
             NickName = "Recompute",
-            Description = "Update the objects in Tekla Structures, regenerating any missing ones"
+            Description = "Update the objects in Tekla Structures, regenerating any missing ones. F5 but limited to a single component."
         };
 
         public static readonly GH_InstanceDescription BakeToTekla = new GH_InstanceDescription
@@ -558,6 +573,13 @@ namespace GTDrawingLink.Tools
             Description = "Group by Assembly Position"
         };
 
+        public static readonly GH_InstanceDescription GroupByPartPosition = new GH_InstanceDescription
+        {
+            Name = "Group by Part Position",
+            NickName = "Pos",
+            Description = "Group by Part Position"
+        };
+
         public static readonly GH_InstanceDescription GroupByName = new GH_InstanceDescription
         {
             Name = "Group by Name",
@@ -585,6 +607,14 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Group by Report"
         };
+
+        public static readonly GH_InstanceDescription GroupByType = new GH_InstanceDescription
+        {
+            Name = "Group by Type",
+            NickName = "T",
+            Description = "Group by Tekla object Type"
+        };
+
         public static readonly GH_InstanceDescription LeaderLinePresence = new GH_InstanceDescription
         {
             Name = "Leader line",
@@ -597,6 +627,13 @@ namespace GTDrawingLink.Tools
             Name = "Text",
             NickName = "T",
             Description = "Tekla Text"
+        };
+
+        public static readonly GH_InstanceDescription TextContents = new GH_InstanceDescription
+        {
+            Name = "Content",
+            NickName = "C",
+            Description = "The contents of the text."
         };
 
         public static readonly GH_InstanceDescription BoundingBox = new GH_InstanceDescription
@@ -707,6 +744,12 @@ namespace GTDrawingLink.Tools
             Name = "Ruler Width",
             NickName = "RW",
             Description = "Sets the width of the text area."
+        };
+        public static readonly GH_InstanceDescription TextAlignment = new GH_InstanceDescription
+        {
+            Name = "Alignment",
+            NickName = "Al",
+            Description = "The text object's alignment (left, center, right)"
         };
         public static readonly GH_InstanceDescription ModelView = new GH_InstanceDescription
         {
@@ -1205,6 +1248,13 @@ namespace GTDrawingLink.Tools
             Description = "Curve"
         };
 
+        public static readonly GH_InstanceDescription ViewingVector = new GH_InstanceDescription
+        {
+            Name = "Vector",
+            NickName = "V",
+            Description = "Viewing Vector"
+        };
+
         public static readonly GH_InstanceDescription Line = new GH_InstanceDescription
         {
             Name = "Line",
@@ -1359,11 +1409,564 @@ namespace GTDrawingLink.Tools
             Description = "Drawing title 3"
         };
 
+        public static readonly GH_InstanceDescription DrawingMark = new GH_InstanceDescription
+        {
+            Name = "Mark",
+            NickName = "M",
+            Description = "Drawing mark"
+        };
+
         public static readonly GH_InstanceDescription DrawingSheetNumber = new GH_InstanceDescription
         {
             Name = "Sheet number",
             NickName = "No",
             Description = "Drawing sheet number"
+        };
+
+        public static readonly GH_InstanceDescription RotationAngle = new GH_InstanceDescription
+        {
+            Name = "Angle",
+            NickName = "A",
+            Description = "Rotation angle"
+        };
+
+        public static readonly GH_InstanceDescription VisiblePoints = new GH_InstanceDescription
+        {
+            Name = "Points",
+            NickName = "P",
+            Description = "Visible Points"
+        };
+
+        public static readonly GH_InstanceDescription VisibleEdges = new GH_InstanceDescription
+        {
+            Name = "Edges",
+            NickName = "E",
+            Description = "Visible Edges"
+        };
+
+        public static readonly GH_InstanceDescription ExtremePoints = new GH_InstanceDescription
+        {
+            Name = "Extremes",
+            NickName = "Ext",
+            Description = "Extreme Points"
+        };
+
+        public static readonly GH_InstanceDescription Brep = new GH_InstanceDescription
+        {
+            Name = "Brep",
+            NickName = "B",
+            Description = "Brep to project and obtain border of"
+        };
+
+        public static readonly GH_InstanceDescription ProjectionPlane = new GH_InstanceDescription
+        {
+            Name = "Plane",
+            NickName = "P",
+            Description = "Projection plane"
+        };
+
+        public static readonly GH_InstanceDescription ProjectedBoundary = new GH_InstanceDescription
+        {
+            Name = "Boundary",
+            NickName = "B",
+            Description = "Outer border of projected surface"
+        };
+
+        public static readonly GH_InstanceDescription ProjectedHole = new GH_InstanceDescription
+        {
+            Name = "Hole",
+            NickName = "H",
+            Description = "Inner border of projected surface"
+        };
+
+        public static readonly GH_InstanceDescription UnionRectangle = new GH_InstanceDescription
+        {
+            Name = "Union Rectangle",
+            NickName = "R",
+            Description = "Union of projected bounding rectangles"
+        };
+
+        public static readonly GH_InstanceDescription Values = new GH_InstanceDescription
+        {
+            Name = "Values",
+            NickName = "V",
+            Description = "Tree Branches"
+        };
+
+        public static readonly GH_InstanceDescription Search = new GH_InstanceDescription
+        {
+            Name = "Search",
+            NickName = "S",
+            Description = "Search key"
+        };
+
+        public static readonly GH_InstanceDescription FoundedBranches = new GH_InstanceDescription
+        {
+            Name = "Match",
+            NickName = "M",
+            Description = "Matched tree branches"
+        };
+
+        public static readonly GH_InstanceDescription DimensionBoxInitialRectangle = new GH_InstanceDescription
+        {
+            Name = "Rectangle",
+            NickName = "R",
+            Description = "Initial rectangle"
+        };
+
+        public static readonly GH_InstanceDescription DimensionLines = new GH_InstanceDescription
+        {
+            Name = "Lines",
+            NickName = "L",
+            Description = "Dimension lines"
+        };
+
+        public static readonly GH_InstanceDescription Geometry = new GH_InstanceDescription
+        {
+            Name = "Geometry",
+            NickName = "G",
+            Description = "Geometry objects"
+        };
+
+        public static readonly GH_InstanceDescription DirectionVector = new GH_InstanceDescription
+        {
+            Name = "Vector",
+            NickName = "V",
+            Description = "Direction vector"
+        };
+
+        public static readonly GH_InstanceDescription OrderIndicies = new GH_InstanceDescription
+        {
+            Name = "Indices",
+            NickName = "I",
+            Description = "Ordering Indices"
+        };
+
+        public static readonly GH_InstanceDescription FilteredModelObjects = new GH_InstanceDescription
+        {
+            Name = "Filtered Object",
+            NickName = "FO",
+            Description = "Tekla model object meeting filter criteria"
+        };
+
+        public static readonly GH_InstanceDescription FilterPattern = new GH_InstanceDescription
+        {
+            Name = "Filter Pattern",
+            NickName = "P",
+            Description = "Filter pattern"
+        };
+
+        public static readonly GH_InstanceDescription SortOrder = new GH_InstanceDescription
+        {
+            Name = "Order",
+            NickName = "S",
+            Description = "Order of sorting"
+        };
+
+        public static readonly GH_InstanceDescription SortedValues = new GH_InstanceDescription
+        {
+            Name = "Sorted",
+            NickName = "V",
+            Description = "Sorted objects"
+        };
+
+        public static readonly GH_InstanceDescription TeklaComponent = new GH_InstanceDescription
+        {
+            Name = "Component",
+            NickName = "C",
+            Description = "Tekla component (model or drawing) which output should be baked into Tekla"
+        };
+
+        public static readonly GH_InstanceDescription Plane = new GH_InstanceDescription
+        {
+            Name = "Plane",
+            NickName = "P",
+            Description = "Tekla's plane"
+        };
+
+        public static readonly GH_InstanceDescription Set = new GH_InstanceDescription
+        {
+            Name = "Set",
+            NickName = "S",
+            Description = "Tekla objects set to operate on"
+        };
+
+        public static readonly GH_InstanceDescription Member = new GH_InstanceDescription
+        {
+            Name = "Member",
+            NickName = "M",
+            Description = "Tekla object to search for"
+        };
+
+        public static readonly GH_InstanceDescription Index = new GH_InstanceDescription
+        {
+            Name = "Index",
+            NickName = "I",
+            Description = "Indicies of Tekla object"
+        };
+
+        public static readonly GH_InstanceDescription Count = new GH_InstanceDescription
+        {
+            Name = "Count",
+            NickName = "N",
+            Description = "Number of occurences of the Tekla object"
+        };
+
+        public static readonly GH_InstanceDescription Grid = new GH_InstanceDescription
+        {
+            Name = "Grid",
+            NickName = "G",
+            Description = "Tekla Grid object"
+        };
+
+        public static readonly GH_InstanceDescription GridSurface = new GH_InstanceDescription
+        {
+            Name = "Surface",
+            NickName = "S",
+            Description = "Grid surfaces"
+        };
+
+        public static readonly GH_InstanceDescription GridLabel = new GH_InstanceDescription
+        {
+            Name = "Label",
+            NickName = "L",
+            Description = "Grid labels"
+        };
+
+        public static readonly GH_InstanceDescription GridXYSurface = new GH_InstanceDescription
+        {
+            Name = "XY Surface",
+            NickName = "XYS",
+            Description = "Grid surfaces with normal parallel to the Z axis"
+        };
+
+        public static readonly GH_InstanceDescription GridXYLabel = new GH_InstanceDescription
+        {
+            Name = "XY Label",
+            NickName = "XYL",
+            Description = "Grid labels with normal parallel to the Z axis"
+        };
+
+        public static readonly GH_InstanceDescription GridNotXYSurface = new GH_InstanceDescription
+        {
+            Name = "Not XY Surface",
+            NickName = "NXYS",
+            Description = "Grid surfaces with normal NOT parallel to the Z axis"
+        };
+
+        public static readonly GH_InstanceDescription GridNotXYLabel = new GH_InstanceDescription
+        {
+            Name = "Not XY Label",
+            NickName = "NXYL",
+            Description = "Grid labels with normal NOT parallel to the Z axis"
+        };
+
+        public static readonly GH_InstanceDescription ModelMode = new GH_InstanceDescription
+        {
+            Name = "Model",
+            NickName = "M",
+            Description = "Tekla is in Model area"
+        };
+
+        public static readonly GH_InstanceDescription DrawingMode = new GH_InstanceDescription
+        {
+            Name = "Drawing",
+            NickName = "D",
+            Description = "Tekla is in Drawing area"
+        };
+
+        public static readonly GH_InstanceDescription DetailCenterPoint = new GH_InstanceDescription
+        {
+            Name = "Center point",
+            NickName = "CP",
+            Description = "Center point of detail"
+        };
+
+        public static readonly GH_InstanceDescription DetailLabelPoint = new GH_InstanceDescription
+        {
+            Name = "Label point",
+            NickName = "LP",
+            Description = "Label location"
+        };
+
+        public static readonly GH_InstanceDescription DetailInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion point",
+            NickName = "IP",
+            Description = "Detail view insertion point"
+        };
+
+        public static readonly GH_InstanceDescription DetailRadius = new GH_InstanceDescription
+        {
+            Name = "Radius",
+            NickName = "R",
+            Description = "Detail range"
+        };
+
+        public static readonly GH_InstanceDescription DetailViewAttributes = new GH_InstanceDescription
+        {
+            Name = "View attributes",
+            NickName = "VA",
+            Description = "View attributes file name"
+        };
+
+        public static readonly GH_InstanceDescription DetailMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Mark attributes",
+            NickName = "MA",
+            Description = "Detail mark attributes file name"
+        };
+
+        public static readonly GH_InstanceDescription SectionStartPoint = new GH_InstanceDescription
+        {
+            Name = "Start point",
+            NickName = "P1",
+            Description = "Start point of section line"
+        };
+
+        public static readonly GH_InstanceDescription SectionEndPoint = new GH_InstanceDescription
+        {
+            Name = "End point",
+            NickName = "P2",
+            Description = "End point of section line"
+        };
+
+        public static readonly GH_InstanceDescription CurvedSectionMidPoint = new GH_InstanceDescription
+        {
+            Name = "Mid point",
+            NickName = "MidPt",
+            Description = "Mid point of curved section line"
+        };
+
+        public static readonly GH_InstanceDescription SectionInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion point",
+            NickName = "IP",
+            Description = "Detail view insertion point"
+        };
+
+        public static readonly GH_InstanceDescription SectionDepthUp = new GH_InstanceDescription
+        {
+            Name = "Depth up",
+            NickName = "DU",
+            Description = "Section depth up"
+        };
+
+        public static readonly GH_InstanceDescription SectionDepthDown = new GH_InstanceDescription
+        {
+            Name = "Depth down",
+            NickName = "DD",
+            Description = "Section depth down"
+        };
+
+        public static readonly GH_InstanceDescription SectionViewAttributes = new GH_InstanceDescription
+        {
+            Name = "View attributes",
+            NickName = "VA",
+            Description = "View attributes file name"
+        };
+
+        public static readonly GH_InstanceDescription SectionMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Mark attributes",
+            NickName = "MA",
+            Description = "Section mark attributes file name"
+        };
+
+        public static readonly GH_InstanceDescription SplitPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "Split point"
+        };
+
+        public static readonly GH_InstanceDescription GeometryA = new GH_InstanceDescription
+        {
+            Name = "Geometry A",
+            NickName = "GA",
+            Description = "Geometries to the left of specified split point"
+        };
+
+        public static readonly GH_InstanceDescription GeometryB = new GH_InstanceDescription
+        {
+            Name = "Geometry B",
+            NickName = "GB",
+            Description = "Geometries to the right of specified split point"
+        };
+
+        public static readonly GH_InstanceDescription AllViews = new GH_InstanceDescription
+        {
+            Name = "All views",
+            NickName = "All",
+            Description = "Gets all the views that are placed on the container view and their children views."
+        };
+
+        public static readonly GH_InstanceDescription OnlyTopMostViews = new GH_InstanceDescription
+        {
+            Name = "Top most views",
+            NickName = "Top",
+            Description = "Gets all the views that are placed directly in the drawing container."
+        };
+
+        public static readonly GH_InstanceDescription LevelMarkInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion point",
+            NickName = "IP",
+            Description = "Insertion point of the Level Mark"
+        };
+
+        public static readonly GH_InstanceDescription LevelMarkBasePoint = new GH_InstanceDescription
+        {
+            Name = "Base point",
+            NickName = "BP",
+            Description = "Base point of the Level Mark"
+        };
+
+        public static readonly GH_InstanceDescription LevelMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Mark attributes",
+            NickName = "MA",
+            Description = "Level mark attributes file name"
+        };
+
+        public static readonly GH_InstanceDescription PlacingType = new GH_InstanceDescription
+        {
+            Name = "Placing Type",
+            NickName = "PT",
+            Description = "Placing type for the drawing object"
+        };
+
+        public static readonly GH_InstanceDescription LeaderLineType = new GH_InstanceDescription
+        {
+            Name = "Leader Type",
+            NickName = "LT",
+            Description = $"Leader line type:\n{EnumHelpers.EnumToString<GTDrawingLink.Components.AttributesComponents.LeaderLineType>()}\nRight-click to set"
+        };
+
+        public static readonly GH_InstanceDescription LeaderLineTypeOld = new GH_InstanceDescription
+        {
+            Name = "Leader Type",
+            NickName = "LT",
+            Description = $"Leader line type:\n{EnumHelpers.EnumToString<GTDrawingLink.Components.Obsolete.LeaderLineType>()}\nRight-click to set"
+        };
+
+        public static readonly GH_InstanceDescription LeaderLineStartingPoint = new GH_InstanceDescription
+        {
+            Name = "Starting Point",
+            NickName = "P",
+            Description = "Leader line starting point"
+        };
+
+        public static readonly GH_InstanceDescription LeaderLineStartPoint = new GH_InstanceDescription
+        {
+            Name = "Start Point",
+            NickName = "S",
+            Description = "Leader line starting point"
+        };
+        public static readonly GH_InstanceDescription LeaderLineEndPoint = new GH_InstanceDescription
+        {
+            Name = "End Point",
+            NickName = "E",
+            Description = "Leader line starting point"
+        };
+
+        public static readonly GH_InstanceDescription AngleDimension = new GH_InstanceDescription
+        {
+            Name = "Angle Dimension",
+            NickName = "Dim",
+            Description = "Angle Dimension"
+        };
+
+        public static readonly GH_InstanceDescription Polygon = new GH_InstanceDescription
+        {
+            Name = "Polygon",
+            NickName = "PL",
+            Description = "Tekla Polygon"
+        };
+
+        public static readonly GH_InstanceDescription PolygonAttributes = new GH_InstanceDescription
+        {
+            Name = "Polygon attributes",
+            NickName = "PLAttr",
+            Description = "Polygon attributes"
+        };
+
+        public static readonly GH_InstanceDescription PolygonMode = new GH_InstanceDescription
+        {
+            Name = "Insert as polygon",
+            NickName = "Polygon",
+            Description = "Polygon object will be created"
+        };
+
+        public static readonly GH_InstanceDescription CloudMode = new GH_InstanceDescription
+        {
+            Name = "Insert as cloud",
+            NickName = "Cloud",
+            Description = "Cloud object will be created"
+        };
+
+        public static readonly GH_InstanceDescription RebarCustomPosition = new GH_InstanceDescription
+        {
+            Name = "Custom Position",
+            NickName = "Pos",
+            Description = "Defines the location of the reinforcement bar when you want to show only single rebar.\nThis location is a value between 0.0 and 1.0 and it defines the proportion from the reinforcement's start point."
+        };
+
+        public static readonly GH_InstanceDescription RebarCustomPositionLongitudinal = new GH_InstanceDescription
+        {
+            Name = "Custom Longitudinal",
+            NickName = "Long",
+            Description = "Defines the location of the reinforcement bar when you want to show only single rebar.\nThis location is a value between 0.0 and 1.0 and it defines the proportion from the reinforcement's start point."
+        };
+
+        public static readonly GH_InstanceDescription RebarCustomPositionCross = new GH_InstanceDescription
+        {
+            Name = "Custom Cross",
+            NickName = "Long",
+            Description = "Defines the location of the reinforcement bar when you want to show only single rebar.\nThis location is a value between 0.0 and 1.0 and it defines the proportion from the reinforcement's start point."
+        };
+
+        public static readonly GH_InstanceDescription MarkType = new GH_InstanceDescription
+        {
+            Name = "Mark Type",
+            NickName = "Type",
+            Description = "Returns mark type. It can be AssociativeNote, Mark or MarkSet."
+        };
+
+        public static readonly GH_InstanceDescription AxisAlignedBoundingBox = new GH_InstanceDescription
+        {
+            Name = "Axis Box",
+            NickName = "ABox",
+            Description = "Returns the axis aligned bounding box of the object (rectangle format)."
+        };
+
+        public static readonly GH_InstanceDescription ObjectAlignedBoundingBox = new GH_InstanceDescription
+        {
+            Name = "Object Box",
+            NickName = "OBox",
+            Description = "Returns the object aligned bounding box of the object (rectangle format)."
+        };
+
+
+        public static readonly GH_InstanceDescription LeaderLine = new GH_InstanceDescription
+        {
+            Name = "Leader Line",
+            NickName = "LL",
+            Description = "Leader line"
+        };
+
+        public static readonly GH_InstanceDescription IsValid = new GH_InstanceDescription
+        {
+            Name = "Is Valid",
+            NickName = "V",
+            Description = "Tekla Marks can belong to the ghost category. This boolean flag will return false if mark bounding box is invalid."
+        };
+
+        public static readonly GH_InstanceDescription MarkContent = new GH_InstanceDescription
+        {
+            Name = "Content",
+            NickName = "C",
+            Description = "Returns mark content if available."
         };
     }
 }

@@ -7,7 +7,7 @@ namespace GTDrawingLink.Tools
 {
     public static class ReflectionHelper
     {
-        private static PropertyInfo GetPropertyInfo(Type type, string propertyName)
+        public static PropertyInfo GetPropertyInfo(Type type, string propertyName)
         {
             PropertyInfo propInfo = null;
             do
