@@ -8,7 +8,7 @@ namespace DrawingLink.UI
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private string definitionPath = @"C:\Users\grzeg\Downloads\PanelConnectedWith.gh";
+        private string definitionPath = @"C:\Users\grzeg\Downloads\SampleDrawingOutput.gh";
         [StructuresDialog("definitionPath", typeof(TD.String))]
         public string DefinitionPath
         {

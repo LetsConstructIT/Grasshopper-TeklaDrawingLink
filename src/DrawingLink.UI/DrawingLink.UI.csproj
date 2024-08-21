@@ -17,8 +17,7 @@
         <PackageReference Include="Grasshopper" Version="7.0.20314.3001">
             <ExcludeAssets>runtime</ExcludeAssets>
         </PackageReference>
-        <PackageReference Include="Tekla.Structures.Drawing" Version="2022.0.10715" />
-        <PackageReference Include="Tekla.Structures.Dialog" Version="2022.0.10715" />
+        <PackageReference Include="Tekla.Structures.Drawing" Version="2023.0.1" />
         <PackageReference Include="TeklaFusion" Version="4.0.52" />
 
     </ItemGroup>
