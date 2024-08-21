@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Windows;
 
 namespace DrawingLink.UI.GH
@@ -34,12 +35,12 @@ namespace DrawingLink.UI.GH
             return _instance;
         }
 
-        public void Solve(string definitionPath)
+        public void Solve(string definitionPath, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
-            var status = OperateOnGrasshopperScript(definitionPath, doc => SolveDocument(doc));
+            var status = OperateOnGrasshopperScript(definitionPath, doc => SolveDocument(doc, messages));
         }
 
-        private TemporaryResultObject SolveDocument(GH_Document document)
+        private TemporaryResultObject SolveDocument(GH_Document document, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
             var allowedComponentTypes = new string[]
             {
@@ -64,7 +65,22 @@ namespace DrawingLink.UI.GH
                     component.CollectData();
                     component.ComputeData();
                 }
-
+                else if (activeObject is GH_Panel && (activeObject as GH_Panel).Sources.Any())
+                {
+                    GH_Panel gh_Panel = activeObject as GH_Panel;
+                    string panelName = gh_Panel.NickName.Trim().ToUpperInvariant();
+                    if (IsOutputPanelName(panelName))
+                    {
+                        gh_Panel.CollectData();
+                        gh_Panel.ComputeData();
+                        AppendOutputMessages(gh_Panel, messages);
+                    }
+                    else if (IsSolvePanelName(panelName))
+                    {
+                        gh_Panel.CollectData();
+                        gh_Panel.ComputeData();
+                    }
+                }
             }
 
             return new TemporaryResultObject();
@@ -279,6 +295,57 @@ namespace DrawingLink.UI.GH
         {
             var allowedNames = new string[] { "OUTPUT", "OUT:", "O", "O:" };
             return allowedNames.Any(n => panelName.StartsWith(n));
+        }
+
+        private bool IsSolvePanelName(string panelName)
+        {
+            var allowedNames = new string[] { "SOLVE", "S", "S:" };
+            return allowedNames.Any(n => panelName.StartsWith(n));
+        }
+
+        private void AppendOutputMessages(GH_Panel panel, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        {
+            InitializeMessagesIfNeeded(messages);
+            var outputPanelName = GetOutputPanelName(panel);
+            if (panel.VolatileDataCount == 0)
+            {
+                messages[GH_RuntimeMessageLevel.Blank].Add("[ " + outputPanelName + " ] *** No output was collected ***");
+                return;
+            }
+            string text = string.Join("\n", from d in panel.VolatileData.AllData(true)
+                                            select d.ToString());
+            if (string.IsNullOrEmpty(text))
+            {
+                messages[GH_RuntimeMessageLevel.Blank].Add("[ " + outputPanelName + " ] *** Output is empty ***");
+                return;
+            }
+            messages[GH_RuntimeMessageLevel.Remark].Add("[ " + outputPanelName + " ]\n" + text);
+        }
+
+        private void InitializeMessagesIfNeeded(Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        {
+            messages ??= new Dictionary<GH_RuntimeMessageLevel, List<string>>();
+
+            foreach (object obj in Enum.GetValues(typeof(GH_RuntimeMessageLevel)))
+            {
+                GH_RuntimeMessageLevel key = (GH_RuntimeMessageLevel)obj;
+                if (!messages.ContainsKey(key) || messages[key] == null)
+                    messages[key] = new List<string>();
+            }
+        }
+
+        private static string GetOutputPanelName(GH_Panel panel)
+        {
+            string text = panel.NickName.Trim();
+            string text2 = text.ToUpperInvariant();
+            if (text2.StartsWith("OUTPUT ") || text2.StartsWith("OUTPUT:"))
+                return text.Substring(7).Trim();
+            else if (text2.StartsWith("OUT:"))
+                return text.Substring(4).Trim();
+            else if (text2.StartsWith("O:"))
+                return text.Substring(2).Trim();
+            else
+                return text;
         }
 
         private class TemporaryResultObject

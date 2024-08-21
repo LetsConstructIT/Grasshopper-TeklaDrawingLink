@@ -1,5 +1,6 @@
 ﻿using DrawingLink.UI.GH;
 using Fusion;
+using Grasshopper.Kernel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,8 +23,11 @@ namespace DrawingLink.UI
     {
         private readonly MainWindowViewModel _viewModel;
 
+        private readonly MessageBoxWindow _messageBoxWindow;
+
         public MainWindow(MainWindowViewModel viewModel)
         {
+            _messageBoxWindow = new MessageBoxWindow();
             InitializeComponent();
             _viewModel = viewModel;
             InitializeDataStorage(_viewModel);
@@ -41,8 +45,15 @@ namespace DrawingLink.UI
 
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
         {
+            var messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>();
+
             var instance = GrasshopperCaller.GetInstance();
-            instance.Solve(_viewModel.DefinitionPath);
+            instance.Solve(_viewModel.DefinitionPath, messages);
+
+            var test = messages[GH_RuntimeMessageLevel.Remark];
+
+            _messageBoxWindow.AddMessages(test);
+            _messageBoxWindow.Show();
 
         }
 
