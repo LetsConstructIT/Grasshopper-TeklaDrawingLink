@@ -52,9 +52,13 @@ namespace DrawingLink.UI
 
             var test = messages[GH_RuntimeMessageLevel.Remark];
 
-            _messageBoxWindow.AddMessages(test);
-            _messageBoxWindow.Show();
+            _messageBoxWindow.ClearMessages();
+            _messageBoxWindow.ShowMessages(GetTitle(_viewModel.DefinitionPath), test);
+        }
 
+        private string GetTitle(string definitionPath)
+        {
+            return System.IO.File.Exists(definitionPath) ? ("Messages from the " + System.IO.Path.GetFileNameWithoutExtension(definitionPath) + " definition") : "[No definition loaded]";
         }
 
         private void WpfOkCreateCancel_ApplyClicked(object sender, EventArgs e)

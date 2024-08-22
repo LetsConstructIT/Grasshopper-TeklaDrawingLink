@@ -10,7 +10,7 @@
         Height="450"
         Width="800">
   <ScrollViewer HorizontalScrollBarVisibility="Auto">
-    <TextBox x:Name="textBox" IsReadOnly="True">
+    <TextBox x:Name="textBox" IsReadOnly="True" VerticalAlignment="Top">
 
     </TextBox>
   </ScrollViewer>

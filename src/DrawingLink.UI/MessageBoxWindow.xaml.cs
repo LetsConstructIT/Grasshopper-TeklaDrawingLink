@@ -25,23 +25,34 @@ namespace DrawingLink.UI
             InitializeComponent();
         }
 
-        public void AddMessages(IEnumerable<string> messages)
+        public void ClearMessages()
         {
-            if (messages == null)
-                return;
+            this.textBox.Text = "";
+        }
+
+        public void ShowMessages(string title, IEnumerable<string> messages)
+        {
+            this.Title = title;
 
             var textBox = this.textBox;
 
             textBox.Text = string.IsNullOrWhiteSpace(textBox.Text) ? "" : (textBox.Text + Environment.NewLine);
-            textBox.Text += string.Join(Environment.NewLine,
-                from m in messages
-                select m.Trim(new char[]
+            textBox.Text += JoinMessages(messages);
+
+            this.Show();
+        }
+
+        private string JoinMessages(IEnumerable<string> messages)
+        {
+            var trimmed = messages.Select(m => m.Trim(new char[]
                 {
                     '\n',
                     '\r',
                     '\t',
                     ' '
                 }).Replace("\r\n", "\n").Replace("\n", Environment.NewLine));
+
+            return string.Join(Environment.NewLine, trimmed);
         }
     }
 }
