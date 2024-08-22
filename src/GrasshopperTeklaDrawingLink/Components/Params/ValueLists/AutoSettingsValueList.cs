@@ -143,6 +143,8 @@ namespace GTDrawingLink.Components.Params.ValueLists
             DrRichText,
             [DescriptionWithExtension("Section mark", "cs")]
             DrSectionMark,
+            [DescriptionWithExtension("Selection filter", "SObjGrp")]
+            MoSelectionFilter,
             [DescriptionWithExtension("Symbol", "sbl")]
             DrSymbol,
             [DescriptionWithExtension("Text", "drtxt")]
