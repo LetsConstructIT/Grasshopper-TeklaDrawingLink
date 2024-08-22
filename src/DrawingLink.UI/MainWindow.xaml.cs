@@ -4,6 +4,7 @@ using Grasshopper.Kernel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,7 +59,7 @@ namespace DrawingLink.UI
 
         private string GetTitle(string definitionPath)
         {
-            return System.IO.File.Exists(definitionPath) ? ("Messages from the " + System.IO.Path.GetFileNameWithoutExtension(definitionPath) + " definition") : "[No definition loaded]";
+            return File.Exists(definitionPath) ? ("Messages from the " + Path.GetFileNameWithoutExtension(definitionPath) + " definition") : "[No definition loaded]";
         }
 
         private void WpfOkCreateCancel_ApplyClicked(object sender, EventArgs e)
@@ -68,12 +69,16 @@ namespace DrawingLink.UI
 
         private void SelectGrasshopperFile_Click(object sender, RoutedEventArgs e)
         {
-
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
                 DefaultExt = ".gh",
-                Filter = "Grasshopper file (.gh)|*.gh"
+                Filter = "Grasshopper file (.gh)|*.gh",
             };
+
+            if (File.Exists(_viewModel.DefinitionPath))
+            {
+                dialog.InitialDirectory = Path.GetDirectoryName(_viewModel.DefinitionPath);
+            }
 
             if (dialog.ShowDialog() != true)
                 return;
