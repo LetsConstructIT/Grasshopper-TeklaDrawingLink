@@ -21,4 +21,8 @@
         <PackageReference Include="TeklaFusion" Version="4.0.52" />
 
     </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="System.Windows.Forms" />
+    </ItemGroup>
 </Project>

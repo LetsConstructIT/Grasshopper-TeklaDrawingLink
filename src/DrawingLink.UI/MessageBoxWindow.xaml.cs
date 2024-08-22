@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DrawingLink.UI
 {
@@ -53,6 +43,20 @@ namespace DrawingLink.UI
                 }).Replace("\r\n", "\n").Replace("\n", Environment.NewLine));
 
             return string.Join(Environment.NewLine, trimmed);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var screen = System.Windows.Forms.Screen.FromHandle(new System.Windows.Interop.WindowInteropHelper(this).Handle);
+
+            this.Left = screen.WorkingArea.Left;
+            this.Top = screen.WorkingArea.Bottom - this.Height - 30;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
         }
     }
 }
