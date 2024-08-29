@@ -1,5 +1,10 @@
 ﻿using DrawingLink.UI.GH;
 using DrawingLink.UI.WPF;
+using RenderData;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Input;
 using Tekla.Structures.Dialog;
 using TD = Tekla.Structures.Datatype;
@@ -4231,6 +4236,59 @@ namespace DrawingLink.UI
 
         public MainWindowViewModel()
         {
+        }
+
+        public GrasshopperData ToDataModel()
+        {
+            var fields = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            var strings = (from f in fields
+                           where f.Name.StartsWith("string_")
+                           select f.GetValue(this)).Cast<string>().ToList();
+
+            var doubles = (from f in fields
+                           where f.Name.StartsWith("double_")
+                           select f.GetValue(this)).Cast<double>().ToList();
+
+            var integers = (from f in fields
+                            where f.Name.StartsWith("int_")
+                            select f.GetValue(this)).Cast<int>().ToList();
+
+            return new GrasshopperData(DefinitionPath, strings, doubles, integers);
+        }
+    }
+
+    public class GrasshopperData
+    {
+        public string DefinitionPath { get; }
+        private readonly IReadOnlyList<string> _strings;
+        private readonly IReadOnlyList<double> _doubles;
+        private readonly IReadOnlyList<int> _integers;
+
+        public GrasshopperData(string definitionPath, IReadOnlyList<string> strings, IReadOnlyList<double> doubles, IReadOnlyList<int> integers)
+        {
+            DefinitionPath = definitionPath ?? throw new ArgumentNullException(nameof(definitionPath));
+            _strings = strings ?? throw new ArgumentNullException(nameof(strings));
+            _doubles = doubles ?? throw new ArgumentNullException(nameof(doubles));
+            _integers = integers ?? throw new ArgumentNullException(nameof(integers));
+        }
+
+        public DataQueues ToQueues()
+        {
+            return new DataQueues(new Queue<string>(_strings), new Queue<double>(_doubles), new Queue<int>(_integers));
+        }
+    }
+
+    public class DataQueues
+    {
+        public Queue<string> Strings { get; }
+        public Queue<double> Doubles { get; }
+        public Queue<int> Integers { get; }
+
+        public DataQueues(Queue<string> strings, Queue<double> doubles, Queue<int> integers)
+        {
+            Strings = strings ?? throw new ArgumentNullException(nameof(strings));
+            Doubles = doubles ?? throw new ArgumentNullException(nameof(doubles));
+            Integers = integers ?? throw new ArgumentNullException(nameof(integers));
         }
     }
 }

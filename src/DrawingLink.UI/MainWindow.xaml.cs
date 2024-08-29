@@ -49,7 +49,7 @@ namespace DrawingLink.UI
             var messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>();
 
             var instance = GrasshopperCaller.GetInstance();
-            instance.Solve(_viewModel.DefinitionPath, messages);
+            instance.Solve(_viewModel.ToDataModel(), messages);
 
             var test = messages[GH_RuntimeMessageLevel.Remark];
 

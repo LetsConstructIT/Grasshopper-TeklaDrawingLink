@@ -35,12 +35,12 @@ namespace DrawingLink.UI.GH
             return _instance;
         }
 
-        public void Solve(string definitionPath, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        public void Solve(GrasshopperData grasshopperData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
-            var status = OperateOnGrasshopperScript(definitionPath, doc => SolveDocument(doc, messages));
+            var status = OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData.ToQueues(), messages));
         }
 
-        private TemporaryResultObject SolveDocument(GH_Document document, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private TemporaryResultObject SolveDocument(GH_Document document, DataQueues data, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
             var allowedComponentTypes = new string[]
             {

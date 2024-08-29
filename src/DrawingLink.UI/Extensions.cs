@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -18,6 +20,18 @@ namespace DrawingLink.UI
             bitmapimage.EndInit();
 
             return bitmapimage;
+        }
+
+        public static bool TryDequeue<T>(this Queue<T> queue, out T result)
+        {
+            if (queue.Count == 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = queue.Dequeue();
+            return true;
         }
     }
 }
