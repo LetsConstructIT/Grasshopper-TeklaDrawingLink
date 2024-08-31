@@ -31,7 +31,6 @@ namespace DrawingLink.UI
         public void ShowControls(string filePath, bool loadValuesFromGh)
         {
             var parameters = GrasshopperCaller.GetInstance().GetInputParams(filePath);
-            //var uiDefinition = UiPopulator.GetSample();
             var uiDefinition = ParameterTransformer.Transform(parameters.AttributeParams);
             PopulateUi(uiDefinition, loadValuesFromGh);
         }

@@ -46,15 +46,15 @@ namespace DrawingLink.UI
 
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
         {
-            var messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>();
+            var grasshopperData = _viewModel.ToDataModel();            
 
             var instance = GrasshopperCaller.GetInstance();
-            instance.Solve(_viewModel.ToDataModel(), messages);
+            var messages = instance.Solve(grasshopperData);
 
-            var test = messages[GH_RuntimeMessageLevel.Remark];
+            var remarks = messages[GH_RuntimeMessageLevel.Remark];
 
             _messageBoxWindow.ClearMessages();
-            _messageBoxWindow.ShowMessages(GetTitle(_viewModel.DefinitionPath), test);
+            _messageBoxWindow.ShowMessages(GetTitle(_viewModel.DefinitionPath), remarks);
         }
 
         private string GetTitle(string definitionPath)

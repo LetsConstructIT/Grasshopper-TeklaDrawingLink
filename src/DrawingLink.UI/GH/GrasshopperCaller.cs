@@ -50,13 +50,15 @@ namespace DrawingLink.UI.GH
             return inputParams.TeklaParams;
         }
 
-        public void Solve(GrasshopperData grasshopperData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        public Dictionary<GH_RuntimeMessageLevel, List<string>> Solve(GrasshopperData grasshopperData)
         {
-            var status = OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData, messages));
+            return OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData));
         }
 
-        private TemporaryResultObject SolveDocument(GH_Document document, GrasshopperData inputData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, GrasshopperData inputData)
         {
+            var messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>();
+
             var allowedComponentTypes = new string[]
             {
                 "CreateModelObjectComponent",
@@ -97,7 +99,7 @@ namespace DrawingLink.UI.GH
                 }
             }
 
-            return new TemporaryResultObject();
+            return messages;
         }
 
         private void SetValuesInGrasshopper(GrasshopperData data, GHParams inputParams)
@@ -538,10 +540,5 @@ namespace DrawingLink.UI.GH
             else
                 return text;
         }
-
-        private class TemporaryResultObject
-        {
-        }
-
     }
 }
