@@ -39,17 +39,6 @@ namespace DrawingLink.UI.GH
             return _instance;
         }
 
-        public TeklaParams ReadTeklaParams(string grasshopperPath)
-        {
-            return OperateOnGrasshopperScript(grasshopperPath, doc => GetModelAndDrawingParams(doc));
-        }
-
-        private TeklaParams GetModelAndDrawingParams(GH_Document document)
-        {
-            var inputParams = GetInputParams(document);
-            return inputParams.TeklaParams;
-        }
-
         public Dictionary<GH_RuntimeMessageLevel, List<string>> Solve(GrasshopperData grasshopperData)
         {
             return OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData));
@@ -57,7 +46,7 @@ namespace DrawingLink.UI.GH
 
         private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, GrasshopperData inputData)
         {
-            var messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>();
+            var messages = InitialieMessageDictionary();
 
             var allowedComponentTypes = new string[]
             {
@@ -357,25 +346,27 @@ namespace DrawingLink.UI.GH
         private TeklaModelParam TransformToModelParam(GH_PersistentParam<GH_Goo<ModelObject>> ghModelParam, bool isMultiple)
         {
             var paramName = ghModelParam.GetType().Name;
+            var prompt = $"Pick a {ghModelParam.NickName.Trim()}";
 
             return paramName switch
             {
-                "TeklaPointParam" => new TeklaModelParam(ghModelParam, ModelParamType.Point, isMultiple),
-                "TeklaLineParam" => new TeklaModelParam(ghModelParam, ModelParamType.Line, isMultiple),
-                "TeklaPolylineParam" => new TeklaModelParam(ghModelParam, ModelParamType.Polyline, isMultiple),
-                "TeklaFaceParam" => new TeklaModelParam(ghModelParam, ModelParamType.Face, isMultiple),
-                _ => new TeklaModelParam(ghModelParam, ModelParamType.Object, isMultiple),
+                "TeklaPointParam" => new TeklaModelParam(ghModelParam, ModelParamType.Point, isMultiple, prompt),
+                "TeklaLineParam" => new TeklaModelParam(ghModelParam, ModelParamType.Line, isMultiple, prompt),
+                "TeklaPolylineParam" => new TeklaModelParam(ghModelParam, ModelParamType.Polyline, isMultiple, prompt),
+                "TeklaFaceParam" => new TeklaModelParam(ghModelParam, ModelParamType.Face, isMultiple, prompt),
+                _ => new TeklaModelParam(ghModelParam, ModelParamType.Object, isMultiple, prompt),
             };
         }
 
         private TeklaDrawingParam TransformToDrawingParam(IGH_ActiveObject ghDrawingParam, bool isMultiple)
         {
             var paramName = ghDrawingParam.GetType().Name;
+            var prompt = $"Pick a drawing {ghDrawingParam.NickName.Trim()}";
 
             return paramName switch
             {
-                "TeklaDrawingPointParam" => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Point, isMultiple),
-                _ => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Object, isMultiple),
+                "TeklaDrawingPointParam" => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Point, isMultiple, prompt),
+                _ => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Object, isMultiple, prompt),
             };
         }
 
@@ -498,7 +489,6 @@ namespace DrawingLink.UI.GH
 
         private void AppendOutputMessages(GH_Panel panel, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
-            InitializeMessagesIfNeeded(messages);
             var outputPanelName = GetOutputPanelName(panel);
             if (panel.VolatileDataCount == 0)
             {
@@ -515,16 +505,16 @@ namespace DrawingLink.UI.GH
             messages[GH_RuntimeMessageLevel.Remark].Add("[ " + outputPanelName + " ]\n" + text);
         }
 
-        private void InitializeMessagesIfNeeded(Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private Dictionary<GH_RuntimeMessageLevel, List<string>> InitializeMessageDictionary()
         {
-            messages ??= new Dictionary<GH_RuntimeMessageLevel, List<string>>();
-
-            foreach (object obj in Enum.GetValues(typeof(GH_RuntimeMessageLevel)))
+            var messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>();
+            foreach (GH_RuntimeMessageLevel key in Enum.GetValues(typeof(GH_RuntimeMessageLevel)))
             {
-                GH_RuntimeMessageLevel key = (GH_RuntimeMessageLevel)obj;
                 if (!messages.ContainsKey(key) || messages[key] == null)
                     messages[key] = new List<string>();
             }
+
+            return messages;
         }
 
         private static string GetOutputPanelName(GH_Panel panel)

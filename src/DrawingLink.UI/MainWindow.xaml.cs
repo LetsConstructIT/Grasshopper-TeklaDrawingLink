@@ -1,4 +1,5 @@
 ﻿using DrawingLink.UI.GH;
+using DrawingLink.UI.TeklaInteraction;
 using Fusion;
 using Grasshopper.Kernel;
 using System;
@@ -46,9 +47,12 @@ namespace DrawingLink.UI
 
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
         {
-            var grasshopperData = _viewModel.ToDataModel();            
+            var grasshopperData = _viewModel.ToDataModel();
 
             var instance = GrasshopperCaller.GetInstance();
+            var teklaParams = instance.GetInputParams(grasshopperData.DefinitionPath).TeklaParams;
+            var teklaInput = new UserInputPicker().PickInput(teklaParams);
+
             var messages = instance.Solve(grasshopperData);
 
             var remarks = messages[GH_RuntimeMessageLevel.Remark];

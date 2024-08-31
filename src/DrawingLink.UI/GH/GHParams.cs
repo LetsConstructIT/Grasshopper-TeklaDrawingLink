@@ -76,11 +76,13 @@ namespace DrawingLink.UI.GH
     {
         public IGH_ActiveObject ActiveObject { get; }
         public bool IsMultiple { get; }
+        public string Prompt { get; }
 
-        protected TeklaParamBase(IGH_ActiveObject activeObject, bool isMultiple)
+        protected TeklaParamBase(IGH_ActiveObject activeObject, bool isMultiple, string prompt)
         {
             ActiveObject = activeObject ?? throw new ArgumentNullException(nameof(activeObject));
             IsMultiple = isMultiple;
+            Prompt = prompt ?? throw new ArgumentNullException(nameof(prompt));
         }
     }
 
@@ -88,9 +90,22 @@ namespace DrawingLink.UI.GH
     {
         public ModelParamType ParamType { get; }
 
-        public TeklaModelParam(IGH_ActiveObject activeObject, ModelParamType paramType, bool isMultiple) : base(activeObject, isMultiple)
+        private List<Tekla.Structures.Model.ModelObject>? _modelObjects;
+        private List<Tekla.Structures.Geometry3d.Point>? _points;
+
+        public TeklaModelParam(IGH_ActiveObject activeObject, ModelParamType paramType, bool isMultiple, string prompt) : base(activeObject, isMultiple, prompt)
         {
             ParamType = paramType;
+        }
+
+        public void Set(List<Tekla.Structures.Model.ModelObject> modelObjects)
+        {
+            _modelObjects = modelObjects;
+        }
+
+        public void Set(List<Tekla.Structures.Geometry3d.Point> points)
+        {
+            _points = points;
         }
     }
 
@@ -98,9 +113,22 @@ namespace DrawingLink.UI.GH
     {
         public DrawingParamType ParamType { get; }
 
-        public TeklaDrawingParam(IGH_ActiveObject activeObject, DrawingParamType paramType, bool isMany) : base(activeObject, isMany)
+        private List<Tekla.Structures.Drawing.DatabaseObject>? _drawingObjects;
+        private List<Tekla.Structures.Geometry3d.Point>? _points;
+
+        public TeklaDrawingParam(IGH_ActiveObject activeObject, DrawingParamType paramType, bool isMany, string prompt) : base(activeObject, isMany, prompt)
         {
             ParamType = paramType;
+        }
+
+        public void Set(List<Tekla.Structures.Drawing.DatabaseObject> drawingObjects)
+        {
+            _drawingObjects = drawingObjects;
+        }
+
+        public void Set(List<Tekla.Structures.Geometry3d.Point> points)
+        {
+            _points = points;
         }
     }
 
