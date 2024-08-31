@@ -2,12 +2,14 @@
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
+using Rhino;
 using Rhino.Runtime.InProcess;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
+using System.Reflection;
 using System.Windows;
 
 namespace DrawingLink.UI.GH
@@ -53,10 +55,7 @@ namespace DrawingLink.UI.GH
             };
 
             var inputParams = GetInputParams(document);
-            foreach (var param in inputParams.AttributeParams)
-            {
-                param.ActiveObject.ExpireSolution(true);
-            }
+            SetValuesInGrasshopper(data, inputParams);
 
             foreach (var activeObject in document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked))
             {
@@ -84,6 +83,118 @@ namespace DrawingLink.UI.GH
             }
 
             return new TemporaryResultObject();
+        }
+
+        private void SetValuesInGrasshopper(DataQueues data, GHParams inputParams)
+        {
+            foreach (ActiveObjectWrapper activeObjectWrapper in inputParams.AttributeParams)
+            {
+                var ighActiveObject = activeObjectWrapper.ActiveObject;
+                if (ighActiveObject is GH_PersistentParam<GH_String> stringParam)
+                {
+                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    {
+                        SetValue(stringParam, stringValue);
+                    }
+                }
+                else if (ighActiveObject is GH_PersistentParam<GH_Integer> integerParam)
+                {
+                    if (data.Integers.TryDequeue(out int intValue) && intValue != int.MinValue)
+                    {
+                        SetValue(integerParam, intValue);
+                    }
+                }
+                else if (ighActiveObject is GH_PersistentParam<GH_Number> numberParam)
+                {
+                    if (data.Doubles.TryDequeue(out double dblValue) && dblValue != double.MinValue && dblValue != int.MinValue)
+                    {
+                        SetValue(numberParam, dblValue);
+                    }
+                }
+                else if (ighActiveObject is GH_Panel panel)
+                {
+                    if (IsInfoPanel(panel))
+                        continue;
+
+                    if (data.Strings.TryDequeue(out string panelText) && !string.IsNullOrWhiteSpace(panelText))
+                    {
+                        panelText = panelText.Replace("\\n", "\r\n");
+                        panel.RemoveAllSources();
+                        panel.SetUserText(panelText);
+                        panel.ExpireSolution(true);
+                        if (IsSettingsPanel(panel))
+                        {
+                            string text4 = panel.NickName.Trim().ToUpperInvariant();
+                            if (text4.StartsWith(STRING_SETTING_TOLERANCE))
+                            {
+                                if (double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoTolerance))
+                                {
+                                    SetRhinoTolerance(rhinoTolerance);
+                                }
+                            }
+                            else if (text4.StartsWith(STRING_SETTING_ANGLE_TOLERANCE) && double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoAngleTolerance))
+                            {
+                                SetRhinoAngleTolerance(rhinoAngleTolerance);
+                            }
+                        }
+                    }
+                }
+                else if (ighActiveObject is GH_ValueList valueList)
+                {
+                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    {
+                        int num = Math.Max(valueList.ListItems.FindIndex((GH_ValueListItem i) => i.Name == stringValue), 0);
+                        valueList.RemoveAllSources();
+                        valueList.SelectItem(num);
+                        valueList.ExpireSolution(true);
+                    }
+                }
+                else if (ighActiveObject is GH_BooleanToggle booleanToggle)
+                {
+                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    {
+                        booleanToggle.RemoveAllSources();
+                        booleanToggle.Value = (stringValue.Trim().ToUpperInvariant() == "TRUE");
+                        booleanToggle.ExpireSolution(true);
+                    }
+                }
+                else if (ighActiveObject is GH_ButtonObject buttonObject)
+                {
+                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    {
+                        buttonObject.RemoveAllSources();
+                        buttonObject.ButtonDown = (stringValue.Trim().ToUpperInvariant() == buttonObject.ExpressionPressed.Trim().ToUpperInvariant());
+                        buttonObject.ExpireSolution(true);
+                    }
+                }
+                else if (ighActiveObject is GH_NumberSlider gh_NumberSlider)
+                {
+                    if (data.Doubles.TryDequeue(out double dblValue) && dblValue != double.MinValue && dblValue != int.MinValue)
+                    {
+                        gh_NumberSlider.RemoveAllSources();
+                        gh_NumberSlider.TrySetSliderValue((decimal)dblValue);
+                        gh_NumberSlider.ExpireSolution(true);
+                    }
+                }
+                else if (ighActiveObject.GetType().BaseType.Name == "CatalogBaseComponent")
+                {
+                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    {
+                        var method = ighActiveObject.GetType().GetMethod("SetValue", BindingFlags.Instance | BindingFlags.Public);
+                        var parameters = new string[] { stringValue };
+                        method.Invoke(ighActiveObject, parameters);
+                        ighActiveObject.ExpireSolution(true);
+                    }
+                }
+            }
+        }
+
+        private void SetValue<T>(GH_PersistentParam<T> param, object valueToSet) where T : class, IGH_Goo
+        {
+            param.RemoveAllSources();
+            param.PersistentData.Clear();
+            param.SetPersistentData(new object[] { valueToSet });
+            param.ExpireSolution(true);
         }
 
         private static IEnumerable<Type> GetInheritanceHierarchy(Type type)
@@ -140,6 +251,37 @@ namespace DrawingLink.UI.GH
             {
                 document?.Dispose();
             }
+        }
+        public static void SetRhinoTolerance(double toleranceMm)
+        {
+            RhinoDoc.ActiveDoc.ModelAbsoluteTolerance = GetAbsoluteTolerance(toleranceMm, UnitSystem.Unset);
+        }
+
+        public static double GetAbsoluteTolerance(double toleranceMm, UnitSystem unitSystem = UnitSystem.Unset)
+        {
+            if (unitSystem == UnitSystem.Unset)
+                unitSystem = RhinoDoc.ActiveDoc.ModelUnitSystem;
+
+            switch (unitSystem)
+            {
+                case UnitSystem.Millimeters:
+                    return toleranceMm / 1.0;
+                case UnitSystem.Centimeters:
+                    return toleranceMm / 10.0;
+                case UnitSystem.Meters:
+                    return toleranceMm / 1000.0;
+                case UnitSystem.Inches:
+                    return toleranceMm / 25.4;
+                case UnitSystem.Feet:
+                    return toleranceMm / 304.8;
+                default:
+                    return toleranceMm / 1.0;
+            }
+        }
+
+        public static void SetRhinoAngleTolerance(double angleToleranceDegrees)
+        {
+            RhinoDoc.ActiveDoc.ModelAngleToleranceDegrees = angleToleranceDegrees;
         }
 
         private GHParams GetInputParams(GH_Document doc)
