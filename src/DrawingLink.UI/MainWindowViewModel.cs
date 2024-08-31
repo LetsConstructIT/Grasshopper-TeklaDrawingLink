@@ -4257,32 +4257,13 @@ namespace DrawingLink.UI
     public class GrasshopperData
     {
         public string DefinitionPath { get; }
-        private readonly IReadOnlyList<string> _strings;
-        private readonly IReadOnlyList<double> _doubles;
-        private readonly IReadOnlyList<int> _integers;
-
-        public GrasshopperData(string definitionPath, IReadOnlyList<string> strings, IReadOnlyList<double> doubles, IReadOnlyList<int> integers)
-        {
-            DefinitionPath = definitionPath ?? throw new ArgumentNullException(nameof(definitionPath));
-            _strings = strings ?? throw new ArgumentNullException(nameof(strings));
-            _doubles = doubles ?? throw new ArgumentNullException(nameof(doubles));
-            _integers = integers ?? throw new ArgumentNullException(nameof(integers));
-        }
-
-        public InputData ToInputData()
-        {
-            return new InputData(_strings, _doubles, _integers);
-        }
-    }
-
-    public class InputData
-    {
         private readonly Dictionary<string, string> _stringPerFieldName;
         private readonly Dictionary<string, int> _intPerFieldName;
         private readonly Dictionary<string, double> _doublePerFieldName;
 
-        public InputData(IEnumerable<string> strings, IEnumerable<double> doubles, IEnumerable<int> integers)
+        public GrasshopperData(string definitionPath, IReadOnlyList<string> strings, IReadOnlyList<double> doubles, IReadOnlyList<int> integers)
         {
+            DefinitionPath = definitionPath ?? throw new ArgumentNullException(nameof(definitionPath));
             _stringPerFieldName = SetupDictionary(strings);
             _intPerFieldName = SetupDictionary(integers);
             _doublePerFieldName = SetupDictionary(doubles);

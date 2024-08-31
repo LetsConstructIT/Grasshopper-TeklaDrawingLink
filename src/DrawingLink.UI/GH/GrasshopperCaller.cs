@@ -39,10 +39,10 @@ namespace DrawingLink.UI.GH
 
         public void Solve(GrasshopperData grasshopperData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
-            var status = OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData.ToInputData(), messages));
+            var status = OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData, messages));
         }
 
-        private TemporaryResultObject SolveDocument(GH_Document document, InputData inputData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private TemporaryResultObject SolveDocument(GH_Document document, GrasshopperData inputData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
             var allowedComponentTypes = new string[]
             {
@@ -55,7 +55,8 @@ namespace DrawingLink.UI.GH
             };
 
             var inputParams = GetInputParams(document);
-
+            //var inputModel = GetModelInput(inputParams.ModelParams);
+            //var inputDrawing = GetDrawingInput(inputParams.DrawingParams);
             SetValuesInGrasshopper(inputData, inputParams);
 
             foreach (var activeObject in document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked))
@@ -86,7 +87,7 @@ namespace DrawingLink.UI.GH
             return new TemporaryResultObject();
         }
 
-        private void SetValuesInGrasshopper(InputData data, GHParams inputParams)
+        private void SetValuesInGrasshopper(GrasshopperData data, GHParams inputParams)
         {
             foreach (ActiveObjectWrapper activeObjectWrapper in inputParams.AttributeParams)
             {
