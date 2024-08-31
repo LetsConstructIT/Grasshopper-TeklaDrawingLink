@@ -39,10 +39,10 @@ namespace DrawingLink.UI.GH
 
         public void Solve(GrasshopperData grasshopperData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
-            var status = OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData.ToQueues(), messages));
+            var status = OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData.ToInputData(), messages));
         }
 
-        private TemporaryResultObject SolveDocument(GH_Document document, DataQueues data, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private TemporaryResultObject SolveDocument(GH_Document document, InputData inputData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
             var allowedComponentTypes = new string[]
             {
@@ -55,7 +55,8 @@ namespace DrawingLink.UI.GH
             };
 
             var inputParams = GetInputParams(document);
-            SetValuesInGrasshopper(data, inputParams);
+
+            SetValuesInGrasshopper(inputData, inputParams);
 
             foreach (var activeObject in document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked))
             {
@@ -85,28 +86,29 @@ namespace DrawingLink.UI.GH
             return new TemporaryResultObject();
         }
 
-        private void SetValuesInGrasshopper(DataQueues data, GHParams inputParams)
+        private void SetValuesInGrasshopper(InputData data, GHParams inputParams)
         {
             foreach (ActiveObjectWrapper activeObjectWrapper in inputParams.AttributeParams)
             {
+                var fieldName = activeObjectWrapper.FieldName;
                 var ighActiveObject = activeObjectWrapper.ActiveObject;
                 if (ighActiveObject is GH_PersistentParam<GH_String> stringParam)
                 {
-                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    if (data.TryGetStringValue(fieldName, out string stringValue))
                     {
                         SetValue(stringParam, stringValue);
                     }
                 }
                 else if (ighActiveObject is GH_PersistentParam<GH_Integer> integerParam)
                 {
-                    if (data.Integers.TryDequeue(out int intValue) && intValue != int.MinValue)
+                    if (data.TryGetIntValue(fieldName, out int intValue))
                     {
                         SetValue(integerParam, intValue);
                     }
                 }
                 else if (ighActiveObject is GH_PersistentParam<GH_Number> numberParam)
                 {
-                    if (data.Doubles.TryDequeue(out double dblValue) && dblValue != double.MinValue && dblValue != int.MinValue)
+                    if (data.TryGetDoubleValue(fieldName, out double dblValue))
                     {
                         SetValue(numberParam, dblValue);
                     }
@@ -116,7 +118,7 @@ namespace DrawingLink.UI.GH
                     if (IsInfoPanel(panel))
                         continue;
 
-                    if (data.Strings.TryDequeue(out string panelText) && !string.IsNullOrWhiteSpace(panelText))
+                    if (data.TryGetStringValue(fieldName, out string panelText))
                     {
                         panelText = panelText.Replace("\\n", "\r\n");
                         panel.RemoveAllSources();
@@ -141,7 +143,7 @@ namespace DrawingLink.UI.GH
                 }
                 else if (ighActiveObject is GH_ValueList valueList)
                 {
-                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    if (data.TryGetStringValue(fieldName, out string stringValue))
                     {
                         int num = Math.Max(valueList.ListItems.FindIndex((GH_ValueListItem i) => i.Name == stringValue), 0);
                         valueList.RemoveAllSources();
@@ -151,7 +153,7 @@ namespace DrawingLink.UI.GH
                 }
                 else if (ighActiveObject is GH_BooleanToggle booleanToggle)
                 {
-                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    if (data.TryGetStringValue(fieldName, out string stringValue))
                     {
                         booleanToggle.RemoveAllSources();
                         booleanToggle.Value = (stringValue.Trim().ToUpperInvariant() == "TRUE");
@@ -160,7 +162,7 @@ namespace DrawingLink.UI.GH
                 }
                 else if (ighActiveObject is GH_ButtonObject buttonObject)
                 {
-                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    if (data.TryGetStringValue(fieldName, out string stringValue))
                     {
                         buttonObject.RemoveAllSources();
                         buttonObject.ButtonDown = (stringValue.Trim().ToUpperInvariant() == buttonObject.ExpressionPressed.Trim().ToUpperInvariant());
@@ -169,7 +171,7 @@ namespace DrawingLink.UI.GH
                 }
                 else if (ighActiveObject is GH_NumberSlider gh_NumberSlider)
                 {
-                    if (data.Doubles.TryDequeue(out double dblValue) && dblValue != double.MinValue && dblValue != int.MinValue)
+                    if (data.TryGetDoubleValue(fieldName, out double dblValue))
                     {
                         gh_NumberSlider.RemoveAllSources();
                         gh_NumberSlider.TrySetSliderValue((decimal)dblValue);
@@ -178,7 +180,7 @@ namespace DrawingLink.UI.GH
                 }
                 else if (ighActiveObject.GetType().BaseType.Name == "CatalogBaseComponent")
                 {
-                    if (data.Strings.TryDequeue(out string stringValue) && !string.IsNullOrWhiteSpace(stringValue))
+                    if (data.TryGetStringValue(fieldName, out string stringValue))
                     {
                         var method = ighActiveObject.GetType().GetMethod("SetValue", BindingFlags.Instance | BindingFlags.Public);
                         var parameters = new string[] { stringValue };

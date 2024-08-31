@@ -1,11 +1,8 @@
-﻿using DrawingLink.UI.GH;
-using DrawingLink.UI.WPF;
-using RenderData;
+﻿using DrawingLink.UI.WPF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Input;
 using Tekla.Structures.Dialog;
 using TD = Tekla.Structures.Datatype;
 
@@ -4272,23 +4269,87 @@ namespace DrawingLink.UI
             _integers = integers ?? throw new ArgumentNullException(nameof(integers));
         }
 
-        public DataQueues ToQueues()
+        public InputData ToInputData()
         {
-            return new DataQueues(new Queue<string>(_strings), new Queue<double>(_doubles), new Queue<int>(_integers));
+            return new InputData(_strings, _doubles, _integers);
         }
     }
 
-    public class DataQueues
+    public class InputData
     {
-        public Queue<string> Strings { get; }
-        public Queue<double> Doubles { get; }
-        public Queue<int> Integers { get; }
+        private readonly Dictionary<string, string> _stringPerFieldName;
+        private readonly Dictionary<string, int> _intPerFieldName;
+        private readonly Dictionary<string, double> _doublePerFieldName;
 
-        public DataQueues(Queue<string> strings, Queue<double> doubles, Queue<int> integers)
+        public InputData(IEnumerable<string> strings, IEnumerable<double> doubles, IEnumerable<int> integers)
         {
-            Strings = strings ?? throw new ArgumentNullException(nameof(strings));
-            Doubles = doubles ?? throw new ArgumentNullException(nameof(doubles));
-            Integers = integers ?? throw new ArgumentNullException(nameof(integers));
+            _stringPerFieldName = SetupDictionary(strings);
+            _intPerFieldName = SetupDictionary(integers);
+            _doublePerFieldName = SetupDictionary(doubles);
+        }
+
+        private Dictionary<string, T> SetupDictionary<T>(IEnumerable<T> values)
+        {
+            var counter = 0;
+            var type = GetTypeName(typeof(T));
+
+            var result = new Dictionary<string, T>();
+            foreach (var item in values)
+            {
+                result[$"{type}_{counter}"] = item;
+                counter++;
+            }
+
+            return result;
+        }
+
+        private string GetTypeName(Type type)
+        {
+            if (type == typeof(int))
+                return "int";
+            else if (type == typeof(double))
+                return "double";
+            else
+                return "string";
+        }
+
+        public bool TryGetStringValue(string fieldName, out string result)
+        {
+            result = string.Empty;
+            if (!_stringPerFieldName.ContainsKey(fieldName))
+                return false;
+
+            result = _stringPerFieldName[fieldName];
+            if (string.IsNullOrWhiteSpace(result))
+                return false;
+
+            return true;
+        }
+
+        public bool TryGetIntValue(string fieldName, out int result)
+        {
+            result = int.MinValue;
+            if (!_intPerFieldName.ContainsKey(fieldName))
+                return false;
+
+            result = _intPerFieldName[fieldName];
+            if (result == int.MinValue)
+                return false;
+
+            return true;
+        }
+
+        public bool TryGetDoubleValue(string fieldName, out double result)
+        {
+            result = double.MinValue;
+            if (!_doublePerFieldName.ContainsKey(fieldName))
+                return false;
+
+            result = _doublePerFieldName[fieldName];
+            if (result == double.MinValue)
+                return false;
+
+            return true;
         }
     }
 }
