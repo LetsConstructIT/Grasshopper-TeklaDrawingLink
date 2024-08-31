@@ -9,14 +9,12 @@ namespace DrawingLink.UI.GH
 {
     public class GHParams
     {
-        public IReadOnlyList<IGH_ActiveObject> ModelParams { get; }
-        public IReadOnlyList<IGH_ActiveObject> DrawingParams { get; }
+        public TeklaParams TeklaParams { get; }
         public IReadOnlyList<ActiveObjectWrapper> AttributeParams { get; }
 
-        public GHParams(List<IGH_ActiveObject> modelParams, List<IGH_ActiveObject> drawingParams, List<ActiveObjectWrapper> attributeParams)
+        public GHParams(TeklaParams teklaParams, List<ActiveObjectWrapper> attributeParams)
         {
-            ModelParams = modelParams ?? throw new ArgumentNullException(nameof(modelParams));
-            DrawingParams = drawingParams ?? throw new ArgumentNullException(nameof(drawingParams));
+            TeklaParams = teklaParams ?? throw new ArgumentNullException(nameof(teklaParams));
             AttributeParams = attributeParams ?? throw new ArgumentNullException(nameof(attributeParams));
 
             ApplyFieldNames();
@@ -72,5 +70,52 @@ namespace DrawingLink.UI.GH
             Connectivity = connectivity ?? throw new ArgumentNullException(nameof(connectivity));
             FieldName = string.Empty;
         }
+    }
+
+    public abstract class TeklaParamBase
+    {
+        public IGH_ActiveObject ActiveObject { get; }
+        public bool IsMultiple { get; }
+
+        protected TeklaParamBase(IGH_ActiveObject activeObject, bool isMultiple)
+        {
+            ActiveObject = activeObject ?? throw new ArgumentNullException(nameof(activeObject));
+            IsMultiple = isMultiple;
+        }
+    }
+
+    public class TeklaModelParam : TeklaParamBase
+    {
+        public ModelParamType ParamType { get; }
+
+        public TeklaModelParam(IGH_ActiveObject activeObject, ModelParamType paramType, bool isMultiple) : base(activeObject, isMultiple)
+        {
+            ParamType = paramType;
+        }
+    }
+
+    public class TeklaDrawingParam : TeklaParamBase
+    {
+        public DrawingParamType ParamType { get; }
+
+        public TeklaDrawingParam(IGH_ActiveObject activeObject, DrawingParamType paramType, bool isMany) : base(activeObject, isMany)
+        {
+            ParamType = paramType;
+        }
+    }
+
+    public enum ModelParamType
+    {
+        Point,
+        Line,
+        Polyline,
+        Face,
+        Object
+    }
+
+    public enum DrawingParamType
+    {
+        Point,
+        Object
     }
 }

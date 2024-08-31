@@ -11,6 +11,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Xml.Linq;
+using Tekla.Structures.Model;
 
 namespace DrawingLink.UI.GH
 {
@@ -35,6 +37,17 @@ namespace DrawingLink.UI.GH
             }
 
             return _instance;
+        }
+
+        public TeklaParams ReadTeklaParams(string grasshopperPath)
+        {
+            return OperateOnGrasshopperScript(grasshopperPath, doc => GetModelAndDrawingParams(doc));
+        }
+
+        private TeklaParams GetModelAndDrawingParams(GH_Document document)
+        {
+            var inputParams = GetInputParams(document);
+            return inputParams.TeklaParams;
         }
 
         public void Solve(GrasshopperData grasshopperData, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
@@ -297,19 +310,21 @@ namespace DrawingLink.UI.GH
 
             var withoutTabsAndGroups = !groups.Tabs.Any() && !groups.Groups.Any();
 
-            var modelParams = new List<IGH_ActiveObject>();
-            var drawingParams = new List<IGH_ActiveObject>();
+            var modelParams = new List<TeklaModelParam>();
+            var drawingParams = new List<TeklaDrawingParam>();
             var attributeParams = new List<ActiveObjectWrapper>();
             foreach (var activeObject in activeObjects)
             {
-                if (activeObject is GH_PersistentParam<GH_Goo<Tekla.Structures.Model.ModelObject>>)
+                var isMultiple = CheckIfMultiple(activeObject);
+                if (activeObject is GH_PersistentParam<GH_Goo<Tekla.Structures.Model.ModelObject>> ghModelParam)
                 {
-                    modelParams.Add(activeObject);
+                    modelParams.Add(TransformToModelParam(ghModelParam, isMultiple));
                     continue;
                 }
-                else if (activeObject is GH_PersistentParam<GH_Goo<Tekla.Structures.Drawing.DatabaseObject>>)
+                else if (activeObject is GH_PersistentParam<GH_Goo<Tekla.Structures.Drawing.DatabaseObject>> ghDrawingParam ||
+                    activeObject.GetType().Name == "TeklaDrawingPointParam")
                 {
-                    drawingParams.Add(activeObject);
+                    drawingParams.Add(TransformToDrawingParam(activeObject, isMultiple));
                     continue;
                 }
 
@@ -328,7 +343,38 @@ namespace DrawingLink.UI.GH
                 }
             }
 
-            return new GHParams(modelParams, drawingParams, attributeParams);
+            return new GHParams(new TeklaParams(modelParams, drawingParams), attributeParams);
+        }
+
+        private bool CheckIfMultiple(IGH_ActiveObject activeObject)
+        {
+            var nickName = activeObject.NickName.Trim().ToUpperInvariant();
+            return nickName.StartsWith("MULTIPLE") || nickName.StartsWith("M:");
+        }
+
+        private TeklaModelParam TransformToModelParam(GH_PersistentParam<GH_Goo<ModelObject>> ghModelParam, bool isMultiple)
+        {
+            var paramName = ghModelParam.GetType().Name;
+
+            return paramName switch
+            {
+                "TeklaPointParam" => new TeklaModelParam(ghModelParam, ModelParamType.Point, isMultiple),
+                "TeklaLineParam" => new TeklaModelParam(ghModelParam, ModelParamType.Line, isMultiple),
+                "TeklaPolylineParam" => new TeklaModelParam(ghModelParam, ModelParamType.Polyline, isMultiple),
+                "TeklaFaceParam" => new TeklaModelParam(ghModelParam, ModelParamType.Face, isMultiple),
+                _ => new TeklaModelParam(ghModelParam, ModelParamType.Object, isMultiple),
+            };
+        }
+
+        private TeklaDrawingParam TransformToDrawingParam(IGH_ActiveObject ghDrawingParam, bool isMultiple)
+        {
+            var paramName = ghDrawingParam.GetType().Name;
+
+            return paramName switch
+            {
+                "TeklaDrawingPointParam" => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Point, isMultiple),
+                _ => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Object, isMultiple),
+            };
         }
 
         private List<IGH_ActiveObject> GetValidParameters(GH_Document doc)
