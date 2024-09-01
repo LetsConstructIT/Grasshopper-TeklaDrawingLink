@@ -1,4 +1,5 @@
-﻿using GH_IO.Serialization;
+﻿using DrawingLink.UI.Model;
+using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
@@ -39,12 +40,12 @@ namespace DrawingLink.UI.GH
             return _instance;
         }
 
-        public Dictionary<GH_RuntimeMessageLevel, List<string>> Solve(GrasshopperData grasshopperData)
+        public Dictionary<GH_RuntimeMessageLevel, List<string>> Solve(UserFormData grasshopperData)
         {
             return OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData));
         }
 
-        private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, GrasshopperData inputData)
+        private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData inputData)
         {
             var messages = InitializeMessageDictionary();
 
@@ -91,7 +92,7 @@ namespace DrawingLink.UI.GH
             return messages;
         }
 
-        private void SetValuesInGrasshopper(GrasshopperData data, GHParams inputParams)
+        private void SetValuesInGrasshopper(UserFormData data, GHParams inputParams)
         {
             foreach (ActiveObjectWrapper activeObjectWrapper in inputParams.AttributeParams)
             {
