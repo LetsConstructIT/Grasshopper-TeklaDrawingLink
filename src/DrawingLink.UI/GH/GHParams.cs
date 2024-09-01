@@ -18,6 +18,7 @@ namespace DrawingLink.UI.GH
             AttributeParams = attributeParams ?? throw new ArgumentNullException(nameof(attributeParams));
 
             ApplyFieldNames();
+            ApplyTeklaFieldNames();
         }
 
         private void ApplyFieldNames()
@@ -54,6 +55,16 @@ namespace DrawingLink.UI.GH
             bool IsCatalogBaseComponent(IGH_ActiveObject activeObject)
                 => activeObject.GetType().BaseType.Name == "CatalogBaseComponent";
         }
+
+        private void ApplyTeklaFieldNames()
+        {
+            var counter = 0;
+            foreach (var param in TeklaParams.ModelParams)
+                param.FieldName = $"tekla_{counter++}";
+
+            foreach (var param in TeklaParams.DrawingParams)
+                param.FieldName = $"tekla_{counter++}";
+        }
     }
 
     public class ActiveObjectWrapper
@@ -75,6 +86,7 @@ namespace DrawingLink.UI.GH
     public abstract class TeklaParamBase
     {
         public IGH_ActiveObject ActiveObject { get; }
+        public string FieldName { get; set; }
         public bool IsMultiple { get; }
         public string Prompt { get; }
 
@@ -83,6 +95,7 @@ namespace DrawingLink.UI.GH
             ActiveObject = activeObject ?? throw new ArgumentNullException(nameof(activeObject));
             IsMultiple = isMultiple;
             Prompt = prompt ?? throw new ArgumentNullException(nameof(prompt));
+            FieldName = string.Empty;
         }
     }
 
@@ -116,7 +129,7 @@ namespace DrawingLink.UI.GH
         private List<Tekla.Structures.Drawing.DatabaseObject>? _drawingObjects;
         private List<Tekla.Structures.Geometry3d.Point>? _points;
 
-        public TeklaDrawingParam(IGH_ActiveObject activeObject, DrawingParamType paramType, bool isMany, string prompt) : base(activeObject, isMany, prompt)
+        public TeklaDrawingParam(IGH_ActiveObject activeObject, DrawingParamType paramType, bool isMultiple, string prompt) : base(activeObject, isMultiple, prompt)
         {
             ParamType = paramType;
         }
