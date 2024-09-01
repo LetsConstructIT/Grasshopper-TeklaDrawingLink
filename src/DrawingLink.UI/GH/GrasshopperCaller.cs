@@ -46,7 +46,7 @@ namespace DrawingLink.UI.GH
 
         private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, GrasshopperData inputData)
         {
-            var messages = InitialieMessageDictionary();
+            var messages = InitializeMessageDictionary();
 
             var allowedComponentTypes = new string[]
             {
