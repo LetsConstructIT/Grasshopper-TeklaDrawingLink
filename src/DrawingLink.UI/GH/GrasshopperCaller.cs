@@ -45,7 +45,7 @@ namespace DrawingLink.UI.GH
             return OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData, teklaInput));
         }
 
-        private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData inputData, Dictionary<string, TeklaObjects> teklaInput)
+        private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData userFormData, Dictionary<string, TeklaObjects> teklaInput)
         {
             var messages = InitializeMessageDictionary();
 
@@ -59,8 +59,8 @@ namespace DrawingLink.UI.GH
                 "TeklaComponentBase"
             };
 
-            var inputParams = GetInputParams(document);
-            SetValuesInGrasshopper(inputParams, inputData, teklaInput);
+            var docParams = GetInputParams(document);
+            SetValuesInGrasshopper(docParams, userFormData, teklaInput);
 
             foreach (var activeObject in document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked))
             {
