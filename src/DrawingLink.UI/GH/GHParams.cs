@@ -4,6 +4,7 @@ using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
 using System;
 using System.Collections.Generic;
+using TSG = Tekla.Structures.Geometry3d;
 
 namespace DrawingLink.UI.GH
 {
@@ -90,7 +91,7 @@ namespace DrawingLink.UI.GH
         public bool IsMultiple { get; }
         public string Prompt { get; }
 
-        public TeklaObjects TeklaObjets { get; }
+        public TeklaObjects TeklaObjects { get; protected set; }
 
         protected TeklaParamBase(IGH_ActiveObject activeObject, bool isMultiple, string prompt)
         {
@@ -98,8 +99,6 @@ namespace DrawingLink.UI.GH
             IsMultiple = isMultiple;
             Prompt = prompt ?? throw new ArgumentNullException(nameof(prompt));
             FieldName = string.Empty;
-
-            TeklaObjets = new TeklaObjects();
         }
     }
 
@@ -110,16 +109,19 @@ namespace DrawingLink.UI.GH
         public TeklaModelParam(IGH_ActiveObject activeObject, ModelParamType paramType, bool isMultiple, string prompt) : base(activeObject, isMultiple, prompt)
         {
             ParamType = paramType;
+
+            TeklaObjects = new TeklaObjects(isDrawing: false);
+            TeklaObjects.SetModelType(ParamType);
         }
 
         public void Set(List<Tekla.Structures.Model.ModelObject> modelObjects)
         {
-            TeklaObjets.Set(modelObjects);
+            TeklaObjects.Set(modelObjects);
         }
 
         public void Set(List<Tekla.Structures.Geometry3d.Point> points)
         {
-            TeklaObjets.Set(points);
+            TeklaObjects.Set(points);
         }
     }
 
@@ -128,6 +130,44 @@ namespace DrawingLink.UI.GH
         private List<Tekla.Structures.Model.ModelObject>? _modelObjects;
         private List<Tekla.Structures.Drawing.DatabaseObject>? _drawingObjects;
         private List<Tekla.Structures.Geometry3d.Point>? _points;
+
+        private readonly bool _isDrawing;
+        private DrawingParamType _drawingType;
+        private ModelParamType _modelType;
+
+        public TeklaObjects(bool isDrawing)
+        {
+            _isDrawing = isDrawing;
+        }
+
+        public void SetDrawingType(DrawingParamType drawingParamType)
+        {
+            _drawingType = drawingParamType;
+        }
+
+        public void SetModelType(ModelParamType modelParamType)
+        {
+            _modelType = modelParamType;
+        }
+
+        public object[] GetCorrectObject()
+        {
+            if (_isDrawing)
+            {
+                return _drawingType == DrawingParamType.Point ? _points.ToArray() : _drawingObjects.ToArray();
+            }
+            else
+            {
+                return _modelType switch
+                {
+                    ModelParamType.Point => _points.ToArray(),
+                    ModelParamType.Line => new object[] { new TSG.LineSegment(_points[0], _points[1]) },
+                    ModelParamType.Polyline => new object[] { new TSG.PolyLine(_points) },
+                    ModelParamType.Face => new object[] { new TSG.PolyLine(_points) },
+                    _ => _modelObjects.ToArray(),
+                };
+            }
+        }
 
         internal void Set(List<Tekla.Structures.Model.ModelObject> modelObjects)
         {
@@ -155,16 +195,19 @@ namespace DrawingLink.UI.GH
         public TeklaDrawingParam(IGH_ActiveObject activeObject, DrawingParamType paramType, bool isMultiple, string prompt) : base(activeObject, isMultiple, prompt)
         {
             ParamType = paramType;
+
+            TeklaObjects = new TeklaObjects(isDrawing: true);
+            TeklaObjects.SetDrawingType(ParamType);
         }
 
         public void Set(List<Tekla.Structures.Drawing.DatabaseObject> drawingObjects)
         {
-            TeklaObjets.Set(drawingObjects);
+            TeklaObjects.Set(drawingObjects);
         }
 
         public void Set(List<Tekla.Structures.Geometry3d.Point> points)
         {
-            TeklaObjets.Set(points);
+            TeklaObjects.Set(points);
         }
     }
 

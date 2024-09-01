@@ -25,12 +25,12 @@ namespace DrawingLink.UI.TeklaInteraction
             var result = new Dictionary<string, TeklaObjects>();
             foreach (var param in teklaParams.ModelParams)
             {
-                result[param.FieldName] = param.TeklaObjets;
+                result[param.FieldName] = param.TeklaObjects;
             }
 
             foreach (var param in teklaParams.DrawingParams)
             {
-                result[param.FieldName] = param.TeklaObjets;
+                result[param.FieldName] = param.TeklaObjects;
             }
 
             return result;

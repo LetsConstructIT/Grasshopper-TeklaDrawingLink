@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Xml.Linq;
 using Tekla.Structures.Model;
 
 namespace DrawingLink.UI.GH
@@ -92,6 +91,8 @@ namespace DrawingLink.UI.GH
 
         private void SetValuesInGrasshopper(GHParams inputParams, UserFormData data, Dictionary<string, TeklaObjects> teklaInput)
         {
+            SetTeklaInputs(inputParams.TeklaParams, teklaInput);
+
             foreach (ActiveObjectWrapper activeObjectWrapper in inputParams.AttributeParams)
             {
                 var fieldName = activeObjectWrapper.FieldName;
@@ -192,6 +193,27 @@ namespace DrawingLink.UI.GH
                         ighActiveObject.ExpireSolution(true);
                     }
                 }
+            }
+        }
+
+        private void SetTeklaInputs(TeklaParams teklaParams, Dictionary<string, TeklaObjects> teklaInputs)
+        {
+            foreach (var teklaModelParam in teklaParams.ModelParams)
+            {
+                var ighActiveObject = teklaModelParam.ActiveObject;
+                var modelPersistentParam = ighActiveObject as GH_PersistentParam<GH_Goo<ModelObject>>;
+                if (!teklaInputs.ContainsKey(teklaModelParam.FieldName) || modelPersistentParam == null)
+                {
+                    //Raise warning flag about missing input
+                    continue;
+                }
+
+                modelPersistentParam.PersistentData.Clear();
+                var teklaInput = teklaInputs[teklaModelParam.FieldName];
+
+                var objectsToSet = teklaInput.GetCorrectObject();
+                modelPersistentParam.SetPersistentData(objectsToSet);
+                modelPersistentParam.ExpireSolution(true);
             }
         }
 
