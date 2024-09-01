@@ -60,9 +60,7 @@ namespace DrawingLink.UI.GH
             };
 
             var inputParams = GetInputParams(document);
-            //var inputModel = GetModelInput(inputParams.ModelParams);
-            //var inputDrawing = GetDrawingInput(inputParams.DrawingParams);
-            SetValuesInGrasshopper(inputData, inputParams);
+            SetValuesInGrasshopper(inputParams, inputData, teklaInput);
 
             foreach (var activeObject in document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked))
             {
@@ -92,7 +90,7 @@ namespace DrawingLink.UI.GH
             return messages;
         }
 
-        private void SetValuesInGrasshopper(UserFormData data, GHParams inputParams)
+        private void SetValuesInGrasshopper(GHParams inputParams, UserFormData data, Dictionary<string, TeklaObjects> teklaInput)
         {
             foreach (ActiveObjectWrapper activeObjectWrapper in inputParams.AttributeParams)
             {
