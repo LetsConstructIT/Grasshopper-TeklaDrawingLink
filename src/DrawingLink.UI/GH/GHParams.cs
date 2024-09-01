@@ -90,21 +90,22 @@ namespace DrawingLink.UI.GH
         public bool IsMultiple { get; }
         public string Prompt { get; }
 
+        public TeklaObjects TeklaObjets { get; }
+
         protected TeklaParamBase(IGH_ActiveObject activeObject, bool isMultiple, string prompt)
         {
             ActiveObject = activeObject ?? throw new ArgumentNullException(nameof(activeObject));
             IsMultiple = isMultiple;
             Prompt = prompt ?? throw new ArgumentNullException(nameof(prompt));
             FieldName = string.Empty;
+
+            TeklaObjets = new TeklaObjects();
         }
     }
 
     public class TeklaModelParam : TeklaParamBase
     {
         public ModelParamType ParamType { get; }
-
-        private List<Tekla.Structures.Model.ModelObject>? _modelObjects;
-        private List<Tekla.Structures.Geometry3d.Point>? _points;
 
         public TeklaModelParam(IGH_ActiveObject activeObject, ModelParamType paramType, bool isMultiple, string prompt) : base(activeObject, isMultiple, prompt)
         {
@@ -113,12 +114,34 @@ namespace DrawingLink.UI.GH
 
         public void Set(List<Tekla.Structures.Model.ModelObject> modelObjects)
         {
+            TeklaObjets.Set(modelObjects);
+        }
+
+        public void Set(List<Tekla.Structures.Geometry3d.Point> points)
+        {
+            TeklaObjets.Set(points);
+        }
+    }
+
+    public class TeklaObjects
+    {
+        private List<Tekla.Structures.Model.ModelObject>? _modelObjects;
+        private List<Tekla.Structures.Drawing.DatabaseObject>? _drawingObjects;
+        private List<Tekla.Structures.Geometry3d.Point>? _points;
+
+        internal void Set(List<Tekla.Structures.Model.ModelObject> modelObjects)
+        {
             _modelObjects = modelObjects;
         }
 
         public void Set(List<Tekla.Structures.Geometry3d.Point> points)
         {
             _points = points;
+        }
+
+        public void Set(List<Tekla.Structures.Drawing.DatabaseObject> drawingObjects)
+        {
+            _drawingObjects = drawingObjects;
         }
     }
 
@@ -136,12 +159,12 @@ namespace DrawingLink.UI.GH
 
         public void Set(List<Tekla.Structures.Drawing.DatabaseObject> drawingObjects)
         {
-            _drawingObjects = drawingObjects;
+            TeklaObjets.Set(drawingObjects);
         }
 
         public void Set(List<Tekla.Structures.Geometry3d.Point> points)
         {
-            _points = points;
+            TeklaObjets.Set(points);
         }
     }
 

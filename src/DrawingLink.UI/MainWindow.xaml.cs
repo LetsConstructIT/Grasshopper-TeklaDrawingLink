@@ -47,13 +47,13 @@ namespace DrawingLink.UI
 
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
         {
-            var grasshopperData = _viewModel.ToDataModel();
+            var userFormData = _viewModel.ToDataModel();
 
             var instance = GrasshopperCaller.GetInstance();
-            var teklaParams = instance.GetInputParams(grasshopperData.DefinitionPath).TeklaParams;
+            var teklaParams = instance.GetInputParams(userFormData.DefinitionPath).TeklaParams;
             var teklaInput = new UserInputPicker().PickInput(teklaParams);
 
-            var messages = instance.Solve(grasshopperData);
+            var messages = instance.Solve(userFormData, teklaInput);
 
             var remarks = messages[GH_RuntimeMessageLevel.Remark];
 

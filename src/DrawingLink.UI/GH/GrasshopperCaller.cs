@@ -40,12 +40,12 @@ namespace DrawingLink.UI.GH
             return _instance;
         }
 
-        public Dictionary<GH_RuntimeMessageLevel, List<string>> Solve(UserFormData grasshopperData)
+        public Dictionary<GH_RuntimeMessageLevel, List<string>> Solve(UserFormData grasshopperData, Dictionary<string, TeklaObjects> teklaInput)
         {
-            return OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData));
+            return OperateOnGrasshopperScript(grasshopperData.DefinitionPath, doc => SolveDocument(doc, grasshopperData, teklaInput));
         }
 
-        private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData inputData)
+        private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData inputData, Dictionary<string, TeklaObjects> teklaInput)
         {
             var messages = InitializeMessageDictionary();
 

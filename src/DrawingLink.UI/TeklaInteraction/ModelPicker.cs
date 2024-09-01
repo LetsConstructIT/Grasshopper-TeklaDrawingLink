@@ -13,7 +13,30 @@ namespace DrawingLink.UI.TeklaInteraction
         private readonly ModelPicker _modelPicker = new();
         private readonly DrawingPicker _drawingPicker = new();
 
-        public string PickInput(TeklaParams teklaParams)
+        public Dictionary<string, TeklaObjects> PickInput(TeklaParams teklaParams)
+        {
+            CollectTeklaInputs(teklaParams);
+
+            return TransformToDictionary(teklaParams);
+        }
+
+        private Dictionary<string, TeklaObjects> TransformToDictionary(TeklaParams teklaParams)
+        {
+            var result = new Dictionary<string, TeklaObjects>();
+            foreach (var param in teklaParams.ModelParams)
+            {
+                result[param.FieldName] = param.TeklaObjets;
+            }
+
+            foreach (var param in teklaParams.DrawingParams)
+            {
+                result[param.FieldName] = param.TeklaObjets;
+            }
+
+            return result;
+        }
+
+        private void CollectTeklaInputs(TeklaParams teklaParams)
         {
             // check in which Tekla area we are
             foreach (var param in teklaParams.ModelParams)
@@ -38,8 +61,6 @@ namespace DrawingLink.UI.TeklaInteraction
                     param.Set(_drawingPicker.PickPoint(param.IsMultiple, param.Prompt));
                 }
             }
-
-            return string.Empty;
         }
     }
 
