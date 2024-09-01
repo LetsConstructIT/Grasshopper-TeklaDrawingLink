@@ -61,7 +61,9 @@ namespace DrawingLink.UI.GH
             var docParams = GetInputParams(document);
             SetValuesInGrasshopper(docParams, userFormData, teklaInput);
 
-            foreach (var activeObject in document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked))
+            var activeObjects = document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked).ToList();
+            DisableTeklaLiveness(activeObjects);
+            foreach (var activeObject in activeObjects)
             {
                 if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => allowedComponentTypes.Contains(t.Name)))
                 {
@@ -193,6 +195,19 @@ namespace DrawingLink.UI.GH
                         ighActiveObject.ExpireSolution(true);
                     }
                 }
+            }
+
+        }
+
+        private void DisableTeklaLiveness(IEnumerable<IGH_ActiveObject> activeObjects)
+        {
+            var guid = Guid.NewGuid().ToString();
+
+            foreach (IGH_DocumentObject igh_DocumentObject in activeObjects)
+            {
+                var property = igh_DocumentObject.GetType().GetProperty("TSPluginGuid");
+                if (property != null)
+                    property.SetValue(igh_DocumentObject, guid);
             }
         }
 

@@ -59,6 +59,8 @@ namespace DrawingLink.UI
 
             _messageBoxWindow.ClearMessages();
             _messageBoxWindow.ShowMessages(GetTitle(_viewModel.DefinitionPath), remarks);
+
+            new Tekla.Structures.Model.Model().CommitChanges();
         }
 
         private string GetTitle(string definitionPath)
