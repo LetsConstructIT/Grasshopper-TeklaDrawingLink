@@ -65,7 +65,7 @@ namespace DrawingLink.UI
 
         private string GetTitle(string definitionPath)
         {
-            return File.Exists(definitionPath) ? ("Messages from the " + Path.GetFileNameWithoutExtension(definitionPath) + " definition") : "[No definition loaded]";
+            return File.Exists(definitionPath) ? ("[GH Drawing] Messages from the " + Path.GetFileNameWithoutExtension(definitionPath) + " definition") : "[GH Drawing] [No definition loaded]";
         }
 
         private void WpfOkCreateCancel_ApplyClicked(object sender, EventArgs e)
