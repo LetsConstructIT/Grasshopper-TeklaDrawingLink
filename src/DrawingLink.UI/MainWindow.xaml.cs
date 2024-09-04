@@ -103,5 +103,11 @@ namespace DrawingLink.UI
         {
             parameterViewer.ShowControls(tbDefinitionPath.Text, true);
         }
+
+        private void OpenGrasshopperFile_Click(object sender, RoutedEventArgs e)
+        {
+            var instance = GrasshopperCaller.GetInstance();
+            instance.OpenGrasshopperDefinition(tbDefinitionPath.Text);
+        }
     }
 }

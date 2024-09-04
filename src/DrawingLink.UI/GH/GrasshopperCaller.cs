@@ -3,6 +3,7 @@ using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
+using Grasshopper.Plugin;
 using Rhino;
 using Rhino.Runtime.InProcess;
 using System;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 using Tekla.Structures.Model;
 
 namespace DrawingLink.UI.GH
@@ -20,6 +22,8 @@ namespace DrawingLink.UI.GH
     {
         private static GrasshopperCaller _instance;
         private static RhinoCore _rhinoCore;
+        private static GH_RhinoScriptInterface _grasshopperInstance;
+        private static readonly Guid _ghPluginGuid = new("b45a29b1-4343-4035-989e-044e8580d9cf");
 
         private const string STRING_SETTING_TOLERANCE = "RHINO TOLERANCE";
         private const string STRING_SETTING_ANGLE_TOLERANCE = "RHINO ANGLE TOLERANCE";
@@ -574,6 +578,23 @@ namespace DrawingLink.UI.GH
                 return text.Substring(2).Trim();
             else
                 return text;
+        }
+
+        internal void OpenGrasshopperDefinition(string definitionPath)
+        {
+            if (_grasshopperInstance == null || !_grasshopperInstance.IsEditorLoaded())
+                _grasshopperInstance = (GH_RhinoScriptInterface)RhinoApp.GetPlugInObject(_ghPluginGuid);
+
+            if (_grasshopperInstance == null)
+            {
+                System.Windows.Forms.MessageBox.Show("Rhino didn't return the Grasshopper plugin.", "Exception when launching Grasshopper");
+                return;
+            }
+
+            _grasshopperInstance.DisableBanner();
+            _grasshopperInstance.DisableSolver();
+            _grasshopperInstance.OpenDocument(definitionPath);
+            _grasshopperInstance.ShowEditor();
         }
     }
 }
