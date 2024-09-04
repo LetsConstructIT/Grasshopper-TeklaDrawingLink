@@ -11,9 +11,10 @@
         Title="Messages"
         Height="450"
         Width="800">
-  <ScrollViewer HorizontalScrollBarVisibility="Auto">
-    <TextBox x:Name="textBox" IsReadOnly="True" VerticalAlignment="Top">
+  <TextBox x:Name="textBox"
+           IsReadOnly="True"
+           VerticalAlignment="Top"
+           VerticalScrollBarVisibility="Auto">
 
-    </TextBox>
-  </ScrollViewer>
+  </TextBox>
 </Window>
