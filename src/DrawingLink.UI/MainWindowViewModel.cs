@@ -1424,1400 +1424,1400 @@ namespace DrawingLink.UI
 
         #region StructuresDialog_Int
 
-        private int _int_0 = 0;
+        private int _int_0 = int.MinValue;
         [StructuresDialog("int_0", typeof(TD.Integer))]
         public int int_0
         {
             get { return _int_0; }
             set { _int_0 = value; OnPropertyChanged(); }
         }
-        private int _int_1 = 0;
+        private int _int_1 = int.MinValue;
         [StructuresDialog("int_1", typeof(TD.Integer))]
         public int int_1
         {
             get { return _int_1; }
             set { _int_1 = value; OnPropertyChanged(); }
         }
-        private int _int_2 = 0;
+        private int _int_2 = int.MinValue;
         [StructuresDialog("int_2", typeof(TD.Integer))]
         public int int_2
         {
             get { return _int_2; }
             set { _int_2 = value; OnPropertyChanged(); }
         }
-        private int _int_3 = 0;
+        private int _int_3 = int.MinValue;
         [StructuresDialog("int_3", typeof(TD.Integer))]
         public int int_3
         {
             get { return _int_3; }
             set { _int_3 = value; OnPropertyChanged(); }
         }
-        private int _int_4 = 0;
+        private int _int_4 = int.MinValue;
         [StructuresDialog("int_4", typeof(TD.Integer))]
         public int int_4
         {
             get { return _int_4; }
             set { _int_4 = value; OnPropertyChanged(); }
         }
-        private int _int_5 = 0;
+        private int _int_5 = int.MinValue;
         [StructuresDialog("int_5", typeof(TD.Integer))]
         public int int_5
         {
             get { return _int_5; }
             set { _int_5 = value; OnPropertyChanged(); }
         }
-        private int _int_6 = 0;
+        private int _int_6 = int.MinValue;
         [StructuresDialog("int_6", typeof(TD.Integer))]
         public int int_6
         {
             get { return _int_6; }
             set { _int_6 = value; OnPropertyChanged(); }
         }
-        private int _int_7 = 0;
+        private int _int_7 = int.MinValue;
         [StructuresDialog("int_7", typeof(TD.Integer))]
         public int int_7
         {
             get { return _int_7; }
             set { _int_7 = value; OnPropertyChanged(); }
         }
-        private int _int_8 = 0;
+        private int _int_8 = int.MinValue;
         [StructuresDialog("int_8", typeof(TD.Integer))]
         public int int_8
         {
             get { return _int_8; }
             set { _int_8 = value; OnPropertyChanged(); }
         }
-        private int _int_9 = 0;
+        private int _int_9 = int.MinValue;
         [StructuresDialog("int_9", typeof(TD.Integer))]
         public int int_9
         {
             get { return _int_9; }
             set { _int_9 = value; OnPropertyChanged(); }
         }
-        private int _int_10 = 0;
+        private int _int_10 = int.MinValue;
         [StructuresDialog("int_10", typeof(TD.Integer))]
         public int int_10
         {
             get { return _int_10; }
             set { _int_10 = value; OnPropertyChanged(); }
         }
-        private int _int_11 = 0;
+        private int _int_11 = int.MinValue;
         [StructuresDialog("int_11", typeof(TD.Integer))]
         public int int_11
         {
             get { return _int_11; }
             set { _int_11 = value; OnPropertyChanged(); }
         }
-        private int _int_12 = 0;
+        private int _int_12 = int.MinValue;
         [StructuresDialog("int_12", typeof(TD.Integer))]
         public int int_12
         {
             get { return _int_12; }
             set { _int_12 = value; OnPropertyChanged(); }
         }
-        private int _int_13 = 0;
+        private int _int_13 = int.MinValue;
         [StructuresDialog("int_13", typeof(TD.Integer))]
         public int int_13
         {
             get { return _int_13; }
             set { _int_13 = value; OnPropertyChanged(); }
         }
-        private int _int_14 = 0;
+        private int _int_14 = int.MinValue;
         [StructuresDialog("int_14", typeof(TD.Integer))]
         public int int_14
         {
             get { return _int_14; }
             set { _int_14 = value; OnPropertyChanged(); }
         }
-        private int _int_15 = 0;
+        private int _int_15 = int.MinValue;
         [StructuresDialog("int_15", typeof(TD.Integer))]
         public int int_15
         {
             get { return _int_15; }
             set { _int_15 = value; OnPropertyChanged(); }
         }
-        private int _int_16 = 0;
+        private int _int_16 = int.MinValue;
         [StructuresDialog("int_16", typeof(TD.Integer))]
         public int int_16
         {
             get { return _int_16; }
             set { _int_16 = value; OnPropertyChanged(); }
         }
-        private int _int_17 = 0;
+        private int _int_17 = int.MinValue;
         [StructuresDialog("int_17", typeof(TD.Integer))]
         public int int_17
         {
             get { return _int_17; }
             set { _int_17 = value; OnPropertyChanged(); }
         }
-        private int _int_18 = 0;
+        private int _int_18 = int.MinValue;
         [StructuresDialog("int_18", typeof(TD.Integer))]
         public int int_18
         {
             get { return _int_18; }
             set { _int_18 = value; OnPropertyChanged(); }
         }
-        private int _int_19 = 0;
+        private int _int_19 = int.MinValue;
         [StructuresDialog("int_19", typeof(TD.Integer))]
         public int int_19
         {
             get { return _int_19; }
             set { _int_19 = value; OnPropertyChanged(); }
         }
-        private int _int_20 = 0;
+        private int _int_20 = int.MinValue;
         [StructuresDialog("int_20", typeof(TD.Integer))]
         public int int_20
         {
             get { return _int_20; }
             set { _int_20 = value; OnPropertyChanged(); }
         }
-        private int _int_21 = 0;
+        private int _int_21 = int.MinValue;
         [StructuresDialog("int_21", typeof(TD.Integer))]
         public int int_21
         {
             get { return _int_21; }
             set { _int_21 = value; OnPropertyChanged(); }
         }
-        private int _int_22 = 0;
+        private int _int_22 = int.MinValue;
         [StructuresDialog("int_22", typeof(TD.Integer))]
         public int int_22
         {
             get { return _int_22; }
             set { _int_22 = value; OnPropertyChanged(); }
         }
-        private int _int_23 = 0;
+        private int _int_23 = int.MinValue;
         [StructuresDialog("int_23", typeof(TD.Integer))]
         public int int_23
         {
             get { return _int_23; }
             set { _int_23 = value; OnPropertyChanged(); }
         }
-        private int _int_24 = 0;
+        private int _int_24 = int.MinValue;
         [StructuresDialog("int_24", typeof(TD.Integer))]
         public int int_24
         {
             get { return _int_24; }
             set { _int_24 = value; OnPropertyChanged(); }
         }
-        private int _int_25 = 0;
+        private int _int_25 = int.MinValue;
         [StructuresDialog("int_25", typeof(TD.Integer))]
         public int int_25
         {
             get { return _int_25; }
             set { _int_25 = value; OnPropertyChanged(); }
         }
-        private int _int_26 = 0;
+        private int _int_26 = int.MinValue;
         [StructuresDialog("int_26", typeof(TD.Integer))]
         public int int_26
         {
             get { return _int_26; }
             set { _int_26 = value; OnPropertyChanged(); }
         }
-        private int _int_27 = 0;
+        private int _int_27 = int.MinValue;
         [StructuresDialog("int_27", typeof(TD.Integer))]
         public int int_27
         {
             get { return _int_27; }
             set { _int_27 = value; OnPropertyChanged(); }
         }
-        private int _int_28 = 0;
+        private int _int_28 = int.MinValue;
         [StructuresDialog("int_28", typeof(TD.Integer))]
         public int int_28
         {
             get { return _int_28; }
             set { _int_28 = value; OnPropertyChanged(); }
         }
-        private int _int_29 = 0;
+        private int _int_29 = int.MinValue;
         [StructuresDialog("int_29", typeof(TD.Integer))]
         public int int_29
         {
             get { return _int_29; }
             set { _int_29 = value; OnPropertyChanged(); }
         }
-        private int _int_30 = 0;
+        private int _int_30 = int.MinValue;
         [StructuresDialog("int_30", typeof(TD.Integer))]
         public int int_30
         {
             get { return _int_30; }
             set { _int_30 = value; OnPropertyChanged(); }
         }
-        private int _int_31 = 0;
+        private int _int_31 = int.MinValue;
         [StructuresDialog("int_31", typeof(TD.Integer))]
         public int int_31
         {
             get { return _int_31; }
             set { _int_31 = value; OnPropertyChanged(); }
         }
-        private int _int_32 = 0;
+        private int _int_32 = int.MinValue;
         [StructuresDialog("int_32", typeof(TD.Integer))]
         public int int_32
         {
             get { return _int_32; }
             set { _int_32 = value; OnPropertyChanged(); }
         }
-        private int _int_33 = 0;
+        private int _int_33 = int.MinValue;
         [StructuresDialog("int_33", typeof(TD.Integer))]
         public int int_33
         {
             get { return _int_33; }
             set { _int_33 = value; OnPropertyChanged(); }
         }
-        private int _int_34 = 0;
+        private int _int_34 = int.MinValue;
         [StructuresDialog("int_34", typeof(TD.Integer))]
         public int int_34
         {
             get { return _int_34; }
             set { _int_34 = value; OnPropertyChanged(); }
         }
-        private int _int_35 = 0;
+        private int _int_35 = int.MinValue;
         [StructuresDialog("int_35", typeof(TD.Integer))]
         public int int_35
         {
             get { return _int_35; }
             set { _int_35 = value; OnPropertyChanged(); }
         }
-        private int _int_36 = 0;
+        private int _int_36 = int.MinValue;
         [StructuresDialog("int_36", typeof(TD.Integer))]
         public int int_36
         {
             get { return _int_36; }
             set { _int_36 = value; OnPropertyChanged(); }
         }
-        private int _int_37 = 0;
+        private int _int_37 = int.MinValue;
         [StructuresDialog("int_37", typeof(TD.Integer))]
         public int int_37
         {
             get { return _int_37; }
             set { _int_37 = value; OnPropertyChanged(); }
         }
-        private int _int_38 = 0;
+        private int _int_38 = int.MinValue;
         [StructuresDialog("int_38", typeof(TD.Integer))]
         public int int_38
         {
             get { return _int_38; }
             set { _int_38 = value; OnPropertyChanged(); }
         }
-        private int _int_39 = 0;
+        private int _int_39 = int.MinValue;
         [StructuresDialog("int_39", typeof(TD.Integer))]
         public int int_39
         {
             get { return _int_39; }
             set { _int_39 = value; OnPropertyChanged(); }
         }
-        private int _int_40 = 0;
+        private int _int_40 = int.MinValue;
         [StructuresDialog("int_40", typeof(TD.Integer))]
         public int int_40
         {
             get { return _int_40; }
             set { _int_40 = value; OnPropertyChanged(); }
         }
-        private int _int_41 = 0;
+        private int _int_41 = int.MinValue;
         [StructuresDialog("int_41", typeof(TD.Integer))]
         public int int_41
         {
             get { return _int_41; }
             set { _int_41 = value; OnPropertyChanged(); }
         }
-        private int _int_42 = 0;
+        private int _int_42 = int.MinValue;
         [StructuresDialog("int_42", typeof(TD.Integer))]
         public int int_42
         {
             get { return _int_42; }
             set { _int_42 = value; OnPropertyChanged(); }
         }
-        private int _int_43 = 0;
+        private int _int_43 = int.MinValue;
         [StructuresDialog("int_43", typeof(TD.Integer))]
         public int int_43
         {
             get { return _int_43; }
             set { _int_43 = value; OnPropertyChanged(); }
         }
-        private int _int_44 = 0;
+        private int _int_44 = int.MinValue;
         [StructuresDialog("int_44", typeof(TD.Integer))]
         public int int_44
         {
             get { return _int_44; }
             set { _int_44 = value; OnPropertyChanged(); }
         }
-        private int _int_45 = 0;
+        private int _int_45 = int.MinValue;
         [StructuresDialog("int_45", typeof(TD.Integer))]
         public int int_45
         {
             get { return _int_45; }
             set { _int_45 = value; OnPropertyChanged(); }
         }
-        private int _int_46 = 0;
+        private int _int_46 = int.MinValue;
         [StructuresDialog("int_46", typeof(TD.Integer))]
         public int int_46
         {
             get { return _int_46; }
             set { _int_46 = value; OnPropertyChanged(); }
         }
-        private int _int_47 = 0;
+        private int _int_47 = int.MinValue;
         [StructuresDialog("int_47", typeof(TD.Integer))]
         public int int_47
         {
             get { return _int_47; }
             set { _int_47 = value; OnPropertyChanged(); }
         }
-        private int _int_48 = 0;
+        private int _int_48 = int.MinValue;
         [StructuresDialog("int_48", typeof(TD.Integer))]
         public int int_48
         {
             get { return _int_48; }
             set { _int_48 = value; OnPropertyChanged(); }
         }
-        private int _int_49 = 0;
+        private int _int_49 = int.MinValue;
         [StructuresDialog("int_49", typeof(TD.Integer))]
         public int int_49
         {
             get { return _int_49; }
             set { _int_49 = value; OnPropertyChanged(); }
         }
-        private int _int_50 = 0;
+        private int _int_50 = int.MinValue;
         [StructuresDialog("int_50", typeof(TD.Integer))]
         public int int_50
         {
             get { return _int_50; }
             set { _int_50 = value; OnPropertyChanged(); }
         }
-        private int _int_51 = 0;
+        private int _int_51 = int.MinValue;
         [StructuresDialog("int_51", typeof(TD.Integer))]
         public int int_51
         {
             get { return _int_51; }
             set { _int_51 = value; OnPropertyChanged(); }
         }
-        private int _int_52 = 0;
+        private int _int_52 = int.MinValue;
         [StructuresDialog("int_52", typeof(TD.Integer))]
         public int int_52
         {
             get { return _int_52; }
             set { _int_52 = value; OnPropertyChanged(); }
         }
-        private int _int_53 = 0;
+        private int _int_53 = int.MinValue;
         [StructuresDialog("int_53", typeof(TD.Integer))]
         public int int_53
         {
             get { return _int_53; }
             set { _int_53 = value; OnPropertyChanged(); }
         }
-        private int _int_54 = 0;
+        private int _int_54 = int.MinValue;
         [StructuresDialog("int_54", typeof(TD.Integer))]
         public int int_54
         {
             get { return _int_54; }
             set { _int_54 = value; OnPropertyChanged(); }
         }
-        private int _int_55 = 0;
+        private int _int_55 = int.MinValue;
         [StructuresDialog("int_55", typeof(TD.Integer))]
         public int int_55
         {
             get { return _int_55; }
             set { _int_55 = value; OnPropertyChanged(); }
         }
-        private int _int_56 = 0;
+        private int _int_56 = int.MinValue;
         [StructuresDialog("int_56", typeof(TD.Integer))]
         public int int_56
         {
             get { return _int_56; }
             set { _int_56 = value; OnPropertyChanged(); }
         }
-        private int _int_57 = 0;
+        private int _int_57 = int.MinValue;
         [StructuresDialog("int_57", typeof(TD.Integer))]
         public int int_57
         {
             get { return _int_57; }
             set { _int_57 = value; OnPropertyChanged(); }
         }
-        private int _int_58 = 0;
+        private int _int_58 = int.MinValue;
         [StructuresDialog("int_58", typeof(TD.Integer))]
         public int int_58
         {
             get { return _int_58; }
             set { _int_58 = value; OnPropertyChanged(); }
         }
-        private int _int_59 = 0;
+        private int _int_59 = int.MinValue;
         [StructuresDialog("int_59", typeof(TD.Integer))]
         public int int_59
         {
             get { return _int_59; }
             set { _int_59 = value; OnPropertyChanged(); }
         }
-        private int _int_60 = 0;
+        private int _int_60 = int.MinValue;
         [StructuresDialog("int_60", typeof(TD.Integer))]
         public int int_60
         {
             get { return _int_60; }
             set { _int_60 = value; OnPropertyChanged(); }
         }
-        private int _int_61 = 0;
+        private int _int_61 = int.MinValue;
         [StructuresDialog("int_61", typeof(TD.Integer))]
         public int int_61
         {
             get { return _int_61; }
             set { _int_61 = value; OnPropertyChanged(); }
         }
-        private int _int_62 = 0;
+        private int _int_62 = int.MinValue;
         [StructuresDialog("int_62", typeof(TD.Integer))]
         public int int_62
         {
             get { return _int_62; }
             set { _int_62 = value; OnPropertyChanged(); }
         }
-        private int _int_63 = 0;
+        private int _int_63 = int.MinValue;
         [StructuresDialog("int_63", typeof(TD.Integer))]
         public int int_63
         {
             get { return _int_63; }
             set { _int_63 = value; OnPropertyChanged(); }
         }
-        private int _int_64 = 0;
+        private int _int_64 = int.MinValue;
         [StructuresDialog("int_64", typeof(TD.Integer))]
         public int int_64
         {
             get { return _int_64; }
             set { _int_64 = value; OnPropertyChanged(); }
         }
-        private int _int_65 = 0;
+        private int _int_65 = int.MinValue;
         [StructuresDialog("int_65", typeof(TD.Integer))]
         public int int_65
         {
             get { return _int_65; }
             set { _int_65 = value; OnPropertyChanged(); }
         }
-        private int _int_66 = 0;
+        private int _int_66 = int.MinValue;
         [StructuresDialog("int_66", typeof(TD.Integer))]
         public int int_66
         {
             get { return _int_66; }
             set { _int_66 = value; OnPropertyChanged(); }
         }
-        private int _int_67 = 0;
+        private int _int_67 = int.MinValue;
         [StructuresDialog("int_67", typeof(TD.Integer))]
         public int int_67
         {
             get { return _int_67; }
             set { _int_67 = value; OnPropertyChanged(); }
         }
-        private int _int_68 = 0;
+        private int _int_68 = int.MinValue;
         [StructuresDialog("int_68", typeof(TD.Integer))]
         public int int_68
         {
             get { return _int_68; }
             set { _int_68 = value; OnPropertyChanged(); }
         }
-        private int _int_69 = 0;
+        private int _int_69 = int.MinValue;
         [StructuresDialog("int_69", typeof(TD.Integer))]
         public int int_69
         {
             get { return _int_69; }
             set { _int_69 = value; OnPropertyChanged(); }
         }
-        private int _int_70 = 0;
+        private int _int_70 = int.MinValue;
         [StructuresDialog("int_70", typeof(TD.Integer))]
         public int int_70
         {
             get { return _int_70; }
             set { _int_70 = value; OnPropertyChanged(); }
         }
-        private int _int_71 = 0;
+        private int _int_71 = int.MinValue;
         [StructuresDialog("int_71", typeof(TD.Integer))]
         public int int_71
         {
             get { return _int_71; }
             set { _int_71 = value; OnPropertyChanged(); }
         }
-        private int _int_72 = 0;
+        private int _int_72 = int.MinValue;
         [StructuresDialog("int_72", typeof(TD.Integer))]
         public int int_72
         {
             get { return _int_72; }
             set { _int_72 = value; OnPropertyChanged(); }
         }
-        private int _int_73 = 0;
+        private int _int_73 = int.MinValue;
         [StructuresDialog("int_73", typeof(TD.Integer))]
         public int int_73
         {
             get { return _int_73; }
             set { _int_73 = value; OnPropertyChanged(); }
         }
-        private int _int_74 = 0;
+        private int _int_74 = int.MinValue;
         [StructuresDialog("int_74", typeof(TD.Integer))]
         public int int_74
         {
             get { return _int_74; }
             set { _int_74 = value; OnPropertyChanged(); }
         }
-        private int _int_75 = 0;
+        private int _int_75 = int.MinValue;
         [StructuresDialog("int_75", typeof(TD.Integer))]
         public int int_75
         {
             get { return _int_75; }
             set { _int_75 = value; OnPropertyChanged(); }
         }
-        private int _int_76 = 0;
+        private int _int_76 = int.MinValue;
         [StructuresDialog("int_76", typeof(TD.Integer))]
         public int int_76
         {
             get { return _int_76; }
             set { _int_76 = value; OnPropertyChanged(); }
         }
-        private int _int_77 = 0;
+        private int _int_77 = int.MinValue;
         [StructuresDialog("int_77", typeof(TD.Integer))]
         public int int_77
         {
             get { return _int_77; }
             set { _int_77 = value; OnPropertyChanged(); }
         }
-        private int _int_78 = 0;
+        private int _int_78 = int.MinValue;
         [StructuresDialog("int_78", typeof(TD.Integer))]
         public int int_78
         {
             get { return _int_78; }
             set { _int_78 = value; OnPropertyChanged(); }
         }
-        private int _int_79 = 0;
+        private int _int_79 = int.MinValue;
         [StructuresDialog("int_79", typeof(TD.Integer))]
         public int int_79
         {
             get { return _int_79; }
             set { _int_79 = value; OnPropertyChanged(); }
         }
-        private int _int_80 = 0;
+        private int _int_80 = int.MinValue;
         [StructuresDialog("int_80", typeof(TD.Integer))]
         public int int_80
         {
             get { return _int_80; }
             set { _int_80 = value; OnPropertyChanged(); }
         }
-        private int _int_81 = 0;
+        private int _int_81 = int.MinValue;
         [StructuresDialog("int_81", typeof(TD.Integer))]
         public int int_81
         {
             get { return _int_81; }
             set { _int_81 = value; OnPropertyChanged(); }
         }
-        private int _int_82 = 0;
+        private int _int_82 = int.MinValue;
         [StructuresDialog("int_82", typeof(TD.Integer))]
         public int int_82
         {
             get { return _int_82; }
             set { _int_82 = value; OnPropertyChanged(); }
         }
-        private int _int_83 = 0;
+        private int _int_83 = int.MinValue;
         [StructuresDialog("int_83", typeof(TD.Integer))]
         public int int_83
         {
             get { return _int_83; }
             set { _int_83 = value; OnPropertyChanged(); }
         }
-        private int _int_84 = 0;
+        private int _int_84 = int.MinValue;
         [StructuresDialog("int_84", typeof(TD.Integer))]
         public int int_84
         {
             get { return _int_84; }
             set { _int_84 = value; OnPropertyChanged(); }
         }
-        private int _int_85 = 0;
+        private int _int_85 = int.MinValue;
         [StructuresDialog("int_85", typeof(TD.Integer))]
         public int int_85
         {
             get { return _int_85; }
             set { _int_85 = value; OnPropertyChanged(); }
         }
-        private int _int_86 = 0;
+        private int _int_86 = int.MinValue;
         [StructuresDialog("int_86", typeof(TD.Integer))]
         public int int_86
         {
             get { return _int_86; }
             set { _int_86 = value; OnPropertyChanged(); }
         }
-        private int _int_87 = 0;
+        private int _int_87 = int.MinValue;
         [StructuresDialog("int_87", typeof(TD.Integer))]
         public int int_87
         {
             get { return _int_87; }
             set { _int_87 = value; OnPropertyChanged(); }
         }
-        private int _int_88 = 0;
+        private int _int_88 = int.MinValue;
         [StructuresDialog("int_88", typeof(TD.Integer))]
         public int int_88
         {
             get { return _int_88; }
             set { _int_88 = value; OnPropertyChanged(); }
         }
-        private int _int_89 = 0;
+        private int _int_89 = int.MinValue;
         [StructuresDialog("int_89", typeof(TD.Integer))]
         public int int_89
         {
             get { return _int_89; }
             set { _int_89 = value; OnPropertyChanged(); }
         }
-        private int _int_90 = 0;
+        private int _int_90 = int.MinValue;
         [StructuresDialog("int_90", typeof(TD.Integer))]
         public int int_90
         {
             get { return _int_90; }
             set { _int_90 = value; OnPropertyChanged(); }
         }
-        private int _int_91 = 0;
+        private int _int_91 = int.MinValue;
         [StructuresDialog("int_91", typeof(TD.Integer))]
         public int int_91
         {
             get { return _int_91; }
             set { _int_91 = value; OnPropertyChanged(); }
         }
-        private int _int_92 = 0;
+        private int _int_92 = int.MinValue;
         [StructuresDialog("int_92", typeof(TD.Integer))]
         public int int_92
         {
             get { return _int_92; }
             set { _int_92 = value; OnPropertyChanged(); }
         }
-        private int _int_93 = 0;
+        private int _int_93 = int.MinValue;
         [StructuresDialog("int_93", typeof(TD.Integer))]
         public int int_93
         {
             get { return _int_93; }
             set { _int_93 = value; OnPropertyChanged(); }
         }
-        private int _int_94 = 0;
+        private int _int_94 = int.MinValue;
         [StructuresDialog("int_94", typeof(TD.Integer))]
         public int int_94
         {
             get { return _int_94; }
             set { _int_94 = value; OnPropertyChanged(); }
         }
-        private int _int_95 = 0;
+        private int _int_95 = int.MinValue;
         [StructuresDialog("int_95", typeof(TD.Integer))]
         public int int_95
         {
             get { return _int_95; }
             set { _int_95 = value; OnPropertyChanged(); }
         }
-        private int _int_96 = 0;
+        private int _int_96 = int.MinValue;
         [StructuresDialog("int_96", typeof(TD.Integer))]
         public int int_96
         {
             get { return _int_96; }
             set { _int_96 = value; OnPropertyChanged(); }
         }
-        private int _int_97 = 0;
+        private int _int_97 = int.MinValue;
         [StructuresDialog("int_97", typeof(TD.Integer))]
         public int int_97
         {
             get { return _int_97; }
             set { _int_97 = value; OnPropertyChanged(); }
         }
-        private int _int_98 = 0;
+        private int _int_98 = int.MinValue;
         [StructuresDialog("int_98", typeof(TD.Integer))]
         public int int_98
         {
             get { return _int_98; }
             set { _int_98 = value; OnPropertyChanged(); }
         }
-        private int _int_99 = 0;
+        private int _int_99 = int.MinValue;
         [StructuresDialog("int_99", typeof(TD.Integer))]
         public int int_99
         {
             get { return _int_99; }
             set { _int_99 = value; OnPropertyChanged(); }
         }
-        private int _int_100 = 0;
+        private int _int_100 = int.MinValue;
         [StructuresDialog("int_100", typeof(TD.Integer))]
         public int int_100
         {
             get { return _int_100; }
             set { _int_100 = value; OnPropertyChanged(); }
         }
-        private int _int_101 = 0;
+        private int _int_101 = int.MinValue;
         [StructuresDialog("int_101", typeof(TD.Integer))]
         public int int_101
         {
             get { return _int_101; }
             set { _int_101 = value; OnPropertyChanged(); }
         }
-        private int _int_102 = 0;
+        private int _int_102 = int.MinValue;
         [StructuresDialog("int_102", typeof(TD.Integer))]
         public int int_102
         {
             get { return _int_102; }
             set { _int_102 = value; OnPropertyChanged(); }
         }
-        private int _int_103 = 0;
+        private int _int_103 = int.MinValue;
         [StructuresDialog("int_103", typeof(TD.Integer))]
         public int int_103
         {
             get { return _int_103; }
             set { _int_103 = value; OnPropertyChanged(); }
         }
-        private int _int_104 = 0;
+        private int _int_104 = int.MinValue;
         [StructuresDialog("int_104", typeof(TD.Integer))]
         public int int_104
         {
             get { return _int_104; }
             set { _int_104 = value; OnPropertyChanged(); }
         }
-        private int _int_105 = 0;
+        private int _int_105 = int.MinValue;
         [StructuresDialog("int_105", typeof(TD.Integer))]
         public int int_105
         {
             get { return _int_105; }
             set { _int_105 = value; OnPropertyChanged(); }
         }
-        private int _int_106 = 0;
+        private int _int_106 = int.MinValue;
         [StructuresDialog("int_106", typeof(TD.Integer))]
         public int int_106
         {
             get { return _int_106; }
             set { _int_106 = value; OnPropertyChanged(); }
         }
-        private int _int_107 = 0;
+        private int _int_107 = int.MinValue;
         [StructuresDialog("int_107", typeof(TD.Integer))]
         public int int_107
         {
             get { return _int_107; }
             set { _int_107 = value; OnPropertyChanged(); }
         }
-        private int _int_108 = 0;
+        private int _int_108 = int.MinValue;
         [StructuresDialog("int_108", typeof(TD.Integer))]
         public int int_108
         {
             get { return _int_108; }
             set { _int_108 = value; OnPropertyChanged(); }
         }
-        private int _int_109 = 0;
+        private int _int_109 = int.MinValue;
         [StructuresDialog("int_109", typeof(TD.Integer))]
         public int int_109
         {
             get { return _int_109; }
             set { _int_109 = value; OnPropertyChanged(); }
         }
-        private int _int_110 = 0;
+        private int _int_110 = int.MinValue;
         [StructuresDialog("int_110", typeof(TD.Integer))]
         public int int_110
         {
             get { return _int_110; }
             set { _int_110 = value; OnPropertyChanged(); }
         }
-        private int _int_111 = 0;
+        private int _int_111 = int.MinValue;
         [StructuresDialog("int_111", typeof(TD.Integer))]
         public int int_111
         {
             get { return _int_111; }
             set { _int_111 = value; OnPropertyChanged(); }
         }
-        private int _int_112 = 0;
+        private int _int_112 = int.MinValue;
         [StructuresDialog("int_112", typeof(TD.Integer))]
         public int int_112
         {
             get { return _int_112; }
             set { _int_112 = value; OnPropertyChanged(); }
         }
-        private int _int_113 = 0;
+        private int _int_113 = int.MinValue;
         [StructuresDialog("int_113", typeof(TD.Integer))]
         public int int_113
         {
             get { return _int_113; }
             set { _int_113 = value; OnPropertyChanged(); }
         }
-        private int _int_114 = 0;
+        private int _int_114 = int.MinValue;
         [StructuresDialog("int_114", typeof(TD.Integer))]
         public int int_114
         {
             get { return _int_114; }
             set { _int_114 = value; OnPropertyChanged(); }
         }
-        private int _int_115 = 0;
+        private int _int_115 = int.MinValue;
         [StructuresDialog("int_115", typeof(TD.Integer))]
         public int int_115
         {
             get { return _int_115; }
             set { _int_115 = value; OnPropertyChanged(); }
         }
-        private int _int_116 = 0;
+        private int _int_116 = int.MinValue;
         [StructuresDialog("int_116", typeof(TD.Integer))]
         public int int_116
         {
             get { return _int_116; }
             set { _int_116 = value; OnPropertyChanged(); }
         }
-        private int _int_117 = 0;
+        private int _int_117 = int.MinValue;
         [StructuresDialog("int_117", typeof(TD.Integer))]
         public int int_117
         {
             get { return _int_117; }
             set { _int_117 = value; OnPropertyChanged(); }
         }
-        private int _int_118 = 0;
+        private int _int_118 = int.MinValue;
         [StructuresDialog("int_118", typeof(TD.Integer))]
         public int int_118
         {
             get { return _int_118; }
             set { _int_118 = value; OnPropertyChanged(); }
         }
-        private int _int_119 = 0;
+        private int _int_119 = int.MinValue;
         [StructuresDialog("int_119", typeof(TD.Integer))]
         public int int_119
         {
             get { return _int_119; }
             set { _int_119 = value; OnPropertyChanged(); }
         }
-        private int _int_120 = 0;
+        private int _int_120 = int.MinValue;
         [StructuresDialog("int_120", typeof(TD.Integer))]
         public int int_120
         {
             get { return _int_120; }
             set { _int_120 = value; OnPropertyChanged(); }
         }
-        private int _int_121 = 0;
+        private int _int_121 = int.MinValue;
         [StructuresDialog("int_121", typeof(TD.Integer))]
         public int int_121
         {
             get { return _int_121; }
             set { _int_121 = value; OnPropertyChanged(); }
         }
-        private int _int_122 = 0;
+        private int _int_122 = int.MinValue;
         [StructuresDialog("int_122", typeof(TD.Integer))]
         public int int_122
         {
             get { return _int_122; }
             set { _int_122 = value; OnPropertyChanged(); }
         }
-        private int _int_123 = 0;
+        private int _int_123 = int.MinValue;
         [StructuresDialog("int_123", typeof(TD.Integer))]
         public int int_123
         {
             get { return _int_123; }
             set { _int_123 = value; OnPropertyChanged(); }
         }
-        private int _int_124 = 0;
+        private int _int_124 = int.MinValue;
         [StructuresDialog("int_124", typeof(TD.Integer))]
         public int int_124
         {
             get { return _int_124; }
             set { _int_124 = value; OnPropertyChanged(); }
         }
-        private int _int_125 = 0;
+        private int _int_125 = int.MinValue;
         [StructuresDialog("int_125", typeof(TD.Integer))]
         public int int_125
         {
             get { return _int_125; }
             set { _int_125 = value; OnPropertyChanged(); }
         }
-        private int _int_126 = 0;
+        private int _int_126 = int.MinValue;
         [StructuresDialog("int_126", typeof(TD.Integer))]
         public int int_126
         {
             get { return _int_126; }
             set { _int_126 = value; OnPropertyChanged(); }
         }
-        private int _int_127 = 0;
+        private int _int_127 = int.MinValue;
         [StructuresDialog("int_127", typeof(TD.Integer))]
         public int int_127
         {
             get { return _int_127; }
             set { _int_127 = value; OnPropertyChanged(); }
         }
-        private int _int_128 = 0;
+        private int _int_128 = int.MinValue;
         [StructuresDialog("int_128", typeof(TD.Integer))]
         public int int_128
         {
             get { return _int_128; }
             set { _int_128 = value; OnPropertyChanged(); }
         }
-        private int _int_129 = 0;
+        private int _int_129 = int.MinValue;
         [StructuresDialog("int_129", typeof(TD.Integer))]
         public int int_129
         {
             get { return _int_129; }
             set { _int_129 = value; OnPropertyChanged(); }
         }
-        private int _int_130 = 0;
+        private int _int_130 = int.MinValue;
         [StructuresDialog("int_130", typeof(TD.Integer))]
         public int int_130
         {
             get { return _int_130; }
             set { _int_130 = value; OnPropertyChanged(); }
         }
-        private int _int_131 = 0;
+        private int _int_131 = int.MinValue;
         [StructuresDialog("int_131", typeof(TD.Integer))]
         public int int_131
         {
             get { return _int_131; }
             set { _int_131 = value; OnPropertyChanged(); }
         }
-        private int _int_132 = 0;
+        private int _int_132 = int.MinValue;
         [StructuresDialog("int_132", typeof(TD.Integer))]
         public int int_132
         {
             get { return _int_132; }
             set { _int_132 = value; OnPropertyChanged(); }
         }
-        private int _int_133 = 0;
+        private int _int_133 = int.MinValue;
         [StructuresDialog("int_133", typeof(TD.Integer))]
         public int int_133
         {
             get { return _int_133; }
             set { _int_133 = value; OnPropertyChanged(); }
         }
-        private int _int_134 = 0;
+        private int _int_134 = int.MinValue;
         [StructuresDialog("int_134", typeof(TD.Integer))]
         public int int_134
         {
             get { return _int_134; }
             set { _int_134 = value; OnPropertyChanged(); }
         }
-        private int _int_135 = 0;
+        private int _int_135 = int.MinValue;
         [StructuresDialog("int_135", typeof(TD.Integer))]
         public int int_135
         {
             get { return _int_135; }
             set { _int_135 = value; OnPropertyChanged(); }
         }
-        private int _int_136 = 0;
+        private int _int_136 = int.MinValue;
         [StructuresDialog("int_136", typeof(TD.Integer))]
         public int int_136
         {
             get { return _int_136; }
             set { _int_136 = value; OnPropertyChanged(); }
         }
-        private int _int_137 = 0;
+        private int _int_137 = int.MinValue;
         [StructuresDialog("int_137", typeof(TD.Integer))]
         public int int_137
         {
             get { return _int_137; }
             set { _int_137 = value; OnPropertyChanged(); }
         }
-        private int _int_138 = 0;
+        private int _int_138 = int.MinValue;
         [StructuresDialog("int_138", typeof(TD.Integer))]
         public int int_138
         {
             get { return _int_138; }
             set { _int_138 = value; OnPropertyChanged(); }
         }
-        private int _int_139 = 0;
+        private int _int_139 = int.MinValue;
         [StructuresDialog("int_139", typeof(TD.Integer))]
         public int int_139
         {
             get { return _int_139; }
             set { _int_139 = value; OnPropertyChanged(); }
         }
-        private int _int_140 = 0;
+        private int _int_140 = int.MinValue;
         [StructuresDialog("int_140", typeof(TD.Integer))]
         public int int_140
         {
             get { return _int_140; }
             set { _int_140 = value; OnPropertyChanged(); }
         }
-        private int _int_141 = 0;
+        private int _int_141 = int.MinValue;
         [StructuresDialog("int_141", typeof(TD.Integer))]
         public int int_141
         {
             get { return _int_141; }
             set { _int_141 = value; OnPropertyChanged(); }
         }
-        private int _int_142 = 0;
+        private int _int_142 = int.MinValue;
         [StructuresDialog("int_142", typeof(TD.Integer))]
         public int int_142
         {
             get { return _int_142; }
             set { _int_142 = value; OnPropertyChanged(); }
         }
-        private int _int_143 = 0;
+        private int _int_143 = int.MinValue;
         [StructuresDialog("int_143", typeof(TD.Integer))]
         public int int_143
         {
             get { return _int_143; }
             set { _int_143 = value; OnPropertyChanged(); }
         }
-        private int _int_144 = 0;
+        private int _int_144 = int.MinValue;
         [StructuresDialog("int_144", typeof(TD.Integer))]
         public int int_144
         {
             get { return _int_144; }
             set { _int_144 = value; OnPropertyChanged(); }
         }
-        private int _int_145 = 0;
+        private int _int_145 = int.MinValue;
         [StructuresDialog("int_145", typeof(TD.Integer))]
         public int int_145
         {
             get { return _int_145; }
             set { _int_145 = value; OnPropertyChanged(); }
         }
-        private int _int_146 = 0;
+        private int _int_146 = int.MinValue;
         [StructuresDialog("int_146", typeof(TD.Integer))]
         public int int_146
         {
             get { return _int_146; }
             set { _int_146 = value; OnPropertyChanged(); }
         }
-        private int _int_147 = 0;
+        private int _int_147 = int.MinValue;
         [StructuresDialog("int_147", typeof(TD.Integer))]
         public int int_147
         {
             get { return _int_147; }
             set { _int_147 = value; OnPropertyChanged(); }
         }
-        private int _int_148 = 0;
+        private int _int_148 = int.MinValue;
         [StructuresDialog("int_148", typeof(TD.Integer))]
         public int int_148
         {
             get { return _int_148; }
             set { _int_148 = value; OnPropertyChanged(); }
         }
-        private int _int_149 = 0;
+        private int _int_149 = int.MinValue;
         [StructuresDialog("int_149", typeof(TD.Integer))]
         public int int_149
         {
             get { return _int_149; }
             set { _int_149 = value; OnPropertyChanged(); }
         }
-        private int _int_150 = 0;
+        private int _int_150 = int.MinValue;
         [StructuresDialog("int_150", typeof(TD.Integer))]
         public int int_150
         {
             get { return _int_150; }
             set { _int_150 = value; OnPropertyChanged(); }
         }
-        private int _int_151 = 0;
+        private int _int_151 = int.MinValue;
         [StructuresDialog("int_151", typeof(TD.Integer))]
         public int int_151
         {
             get { return _int_151; }
             set { _int_151 = value; OnPropertyChanged(); }
         }
-        private int _int_152 = 0;
+        private int _int_152 = int.MinValue;
         [StructuresDialog("int_152", typeof(TD.Integer))]
         public int int_152
         {
             get { return _int_152; }
             set { _int_152 = value; OnPropertyChanged(); }
         }
-        private int _int_153 = 0;
+        private int _int_153 = int.MinValue;
         [StructuresDialog("int_153", typeof(TD.Integer))]
         public int int_153
         {
             get { return _int_153; }
             set { _int_153 = value; OnPropertyChanged(); }
         }
-        private int _int_154 = 0;
+        private int _int_154 = int.MinValue;
         [StructuresDialog("int_154", typeof(TD.Integer))]
         public int int_154
         {
             get { return _int_154; }
             set { _int_154 = value; OnPropertyChanged(); }
         }
-        private int _int_155 = 0;
+        private int _int_155 = int.MinValue;
         [StructuresDialog("int_155", typeof(TD.Integer))]
         public int int_155
         {
             get { return _int_155; }
             set { _int_155 = value; OnPropertyChanged(); }
         }
-        private int _int_156 = 0;
+        private int _int_156 = int.MinValue;
         [StructuresDialog("int_156", typeof(TD.Integer))]
         public int int_156
         {
             get { return _int_156; }
             set { _int_156 = value; OnPropertyChanged(); }
         }
-        private int _int_157 = 0;
+        private int _int_157 = int.MinValue;
         [StructuresDialog("int_157", typeof(TD.Integer))]
         public int int_157
         {
             get { return _int_157; }
             set { _int_157 = value; OnPropertyChanged(); }
         }
-        private int _int_158 = 0;
+        private int _int_158 = int.MinValue;
         [StructuresDialog("int_158", typeof(TD.Integer))]
         public int int_158
         {
             get { return _int_158; }
             set { _int_158 = value; OnPropertyChanged(); }
         }
-        private int _int_159 = 0;
+        private int _int_159 = int.MinValue;
         [StructuresDialog("int_159", typeof(TD.Integer))]
         public int int_159
         {
             get { return _int_159; }
             set { _int_159 = value; OnPropertyChanged(); }
         }
-        private int _int_160 = 0;
+        private int _int_160 = int.MinValue;
         [StructuresDialog("int_160", typeof(TD.Integer))]
         public int int_160
         {
             get { return _int_160; }
             set { _int_160 = value; OnPropertyChanged(); }
         }
-        private int _int_161 = 0;
+        private int _int_161 = int.MinValue;
         [StructuresDialog("int_161", typeof(TD.Integer))]
         public int int_161
         {
             get { return _int_161; }
             set { _int_161 = value; OnPropertyChanged(); }
         }
-        private int _int_162 = 0;
+        private int _int_162 = int.MinValue;
         [StructuresDialog("int_162", typeof(TD.Integer))]
         public int int_162
         {
             get { return _int_162; }
             set { _int_162 = value; OnPropertyChanged(); }
         }
-        private int _int_163 = 0;
+        private int _int_163 = int.MinValue;
         [StructuresDialog("int_163", typeof(TD.Integer))]
         public int int_163
         {
             get { return _int_163; }
             set { _int_163 = value; OnPropertyChanged(); }
         }
-        private int _int_164 = 0;
+        private int _int_164 = int.MinValue;
         [StructuresDialog("int_164", typeof(TD.Integer))]
         public int int_164
         {
             get { return _int_164; }
             set { _int_164 = value; OnPropertyChanged(); }
         }
-        private int _int_165 = 0;
+        private int _int_165 = int.MinValue;
         [StructuresDialog("int_165", typeof(TD.Integer))]
         public int int_165
         {
             get { return _int_165; }
             set { _int_165 = value; OnPropertyChanged(); }
         }
-        private int _int_166 = 0;
+        private int _int_166 = int.MinValue;
         [StructuresDialog("int_166", typeof(TD.Integer))]
         public int int_166
         {
             get { return _int_166; }
             set { _int_166 = value; OnPropertyChanged(); }
         }
-        private int _int_167 = 0;
+        private int _int_167 = int.MinValue;
         [StructuresDialog("int_167", typeof(TD.Integer))]
         public int int_167
         {
             get { return _int_167; }
             set { _int_167 = value; OnPropertyChanged(); }
         }
-        private int _int_168 = 0;
+        private int _int_168 = int.MinValue;
         [StructuresDialog("int_168", typeof(TD.Integer))]
         public int int_168
         {
             get { return _int_168; }
             set { _int_168 = value; OnPropertyChanged(); }
         }
-        private int _int_169 = 0;
+        private int _int_169 = int.MinValue;
         [StructuresDialog("int_169", typeof(TD.Integer))]
         public int int_169
         {
             get { return _int_169; }
             set { _int_169 = value; OnPropertyChanged(); }
         }
-        private int _int_170 = 0;
+        private int _int_170 = int.MinValue;
         [StructuresDialog("int_170", typeof(TD.Integer))]
         public int int_170
         {
             get { return _int_170; }
             set { _int_170 = value; OnPropertyChanged(); }
         }
-        private int _int_171 = 0;
+        private int _int_171 = int.MinValue;
         [StructuresDialog("int_171", typeof(TD.Integer))]
         public int int_171
         {
             get { return _int_171; }
             set { _int_171 = value; OnPropertyChanged(); }
         }
-        private int _int_172 = 0;
+        private int _int_172 = int.MinValue;
         [StructuresDialog("int_172", typeof(TD.Integer))]
         public int int_172
         {
             get { return _int_172; }
             set { _int_172 = value; OnPropertyChanged(); }
         }
-        private int _int_173 = 0;
+        private int _int_173 = int.MinValue;
         [StructuresDialog("int_173", typeof(TD.Integer))]
         public int int_173
         {
             get { return _int_173; }
             set { _int_173 = value; OnPropertyChanged(); }
         }
-        private int _int_174 = 0;
+        private int _int_174 = int.MinValue;
         [StructuresDialog("int_174", typeof(TD.Integer))]
         public int int_174
         {
             get { return _int_174; }
             set { _int_174 = value; OnPropertyChanged(); }
         }
-        private int _int_175 = 0;
+        private int _int_175 = int.MinValue;
         [StructuresDialog("int_175", typeof(TD.Integer))]
         public int int_175
         {
             get { return _int_175; }
             set { _int_175 = value; OnPropertyChanged(); }
         }
-        private int _int_176 = 0;
+        private int _int_176 = int.MinValue;
         [StructuresDialog("int_176", typeof(TD.Integer))]
         public int int_176
         {
             get { return _int_176; }
             set { _int_176 = value; OnPropertyChanged(); }
         }
-        private int _int_177 = 0;
+        private int _int_177 = int.MinValue;
         [StructuresDialog("int_177", typeof(TD.Integer))]
         public int int_177
         {
             get { return _int_177; }
             set { _int_177 = value; OnPropertyChanged(); }
         }
-        private int _int_178 = 0;
+        private int _int_178 = int.MinValue;
         [StructuresDialog("int_178", typeof(TD.Integer))]
         public int int_178
         {
             get { return _int_178; }
             set { _int_178 = value; OnPropertyChanged(); }
         }
-        private int _int_179 = 0;
+        private int _int_179 = int.MinValue;
         [StructuresDialog("int_179", typeof(TD.Integer))]
         public int int_179
         {
             get { return _int_179; }
             set { _int_179 = value; OnPropertyChanged(); }
         }
-        private int _int_180 = 0;
+        private int _int_180 = int.MinValue;
         [StructuresDialog("int_180", typeof(TD.Integer))]
         public int int_180
         {
             get { return _int_180; }
             set { _int_180 = value; OnPropertyChanged(); }
         }
-        private int _int_181 = 0;
+        private int _int_181 = int.MinValue;
         [StructuresDialog("int_181", typeof(TD.Integer))]
         public int int_181
         {
             get { return _int_181; }
             set { _int_181 = value; OnPropertyChanged(); }
         }
-        private int _int_182 = 0;
+        private int _int_182 = int.MinValue;
         [StructuresDialog("int_182", typeof(TD.Integer))]
         public int int_182
         {
             get { return _int_182; }
             set { _int_182 = value; OnPropertyChanged(); }
         }
-        private int _int_183 = 0;
+        private int _int_183 = int.MinValue;
         [StructuresDialog("int_183", typeof(TD.Integer))]
         public int int_183
         {
             get { return _int_183; }
             set { _int_183 = value; OnPropertyChanged(); }
         }
-        private int _int_184 = 0;
+        private int _int_184 = int.MinValue;
         [StructuresDialog("int_184", typeof(TD.Integer))]
         public int int_184
         {
             get { return _int_184; }
             set { _int_184 = value; OnPropertyChanged(); }
         }
-        private int _int_185 = 0;
+        private int _int_185 = int.MinValue;
         [StructuresDialog("int_185", typeof(TD.Integer))]
         public int int_185
         {
             get { return _int_185; }
             set { _int_185 = value; OnPropertyChanged(); }
         }
-        private int _int_186 = 0;
+        private int _int_186 = int.MinValue;
         [StructuresDialog("int_186", typeof(TD.Integer))]
         public int int_186
         {
             get { return _int_186; }
             set { _int_186 = value; OnPropertyChanged(); }
         }
-        private int _int_187 = 0;
+        private int _int_187 = int.MinValue;
         [StructuresDialog("int_187", typeof(TD.Integer))]
         public int int_187
         {
             get { return _int_187; }
             set { _int_187 = value; OnPropertyChanged(); }
         }
-        private int _int_188 = 0;
+        private int _int_188 = int.MinValue;
         [StructuresDialog("int_188", typeof(TD.Integer))]
         public int int_188
         {
             get { return _int_188; }
             set { _int_188 = value; OnPropertyChanged(); }
         }
-        private int _int_189 = 0;
+        private int _int_189 = int.MinValue;
         [StructuresDialog("int_189", typeof(TD.Integer))]
         public int int_189
         {
             get { return _int_189; }
             set { _int_189 = value; OnPropertyChanged(); }
         }
-        private int _int_190 = 0;
+        private int _int_190 = int.MinValue;
         [StructuresDialog("int_190", typeof(TD.Integer))]
         public int int_190
         {
             get { return _int_190; }
             set { _int_190 = value; OnPropertyChanged(); }
         }
-        private int _int_191 = 0;
+        private int _int_191 = int.MinValue;
         [StructuresDialog("int_191", typeof(TD.Integer))]
         public int int_191
         {
             get { return _int_191; }
             set { _int_191 = value; OnPropertyChanged(); }
         }
-        private int _int_192 = 0;
+        private int _int_192 = int.MinValue;
         [StructuresDialog("int_192", typeof(TD.Integer))]
         public int int_192
         {
             get { return _int_192; }
             set { _int_192 = value; OnPropertyChanged(); }
         }
-        private int _int_193 = 0;
+        private int _int_193 = int.MinValue;
         [StructuresDialog("int_193", typeof(TD.Integer))]
         public int int_193
         {
             get { return _int_193; }
             set { _int_193 = value; OnPropertyChanged(); }
         }
-        private int _int_194 = 0;
+        private int _int_194 = int.MinValue;
         [StructuresDialog("int_194", typeof(TD.Integer))]
         public int int_194
         {
             get { return _int_194; }
             set { _int_194 = value; OnPropertyChanged(); }
         }
-        private int _int_195 = 0;
+        private int _int_195 = int.MinValue;
         [StructuresDialog("int_195", typeof(TD.Integer))]
         public int int_195
         {
             get { return _int_195; }
             set { _int_195 = value; OnPropertyChanged(); }
         }
-        private int _int_196 = 0;
+        private int _int_196 = int.MinValue;
         [StructuresDialog("int_196", typeof(TD.Integer))]
         public int int_196
         {
             get { return _int_196; }
             set { _int_196 = value; OnPropertyChanged(); }
         }
-        private int _int_197 = 0;
+        private int _int_197 = int.MinValue;
         [StructuresDialog("int_197", typeof(TD.Integer))]
         public int int_197
         {
             get { return _int_197; }
             set { _int_197 = value; OnPropertyChanged(); }
         }
-        private int _int_198 = 0;
+        private int _int_198 = int.MinValue;
         [StructuresDialog("int_198", typeof(TD.Integer))]
         public int int_198
         {
             get { return _int_198; }
             set { _int_198 = value; OnPropertyChanged(); }
         }
-        private int _int_199 = 0;
+        private int _int_199 = int.MinValue;
         [StructuresDialog("int_199", typeof(TD.Integer))]
         public int int_199
         {
@@ -2828,1400 +2828,1400 @@ namespace DrawingLink.UI
         #endregion
 
         #region StructuresDialog_Double
-        private double _double_0 = 0;
+        private double _double_0 = int.MinValue;
         [StructuresDialog("double_0", typeof(TD.Double))]
         public double double_0
         {
             get { return _double_0; }
             set { _double_0 = value; OnPropertyChanged(); }
         }
-        private double _double_1 = 0;
+        private double _double_1 = int.MinValue;
         [StructuresDialog("double_1", typeof(TD.Double))]
         public double double_1
         {
             get { return _double_1; }
             set { _double_1 = value; OnPropertyChanged(); }
         }
-        private double _double_2 = 0;
+        private double _double_2 = int.MinValue;
         [StructuresDialog("double_2", typeof(TD.Double))]
         public double double_2
         {
             get { return _double_2; }
             set { _double_2 = value; OnPropertyChanged(); }
         }
-        private double _double_3 = 0;
+        private double _double_3 = int.MinValue;
         [StructuresDialog("double_3", typeof(TD.Double))]
         public double double_3
         {
             get { return _double_3; }
             set { _double_3 = value; OnPropertyChanged(); }
         }
-        private double _double_4 = 0;
+        private double _double_4 = int.MinValue;
         [StructuresDialog("double_4", typeof(TD.Double))]
         public double double_4
         {
             get { return _double_4; }
             set { _double_4 = value; OnPropertyChanged(); }
         }
-        private double _double_5 = 0;
+        private double _double_5 = int.MinValue;
         [StructuresDialog("double_5", typeof(TD.Double))]
         public double double_5
         {
             get { return _double_5; }
             set { _double_5 = value; OnPropertyChanged(); }
         }
-        private double _double_6 = 0;
+        private double _double_6 = int.MinValue;
         [StructuresDialog("double_6", typeof(TD.Double))]
         public double double_6
         {
             get { return _double_6; }
             set { _double_6 = value; OnPropertyChanged(); }
         }
-        private double _double_7 = 0;
+        private double _double_7 = int.MinValue;
         [StructuresDialog("double_7", typeof(TD.Double))]
         public double double_7
         {
             get { return _double_7; }
             set { _double_7 = value; OnPropertyChanged(); }
         }
-        private double _double_8 = 0;
+        private double _double_8 = int.MinValue;
         [StructuresDialog("double_8", typeof(TD.Double))]
         public double double_8
         {
             get { return _double_8; }
             set { _double_8 = value; OnPropertyChanged(); }
         }
-        private double _double_9 = 0;
+        private double _double_9 = int.MinValue;
         [StructuresDialog("double_9", typeof(TD.Double))]
         public double double_9
         {
             get { return _double_9; }
             set { _double_9 = value; OnPropertyChanged(); }
         }
-        private double _double_10 = 0;
+        private double _double_10 = int.MinValue;
         [StructuresDialog("double_10", typeof(TD.Double))]
         public double double_10
         {
             get { return _double_10; }
             set { _double_10 = value; OnPropertyChanged(); }
         }
-        private double _double_11 = 0;
+        private double _double_11 = int.MinValue;
         [StructuresDialog("double_11", typeof(TD.Double))]
         public double double_11
         {
             get { return _double_11; }
             set { _double_11 = value; OnPropertyChanged(); }
         }
-        private double _double_12 = 0;
+        private double _double_12 = int.MinValue;
         [StructuresDialog("double_12", typeof(TD.Double))]
         public double double_12
         {
             get { return _double_12; }
             set { _double_12 = value; OnPropertyChanged(); }
         }
-        private double _double_13 = 0;
+        private double _double_13 = int.MinValue;
         [StructuresDialog("double_13", typeof(TD.Double))]
         public double double_13
         {
             get { return _double_13; }
             set { _double_13 = value; OnPropertyChanged(); }
         }
-        private double _double_14 = 0;
+        private double _double_14 = int.MinValue;
         [StructuresDialog("double_14", typeof(TD.Double))]
         public double double_14
         {
             get { return _double_14; }
             set { _double_14 = value; OnPropertyChanged(); }
         }
-        private double _double_15 = 0;
+        private double _double_15 = int.MinValue;
         [StructuresDialog("double_15", typeof(TD.Double))]
         public double double_15
         {
             get { return _double_15; }
             set { _double_15 = value; OnPropertyChanged(); }
         }
-        private double _double_16 = 0;
+        private double _double_16 = int.MinValue;
         [StructuresDialog("double_16", typeof(TD.Double))]
         public double double_16
         {
             get { return _double_16; }
             set { _double_16 = value; OnPropertyChanged(); }
         }
-        private double _double_17 = 0;
+        private double _double_17 = int.MinValue;
         [StructuresDialog("double_17", typeof(TD.Double))]
         public double double_17
         {
             get { return _double_17; }
             set { _double_17 = value; OnPropertyChanged(); }
         }
-        private double _double_18 = 0;
+        private double _double_18 = int.MinValue;
         [StructuresDialog("double_18", typeof(TD.Double))]
         public double double_18
         {
             get { return _double_18; }
             set { _double_18 = value; OnPropertyChanged(); }
         }
-        private double _double_19 = 0;
+        private double _double_19 = int.MinValue;
         [StructuresDialog("double_19", typeof(TD.Double))]
         public double double_19
         {
             get { return _double_19; }
             set { _double_19 = value; OnPropertyChanged(); }
         }
-        private double _double_20 = 0;
+        private double _double_20 = int.MinValue;
         [StructuresDialog("double_20", typeof(TD.Double))]
         public double double_20
         {
             get { return _double_20; }
             set { _double_20 = value; OnPropertyChanged(); }
         }
-        private double _double_21 = 0;
+        private double _double_21 = int.MinValue;
         [StructuresDialog("double_21", typeof(TD.Double))]
         public double double_21
         {
             get { return _double_21; }
             set { _double_21 = value; OnPropertyChanged(); }
         }
-        private double _double_22 = 0;
+        private double _double_22 = int.MinValue;
         [StructuresDialog("double_22", typeof(TD.Double))]
         public double double_22
         {
             get { return _double_22; }
             set { _double_22 = value; OnPropertyChanged(); }
         }
-        private double _double_23 = 0;
+        private double _double_23 = int.MinValue;
         [StructuresDialog("double_23", typeof(TD.Double))]
         public double double_23
         {
             get { return _double_23; }
             set { _double_23 = value; OnPropertyChanged(); }
         }
-        private double _double_24 = 0;
+        private double _double_24 = int.MinValue;
         [StructuresDialog("double_24", typeof(TD.Double))]
         public double double_24
         {
             get { return _double_24; }
             set { _double_24 = value; OnPropertyChanged(); }
         }
-        private double _double_25 = 0;
+        private double _double_25 = int.MinValue;
         [StructuresDialog("double_25", typeof(TD.Double))]
         public double double_25
         {
             get { return _double_25; }
             set { _double_25 = value; OnPropertyChanged(); }
         }
-        private double _double_26 = 0;
+        private double _double_26 = int.MinValue;
         [StructuresDialog("double_26", typeof(TD.Double))]
         public double double_26
         {
             get { return _double_26; }
             set { _double_26 = value; OnPropertyChanged(); }
         }
-        private double _double_27 = 0;
+        private double _double_27 = int.MinValue;
         [StructuresDialog("double_27", typeof(TD.Double))]
         public double double_27
         {
             get { return _double_27; }
             set { _double_27 = value; OnPropertyChanged(); }
         }
-        private double _double_28 = 0;
+        private double _double_28 = int.MinValue;
         [StructuresDialog("double_28", typeof(TD.Double))]
         public double double_28
         {
             get { return _double_28; }
             set { _double_28 = value; OnPropertyChanged(); }
         }
-        private double _double_29 = 0;
+        private double _double_29 = int.MinValue;
         [StructuresDialog("double_29", typeof(TD.Double))]
         public double double_29
         {
             get { return _double_29; }
             set { _double_29 = value; OnPropertyChanged(); }
         }
-        private double _double_30 = 0;
+        private double _double_30 = int.MinValue;
         [StructuresDialog("double_30", typeof(TD.Double))]
         public double double_30
         {
             get { return _double_30; }
             set { _double_30 = value; OnPropertyChanged(); }
         }
-        private double _double_31 = 0;
+        private double _double_31 = int.MinValue;
         [StructuresDialog("double_31", typeof(TD.Double))]
         public double double_31
         {
             get { return _double_31; }
             set { _double_31 = value; OnPropertyChanged(); }
         }
-        private double _double_32 = 0;
+        private double _double_32 = int.MinValue;
         [StructuresDialog("double_32", typeof(TD.Double))]
         public double double_32
         {
             get { return _double_32; }
             set { _double_32 = value; OnPropertyChanged(); }
         }
-        private double _double_33 = 0;
+        private double _double_33 = int.MinValue;
         [StructuresDialog("double_33", typeof(TD.Double))]
         public double double_33
         {
             get { return _double_33; }
             set { _double_33 = value; OnPropertyChanged(); }
         }
-        private double _double_34 = 0;
+        private double _double_34 = int.MinValue;
         [StructuresDialog("double_34", typeof(TD.Double))]
         public double double_34
         {
             get { return _double_34; }
             set { _double_34 = value; OnPropertyChanged(); }
         }
-        private double _double_35 = 0;
+        private double _double_35 = int.MinValue;
         [StructuresDialog("double_35", typeof(TD.Double))]
         public double double_35
         {
             get { return _double_35; }
             set { _double_35 = value; OnPropertyChanged(); }
         }
-        private double _double_36 = 0;
+        private double _double_36 = int.MinValue;
         [StructuresDialog("double_36", typeof(TD.Double))]
         public double double_36
         {
             get { return _double_36; }
             set { _double_36 = value; OnPropertyChanged(); }
         }
-        private double _double_37 = 0;
+        private double _double_37 = int.MinValue;
         [StructuresDialog("double_37", typeof(TD.Double))]
         public double double_37
         {
             get { return _double_37; }
             set { _double_37 = value; OnPropertyChanged(); }
         }
-        private double _double_38 = 0;
+        private double _double_38 = int.MinValue;
         [StructuresDialog("double_38", typeof(TD.Double))]
         public double double_38
         {
             get { return _double_38; }
             set { _double_38 = value; OnPropertyChanged(); }
         }
-        private double _double_39 = 0;
+        private double _double_39 = int.MinValue;
         [StructuresDialog("double_39", typeof(TD.Double))]
         public double double_39
         {
             get { return _double_39; }
             set { _double_39 = value; OnPropertyChanged(); }
         }
-        private double _double_40 = 0;
+        private double _double_40 = int.MinValue;
         [StructuresDialog("double_40", typeof(TD.Double))]
         public double double_40
         {
             get { return _double_40; }
             set { _double_40 = value; OnPropertyChanged(); }
         }
-        private double _double_41 = 0;
+        private double _double_41 = int.MinValue;
         [StructuresDialog("double_41", typeof(TD.Double))]
         public double double_41
         {
             get { return _double_41; }
             set { _double_41 = value; OnPropertyChanged(); }
         }
-        private double _double_42 = 0;
+        private double _double_42 = int.MinValue;
         [StructuresDialog("double_42", typeof(TD.Double))]
         public double double_42
         {
             get { return _double_42; }
             set { _double_42 = value; OnPropertyChanged(); }
         }
-        private double _double_43 = 0;
+        private double _double_43 = int.MinValue;
         [StructuresDialog("double_43", typeof(TD.Double))]
         public double double_43
         {
             get { return _double_43; }
             set { _double_43 = value; OnPropertyChanged(); }
         }
-        private double _double_44 = 0;
+        private double _double_44 = int.MinValue;
         [StructuresDialog("double_44", typeof(TD.Double))]
         public double double_44
         {
             get { return _double_44; }
             set { _double_44 = value; OnPropertyChanged(); }
         }
-        private double _double_45 = 0;
+        private double _double_45 = int.MinValue;
         [StructuresDialog("double_45", typeof(TD.Double))]
         public double double_45
         {
             get { return _double_45; }
             set { _double_45 = value; OnPropertyChanged(); }
         }
-        private double _double_46 = 0;
+        private double _double_46 = int.MinValue;
         [StructuresDialog("double_46", typeof(TD.Double))]
         public double double_46
         {
             get { return _double_46; }
             set { _double_46 = value; OnPropertyChanged(); }
         }
-        private double _double_47 = 0;
+        private double _double_47 = int.MinValue;
         [StructuresDialog("double_47", typeof(TD.Double))]
         public double double_47
         {
             get { return _double_47; }
             set { _double_47 = value; OnPropertyChanged(); }
         }
-        private double _double_48 = 0;
+        private double _double_48 = int.MinValue;
         [StructuresDialog("double_48", typeof(TD.Double))]
         public double double_48
         {
             get { return _double_48; }
             set { _double_48 = value; OnPropertyChanged(); }
         }
-        private double _double_49 = 0;
+        private double _double_49 = int.MinValue;
         [StructuresDialog("double_49", typeof(TD.Double))]
         public double double_49
         {
             get { return _double_49; }
             set { _double_49 = value; OnPropertyChanged(); }
         }
-        private double _double_50 = 0;
+        private double _double_50 = int.MinValue;
         [StructuresDialog("double_50", typeof(TD.Double))]
         public double double_50
         {
             get { return _double_50; }
             set { _double_50 = value; OnPropertyChanged(); }
         }
-        private double _double_51 = 0;
+        private double _double_51 = int.MinValue;
         [StructuresDialog("double_51", typeof(TD.Double))]
         public double double_51
         {
             get { return _double_51; }
             set { _double_51 = value; OnPropertyChanged(); }
         }
-        private double _double_52 = 0;
+        private double _double_52 = int.MinValue;
         [StructuresDialog("double_52", typeof(TD.Double))]
         public double double_52
         {
             get { return _double_52; }
             set { _double_52 = value; OnPropertyChanged(); }
         }
-        private double _double_53 = 0;
+        private double _double_53 = int.MinValue;
         [StructuresDialog("double_53", typeof(TD.Double))]
         public double double_53
         {
             get { return _double_53; }
             set { _double_53 = value; OnPropertyChanged(); }
         }
-        private double _double_54 = 0;
+        private double _double_54 = int.MinValue;
         [StructuresDialog("double_54", typeof(TD.Double))]
         public double double_54
         {
             get { return _double_54; }
             set { _double_54 = value; OnPropertyChanged(); }
         }
-        private double _double_55 = 0;
+        private double _double_55 = int.MinValue;
         [StructuresDialog("double_55", typeof(TD.Double))]
         public double double_55
         {
             get { return _double_55; }
             set { _double_55 = value; OnPropertyChanged(); }
         }
-        private double _double_56 = 0;
+        private double _double_56 = int.MinValue;
         [StructuresDialog("double_56", typeof(TD.Double))]
         public double double_56
         {
             get { return _double_56; }
             set { _double_56 = value; OnPropertyChanged(); }
         }
-        private double _double_57 = 0;
+        private double _double_57 = int.MinValue;
         [StructuresDialog("double_57", typeof(TD.Double))]
         public double double_57
         {
             get { return _double_57; }
             set { _double_57 = value; OnPropertyChanged(); }
         }
-        private double _double_58 = 0;
+        private double _double_58 = int.MinValue;
         [StructuresDialog("double_58", typeof(TD.Double))]
         public double double_58
         {
             get { return _double_58; }
             set { _double_58 = value; OnPropertyChanged(); }
         }
-        private double _double_59 = 0;
+        private double _double_59 = int.MinValue;
         [StructuresDialog("double_59", typeof(TD.Double))]
         public double double_59
         {
             get { return _double_59; }
             set { _double_59 = value; OnPropertyChanged(); }
         }
-        private double _double_60 = 0;
+        private double _double_60 = int.MinValue;
         [StructuresDialog("double_60", typeof(TD.Double))]
         public double double_60
         {
             get { return _double_60; }
             set { _double_60 = value; OnPropertyChanged(); }
         }
-        private double _double_61 = 0;
+        private double _double_61 = int.MinValue;
         [StructuresDialog("double_61", typeof(TD.Double))]
         public double double_61
         {
             get { return _double_61; }
             set { _double_61 = value; OnPropertyChanged(); }
         }
-        private double _double_62 = 0;
+        private double _double_62 = int.MinValue;
         [StructuresDialog("double_62", typeof(TD.Double))]
         public double double_62
         {
             get { return _double_62; }
             set { _double_62 = value; OnPropertyChanged(); }
         }
-        private double _double_63 = 0;
+        private double _double_63 = int.MinValue;
         [StructuresDialog("double_63", typeof(TD.Double))]
         public double double_63
         {
             get { return _double_63; }
             set { _double_63 = value; OnPropertyChanged(); }
         }
-        private double _double_64 = 0;
+        private double _double_64 = int.MinValue;
         [StructuresDialog("double_64", typeof(TD.Double))]
         public double double_64
         {
             get { return _double_64; }
             set { _double_64 = value; OnPropertyChanged(); }
         }
-        private double _double_65 = 0;
+        private double _double_65 = int.MinValue;
         [StructuresDialog("double_65", typeof(TD.Double))]
         public double double_65
         {
             get { return _double_65; }
             set { _double_65 = value; OnPropertyChanged(); }
         }
-        private double _double_66 = 0;
+        private double _double_66 = int.MinValue;
         [StructuresDialog("double_66", typeof(TD.Double))]
         public double double_66
         {
             get { return _double_66; }
             set { _double_66 = value; OnPropertyChanged(); }
         }
-        private double _double_67 = 0;
+        private double _double_67 = int.MinValue;
         [StructuresDialog("double_67", typeof(TD.Double))]
         public double double_67
         {
             get { return _double_67; }
             set { _double_67 = value; OnPropertyChanged(); }
         }
-        private double _double_68 = 0;
+        private double _double_68 = int.MinValue;
         [StructuresDialog("double_68", typeof(TD.Double))]
         public double double_68
         {
             get { return _double_68; }
             set { _double_68 = value; OnPropertyChanged(); }
         }
-        private double _double_69 = 0;
+        private double _double_69 = int.MinValue;
         [StructuresDialog("double_69", typeof(TD.Double))]
         public double double_69
         {
             get { return _double_69; }
             set { _double_69 = value; OnPropertyChanged(); }
         }
-        private double _double_70 = 0;
+        private double _double_70 = int.MinValue;
         [StructuresDialog("double_70", typeof(TD.Double))]
         public double double_70
         {
             get { return _double_70; }
             set { _double_70 = value; OnPropertyChanged(); }
         }
-        private double _double_71 = 0;
+        private double _double_71 = int.MinValue;
         [StructuresDialog("double_71", typeof(TD.Double))]
         public double double_71
         {
             get { return _double_71; }
             set { _double_71 = value; OnPropertyChanged(); }
         }
-        private double _double_72 = 0;
+        private double _double_72 = int.MinValue;
         [StructuresDialog("double_72", typeof(TD.Double))]
         public double double_72
         {
             get { return _double_72; }
             set { _double_72 = value; OnPropertyChanged(); }
         }
-        private double _double_73 = 0;
+        private double _double_73 = int.MinValue;
         [StructuresDialog("double_73", typeof(TD.Double))]
         public double double_73
         {
             get { return _double_73; }
             set { _double_73 = value; OnPropertyChanged(); }
         }
-        private double _double_74 = 0;
+        private double _double_74 = int.MinValue;
         [StructuresDialog("double_74", typeof(TD.Double))]
         public double double_74
         {
             get { return _double_74; }
             set { _double_74 = value; OnPropertyChanged(); }
         }
-        private double _double_75 = 0;
+        private double _double_75 = int.MinValue;
         [StructuresDialog("double_75", typeof(TD.Double))]
         public double double_75
         {
             get { return _double_75; }
             set { _double_75 = value; OnPropertyChanged(); }
         }
-        private double _double_76 = 0;
+        private double _double_76 = int.MinValue;
         [StructuresDialog("double_76", typeof(TD.Double))]
         public double double_76
         {
             get { return _double_76; }
             set { _double_76 = value; OnPropertyChanged(); }
         }
-        private double _double_77 = 0;
+        private double _double_77 = int.MinValue;
         [StructuresDialog("double_77", typeof(TD.Double))]
         public double double_77
         {
             get { return _double_77; }
             set { _double_77 = value; OnPropertyChanged(); }
         }
-        private double _double_78 = 0;
+        private double _double_78 = int.MinValue;
         [StructuresDialog("double_78", typeof(TD.Double))]
         public double double_78
         {
             get { return _double_78; }
             set { _double_78 = value; OnPropertyChanged(); }
         }
-        private double _double_79 = 0;
+        private double _double_79 = int.MinValue;
         [StructuresDialog("double_79", typeof(TD.Double))]
         public double double_79
         {
             get { return _double_79; }
             set { _double_79 = value; OnPropertyChanged(); }
         }
-        private double _double_80 = 0;
+        private double _double_80 = int.MinValue;
         [StructuresDialog("double_80", typeof(TD.Double))]
         public double double_80
         {
             get { return _double_80; }
             set { _double_80 = value; OnPropertyChanged(); }
         }
-        private double _double_81 = 0;
+        private double _double_81 = int.MinValue;
         [StructuresDialog("double_81", typeof(TD.Double))]
         public double double_81
         {
             get { return _double_81; }
             set { _double_81 = value; OnPropertyChanged(); }
         }
-        private double _double_82 = 0;
+        private double _double_82 = int.MinValue;
         [StructuresDialog("double_82", typeof(TD.Double))]
         public double double_82
         {
             get { return _double_82; }
             set { _double_82 = value; OnPropertyChanged(); }
         }
-        private double _double_83 = 0;
+        private double _double_83 = int.MinValue;
         [StructuresDialog("double_83", typeof(TD.Double))]
         public double double_83
         {
             get { return _double_83; }
             set { _double_83 = value; OnPropertyChanged(); }
         }
-        private double _double_84 = 0;
+        private double _double_84 = int.MinValue;
         [StructuresDialog("double_84", typeof(TD.Double))]
         public double double_84
         {
             get { return _double_84; }
             set { _double_84 = value; OnPropertyChanged(); }
         }
-        private double _double_85 = 0;
+        private double _double_85 = int.MinValue;
         [StructuresDialog("double_85", typeof(TD.Double))]
         public double double_85
         {
             get { return _double_85; }
             set { _double_85 = value; OnPropertyChanged(); }
         }
-        private double _double_86 = 0;
+        private double _double_86 = int.MinValue;
         [StructuresDialog("double_86", typeof(TD.Double))]
         public double double_86
         {
             get { return _double_86; }
             set { _double_86 = value; OnPropertyChanged(); }
         }
-        private double _double_87 = 0;
+        private double _double_87 = int.MinValue;
         [StructuresDialog("double_87", typeof(TD.Double))]
         public double double_87
         {
             get { return _double_87; }
             set { _double_87 = value; OnPropertyChanged(); }
         }
-        private double _double_88 = 0;
+        private double _double_88 = int.MinValue;
         [StructuresDialog("double_88", typeof(TD.Double))]
         public double double_88
         {
             get { return _double_88; }
             set { _double_88 = value; OnPropertyChanged(); }
         }
-        private double _double_89 = 0;
+        private double _double_89 = int.MinValue;
         [StructuresDialog("double_89", typeof(TD.Double))]
         public double double_89
         {
             get { return _double_89; }
             set { _double_89 = value; OnPropertyChanged(); }
         }
-        private double _double_90 = 0;
+        private double _double_90 = int.MinValue;
         [StructuresDialog("double_90", typeof(TD.Double))]
         public double double_90
         {
             get { return _double_90; }
             set { _double_90 = value; OnPropertyChanged(); }
         }
-        private double _double_91 = 0;
+        private double _double_91 = int.MinValue;
         [StructuresDialog("double_91", typeof(TD.Double))]
         public double double_91
         {
             get { return _double_91; }
             set { _double_91 = value; OnPropertyChanged(); }
         }
-        private double _double_92 = 0;
+        private double _double_92 = int.MinValue;
         [StructuresDialog("double_92", typeof(TD.Double))]
         public double double_92
         {
             get { return _double_92; }
             set { _double_92 = value; OnPropertyChanged(); }
         }
-        private double _double_93 = 0;
+        private double _double_93 = int.MinValue;
         [StructuresDialog("double_93", typeof(TD.Double))]
         public double double_93
         {
             get { return _double_93; }
             set { _double_93 = value; OnPropertyChanged(); }
         }
-        private double _double_94 = 0;
+        private double _double_94 = int.MinValue;
         [StructuresDialog("double_94", typeof(TD.Double))]
         public double double_94
         {
             get { return _double_94; }
             set { _double_94 = value; OnPropertyChanged(); }
         }
-        private double _double_95 = 0;
+        private double _double_95 = int.MinValue;
         [StructuresDialog("double_95", typeof(TD.Double))]
         public double double_95
         {
             get { return _double_95; }
             set { _double_95 = value; OnPropertyChanged(); }
         }
-        private double _double_96 = 0;
+        private double _double_96 = int.MinValue;
         [StructuresDialog("double_96", typeof(TD.Double))]
         public double double_96
         {
             get { return _double_96; }
             set { _double_96 = value; OnPropertyChanged(); }
         }
-        private double _double_97 = 0;
+        private double _double_97 = int.MinValue;
         [StructuresDialog("double_97", typeof(TD.Double))]
         public double double_97
         {
             get { return _double_97; }
             set { _double_97 = value; OnPropertyChanged(); }
         }
-        private double _double_98 = 0;
+        private double _double_98 = int.MinValue;
         [StructuresDialog("double_98", typeof(TD.Double))]
         public double double_98
         {
             get { return _double_98; }
             set { _double_98 = value; OnPropertyChanged(); }
         }
-        private double _double_99 = 0;
+        private double _double_99 = int.MinValue;
         [StructuresDialog("double_99", typeof(TD.Double))]
         public double double_99
         {
             get { return _double_99; }
             set { _double_99 = value; OnPropertyChanged(); }
         }
-        private double _double_100 = 0;
+        private double _double_100 = int.MinValue;
         [StructuresDialog("double_100", typeof(TD.Double))]
         public double double_100
         {
             get { return _double_100; }
             set { _double_100 = value; OnPropertyChanged(); }
         }
-        private double _double_101 = 0;
+        private double _double_101 = int.MinValue;
         [StructuresDialog("double_101", typeof(TD.Double))]
         public double double_101
         {
             get { return _double_101; }
             set { _double_101 = value; OnPropertyChanged(); }
         }
-        private double _double_102 = 0;
+        private double _double_102 = int.MinValue;
         [StructuresDialog("double_102", typeof(TD.Double))]
         public double double_102
         {
             get { return _double_102; }
             set { _double_102 = value; OnPropertyChanged(); }
         }
-        private double _double_103 = 0;
+        private double _double_103 = int.MinValue;
         [StructuresDialog("double_103", typeof(TD.Double))]
         public double double_103
         {
             get { return _double_103; }
             set { _double_103 = value; OnPropertyChanged(); }
         }
-        private double _double_104 = 0;
+        private double _double_104 = int.MinValue;
         [StructuresDialog("double_104", typeof(TD.Double))]
         public double double_104
         {
             get { return _double_104; }
             set { _double_104 = value; OnPropertyChanged(); }
         }
-        private double _double_105 = 0;
+        private double _double_105 = int.MinValue;
         [StructuresDialog("double_105", typeof(TD.Double))]
         public double double_105
         {
             get { return _double_105; }
             set { _double_105 = value; OnPropertyChanged(); }
         }
-        private double _double_106 = 0;
+        private double _double_106 = int.MinValue;
         [StructuresDialog("double_106", typeof(TD.Double))]
         public double double_106
         {
             get { return _double_106; }
             set { _double_106 = value; OnPropertyChanged(); }
         }
-        private double _double_107 = 0;
+        private double _double_107 = int.MinValue;
         [StructuresDialog("double_107", typeof(TD.Double))]
         public double double_107
         {
             get { return _double_107; }
             set { _double_107 = value; OnPropertyChanged(); }
         }
-        private double _double_108 = 0;
+        private double _double_108 = int.MinValue;
         [StructuresDialog("double_108", typeof(TD.Double))]
         public double double_108
         {
             get { return _double_108; }
             set { _double_108 = value; OnPropertyChanged(); }
         }
-        private double _double_109 = 0;
+        private double _double_109 = int.MinValue;
         [StructuresDialog("double_109", typeof(TD.Double))]
         public double double_109
         {
             get { return _double_109; }
             set { _double_109 = value; OnPropertyChanged(); }
         }
-        private double _double_110 = 0;
+        private double _double_110 = int.MinValue;
         [StructuresDialog("double_110", typeof(TD.Double))]
         public double double_110
         {
             get { return _double_110; }
             set { _double_110 = value; OnPropertyChanged(); }
         }
-        private double _double_111 = 0;
+        private double _double_111 = int.MinValue;
         [StructuresDialog("double_111", typeof(TD.Double))]
         public double double_111
         {
             get { return _double_111; }
             set { _double_111 = value; OnPropertyChanged(); }
         }
-        private double _double_112 = 0;
+        private double _double_112 = int.MinValue;
         [StructuresDialog("double_112", typeof(TD.Double))]
         public double double_112
         {
             get { return _double_112; }
             set { _double_112 = value; OnPropertyChanged(); }
         }
-        private double _double_113 = 0;
+        private double _double_113 = int.MinValue;
         [StructuresDialog("double_113", typeof(TD.Double))]
         public double double_113
         {
             get { return _double_113; }
             set { _double_113 = value; OnPropertyChanged(); }
         }
-        private double _double_114 = 0;
+        private double _double_114 = int.MinValue;
         [StructuresDialog("double_114", typeof(TD.Double))]
         public double double_114
         {
             get { return _double_114; }
             set { _double_114 = value; OnPropertyChanged(); }
         }
-        private double _double_115 = 0;
+        private double _double_115 = int.MinValue;
         [StructuresDialog("double_115", typeof(TD.Double))]
         public double double_115
         {
             get { return _double_115; }
             set { _double_115 = value; OnPropertyChanged(); }
         }
-        private double _double_116 = 0;
+        private double _double_116 = int.MinValue;
         [StructuresDialog("double_116", typeof(TD.Double))]
         public double double_116
         {
             get { return _double_116; }
             set { _double_116 = value; OnPropertyChanged(); }
         }
-        private double _double_117 = 0;
+        private double _double_117 = int.MinValue;
         [StructuresDialog("double_117", typeof(TD.Double))]
         public double double_117
         {
             get { return _double_117; }
             set { _double_117 = value; OnPropertyChanged(); }
         }
-        private double _double_118 = 0;
+        private double _double_118 = int.MinValue;
         [StructuresDialog("double_118", typeof(TD.Double))]
         public double double_118
         {
             get { return _double_118; }
             set { _double_118 = value; OnPropertyChanged(); }
         }
-        private double _double_119 = 0;
+        private double _double_119 = int.MinValue;
         [StructuresDialog("double_119", typeof(TD.Double))]
         public double double_119
         {
             get { return _double_119; }
             set { _double_119 = value; OnPropertyChanged(); }
         }
-        private double _double_120 = 0;
+        private double _double_120 = int.MinValue;
         [StructuresDialog("double_120", typeof(TD.Double))]
         public double double_120
         {
             get { return _double_120; }
             set { _double_120 = value; OnPropertyChanged(); }
         }
-        private double _double_121 = 0;
+        private double _double_121 = int.MinValue;
         [StructuresDialog("double_121", typeof(TD.Double))]
         public double double_121
         {
             get { return _double_121; }
             set { _double_121 = value; OnPropertyChanged(); }
         }
-        private double _double_122 = 0;
+        private double _double_122 = int.MinValue;
         [StructuresDialog("double_122", typeof(TD.Double))]
         public double double_122
         {
             get { return _double_122; }
             set { _double_122 = value; OnPropertyChanged(); }
         }
-        private double _double_123 = 0;
+        private double _double_123 = int.MinValue;
         [StructuresDialog("double_123", typeof(TD.Double))]
         public double double_123
         {
             get { return _double_123; }
             set { _double_123 = value; OnPropertyChanged(); }
         }
-        private double _double_124 = 0;
+        private double _double_124 = int.MinValue;
         [StructuresDialog("double_124", typeof(TD.Double))]
         public double double_124
         {
             get { return _double_124; }
             set { _double_124 = value; OnPropertyChanged(); }
         }
-        private double _double_125 = 0;
+        private double _double_125 = int.MinValue;
         [StructuresDialog("double_125", typeof(TD.Double))]
         public double double_125
         {
             get { return _double_125; }
             set { _double_125 = value; OnPropertyChanged(); }
         }
-        private double _double_126 = 0;
+        private double _double_126 = int.MinValue;
         [StructuresDialog("double_126", typeof(TD.Double))]
         public double double_126
         {
             get { return _double_126; }
             set { _double_126 = value; OnPropertyChanged(); }
         }
-        private double _double_127 = 0;
+        private double _double_127 = int.MinValue;
         [StructuresDialog("double_127", typeof(TD.Double))]
         public double double_127
         {
             get { return _double_127; }
             set { _double_127 = value; OnPropertyChanged(); }
         }
-        private double _double_128 = 0;
+        private double _double_128 = int.MinValue;
         [StructuresDialog("double_128", typeof(TD.Double))]
         public double double_128
         {
             get { return _double_128; }
             set { _double_128 = value; OnPropertyChanged(); }
         }
-        private double _double_129 = 0;
+        private double _double_129 = int.MinValue;
         [StructuresDialog("double_129", typeof(TD.Double))]
         public double double_129
         {
             get { return _double_129; }
             set { _double_129 = value; OnPropertyChanged(); }
         }
-        private double _double_130 = 0;
+        private double _double_130 = int.MinValue;
         [StructuresDialog("double_130", typeof(TD.Double))]
         public double double_130
         {
             get { return _double_130; }
             set { _double_130 = value; OnPropertyChanged(); }
         }
-        private double _double_131 = 0;
+        private double _double_131 = int.MinValue;
         [StructuresDialog("double_131", typeof(TD.Double))]
         public double double_131
         {
             get { return _double_131; }
             set { _double_131 = value; OnPropertyChanged(); }
         }
-        private double _double_132 = 0;
+        private double _double_132 = int.MinValue;
         [StructuresDialog("double_132", typeof(TD.Double))]
         public double double_132
         {
             get { return _double_132; }
             set { _double_132 = value; OnPropertyChanged(); }
         }
-        private double _double_133 = 0;
+        private double _double_133 = int.MinValue;
         [StructuresDialog("double_133", typeof(TD.Double))]
         public double double_133
         {
             get { return _double_133; }
             set { _double_133 = value; OnPropertyChanged(); }
         }
-        private double _double_134 = 0;
+        private double _double_134 = int.MinValue;
         [StructuresDialog("double_134", typeof(TD.Double))]
         public double double_134
         {
             get { return _double_134; }
             set { _double_134 = value; OnPropertyChanged(); }
         }
-        private double _double_135 = 0;
+        private double _double_135 = int.MinValue;
         [StructuresDialog("double_135", typeof(TD.Double))]
         public double double_135
         {
             get { return _double_135; }
             set { _double_135 = value; OnPropertyChanged(); }
         }
-        private double _double_136 = 0;
+        private double _double_136 = int.MinValue;
         [StructuresDialog("double_136", typeof(TD.Double))]
         public double double_136
         {
             get { return _double_136; }
             set { _double_136 = value; OnPropertyChanged(); }
         }
-        private double _double_137 = 0;
+        private double _double_137 = int.MinValue;
         [StructuresDialog("double_137", typeof(TD.Double))]
         public double double_137
         {
             get { return _double_137; }
             set { _double_137 = value; OnPropertyChanged(); }
         }
-        private double _double_138 = 0;
+        private double _double_138 = int.MinValue;
         [StructuresDialog("double_138", typeof(TD.Double))]
         public double double_138
         {
             get { return _double_138; }
             set { _double_138 = value; OnPropertyChanged(); }
         }
-        private double _double_139 = 0;
+        private double _double_139 = int.MinValue;
         [StructuresDialog("double_139", typeof(TD.Double))]
         public double double_139
         {
             get { return _double_139; }
             set { _double_139 = value; OnPropertyChanged(); }
         }
-        private double _double_140 = 0;
+        private double _double_140 = int.MinValue;
         [StructuresDialog("double_140", typeof(TD.Double))]
         public double double_140
         {
             get { return _double_140; }
             set { _double_140 = value; OnPropertyChanged(); }
         }
-        private double _double_141 = 0;
+        private double _double_141 = int.MinValue;
         [StructuresDialog("double_141", typeof(TD.Double))]
         public double double_141
         {
             get { return _double_141; }
             set { _double_141 = value; OnPropertyChanged(); }
         }
-        private double _double_142 = 0;
+        private double _double_142 = int.MinValue;
         [StructuresDialog("double_142", typeof(TD.Double))]
         public double double_142
         {
             get { return _double_142; }
             set { _double_142 = value; OnPropertyChanged(); }
         }
-        private double _double_143 = 0;
+        private double _double_143 = int.MinValue;
         [StructuresDialog("double_143", typeof(TD.Double))]
         public double double_143
         {
             get { return _double_143; }
             set { _double_143 = value; OnPropertyChanged(); }
         }
-        private double _double_144 = 0;
+        private double _double_144 = int.MinValue;
         [StructuresDialog("double_144", typeof(TD.Double))]
         public double double_144
         {
             get { return _double_144; }
             set { _double_144 = value; OnPropertyChanged(); }
         }
-        private double _double_145 = 0;
+        private double _double_145 = int.MinValue;
         [StructuresDialog("double_145", typeof(TD.Double))]
         public double double_145
         {
             get { return _double_145; }
             set { _double_145 = value; OnPropertyChanged(); }
         }
-        private double _double_146 = 0;
+        private double _double_146 = int.MinValue;
         [StructuresDialog("double_146", typeof(TD.Double))]
         public double double_146
         {
             get { return _double_146; }
             set { _double_146 = value; OnPropertyChanged(); }
         }
-        private double _double_147 = 0;
+        private double _double_147 = int.MinValue;
         [StructuresDialog("double_147", typeof(TD.Double))]
         public double double_147
         {
             get { return _double_147; }
             set { _double_147 = value; OnPropertyChanged(); }
         }
-        private double _double_148 = 0;
+        private double _double_148 = int.MinValue;
         [StructuresDialog("double_148", typeof(TD.Double))]
         public double double_148
         {
             get { return _double_148; }
             set { _double_148 = value; OnPropertyChanged(); }
         }
-        private double _double_149 = 0;
+        private double _double_149 = int.MinValue;
         [StructuresDialog("double_149", typeof(TD.Double))]
         public double double_149
         {
             get { return _double_149; }
             set { _double_149 = value; OnPropertyChanged(); }
         }
-        private double _double_150 = 0;
+        private double _double_150 = int.MinValue;
         [StructuresDialog("double_150", typeof(TD.Double))]
         public double double_150
         {
             get { return _double_150; }
             set { _double_150 = value; OnPropertyChanged(); }
         }
-        private double _double_151 = 0;
+        private double _double_151 = int.MinValue;
         [StructuresDialog("double_151", typeof(TD.Double))]
         public double double_151
         {
             get { return _double_151; }
             set { _double_151 = value; OnPropertyChanged(); }
         }
-        private double _double_152 = 0;
+        private double _double_152 = int.MinValue;
         [StructuresDialog("double_152", typeof(TD.Double))]
         public double double_152
         {
             get { return _double_152; }
             set { _double_152 = value; OnPropertyChanged(); }
         }
-        private double _double_153 = 0;
+        private double _double_153 = int.MinValue;
         [StructuresDialog("double_153", typeof(TD.Double))]
         public double double_153
         {
             get { return _double_153; }
             set { _double_153 = value; OnPropertyChanged(); }
         }
-        private double _double_154 = 0;
+        private double _double_154 = int.MinValue;
         [StructuresDialog("double_154", typeof(TD.Double))]
         public double double_154
         {
             get { return _double_154; }
             set { _double_154 = value; OnPropertyChanged(); }
         }
-        private double _double_155 = 0;
+        private double _double_155 = int.MinValue;
         [StructuresDialog("double_155", typeof(TD.Double))]
         public double double_155
         {
             get { return _double_155; }
             set { _double_155 = value; OnPropertyChanged(); }
         }
-        private double _double_156 = 0;
+        private double _double_156 = int.MinValue;
         [StructuresDialog("double_156", typeof(TD.Double))]
         public double double_156
         {
             get { return _double_156; }
             set { _double_156 = value; OnPropertyChanged(); }
         }
-        private double _double_157 = 0;
+        private double _double_157 = int.MinValue;
         [StructuresDialog("double_157", typeof(TD.Double))]
         public double double_157
         {
             get { return _double_157; }
             set { _double_157 = value; OnPropertyChanged(); }
         }
-        private double _double_158 = 0;
+        private double _double_158 = int.MinValue;
         [StructuresDialog("double_158", typeof(TD.Double))]
         public double double_158
         {
             get { return _double_158; }
             set { _double_158 = value; OnPropertyChanged(); }
         }
-        private double _double_159 = 0;
+        private double _double_159 = int.MinValue;
         [StructuresDialog("double_159", typeof(TD.Double))]
         public double double_159
         {
             get { return _double_159; }
             set { _double_159 = value; OnPropertyChanged(); }
         }
-        private double _double_160 = 0;
+        private double _double_160 = int.MinValue;
         [StructuresDialog("double_160", typeof(TD.Double))]
         public double double_160
         {
             get { return _double_160; }
             set { _double_160 = value; OnPropertyChanged(); }
         }
-        private double _double_161 = 0;
+        private double _double_161 = int.MinValue;
         [StructuresDialog("double_161", typeof(TD.Double))]
         public double double_161
         {
             get { return _double_161; }
             set { _double_161 = value; OnPropertyChanged(); }
         }
-        private double _double_162 = 0;
+        private double _double_162 = int.MinValue;
         [StructuresDialog("double_162", typeof(TD.Double))]
         public double double_162
         {
             get { return _double_162; }
             set { _double_162 = value; OnPropertyChanged(); }
         }
-        private double _double_163 = 0;
+        private double _double_163 = int.MinValue;
         [StructuresDialog("double_163", typeof(TD.Double))]
         public double double_163
         {
             get { return _double_163; }
             set { _double_163 = value; OnPropertyChanged(); }
         }
-        private double _double_164 = 0;
+        private double _double_164 = int.MinValue;
         [StructuresDialog("double_164", typeof(TD.Double))]
         public double double_164
         {
             get { return _double_164; }
             set { _double_164 = value; OnPropertyChanged(); }
         }
-        private double _double_165 = 0;
+        private double _double_165 = int.MinValue;
         [StructuresDialog("double_165", typeof(TD.Double))]
         public double double_165
         {
             get { return _double_165; }
             set { _double_165 = value; OnPropertyChanged(); }
         }
-        private double _double_166 = 0;
+        private double _double_166 = int.MinValue;
         [StructuresDialog("double_166", typeof(TD.Double))]
         public double double_166
         {
             get { return _double_166; }
             set { _double_166 = value; OnPropertyChanged(); }
         }
-        private double _double_167 = 0;
+        private double _double_167 = int.MinValue;
         [StructuresDialog("double_167", typeof(TD.Double))]
         public double double_167
         {
             get { return _double_167; }
             set { _double_167 = value; OnPropertyChanged(); }
         }
-        private double _double_168 = 0;
+        private double _double_168 = int.MinValue;
         [StructuresDialog("double_168", typeof(TD.Double))]
         public double double_168
         {
             get { return _double_168; }
             set { _double_168 = value; OnPropertyChanged(); }
         }
-        private double _double_169 = 0;
+        private double _double_169 = int.MinValue;
         [StructuresDialog("double_169", typeof(TD.Double))]
         public double double_169
         {
             get { return _double_169; }
             set { _double_169 = value; OnPropertyChanged(); }
         }
-        private double _double_170 = 0;
+        private double _double_170 = int.MinValue;
         [StructuresDialog("double_170", typeof(TD.Double))]
         public double double_170
         {
             get { return _double_170; }
             set { _double_170 = value; OnPropertyChanged(); }
         }
-        private double _double_171 = 0;
+        private double _double_171 = int.MinValue;
         [StructuresDialog("double_171", typeof(TD.Double))]
         public double double_171
         {
             get { return _double_171; }
             set { _double_171 = value; OnPropertyChanged(); }
         }
-        private double _double_172 = 0;
+        private double _double_172 = int.MinValue;
         [StructuresDialog("double_172", typeof(TD.Double))]
         public double double_172
         {
             get { return _double_172; }
             set { _double_172 = value; OnPropertyChanged(); }
         }
-        private double _double_173 = 0;
+        private double _double_173 = int.MinValue;
         [StructuresDialog("double_173", typeof(TD.Double))]
         public double double_173
         {
             get { return _double_173; }
             set { _double_173 = value; OnPropertyChanged(); }
         }
-        private double _double_174 = 0;
+        private double _double_174 = int.MinValue;
         [StructuresDialog("double_174", typeof(TD.Double))]
         public double double_174
         {
             get { return _double_174; }
             set { _double_174 = value; OnPropertyChanged(); }
         }
-        private double _double_175 = 0;
+        private double _double_175 = int.MinValue;
         [StructuresDialog("double_175", typeof(TD.Double))]
         public double double_175
         {
             get { return _double_175; }
             set { _double_175 = value; OnPropertyChanged(); }
         }
-        private double _double_176 = 0;
+        private double _double_176 = int.MinValue;
         [StructuresDialog("double_176", typeof(TD.Double))]
         public double double_176
         {
             get { return _double_176; }
             set { _double_176 = value; OnPropertyChanged(); }
         }
-        private double _double_177 = 0;
+        private double _double_177 = int.MinValue;
         [StructuresDialog("double_177", typeof(TD.Double))]
         public double double_177
         {
             get { return _double_177; }
             set { _double_177 = value; OnPropertyChanged(); }
         }
-        private double _double_178 = 0;
+        private double _double_178 = int.MinValue;
         [StructuresDialog("double_178", typeof(TD.Double))]
         public double double_178
         {
             get { return _double_178; }
             set { _double_178 = value; OnPropertyChanged(); }
         }
-        private double _double_179 = 0;
+        private double _double_179 = int.MinValue;
         [StructuresDialog("double_179", typeof(TD.Double))]
         public double double_179
         {
             get { return _double_179; }
             set { _double_179 = value; OnPropertyChanged(); }
         }
-        private double _double_180 = 0;
+        private double _double_180 = int.MinValue;
         [StructuresDialog("double_180", typeof(TD.Double))]
         public double double_180
         {
             get { return _double_180; }
             set { _double_180 = value; OnPropertyChanged(); }
         }
-        private double _double_181 = 0;
+        private double _double_181 = int.MinValue;
         [StructuresDialog("double_181", typeof(TD.Double))]
         public double double_181
         {
             get { return _double_181; }
             set { _double_181 = value; OnPropertyChanged(); }
         }
-        private double _double_182 = 0;
+        private double _double_182 = int.MinValue;
         [StructuresDialog("double_182", typeof(TD.Double))]
         public double double_182
         {
             get { return _double_182; }
             set { _double_182 = value; OnPropertyChanged(); }
         }
-        private double _double_183 = 0;
+        private double _double_183 = int.MinValue;
         [StructuresDialog("double_183", typeof(TD.Double))]
         public double double_183
         {
             get { return _double_183; }
             set { _double_183 = value; OnPropertyChanged(); }
         }
-        private double _double_184 = 0;
+        private double _double_184 = int.MinValue;
         [StructuresDialog("double_184", typeof(TD.Double))]
         public double double_184
         {
             get { return _double_184; }
             set { _double_184 = value; OnPropertyChanged(); }
         }
-        private double _double_185 = 0;
+        private double _double_185 = int.MinValue;
         [StructuresDialog("double_185", typeof(TD.Double))]
         public double double_185
         {
             get { return _double_185; }
             set { _double_185 = value; OnPropertyChanged(); }
         }
-        private double _double_186 = 0;
+        private double _double_186 = int.MinValue;
         [StructuresDialog("double_186", typeof(TD.Double))]
         public double double_186
         {
             get { return _double_186; }
             set { _double_186 = value; OnPropertyChanged(); }
         }
-        private double _double_187 = 0;
+        private double _double_187 = int.MinValue;
         [StructuresDialog("double_187", typeof(TD.Double))]
         public double double_187
         {
             get { return _double_187; }
             set { _double_187 = value; OnPropertyChanged(); }
         }
-        private double _double_188 = 0;
+        private double _double_188 = int.MinValue;
         [StructuresDialog("double_188", typeof(TD.Double))]
         public double double_188
         {
             get { return _double_188; }
             set { _double_188 = value; OnPropertyChanged(); }
         }
-        private double _double_189 = 0;
+        private double _double_189 = int.MinValue;
         [StructuresDialog("double_189", typeof(TD.Double))]
         public double double_189
         {
             get { return _double_189; }
             set { _double_189 = value; OnPropertyChanged(); }
         }
-        private double _double_190 = 0;
+        private double _double_190 = int.MinValue;
         [StructuresDialog("double_190", typeof(TD.Double))]
         public double double_190
         {
             get { return _double_190; }
             set { _double_190 = value; OnPropertyChanged(); }
         }
-        private double _double_191 = 0;
+        private double _double_191 = int.MinValue;
         [StructuresDialog("double_191", typeof(TD.Double))]
         public double double_191
         {
             get { return _double_191; }
             set { _double_191 = value; OnPropertyChanged(); }
         }
-        private double _double_192 = 0;
+        private double _double_192 = int.MinValue;
         [StructuresDialog("double_192", typeof(TD.Double))]
         public double double_192
         {
             get { return _double_192; }
             set { _double_192 = value; OnPropertyChanged(); }
         }
-        private double _double_193 = 0;
+        private double _double_193 = int.MinValue;
         [StructuresDialog("double_193", typeof(TD.Double))]
         public double double_193
         {
             get { return _double_193; }
             set { _double_193 = value; OnPropertyChanged(); }
         }
-        private double _double_194 = 0;
+        private double _double_194 = int.MinValue;
         [StructuresDialog("double_194", typeof(TD.Double))]
         public double double_194
         {
             get { return _double_194; }
             set { _double_194 = value; OnPropertyChanged(); }
         }
-        private double _double_195 = 0;
+        private double _double_195 = int.MinValue;
         [StructuresDialog("double_195", typeof(TD.Double))]
         public double double_195
         {
             get { return _double_195; }
             set { _double_195 = value; OnPropertyChanged(); }
         }
-        private double _double_196 = 0;
+        private double _double_196 = int.MinValue;
         [StructuresDialog("double_196", typeof(TD.Double))]
         public double double_196
         {
             get { return _double_196; }
             set { _double_196 = value; OnPropertyChanged(); }
         }
-        private double _double_197 = 0;
+        private double _double_197 = int.MinValue;
         [StructuresDialog("double_197", typeof(TD.Double))]
         public double double_197
         {
             get { return _double_197; }
             set { _double_197 = value; OnPropertyChanged(); }
         }
-        private double _double_198 = 0;
+        private double _double_198 = int.MinValue;
         [StructuresDialog("double_198", typeof(TD.Double))]
         public double double_198
         {
             get { return _double_198; }
             set { _double_198 = value; OnPropertyChanged(); }
         }
-        private double _double_199 = 0;
+        private double _double_199 = int.MinValue;
         [StructuresDialog("double_199", typeof(TD.Double))]
         public double double_199
         {
