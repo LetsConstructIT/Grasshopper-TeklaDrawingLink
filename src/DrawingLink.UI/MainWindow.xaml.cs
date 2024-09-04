@@ -47,10 +47,12 @@ namespace DrawingLink.UI
 
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
         {
+            var path = GetFullPath(_viewModel.DefinitionPath);
+
             var userFormData = _viewModel.ToDataModel();
 
             var instance = GrasshopperCaller.GetInstance();
-            var teklaParams = instance.GetInputParams(userFormData.DefinitionPath).TeklaParams;
+            var teklaParams = instance.GetInputParams(path).TeklaParams;
             var teklaInput = new UserInputPicker().PickInput(teklaParams);
 
             var messages = instance.Solve(userFormData, teklaInput);
@@ -58,7 +60,8 @@ namespace DrawingLink.UI
             var remarks = messages[GH_RuntimeMessageLevel.Remark];
 
             _messageBoxWindow.ClearMessages();
-            _messageBoxWindow.ShowMessages(GetTitle(_viewModel.DefinitionPath), remarks);
+
+            _messageBoxWindow.ShowMessages(GetTitle(path), remarks);
 
             new Tekla.Structures.Model.Model().CommitChanges();
         }
@@ -96,18 +99,28 @@ namespace DrawingLink.UI
                 .GetBindingExpression(TextBox.TextProperty)
                 .UpdateSource();
 
+            // shorten path if possible
+
             parameterViewer.ShowControls(fileName, true);
         }
 
         private void ReloadGrasshopperFile_Click(object sender, RoutedEventArgs e)
         {
-            parameterViewer.ShowControls(tbDefinitionPath.Text, true);
+            var path = GetFullPath(tbDefinitionPath.Text);
+            parameterViewer.ShowControls(path, true);
         }
 
         private void OpenGrasshopperFile_Click(object sender, RoutedEventArgs e)
         {
+            var path = GetFullPath(tbDefinitionPath.Text);
+
             var instance = GrasshopperCaller.GetInstance();
-            instance.OpenGrasshopperDefinition(tbDefinitionPath.Text);
+            instance.OpenGrasshopperDefinition(path);
+        }
+
+        private string GetFullPath(string path)
+        {
+            return RelativePathHelper.ExpandRelativePath(path);
         }
     }
 }
