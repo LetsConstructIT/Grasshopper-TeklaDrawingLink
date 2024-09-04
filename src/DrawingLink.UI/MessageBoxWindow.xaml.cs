@@ -29,6 +29,7 @@ namespace DrawingLink.UI
             textBox.Text = string.IsNullOrWhiteSpace(textBox.Text) ? "" : (textBox.Text + Environment.NewLine);
             textBox.Text += JoinMessages(messages);
 
+            this.Hide();
             this.Show();
         }
 
