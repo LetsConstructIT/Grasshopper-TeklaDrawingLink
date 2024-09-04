@@ -34,7 +34,7 @@ namespace GTDrawingLink.Components.AttributesComponents
     {
         private readonly InputOptionalParam<TextFile.TextFileAttributes> _inAttributes = new InputOptionalParam<TextFile.TextFileAttributes>(ParamInfos.TextFileAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
-        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes2);
+        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes);
         private readonly InputOptionalParam<FontAttributes> _inFontAttributes = new InputOptionalParam<FontAttributes>(ParamInfos.FontAttributes);
 
         private readonly OutputParam<TextFile.TextFileAttributes> _outAttributes = new OutputParam<TextFile.TextFileAttributes>(ParamInfos.TextFileAttributes);

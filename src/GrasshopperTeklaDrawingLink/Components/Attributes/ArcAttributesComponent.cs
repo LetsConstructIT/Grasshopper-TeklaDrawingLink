@@ -35,7 +35,7 @@ namespace GTDrawingLink.Components.AttributesComponents
     {
         private readonly InputOptionalParam<Arc.ArcAttributes> _inArcAttributes = new InputOptionalParam<Arc.ArcAttributes>(ParamInfos.ArcAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
-        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes2);
+        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes);
         private readonly InputOptionalParam<ArrowheadAttributes> _inArrowhead = new InputOptionalParam<ArrowheadAttributes>(ParamInfos.ArrowAttributes);
 
         private readonly OutputParam<Arc.ArcAttributes> _outAttributes = new OutputParam<Arc.ArcAttributes>(ParamInfos.ArcAttributes);

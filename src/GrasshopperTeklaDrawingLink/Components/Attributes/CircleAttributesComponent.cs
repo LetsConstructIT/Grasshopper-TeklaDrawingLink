@@ -38,7 +38,7 @@ namespace GTDrawingLink.Components.AttributesComponents
     {
         private readonly InputOptionalParam<Circle.CircleAttributes> _inLineAttributes = new InputOptionalParam<Circle.CircleAttributes>(ParamInfos.CircleAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
-        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes2);
+        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes);
         private readonly InputOptionalParam<ModelObjectHatchAttributes> _inHatchAttributes = new InputOptionalParam<ModelObjectHatchAttributes>(ParamInfos.HatchAttributes);
         private readonly InputOptionalStructParam<bool> _inBehindModelObject = new InputOptionalStructParam<bool>(ParamInfos.BehindModelObject);
 

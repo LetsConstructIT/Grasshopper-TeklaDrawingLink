@@ -146,13 +146,6 @@ namespace GTDrawingLink.Tools
             Description = $"Line type:\n{EnumHelpers.EnumToString<LineTypesEnum>()}\nRight-click to set"
         };
 
-        public static readonly GH_InstanceDescription LineTypeAttributes = new GH_InstanceDescription
-        {
-            Name = "Line attributes",
-            NickName = "LAttr",
-            Description = "Line type attributes"
-        };
-
         public static readonly GH_InstanceDescription VisibleLineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Visibile lines",
@@ -1269,11 +1262,11 @@ namespace GTDrawingLink.Tools
             Description = "Line attributes"
         };
 
-        public static readonly GH_InstanceDescription LineTypeAttributes2 = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription LineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Line Type",
             NickName = "LTAttr",
-            Description = "Line type attributes"
+            Description = "Line type (type + color)"
         };
 
         public static readonly GH_InstanceDescription Polyline = new GH_InstanceDescription

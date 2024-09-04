@@ -52,7 +52,7 @@ namespace GTDrawingLink.Components.AttributesComponents
                     lineTypeAttributes.Color = colorEnumValue.Value;
             }
 
-            DA.SetData(ParamInfos.LineTypeAttributes.Name, new LineTypeAttributesGoo(lineTypeAttributes));
+            DA.SetData(0, new LineTypeAttributesGoo(lineTypeAttributes));
         }
 
         private LineTypes GetLineTypeBasedOnEnum(LineTypesEnum? lineTypeValue)

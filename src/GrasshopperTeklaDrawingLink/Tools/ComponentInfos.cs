@@ -320,7 +320,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription LineTypeAttributesComponent = new GH_InstanceDescription
         {
-            Name = "Line Attributes",
+            Name = "Line Type",
             NickName = "LineType",
             Description = "Line type attributes",
             Category = VersionSpecificConstants.TabHeading,

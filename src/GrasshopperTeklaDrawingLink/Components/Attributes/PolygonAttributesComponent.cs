@@ -38,7 +38,7 @@ namespace GTDrawingLink.Components.AttributesComponents
     {
         private readonly InputOptionalParam<Polygon.PolygonAttributes> _inAttributes = new InputOptionalParam<Polygon.PolygonAttributes>(ParamInfos.PolygonAttributes);
         private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
-        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes2);
+        private readonly InputOptionalParam<LineTypeAttributes> _inLineType = new InputOptionalParam<LineTypeAttributes>(ParamInfos.LineTypeAttributes);
         private readonly InputOptionalParam<ModelObjectHatchAttributes> _inHatch = new InputOptionalParam<ModelObjectHatchAttributes>(ParamInfos.HatchAttributes);
 
         private readonly OutputParam<Polygon.PolygonAttributes> _outAttributes = new OutputParam<Polygon.PolygonAttributes>(ParamInfos.PolygonAttributes);
