@@ -23,6 +23,8 @@ namespace DrawingLink.UI
         public void ShowMessages(string title, IEnumerable<string> messages)
         {
             this.Title = title;
+            if (!messages.Any())
+                return;
 
             var textBox = this.textBox;
 
