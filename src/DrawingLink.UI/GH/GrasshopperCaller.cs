@@ -379,10 +379,19 @@ namespace DrawingLink.UI.GH
             return nickName.StartsWith("MULTIPLE") || nickName.StartsWith("M:");
         }
 
+        private string GetUserFriendlyParmName(string input)
+        {
+            var name = input.Trim();
+            if (name.ToUpperInvariant().StartsWith("M:"))
+                name = name.Substring(2).Trim();
+
+            return name;
+        }
+
         private TeklaModelParam TransformToModelParam(GH_PersistentParam<GH_Goo<ModelObject>> ghModelParam, bool isMultiple)
         {
             var paramName = ghModelParam.GetType().Name;
-            var prompt = $"Pick a {ghModelParam.NickName.Trim()}";
+            var prompt = $"Pick a {GetUserFriendlyParmName(ghModelParam.NickName)}";
 
             return paramName switch
             {
@@ -397,7 +406,7 @@ namespace DrawingLink.UI.GH
         private TeklaDrawingParam TransformToDrawingParam(IGH_ActiveObject ghDrawingParam, bool isMultiple)
         {
             var paramName = ghDrawingParam.GetType().Name;
-            var prompt = $"Pick a drawing {ghDrawingParam.NickName.Trim()}";
+            var prompt = $"Pick a drawing {GetUserFriendlyParmName(ghDrawingParam.NickName)}";
 
             return paramName switch
             {
