@@ -24,21 +24,16 @@ namespace DrawingLink.UI.TeklaInteraction
         {
             var result = new Dictionary<string, TeklaObjects>();
             foreach (var param in teklaParams.ModelParams)
-            {
                 result[param.FieldName] = param.TeklaObjects;
-            }
 
             foreach (var param in teklaParams.DrawingParams)
-            {
                 result[param.FieldName] = param.TeklaObjects;
-            }
 
             return result;
         }
 
         private void CollectTeklaInputs(TeklaParams teklaParams)
         {
-            // check in which Tekla area we are
             foreach (var param in teklaParams.ModelParams)
             {
                 if (param.ParamType == ModelParamType.Object)
