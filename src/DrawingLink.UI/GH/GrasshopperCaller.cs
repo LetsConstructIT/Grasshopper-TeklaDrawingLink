@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 using Tekla.Structures.Model;
+using TSG = Tekla.Structures.Geometry3d;
 
 namespace DrawingLink.UI.GH
 {
@@ -220,8 +221,8 @@ namespace DrawingLink.UI.GH
             foreach (var teklaModelParam in teklaParams.ModelParams)
             {
                 var ighActiveObject = teklaModelParam.ActiveObject;
-                var modelPersistentParam = ighActiveObject as GH_PersistentParam<GH_Goo<ModelObject>>;
-                if (!teklaInputs.ContainsKey(teklaModelParam.FieldName) || modelPersistentParam == null)
+                if (!teklaInputs.ContainsKey(teklaModelParam.FieldName) ||
+                    ighActiveObject is not GH_PersistentParam<GH_Goo<ModelObject>> modelPersistentParam)
                 {
                     //Raise warning flag about missing input
                     continue;
@@ -233,6 +234,35 @@ namespace DrawingLink.UI.GH
                 var objectsToSet = teklaInput.GetCorrectObject();
                 modelPersistentParam.SetPersistentData(objectsToSet);
                 modelPersistentParam.ExpireSolution(true);
+            }
+
+            foreach (var teklaDrawingParam in teklaParams.DrawingParams)
+            {
+                var ighActiveObject = teklaDrawingParam.ActiveObject;
+                if (!teklaInputs.ContainsKey(teklaDrawingParam.FieldName))
+                {
+                    //Raise warning flag about missing input
+                    continue;
+                }
+
+                if (ighActiveObject is GH_PersistentParam<GH_Goo<Tekla.Structures.Drawing.DatabaseObject>> drawingPersistentParam)
+                {
+                    drawingPersistentParam.PersistentData.Clear();
+                    var teklaInput = teklaInputs[teklaDrawingParam.FieldName];
+
+                    var objectsToSet = teklaInput.GetCorrectObject();
+                    drawingPersistentParam.SetPersistentData(objectsToSet);
+                    drawingPersistentParam.ExpireSolution(true);
+                }
+                else if (ighActiveObject is GH_PersistentParam<GH_Goo<TSG.Point>> drawingPointParam)
+                {
+                    drawingPointParam.PersistentData.Clear();
+                    var teklaInput = teklaInputs[teklaDrawingParam.FieldName];
+
+                    var objectsToSet = teklaInput.GetCorrectObject();
+                    drawingPointParam.SetPersistentData(objectsToSet);
+                    drawingPointParam.ExpireSolution(true);
+                }
             }
         }
 
