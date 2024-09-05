@@ -245,23 +245,26 @@ namespace DrawingLink.UI.GH
                     continue;
                 }
 
+                var teklaInput = teklaInputs[teklaDrawingParam.FieldName];
+                var objectsToSet = teklaInput.GetCorrectObject();
                 if (ighActiveObject is GH_PersistentParam<GH_Goo<Tekla.Structures.Drawing.DatabaseObject>> drawingPersistentParam)
                 {
                     drawingPersistentParam.PersistentData.Clear();
-                    var teklaInput = teklaInputs[teklaDrawingParam.FieldName];
 
-                    var objectsToSet = teklaInput.GetCorrectObject();
                     drawingPersistentParam.SetPersistentData(objectsToSet);
                     drawingPersistentParam.ExpireSolution(true);
                 }
-                else if (ighActiveObject is GH_PersistentParam<GH_Goo<TSG.Point>> drawingPointParam)
+                else if (ighActiveObject.GetType().ToString() == "GTDrawingLink.Types.TeklaDrawingPointParam")
                 {
-                    drawingPointParam.PersistentData.Clear();
-                    var teklaInput = teklaInputs[teklaDrawingParam.FieldName];
+                    var type = ighActiveObject.GetType();
 
-                    var objectsToSet = teklaInput.GetCorrectObject();
-                    drawingPointParam.SetPersistentData(objectsToSet);
-                    drawingPointParam.ExpireSolution(true);
+                    var persistentData = type.GetProperty("PersistentData").GetValue(ighActiveObject);
+                    var persistentDataType = persistentData.GetType();
+                    persistentDataType.GetMethod("Clear").Invoke(persistentData, null);
+
+                    var method = type.GetMethod("SetPersistentData", new Type[] { typeof(object[]) });
+                    method.Invoke(ighActiveObject, new object[] { objectsToSet });
+                    type.GetMethod("ExpireSolution").Invoke(ighActiveObject, new object[] { true });
                 }
             }
         }
