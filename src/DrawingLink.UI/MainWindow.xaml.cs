@@ -38,11 +38,11 @@ namespace DrawingLink.UI
 
         private void ParameterViewer_SetAttributeValue(object sender, EventArgs e)
         {
-            if (e is SetAttributeEventArgs args)
-            {
-                var property = _viewModel.GetType().GetProperty(args.AttributeName);
-                property.SetValue(_viewModel, args.Value);
-            }
+            if (e is not SetAttributeEventArgs args)
+
+                return;
+            var property = _viewModel.GetType().GetProperty(args.AttributeName);
+            property.SetValue(_viewModel, args.Value);
         }
 
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
@@ -53,7 +53,18 @@ namespace DrawingLink.UI
 
             var instance = GrasshopperCaller.GetInstance();
             var teklaParams = instance.GetInputParams(path).TeklaParams;
-            var teklaInput = new UserInputPicker().PickInput(teklaParams);
+
+            var teklaInput = new Dictionary<string, TeklaObjects>();
+
+            try
+            {
+                teklaInput = new UserInputPicker().PickInput(teklaParams);
+            }
+            catch (Exception exception)
+            {
+                _messageBoxWindow.ShowMessages(GetTitle(path), exception.Message);
+                return;
+            }
 
             var messages = instance.Solve(userFormData, teklaInput);
 

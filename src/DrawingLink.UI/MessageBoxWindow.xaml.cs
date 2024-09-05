@@ -20,16 +20,21 @@ namespace DrawingLink.UI
             this.textBox.Text = "";
         }
 
+        public void ShowMessages(string title, string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                return;
+
+            ShowMessages(title, new string[] { message });
+        }
+
         public void ShowMessages(string title, IEnumerable<string> messages)
         {
             this.Title = title;
             if (!messages.Any())
                 return;
 
-            var textBox = this.textBox;
-
-            textBox.Text = string.IsNullOrWhiteSpace(textBox.Text) ? "" : (textBox.Text + Environment.NewLine);
-            textBox.Text += JoinMessages(messages);
+            this.textBox.Text = JoinMessages(messages);
 
             this.Hide();
             this.Show();
