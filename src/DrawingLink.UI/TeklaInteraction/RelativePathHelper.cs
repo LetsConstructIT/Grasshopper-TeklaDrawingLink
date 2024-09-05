@@ -8,7 +8,7 @@
                 return string.Empty;
 
             var trimedPath = path.Trim();
-            var modelPath = new Tekla.Structures.Model.Model().GetInfo().ModelPath;
+            var modelPath = GetModelPath();
             if (trimedPath.StartsWith(@".\"))
                 return $"{modelPath}\\{trimedPath.Substring(2)}";
             else if (trimedPath.StartsWith(@"..\"))
@@ -16,5 +16,20 @@
             else
                 return trimedPath;
         }
+
+        public static string ShortenIfPossible(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return string.Empty;
+
+            var modelPath = GetModelPath();
+            if (path.StartsWith(modelPath))
+                return path.Replace(modelPath, ".");
+            else
+                return path;
+        }
+
+        private static string GetModelPath()
+            => new Tekla.Structures.Model.Model().GetInfo().ModelPath;
     }
 }

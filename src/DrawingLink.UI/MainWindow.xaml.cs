@@ -92,16 +92,12 @@ namespace DrawingLink.UI
             if (dialog.ShowDialog() != true)
                 return;
 
-            var fileName = dialog.FileName;
-
-            tbDefinitionPath.Text = fileName;
+            tbDefinitionPath.Text = RelativePathHelper.ShortenIfPossible(dialog.FileName);
             tbDefinitionPath
                 .GetBindingExpression(TextBox.TextProperty)
                 .UpdateSource();
 
-            // shorten path if possible
-
-            parameterViewer.ShowControls(fileName, true);
+            parameterViewer.ShowControls(dialog.FileName, true);
         }
 
         private void ReloadGrasshopperFile_Click(object sender, RoutedEventArgs e)
