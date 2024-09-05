@@ -62,6 +62,21 @@ namespace DrawingLink.UI.TeklaInteraction
                 }
             }
         }
+
+        internal bool CanObjectsBePicked(TeklaParams teklaParams, out string warningMessage)
+        {
+            warningMessage = string.Empty;
+
+            var mode = Tekla.Structures.DrawingInternal.Operation.GetEditMode();
+
+            if (teklaParams.DrawingParams.Count > 0 && mode != Tekla.Structures.DrawingInternal.EditMode.DrawingEditMode)
+            {
+                warningMessage = "Incorrect Tekla mode. Cannot select drawing objects when in the model.";
+                return false;
+            }
+
+            return true;
+        }
     }
 
     internal class ModelPicker

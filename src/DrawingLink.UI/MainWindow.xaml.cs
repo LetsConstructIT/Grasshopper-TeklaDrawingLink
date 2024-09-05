@@ -54,11 +54,18 @@ namespace DrawingLink.UI
             var instance = GrasshopperCaller.GetInstance();
             var teklaParams = instance.GetInputParams(path).TeklaParams;
 
+            var userPicker = new UserInputPicker();
+            if (!userPicker.CanObjectsBePicked(teklaParams, out string warningMessage))
+            {
+                _messageBoxWindow.ShowMessages(GetTitle(path), warningMessage);
+                return;
+            }
+
             var teklaInput = new Dictionary<string, TeklaObjects>();
 
             try
             {
-                teklaInput = new UserInputPicker().PickInput(teklaParams);
+                teklaInput = userPicker.PickInput(teklaParams);
             }
             catch (Exception exception)
             {
