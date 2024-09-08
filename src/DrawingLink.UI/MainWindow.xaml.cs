@@ -1,19 +1,11 @@
 ﻿using DrawingLink.UI.GH;
 using DrawingLink.UI.TeklaInteraction;
-using Fusion;
 using Grasshopper.Kernel;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Markup;
-using System.Windows.Navigation;
-using System.Xml.Linq;
 using Tekla.Structures.Dialog;
 
 namespace DrawingLink.UI
@@ -24,8 +16,8 @@ namespace DrawingLink.UI
     public partial class MainWindow : ApplicationWindowBase
     {
         private readonly MainWindowViewModel _viewModel;
-
         private readonly MessageBoxWindow _messageBoxWindow;
+        private GrasshopperCaller _instance;
 
         public MainWindow(MainWindowViewModel viewModel)
         {
@@ -37,6 +29,11 @@ namespace DrawingLink.UI
             parameterViewer.GhAttributeLoaded += ParameterViewer_SetAttributeValue;
 
             HideApplyButton();
+        }
+
+        private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            _instance = GrasshopperCaller.GetInstance();
         }
 
         private void HideApplyButton()
@@ -62,8 +59,7 @@ namespace DrawingLink.UI
 
             var userFormData = _viewModel.ToDataModel();
 
-            var instance = GrasshopperCaller.GetInstance();
-            var teklaParams = instance.GetInputParams(path).TeklaParams;
+            var teklaParams = _instance.GetInputParams(path).TeklaParams;
 
             var userPicker = new UserInputPicker();
             if (!userPicker.CanObjectsBePicked(teklaParams, out string warningMessage))
@@ -84,7 +80,7 @@ namespace DrawingLink.UI
                 return;
             }
 
-            var messages = instance.Solve(userFormData, teklaInput);
+            var messages = _instance.Solve(userFormData, teklaInput);
 
             var remarks = messages[GH_RuntimeMessageLevel.Remark];
 
@@ -126,26 +122,29 @@ namespace DrawingLink.UI
                 .GetBindingExpression(TextBox.TextProperty)
                 .UpdateSource();
 
-            parameterViewer.ShowControls(dialog.FileName, true);
+            parameterViewer.ShowControls(_instance, dialog.FileName, true);
         }
 
         private void ReloadGrasshopperFile_Click(object sender, RoutedEventArgs e)
         {
             var path = GetFullPath(tbDefinitionPath.Text);
-            parameterViewer.ShowControls(path, true);
+            parameterViewer.ShowControls(_instance, path, true);
         }
 
         private void OpenGrasshopperFile_Click(object sender, RoutedEventArgs e)
         {
             var path = GetFullPath(tbDefinitionPath.Text);
-
-            var instance = GrasshopperCaller.GetInstance();
-            instance.OpenGrasshopperDefinition(path);
+            _instance.OpenGrasshopperDefinition(path);
         }
 
         private string GetFullPath(string path)
         {
             return RelativePathHelper.ExpandRelativePath(path);
+        }
+
+        private void ApplicationWindowBase_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _instance.Dispose();
         }
     }
 }

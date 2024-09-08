@@ -13,13 +13,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Threading;
 using Tekla.Structures.Model;
-using TSG = Tekla.Structures.Geometry3d;
 
 namespace DrawingLink.UI.GH
 {
-    public sealed class GrasshopperCaller
+    public sealed class GrasshopperCaller : IDisposable
     {
         private static GrasshopperCaller _instance;
         private static RhinoCore _rhinoCore;
@@ -628,6 +626,21 @@ namespace DrawingLink.UI.GH
             _grasshopperInstance.DisableSolver();
             _grasshopperInstance.OpenDocument(definitionPath);
             _grasshopperInstance.ShowEditor();
+        }
+
+        public void Dispose()
+        {
+            if (_grasshopperInstance != null)
+            {
+                if (_grasshopperInstance.IsEditorLoaded())
+                    _grasshopperInstance.CloseAllDocuments();
+
+                _grasshopperInstance = null;
+            }
+
+            _rhinoCore.Dispose();
+            _rhinoCore = null;
+            Application.Current.Shutdown();
         }
     }
 }

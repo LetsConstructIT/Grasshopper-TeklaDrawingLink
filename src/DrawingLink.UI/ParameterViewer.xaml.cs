@@ -28,9 +28,9 @@ namespace DrawingLink.UI
             GhAttributeLoaded?.Invoke(this, e);
         }
 
-        public void ShowControls(string filePath, bool loadValuesFromGh)
+        public void ShowControls(GrasshopperCaller ghCaller, string filePath, bool loadValuesFromGh)
         {
-            var parameters = GrasshopperCaller.GetInstance().GetInputParams(filePath);
+            var parameters = ghCaller.GetInputParams(filePath);
             var uiDefinition = ParameterTransformer.Transform(parameters.AttributeParams);
             PopulateUi(uiDefinition, loadValuesFromGh);
         }
