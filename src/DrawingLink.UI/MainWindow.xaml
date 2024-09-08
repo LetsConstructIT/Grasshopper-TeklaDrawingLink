@@ -7,7 +7,7 @@
                            xmlns:UIControls="clr-namespace:Tekla.Structures.Dialog.UIControls;assembly=Tekla.Structures.Dialog"
                            xmlns:tsd="clr-namespace:Tekla.Structures.Dialog;assembly=Tekla.Structures.Dialog"
                            mc:Ignorable="d"
-                           Title="MainWindow"
+                           Title="Grasshopper Application"
                            Height="800"
                            Width="700">
 
@@ -63,7 +63,8 @@
       <local:ParameterViewer x:Name="parameterViewer" />
     </ScrollViewer>
 
-    <UIControls:WpfCreateApplyCancel Grid.Row="3"
+    <UIControls:WpfCreateApplyCancel x:Name="teklaBottomBar"
+                                     Grid.Row="3"
                                      CreateClicked="WpfOkCreateCancel_CreateClicked"
                                      ApplyClicked="WpfOkCreateCancel_ApplyClicked" />
   </Grid>

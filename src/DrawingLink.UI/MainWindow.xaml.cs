@@ -31,9 +31,20 @@ namespace DrawingLink.UI
         {
             _messageBoxWindow = new MessageBoxWindow();
             InitializeComponent();
+
             _viewModel = viewModel;
             InitializeDataStorage(_viewModel);
             parameterViewer.GhAttributeLoaded += ParameterViewer_SetAttributeValue;
+
+            HideApplyButton();
+        }
+
+        private void HideApplyButton()
+        {
+            var type = this.teklaBottomBar.GetType();
+            var field = type.GetField("applyButton", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var button = (Button)field.GetValue(this.teklaBottomBar);
+            button.Visibility = Visibility.Collapsed;
         }
 
         private void ParameterViewer_SetAttributeValue(object sender, EventArgs e)
