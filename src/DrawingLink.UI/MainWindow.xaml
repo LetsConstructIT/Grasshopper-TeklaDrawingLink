@@ -21,7 +21,8 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <UIControls:WpfSaveLoad Grid.Row="0" AttributesLoaded="WpfSaveLoad_AttributesLoaded" />
+    <UIControls:WpfSaveLoad Grid.Row="0" AttributesLoaded="WpfSaveLoad_AttributesLoaded"
+                            HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink"/>
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />
