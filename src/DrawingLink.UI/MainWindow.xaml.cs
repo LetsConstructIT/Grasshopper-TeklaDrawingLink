@@ -172,7 +172,20 @@ namespace DrawingLink.UI
                 return;
 
             var path = GetFullPath(tbDefinitionPath.Text);
+            if (string.IsNullOrEmpty(path))
+            {
+                HideLoadingMessage();
+                return;
+            }
+
             parameterViewer.ShowControls(_instance, path, false);
+
+            HideLoadingMessage();
+        }
+
+        private void HideLoadingMessage()
+        {
+            gridLoading.Visibility = Visibility.Collapsed;
         }
     }
 }

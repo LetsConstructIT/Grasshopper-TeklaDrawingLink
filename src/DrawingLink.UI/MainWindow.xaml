@@ -65,6 +65,13 @@
                   HorizontalScrollBarVisibility="Auto">
       <local:ParameterViewer x:Name="parameterViewer" />
     </ScrollViewer>
+    
+    <Grid Background="LightYellow"
+          Grid.Row="2"
+          x:Name="gridLoading">
+      <TextBlock HorizontalAlignment="Center"
+                 VerticalAlignment="Center">Loading...</TextBlock>
+    </Grid>
 
     <UIControls:WpfCreateApplyCancel x:Name="teklaBottomBar"
                                      Grid.Row="3"
