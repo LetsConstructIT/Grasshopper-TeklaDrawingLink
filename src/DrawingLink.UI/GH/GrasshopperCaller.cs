@@ -369,8 +369,6 @@ namespace DrawingLink.UI.GH
             if (groups.HasHidden())
                 activeObjects = activeObjects.Where(p => !groups.ContainsHidden(p.InstanceGuid)).ToList();
 
-            var withoutTabsAndGroups = !groups.Tabs.Any() && !groups.Groups.Any();
-
             var modelParams = new List<TeklaModelParam>();
             var drawingParams = new List<TeklaDrawingParam>();
             var attributeParams = new List<ActiveObjectWrapper>();
@@ -389,12 +387,12 @@ namespace DrawingLink.UI.GH
                     continue;
                 }
 
-                var tab = groups.Tabs.FirstOrDefault(g => g.Value.Contains(activeObject.InstanceGuid)).Key;
-                var group = groups.Groups.FirstOrDefault(g => g.Value.Contains(activeObject.InstanceGuid)).Key;
+                var tab = groups.FindTabName(activeObject.InstanceGuid);
+                var group = groups.FindGroupName(activeObject.InstanceGuid);
                 if (IsSettingsPanel(activeObject) && tab == null)
                     tab = "Settings";
 
-                if (withoutTabsAndGroups || tab != null || group != null)
+                if (groups.WithoutTabsAndGroups() || tab != null || group != null)
                 {
                     var connectivity = (activeObject is IGH_Param param) ?
                         new ObjectConnectivity(param.SourceCount, param.Recipients.Count()) :

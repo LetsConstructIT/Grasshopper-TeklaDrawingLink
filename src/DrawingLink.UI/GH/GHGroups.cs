@@ -17,6 +17,15 @@ namespace DrawingLink.UI.GH
             Groups = new Dictionary<string, HashSet<Guid>>();
         }
 
+        public bool WithoutTabsAndGroups()
+            => !Tabs.Any() && !Groups.Any();
+
+        public string? FindTabName(Guid guid)
+            => Tabs.FirstOrDefault(g => g.Value.Contains(guid)).Key;
+
+        public string? FindGroupName(Guid guid)
+            => Groups.FirstOrDefault(g => g.Value.Contains(guid)).Key;
+
         public void AddHidden(IEnumerable<Guid> guids)
         {
             foreach (var guid in guids)
