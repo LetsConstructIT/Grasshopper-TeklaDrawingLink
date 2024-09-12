@@ -18,6 +18,7 @@ namespace DrawingLink.UI
         private readonly MainWindowViewModel _viewModel;
         private readonly MessageBoxWindow _messageBoxWindow;
         private GrasshopperCaller _instance;
+        private bool _loaded;
 
         public MainWindow(MainWindowViewModel viewModel)
         {
@@ -34,6 +35,7 @@ namespace DrawingLink.UI
         private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)
         {
             _instance = GrasshopperCaller.GetInstance();
+            _loaded = true;
         }
 
         private void HideApplyButton()
@@ -128,12 +130,29 @@ namespace DrawingLink.UI
         private void ReloadGrasshopperFile_Click(object sender, RoutedEventArgs e)
         {
             var path = GetFullPath(tbDefinitionPath.Text);
+            if (string.IsNullOrEmpty(path))
+            {
+                DisplayWarning("Path to Grasshopper file is empty.");
+                return;
+            }
+
             parameterViewer.ShowControls(_instance, path, true);
+        }
+
+        private void DisplayWarning(string message)
+        {
+            MessageBox.Show(this, message, "Warning");
         }
 
         private void OpenGrasshopperFile_Click(object sender, RoutedEventArgs e)
         {
             var path = GetFullPath(tbDefinitionPath.Text);
+            if (string.IsNullOrEmpty(path))
+            {
+                DisplayWarning("Path to Grasshopper file is empty.");
+                return;
+            }
+
             _instance.OpenGrasshopperDefinition(path);
         }
 
@@ -149,6 +168,9 @@ namespace DrawingLink.UI
 
         private void WpfSaveLoad_AttributesLoaded(object sender, EventArgs e)
         {
+            if (!_loaded)
+                return;
+
             var path = GetFullPath(tbDefinitionPath.Text);
             parameterViewer.ShowControls(_instance, path, false);
         }
