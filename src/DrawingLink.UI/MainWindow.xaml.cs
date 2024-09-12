@@ -47,8 +47,8 @@ namespace DrawingLink.UI
         private void ParameterViewer_SetAttributeValue(object sender, EventArgs e)
         {
             if (e is not SetAttributeEventArgs args)
-
                 return;
+
             var property = _viewModel.GetType().GetProperty(args.AttributeName);
             property.SetValue(_viewModel, args.Value);
         }
