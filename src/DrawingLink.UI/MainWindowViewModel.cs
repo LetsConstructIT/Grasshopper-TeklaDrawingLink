@@ -1,5 +1,4 @@
-﻿using DrawingLink.UI.Model;
-using DrawingLink.UI.WPF;
+﻿using DrawingLink.UI.WPF;
 using System.Linq;
 using System.Reflection;
 using Tekla.Structures.Dialog;

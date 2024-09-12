@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DrawingLink.UI.Model
+namespace DrawingLink.UI
 {
     public class UserFormData
     {
