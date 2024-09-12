@@ -146,5 +146,11 @@ namespace DrawingLink.UI
         {
             _instance.Dispose();
         }
+
+        private void WpfSaveLoad_AttributesLoaded(object sender, EventArgs e)
+        {
+            var path = GetFullPath(tbDefinitionPath.Text);
+            parameterViewer.ShowControls(_instance, path, false);
+        }
     }
 }

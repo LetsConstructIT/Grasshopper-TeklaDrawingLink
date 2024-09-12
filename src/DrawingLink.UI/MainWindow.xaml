@@ -21,7 +21,7 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <UIControls:WpfSaveLoad Grid.Row="0" />
+    <UIControls:WpfSaveLoad Grid.Row="0" AttributesLoaded="WpfSaveLoad_AttributesLoaded" />
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />
