@@ -366,8 +366,8 @@ namespace DrawingLink.UI.GH
             var activeObjects = GetValidParameters(doc);
 
             var groups = GetInputGroups(doc);
-            if (groups.Hidden.Any())
-                activeObjects = activeObjects.Where(p => !groups.Hidden.Contains(p.InstanceGuid)).ToList();
+            if (groups.HasHidden())
+                activeObjects = activeObjects.Where(p => !groups.ContainsHidden(p.InstanceGuid)).ToList();
 
             var withoutTabsAndGroups = !groups.Tabs.Any() && !groups.Groups.Any();
 
@@ -513,8 +513,7 @@ namespace DrawingLink.UI.GH
                 }
                 else if (upperName.StartsWith("HIDE") || upperName.StartsWith("HIDDEN"))
                 {
-                    gHGroups.Hidden.UnionWith(from o in @group.ObjectsRecursive()
-                                              select o.InstanceGuid);
+                    gHGroups.AddHidden(@group.ObjectsRecursive().Select(o => o.InstanceGuid));
                 }
             }
             return gHGroups;
