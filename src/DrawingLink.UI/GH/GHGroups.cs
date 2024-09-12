@@ -6,25 +6,40 @@ namespace DrawingLink.UI.GH
 {
     public class GHGroups
     {
-        public Dictionary<string, HashSet<Guid>> Tabs { get; }
-        public Dictionary<string, HashSet<Guid>> Groups { get; }
-
+        private readonly Dictionary<string, HashSet<Guid>> _tabs = new();
+        private readonly Dictionary<string, HashSet<Guid>> _groups = new();
         private readonly HashSet<Guid> _hidden = new();
 
-        public GHGroups()
-        {
-            Tabs = new Dictionary<string, HashSet<Guid>>();
-            Groups = new Dictionary<string, HashSet<Guid>>();
-        }
-
         public bool WithoutTabsAndGroups()
-            => !Tabs.Any() && !Groups.Any();
+            => !_tabs.Any() && !_groups.Any();
 
         public string? FindTabName(Guid guid)
-            => Tabs.FirstOrDefault(g => g.Value.Contains(guid)).Key;
+            => _tabs.FirstOrDefault(g => g.Value.Contains(guid)).Key;
 
         public string? FindGroupName(Guid guid)
-            => Groups.FirstOrDefault(g => g.Value.Contains(guid)).Key;
+            => _groups.FirstOrDefault(g => g.Value.Contains(guid)).Key;
+
+        public void AddGroup(IEnumerable<Guid> guids, string name)
+        {
+            if (!guids.Any())
+                return;
+
+            if (!_groups.ContainsKey(name))
+                _groups[name] = new HashSet<Guid>();
+
+            _groups[name].UnionWith(guids);
+        }
+
+        public void AddTab(IEnumerable<Guid> guids, string name)
+        {
+            if (!guids.Any())
+                return;
+
+            if (!_tabs.ContainsKey(name))
+                _tabs[name] = new HashSet<Guid>();
+
+            _tabs[name].UnionWith(guids);
+        }
 
         public void AddHidden(IEnumerable<Guid> guids)
         {

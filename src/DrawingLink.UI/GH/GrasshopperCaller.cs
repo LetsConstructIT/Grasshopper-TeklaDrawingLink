@@ -491,44 +491,24 @@ namespace DrawingLink.UI.GH
             var gHGroups = new GHGroups();
             foreach (var group in doc.Objects.OfType<GH_Group>())
             {
+                var guids = group.ObjectsRecursive().Select(o => o.InstanceGuid);
+
                 var nickName = group.NickName.Trim();
                 var upperName = nickName.ToUpperInvariant();
+
                 if (upperName.StartsWith("TAB:"))
-                {
-                    AddGroupObjectGuids(gHGroups.Tabs, nickName.Substring(4), group);
-                }
+                    gHGroups.AddTab(guids, nickName.Substring(4));
                 else if (upperName.StartsWith("T:"))
-                {
-                    AddGroupObjectGuids(gHGroups.Tabs, nickName.Substring(2), group);
-                }
+                    gHGroups.AddTab(guids, nickName.Substring(2));
                 else if (upperName.StartsWith("GROUP:"))
-                {
-                    AddGroupObjectGuids(gHGroups.Groups, nickName.Substring(6), group);
-                }
+                    gHGroups.AddGroup(guids, nickName.Substring(6));
                 else if (upperName.StartsWith("G:"))
-                {
-                    AddGroupObjectGuids(gHGroups.Groups, nickName.Substring(2), group);
-                }
+                    gHGroups.AddGroup(guids, nickName.Substring(2));
                 else if (upperName.StartsWith("HIDE") || upperName.StartsWith("HIDDEN"))
-                {
-                    gHGroups.AddHidden(@group.ObjectsRecursive().Select(o => o.InstanceGuid));
-                }
+                    gHGroups.AddHidden(guids);
             }
+
             return gHGroups;
-        }
-
-        private void AddGroupObjectGuids(Dictionary<string, HashSet<Guid>> groupGuidCollection, string groupName, GH_Group group)
-        {
-            var guids = group.ObjectsRecursive().Select(o => o.InstanceGuid);
-
-            if (!guids.Any())
-                return;
-
-            groupName = groupName.Trim();
-            if (!groupGuidCollection.ContainsKey(groupName))
-                groupGuidCollection[groupName] = new HashSet<Guid>();
-
-            groupGuidCollection[groupName].UnionWith(guids);
         }
 
         private bool IsSettingsPanel(IGH_ActiveObject param)
