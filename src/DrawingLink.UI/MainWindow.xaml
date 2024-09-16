@@ -11,7 +11,8 @@
                            Closing="ApplicationWindowBase_Closing"
                            Title="Grasshopper Application"
                            Height="800"
-                           Width="700">
+                           Width="700"
+                           Icon="/icon.png">
 
   <Grid>
     <Grid.RowDefinitions>

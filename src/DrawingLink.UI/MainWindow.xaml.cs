@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using Tekla.Structures.Dialog;
 
 namespace DrawingLink.UI
-{
+{ 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -30,6 +30,8 @@ namespace DrawingLink.UI
             parameterViewer.GhAttributeLoaded += ParameterViewer_SetAttributeValue;
 
             HideApplyButton();
+
+            ShowInTaskbar = true;
         }
 
         private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)

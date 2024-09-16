@@ -11,7 +11,17 @@
         <Deterministic>false</Deterministic>
         <OutputType>WinExe</OutputType>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
+        <AssemblyName>Grasshopper Application</AssemblyName>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="icon.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="icon.ico" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Grasshopper" Version="7.0.20314.3001">
@@ -24,5 +34,9 @@
 
     <ItemGroup>
       <Reference Include="System.Windows.Forms" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="icon.png" />
     </ItemGroup>
 </Project>
