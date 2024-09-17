@@ -16,6 +16,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Installer\Macro\Grasshopper Application.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
       <None Remove="icon.png" />
     </ItemGroup>
 
@@ -59,6 +63,9 @@
 
     <ItemGroup>
       <Folder Include="Installer\BuildDrop\" />
-      <Folder Include="Installer\Macro\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Installer\Macro\Grasshopper Application.cs" />
     </ItemGroup>
 </Project>
