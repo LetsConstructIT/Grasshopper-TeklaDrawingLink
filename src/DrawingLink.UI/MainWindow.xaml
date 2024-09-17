@@ -42,6 +42,7 @@
                x:Name="tbDefinitionPath"
                Grid.Column="1" />
       <Button Content="..."
+              x:Name="btnSelectGHDefinition"
               ToolTip="Select the Grasshopper definition"
               Click="SelectGrasshopperFile_Click"
               Grid.Column="2" />

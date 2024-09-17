@@ -175,7 +175,28 @@ namespace DrawingLink.UI
                 .GetBindingExpression(TextBox.TextProperty)
                 .UpdateSource();
 
+            DisplayScriptName(tbDefinitionPath.Text);
+            ShowRightPortionOfTextBox(tbDefinitionPath);
+
             parameterViewer.ShowControls(_instance, dialog.FileName, true);
+        }
+
+        private void DisplayScriptName(string path)
+        {
+            if (string.IsNullOrEmpty(tbDefinitionPath.Text))
+                return;
+
+            Title = Path.GetFileNameWithoutExtension(path);
+        }
+
+        private void ShowRightPortionOfTextBox(TextBox tbDefinitionPath)
+        {
+            if (string.IsNullOrEmpty(tbDefinitionPath.Text))
+                return;
+
+            tbDefinitionPath.Focus();
+            tbDefinitionPath.Select(tbDefinitionPath.Text.Length, 0);
+            btnSelectGHDefinition.Focus();
         }
 
         private void ReloadGrasshopperFile_Click(object sender, RoutedEventArgs e)
