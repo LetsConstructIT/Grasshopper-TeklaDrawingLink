@@ -124,13 +124,19 @@ namespace DrawingLink.UI
                 return;
             }
 
-            var messages = _instance.Solve(userFormData, teklaInput);
-
-            var remarks = messages[GH_RuntimeMessageLevel.Remark];
+            var messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>();
+            try
+            {
+                messages = _instance.Solve(userFormData, teklaInput);
+            }
+            catch (Exception ex)
+            {
+                messages.Add(GH_RuntimeMessageLevel.Error, new List<string> { ex.Message });
+            }
 
             _messageBoxWindow.ClearMessages();
 
-            _messageBoxWindow.ShowMessages(GetTitle(path), remarks);
+            _messageBoxWindow.ShowMessages(GetTitle(path), messages);
 
             if (teklaParams.ModelParams.Count > 0)
                 new Tekla.Structures.Model.Model().CommitChanges();

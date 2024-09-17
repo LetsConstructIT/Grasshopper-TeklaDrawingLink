@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grasshopper.Kernel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -18,6 +19,18 @@ namespace DrawingLink.UI
         public void ClearMessages()
         {
             this.textBox.Text = "";
+        }
+
+        public void ShowMessages(string title, Dictionary<GH_RuntimeMessageLevel, List<string>> messageDictionary)
+        {
+            var messages = new List<string>();
+            foreach (var item in messageDictionary)
+            {
+                var level = item.Key;
+                foreach (var subMessage in item.Value)
+                    messages.Add($"{level}: {subMessage}");
+            }
+            ShowMessages(title, messages);
         }
 
         public void ShowMessages(string title, string message)
