@@ -32,7 +32,7 @@ namespace DrawingLink.UI
             InitializeDataStorage(_viewModel);
             parameterViewer.GhAttributeLoaded += ParameterViewer_SetAttributeValue;
 
-            HideApplyButton();
+            AdjustUI();
             PopulateRhinoVersions(rhinoVersions);
 
             ShowInTaskbar = true;
@@ -72,12 +72,16 @@ namespace DrawingLink.UI
             _loaded = true;
         }
 
-        private void HideApplyButton()
+        private void AdjustUI()
         {
             var type = this.teklaBottomBar.GetType();
-            var field = type.GetField("applyButton", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var button = (Button)field.GetValue(this.teklaBottomBar);
-            button.Visibility = Visibility.Collapsed;
+            var applyField = type.GetField("applyButton", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var applyButton = (Button)applyField.GetValue(this.teklaBottomBar);
+            applyButton.Visibility = Visibility.Collapsed;
+
+            var createField = type.GetField("createButton", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var createButton = (Button)createField.GetValue(this.teklaBottomBar);
+            createButton.Content = "Run";
         }
 
         private void ParameterViewer_SetAttributeValue(object sender, EventArgs e)
