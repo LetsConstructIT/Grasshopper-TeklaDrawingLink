@@ -183,6 +183,16 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Drawing
         };
 
+
+        public static readonly GH_InstanceDescription SaveDrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Save Drawing",
+            NickName = "Save",
+            Description = "Saves active drawing without closing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };        
+
         public static readonly GH_InstanceDescription OpenDrawingComponent = new GH_InstanceDescription
         {
             Name = "Open Drawing",
