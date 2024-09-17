@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TEP Version="2.0">
+
+    <Product Id="GrasshopperApplication" UpgradeCode="59D4F7C4-C2D9-42A5-A3CC-079963B4DB6C" Version="1.0" Language="1033" 
+        Name="Grasshopper Application" Manufacturer="Let's Construct IT"  
+        Description= "Part of the Grasshopper Drawing Link development project. Enables to utilize Rhino.Inside technology in Tekla Structures."
+        IconPath="%TEPDEFINITIONFILEFOLDER%\..\icon.png" Type="Extension">
+        <TeklaVersions>
+            <TeklaVersion Name="2023.0"/>
+            <MinTeklaVersion Name="2019.0"/>
+            <MaxTeklaVersion Name="2099.1"/>
+        </TeklaVersions>
+    </Product>
+     
+    <SourcePathVariables>
+		<SourcePathVariable Id="TepOutputFolder"  Value="%TEPDEFINITIONFILEFOLDER%\output" />		
+		<SourcePathVariable Id="SourceBinaries"   Value="%TEPDEFINITIONFILEFOLDER%\BuildDrop"/>	
+		<SourcePathVariable Id="SourceMacro"      Value="%TEPDEFINITIONFILEFOLDER%\Macro"/>
+    </SourcePathVariables>
+    
+    <TargetPathVariables>
+        <PathVariable Id="ExtensionName"         Value="GrasshopperApplication"/>
+	    <PathVariable Id="ExtensionsRootDir"     Value="%commonEnvFolder%\extensions"/>	
+		<PathVariable Id="TargetBinaries"        Value="%ExtensionsRootDir%\%ExtensionName%"/>
+		<PathVariable Id="TargetMacroModel"      Value="%commonEnvFolder%\macros\modeling"/>
+		<PathVariable Id="TargetDrawingModel"    Value="%commonEnvFolder%\macros\drawings"/>
+    </TargetPathVariables>
+
+    <Component Id="TheExtensionComponent" Guid="DC8E7886-6049-4A71-8EE6-D2CE1B79B275">
+        <File Id="CopyBinaries" Source="%SourceBinaries%\*.*"  Target="%TargetBinaries%"       Recursive="yes" />
+        <File Id="CopyModelMacro" Source="%SourceMacro%\*.*"  Target="%TargetMacroModel%"      Recursive="no" />
+        <File Id="CopyDrawingMacro" Source="%SourceMacro%\*.*"  Target="%TargetDrawingModel%"  Recursive="no" />
+    </Component>
+
+    <Feature Id="TheExtensionFeature" Title="ExtensionFeature">
+        <ComponentRef ReferenceId="TheExtensionComponent" />
+    </Feature>
+
+ </TEP>
