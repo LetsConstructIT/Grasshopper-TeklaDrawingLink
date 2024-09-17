@@ -507,7 +507,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Attributes",
             NickName = "A",
-            Description = "Angle Dimension Attributes"
+            Description = "Angle Dimension Attributes (name of file with Tekla settings)"
         };
 
         public static readonly GH_InstanceDescription ObjectMatch = new GH_InstanceDescription

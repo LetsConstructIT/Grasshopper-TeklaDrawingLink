@@ -54,6 +54,11 @@ namespace GTDrawingLink.Types
                 Value = (source as GH_Point).Value.ToTekla();
                 return true;
             }
+            else if (source is Point point)
+            {
+                Value = point;
+                return true;
+            }
             return base.CastFrom(source);
         }
 

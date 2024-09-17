@@ -1,11 +1,11 @@
 ﻿using Grasshopper;
+using Grasshopper.GUI.Canvas;
 using Grasshopper.Kernel;
 using GTDrawingLink.Components;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GTDrawingLink
@@ -14,21 +14,19 @@ namespace GTDrawingLink
     {
         public override GH_LoadingInstruction PriorityLoad()
         {
-            AddTeklaMenu();
+            Instances.CanvasCreated += new Instances.CanvasCreatedEventHandler(this.AddTeklaMenu);
 
             return GH_LoadingInstruction.Proceed;
         }
 
-        private async Task AddTeklaMenu()
+        private void AddTeklaMenu(GH_Canvas canvas)
         {
-            var editor = Instances.DocumentEditor;
-            while (editor == null || !editor.IsHandleCreated)
+            Instances.CanvasCreated -= new Instances.CanvasCreatedEventHandler(this.AddTeklaMenu);
+            var documentEditor = Instances.DocumentEditor;
+            if (documentEditor != null)
             {
-                await Task.Delay(500);
-                editor = Instances.DocumentEditor;
-            }
-
-            editor.MainMenuStrip.Items.Add(GetTeklaMenu());
+                documentEditor.MainMenuStrip.Items.Add(GetTeklaMenu());
+            }           
         }
 
         private ToolStripItem GetTeklaMenu()

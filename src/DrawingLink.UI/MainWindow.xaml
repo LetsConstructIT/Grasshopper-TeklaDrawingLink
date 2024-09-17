@@ -1,0 +1,101 @@
+﻿<tsd:ApplicationWindowBase x:Class="DrawingLink.UI.MainWindow"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:local="clr-namespace:DrawingLink.UI"
+                           xmlns:UIControls="clr-namespace:Tekla.Structures.Dialog.UIControls;assembly=Tekla.Structures.Dialog"
+                           xmlns:tsd="clr-namespace:Tekla.Structures.Dialog;assembly=Tekla.Structures.Dialog"
+                           mc:Ignorable="d"
+                           Loaded="ApplicationWindowBase_Loaded"
+                           Closing="ApplicationWindowBase_Closing"
+                           Title="Grasshopper Application"
+                           Height="800"
+                           Width="700"
+                           Icon="/icon.png">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+
+    <UIControls:WpfSaveLoad Grid.Row="0"
+                            x:Name="saveLoadPanel"
+                            AttributesLoaded="WpfSaveLoad_AttributesLoaded"
+                            HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink" />
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+      </Grid.ColumnDefinitions>
+      <Label Content="Definition path"
+             VerticalAlignment="Center"
+             Grid.Column="0" />
+      <TextBox Text="{Binding DefinitionPath}"
+               x:Name="tbDefinitionPath"
+               Grid.Column="1" />
+      <Button Content="..."
+              ToolTip="Select the Grasshopper definition"
+              Click="SelectGrasshopperFile_Click"
+              Grid.Column="2" />
+      <Button ToolTip="Reload the Grasshopper definition"
+              Click="ReloadGrasshopperFile_Click"
+              Grid.Column="3">
+        <Button.Content>
+          <Path Data="M58.5125 162.5H25V175H68.75L75 168.75V125H62.5V150A62.5 62.5 0 1 1 119.125 159.5125L122.9 171.4375A75 75 0 1 0 58.5125 162.5z"
+                Height="16" />
+        </Button.Content>
+      </Button>
+      <Button ToolTip="Open the definition in Grasshopper"
+              Click="OpenGrasshopperFile_Click"
+              Grid.Column="4">
+        <Button.Content>
+          <Path Data="M786.4 715.7L715.7 786.4L250 320.7000000000001V250H320.7L786.4 715.7zM857.1 786.4L927.8 857.0999999999999L857.1 927.8L786.4 857.0999999999999L857.1 786.4zM362.1 150H150V362.1500000000001L821.7499999999999 1033.9A50 50 0 0 0 892.45 1033.9L1033.9 892.45A50 50 0 0 0 1033.9 821.75L362.1500000000001 150z"
+                Height="16" />
+        </Button.Content>
+      </Button>
+      <ComboBox x:Name="cmbRhinoVersion"
+                Grid.Column="5"
+                MinWidth="50"
+                ToolTip="Selected Rhino version. Changing requires restarting the application." />
+    </Grid>
+
+    <ScrollViewer Grid.Row="2"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Auto">
+      <local:ParameterViewer x:Name="parameterViewer" />
+    </ScrollViewer>
+
+    <Grid Grid.Row="2"
+          x:Name="gridLoading">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="150" />
+        <RowDefinition Height="40" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Image Grid.Row="1"
+             Source="/icon.png" />
+
+      <TextBlock Text="Launching Rhino..."
+                 x:Name="tbLaunchingRhino"
+                 Grid.Row="2"
+                 FontSize="17"
+                 FontWeight="SemiBold"
+                 HorizontalAlignment="Center" />
+    </Grid>
+
+    <UIControls:WpfCreateApplyCancel x:Name="teklaBottomBar"
+                                     Grid.Row="3"
+                                     CreateClicked="WpfOkCreateCancel_CreateClicked"
+                                     ApplyClicked="WpfOkCreateCancel_ApplyClicked" />
+  </Grid>
+</tsd:ApplicationWindowBase>
