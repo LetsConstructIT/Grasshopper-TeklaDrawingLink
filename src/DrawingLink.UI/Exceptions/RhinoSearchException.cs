@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DrawingLink.UI.Expections
+namespace DrawingLink.UI.Exceptions
 {
     public class RhinoSearchException : Exception
     {

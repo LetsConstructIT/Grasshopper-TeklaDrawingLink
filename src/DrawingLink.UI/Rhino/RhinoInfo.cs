@@ -1,4 +1,4 @@
-﻿using DrawingLink.UI.Expections;
+﻿using DrawingLink.UI.Exceptions;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
