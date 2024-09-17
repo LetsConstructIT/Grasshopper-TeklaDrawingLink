@@ -59,5 +59,6 @@
 
     <ItemGroup>
       <Folder Include="Installer\BuildDrop\" />
+      <Folder Include="Installer\Macro\" />
     </ItemGroup>
 </Project>
