@@ -22,8 +22,10 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <UIControls:WpfSaveLoad Grid.Row="0" AttributesLoaded="WpfSaveLoad_AttributesLoaded"
-                            HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink"/>
+    <UIControls:WpfSaveLoad Grid.Row="0"
+                            x:Name="saveLoadPanel"
+                            AttributesLoaded="WpfSaveLoad_AttributesLoaded"
+                            HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink" />
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />
@@ -61,8 +63,8 @@
       </Button>
       <ComboBox x:Name="cmbRhinoVersion"
                 Grid.Column="5"
-                MinWidth="50" 
-                ToolTip="Selected Rhino version. Changing requires restarting the application."/>
+                MinWidth="50"
+                ToolTip="Selected Rhino version. Changing requires restarting the application." />
     </Grid>
 
     <ScrollViewer Grid.Row="2"
@@ -70,12 +72,25 @@
                   HorizontalScrollBarVisibility="Auto">
       <local:ParameterViewer x:Name="parameterViewer" />
     </ScrollViewer>
-    
-    <Grid Background="LightYellow"
-          Grid.Row="2"
+
+    <Grid Grid.Row="2"
           x:Name="gridLoading">
-      <TextBlock HorizontalAlignment="Center"
-                 VerticalAlignment="Center">Loading...</TextBlock>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="150" />
+        <RowDefinition Height="40" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Image Grid.Row="1"
+             Source="/icon.png" />
+
+      <TextBlock Text="Launching Rhino..."
+                 x:Name="tbLaunchingRhino"
+                 Grid.Row="2"
+                 FontSize="17"
+                 FontWeight="SemiBold"
+                 HorizontalAlignment="Center" />
     </Grid>
 
     <UIControls:WpfCreateApplyCancel x:Name="teklaBottomBar"

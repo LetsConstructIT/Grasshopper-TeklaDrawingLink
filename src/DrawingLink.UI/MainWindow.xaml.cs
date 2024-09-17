@@ -74,6 +74,8 @@ namespace DrawingLink.UI
 
         private void AdjustUI()
         {
+            this.tbLaunchingRhino.Text = $"Launching Rhino {Properties.Settings.Default.RhinoVersion} ...";
+
             var type = this.teklaBottomBar.GetType();
             var applyField = type.GetField("applyButton", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var applyButton = (Button)applyField.GetValue(this.teklaBottomBar);
