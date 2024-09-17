@@ -1,15 +1,18 @@
 ﻿using DrawingLink.UI.GH;
+using DrawingLink.UI.Rhino;
 using DrawingLink.UI.TeklaInteraction;
 using Grasshopper.Kernel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Tekla.Structures.Dialog;
 
 namespace DrawingLink.UI
-{ 
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -20,7 +23,7 @@ namespace DrawingLink.UI
         private GrasshopperCaller _instance;
         private bool _loaded;
 
-        public MainWindow(MainWindowViewModel viewModel)
+        public MainWindow(MainWindowViewModel viewModel, List<RhinoInfo> rhinoVersions)
         {
             _messageBoxWindow = new MessageBoxWindow();
             InitializeComponent();
@@ -30,8 +33,37 @@ namespace DrawingLink.UI
             parameterViewer.GhAttributeLoaded += ParameterViewer_SetAttributeValue;
 
             HideApplyButton();
+            PopulateRhinoVersions(rhinoVersions);
 
             ShowInTaskbar = true;
+        }
+
+        private void PopulateRhinoVersions(List<RhinoInfo> rhinoVersions)
+        {
+            this.cmbRhinoVersion.Items.Clear();
+            foreach (var rhinoVersion in rhinoVersions)
+                this.cmbRhinoVersion.Items.Add(rhinoVersion.Version);
+
+            var neededVersion = rhinoVersions.FirstOrDefault(v => v.Version == Properties.Settings.Default.RhinoVersion);
+            if (neededVersion == null)
+                return;
+
+            var index = rhinoVersions.IndexOf(neededVersion);
+            this.cmbRhinoVersion.SelectedIndex = index;
+
+            this.cmbRhinoVersion.SelectionChanged += cmbRhinoVersion_SelectionChanged;
+        }
+
+        private void cmbRhinoVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var index = this.cmbRhinoVersion.SelectedIndex;
+            if (index == -1)
+                return;
+
+            Properties.Settings.Default.RhinoVersion = (int)this.cmbRhinoVersion.SelectedItem;
+            Properties.Settings.Default.Save();
+
+            MessageBox.Show(this, "Restart application to load new Rhino version");
         }
 
         private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)

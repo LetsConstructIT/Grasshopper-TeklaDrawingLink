@@ -26,14 +26,14 @@ namespace DrawingLink.UI.Rhino
             InstallFolders = installFolders ?? throw new ArgumentNullException(nameof(installFolders));
         }
 
-        public static IEnumerable<RhinoInfo> GetAllVersions()
+        public static IReadOnlyList<RhinoInfo> GetAllVersions()
         {
             var infos = new List<RhinoInfo>();
             try
             {
                 using var registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\McNeel\\Rhinoceros");
                 if (registryKey == null)
-                    return Enumerable.Empty<RhinoInfo>();
+                    return Array.Empty<RhinoInfo>();
 
                 foreach (var subKey in (from v in registryKey.GetSubKeyNames()
                                         orderby v descending

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,23 +20,23 @@ namespace DrawingLink.UI
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            SetupRhinoFolders();
+            var rhinoVersions = SetupRhinoFolders();
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
             var mainWindowViewModel = new MainWindowViewModel();
-            var mainWindow = new MainWindow(mainWindowViewModel);
+            var mainWindow = new MainWindow(mainWindowViewModel, rhinoVersions);
             mainWindow.Show();
         }
 
-        private void SetupRhinoFolders()
+        private List<Rhino.RhinoInfo> SetupRhinoFolders()
         {
             var versions = Rhino.RhinoInfo.GetAllVersions();
 
             var neededVersion = versions.Where(v => v.Version == UI.Properties.Settings.Default.RhinoVersion).OrderByDescending(v => v.ServiceRelease).FirstOrDefault();
-            if (neededVersion == null)
-                return;
+            if (neededVersion != null)
+                _rhinoFolders = neededVersion.InstallFolders.ToArray();
 
-            _rhinoFolders = neededVersion.InstallFolders.ToArray();
+            return versions.ToList();
         }
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
