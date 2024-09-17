@@ -70,6 +70,8 @@ namespace DrawingLink.UI
         {
             _instance = GrasshopperCaller.GetInstance();
             _loaded = true;
+
+            this.tbLaunchingRhino.Text = "Waiting for definition file ...";
         }
 
         private void AdjustUI()
@@ -158,6 +160,8 @@ namespace DrawingLink.UI
 
             if (dialog.ShowDialog() != true)
                 return;
+
+            HideLoadingMessage();
 
             tbDefinitionPath.Text = RelativePathHelper.ShortenIfPossible(dialog.FileName);
             tbDefinitionPath
