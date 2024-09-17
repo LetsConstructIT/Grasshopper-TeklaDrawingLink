@@ -132,7 +132,8 @@ namespace DrawingLink.UI
 
             _messageBoxWindow.ShowMessages(GetTitle(path), remarks);
 
-            new Tekla.Structures.Model.Model().CommitChanges();
+            if (teklaParams.ModelParams.Count > 0)
+                new Tekla.Structures.Model.Model().CommitChanges();
         }
 
         private string GetTitle(string definitionPath)
