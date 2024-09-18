@@ -117,7 +117,18 @@ namespace DrawingLink.UI.GH
                 }
             }
 
+            SetMissingNameForTab(root);
             return root;
+        }
+
+        private static void SetMissingNameForTab(ParametersRoot root)
+        {
+            if (root.Tabs.Count != 1)
+                return;
+
+            var tab = root.Tabs[0];
+            if (string.IsNullOrEmpty(tab.Name))
+                tab.ChangeName("Attributes");
         }
     }
 }
