@@ -752,6 +752,58 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ModifyMarkComponent),
                 "73A32948-D730-428A-8429-30BC12F97397"
+            },
+            {
+                typeof(CreateCircleComponent),
+                "CCC24CE2-2522-4431-A6E1-6D276B202458"
+            },
+            {
+                typeof(CircleAttributesParam),
+                "36E7487C-FF03-4AB4-8B56-ADC1DB4DC23F"
+            },
+            {
+                typeof(CircleAttributesComponent),
+                "64C1E6E4-8C57-47FB-9AB1-829949BBEEBB"
+            },
+            {
+                typeof(CreateArcComponent),
+                "B644BD37-9581-4402-87E8-8AB9222C92C6"
+            },
+            {
+                typeof(ArcAttributesParam),
+                "B98F6DC3-FE9F-44E7-AF52-92BC194B192A"
+            },
+            {
+                typeof(ArcAttributesComponent),
+                "7B80DFB8-47A1-40D5-A6DA-1E46513424EF"
+            },
+            {
+                typeof(TextFileAttributesParam),
+                "4685727E-575A-4415-9320-67415F2FD9CA"
+            },
+            {
+                typeof(TextFileAttributesComponent),
+                "E143A03D-6DB7-4D3C-92E6-D080B65BF5CC"
+            },
+            {
+                typeof(CreateTextFileComponent),
+                "7F9364FD-90C1-47B2-BF18-64E0C6A69F1D"
+            },
+            {
+                typeof(CreateRadialDimensionComponent),
+                "A70FE01F-0179-44DD-93F7-767848D29D20"
+            },
+            {
+                typeof(CreateCurvedDimensionSetComponent),
+                "DE7CE574-2A7E-48CA-96BC-521E776B508A"
+            },
+            {
+                typeof(ModifyViewComponent),
+                "07317AF8-FCA3-41FF-8F7A-63B8BE0CC729"
+            },
+            {
+                typeof(SaveDrawingComponent),
+                "8C99963F-EF32-451F-9CEE-D0C34F4B3457"
             }
         };
 

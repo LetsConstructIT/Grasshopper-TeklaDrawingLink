@@ -1,4 +1,5 @@
 ﻿using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -75,6 +76,24 @@ namespace GTDrawingLink.Extensions
         {
             return (bool)typeof(View).GetMethod("ModifyFilter", BindingFlags.NonPublic | BindingFlags.Instance)
                 .Invoke(view, new object[] { filterContent });
+        }
+
+        internal static GraphicObjectHatchAttributes ToGraphicObjectHatch(this ModelObjectHatchAttributes hatch)
+        {
+            var hatchAttributes = (GraphicObjectHatchAttributes)typeof(GraphicObjectHatchAttributes)
+                .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance,
+                                null,
+                                Type.EmptyTypes,
+                                null).Invoke(null);
+
+            hatchAttributes.Name = hatch.Name;
+            hatchAttributes.Color = hatch.Color;
+            hatchAttributes.BackgroundColor = hatch.BackgroundColor;
+            hatchAttributes.DrawBackgroundColor = hatch.DrawBackgroundColor;
+            hatchAttributes.ScaleX = hatch.ScaleX;
+            hatchAttributes.ScaleY = hatch.ScaleY;
+
+            return hatchAttributes;
         }
     }
 }

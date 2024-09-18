@@ -83,6 +83,26 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Arc {
+            get {
+                object obj = ResourceManager.GetObject("Arc", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArcAttributes {
+            get {
+                object obj = ResourceManager.GetObject("ArcAttributes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ArrowAttributes {
             get {
                 object obj = ResourceManager.GetObject("ArrowAttributes", resourceCulture);
@@ -96,6 +116,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap AssociativeNote {
             get {
                 object obj = ResourceManager.GetObject("AssociativeNote", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AutoSettings {
+            get {
+                object obj = ResourceManager.GetObject("AutoSettings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -136,6 +166,26 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap BrepProjectionBorder {
             get {
                 object obj = ResourceManager.GetObject("BrepProjectionBorder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Circle {
+            get {
+                object obj = ResourceManager.GetObject("Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CircleAttributes {
+            get {
+                object obj = ResourceManager.GetObject("CircleAttributes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,6 +263,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CreateCurvedDimensionSet {
+            get {
+                object obj = ResourceManager.GetObject("CreateCurvedDimensionSet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CreateDimensionLink {
             get {
                 object obj = ResourceManager.GetObject("CreateDimensionLink", resourceCulture);
@@ -233,6 +293,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CreateRadialDimension {
+            get {
+                object obj = ResourceManager.GetObject("CreateRadialDimension", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CreateStraightDimensionSet {
             get {
                 object obj = ResourceManager.GetObject("CreateStraightDimensionSet", resourceCulture);
@@ -246,6 +316,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap CreateText {
             get {
                 object obj = ResourceManager.GetObject("CreateText", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CreateTextFile {
+            get {
+                object obj = ResourceManager.GetObject("CreateTextFile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -853,6 +933,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ModifyView {
+            get {
+                object obj = ResourceManager.GetObject("ModifyView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ModifyWeld {
             get {
                 object obj = ResourceManager.GetObject("ModifyWeld", resourceCulture);
@@ -1073,6 +1163,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SaveDrawing {
+            get {
+                object obj = ResourceManager.GetObject("SaveDrawing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SearchUsingKey {
             get {
                 object obj = ResourceManager.GetObject("SearchUsingKey", resourceCulture);
@@ -1246,6 +1346,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap TextAttributes {
             get {
                 object obj = ResourceManager.GetObject("TextAttributes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextFileAttributes {
+            get {
+                object obj = ResourceManager.GetObject("TextFileAttributes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

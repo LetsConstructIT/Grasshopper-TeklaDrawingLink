@@ -135,6 +135,12 @@ namespace GTDrawingLink.Extensions
                 plane.AxisX.ToRhino(),
                 plane.AxisY.ToRhino());
         }
+        public static Rhino.Geometry.Interval ToTekla(this Rhino.Geometry.Interval interval)
+        {
+            return new Rhino.Geometry.Interval(
+                interval.Min.ToTekla(),
+                interval.Max.ToTekla());
+        }
 
         public static Tekla.Structures.Model.Plane ToTeklaPlane(this Rhino.Geometry.Plane plane)
         {

@@ -183,6 +183,16 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Drawing
         };
 
+
+        public static readonly GH_InstanceDescription SaveDrawingComponent = new GH_InstanceDescription
+        {
+            Name = "Save Drawing",
+            NickName = "Save",
+            Description = "Saves active drawing without closing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Drawing
+        };        
+
         public static readonly GH_InstanceDescription OpenDrawingComponent = new GH_InstanceDescription
         {
             Name = "Open Drawing",
@@ -320,7 +330,7 @@ namespace GTDrawingLink.Tools
 
         public static readonly GH_InstanceDescription LineTypeAttributesComponent = new GH_InstanceDescription
         {
-            Name = "Line Attributes",
+            Name = "Line Type",
             NickName = "LineType",
             Description = "Line type attributes",
             Category = VersionSpecificConstants.TabHeading,
@@ -1119,6 +1129,86 @@ namespace GTDrawingLink.Tools
             Name = "Modify Mark",
             NickName = "MMark",
             Description = "Modifies a drawing mark in Tekla Structures",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Modify
+        };
+
+        public static readonly GH_InstanceDescription CreateCircleComponent = new GH_InstanceDescription
+        {
+            Name = "Circle",
+            NickName = "C",
+            Description = "Draw Circle in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription CircleAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Circle Attributes",
+            NickName = "CAttr",
+            Description = "Create circle attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
+        public static readonly GH_InstanceDescription CreateArcComponent = new GH_InstanceDescription
+        {
+            Name = "Arc",
+            NickName = "A",
+            Description = "Draw Arc in Tekla Drawing",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription ArcAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Arc Attributes",
+            NickName = "AAttr",
+            Description = "Create arc attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+
+        public static readonly GH_InstanceDescription TextFileAttributesComponent = new GH_InstanceDescription
+        {
+            Name = "Rich Text Attributes",
+            NickName = "RAttr",
+            Description = "Create rich text attributes",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Attributes
+        };
+        public static readonly GH_InstanceDescription CreateTextFileComponent = new GH_InstanceDescription
+        {
+            Name = "RichText",
+            NickName = "RTxt",
+            Description = "Create Tekla rich text.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+
+        public static readonly GH_InstanceDescription CreateRadialDimensionComponent = new GH_InstanceDescription
+        {
+            Name = "Radial Dimension",
+            NickName = "RadDim",
+            Description = "Create Tekla radial dimension.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
+
+        public static readonly GH_InstanceDescription CreateCurvedDimensionSetComponent = new GH_InstanceDescription
+        {
+            Name = "Curved Dimension",
+            NickName = "CurDim",
+            Description = "Create Tekla curved dimension.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Dimensions
+        };
+
+        public static readonly GH_InstanceDescription ModifyViewComponent = new GH_InstanceDescription
+        {
+            Name = "Modify View",
+            NickName = "MView",
+            Description = "Modifies a view in Tekla Structures",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };

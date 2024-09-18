@@ -146,13 +146,6 @@ namespace GTDrawingLink.Tools
             Description = $"Line type:\n{EnumHelpers.EnumToString<LineTypesEnum>()}\nRight-click to set"
         };
 
-        public static readonly GH_InstanceDescription LineTypeAttributes = new GH_InstanceDescription
-        {
-            Name = "Line attributes",
-            NickName = "LAttr",
-            Description = "Line type attributes"
-        };
-
         public static readonly GH_InstanceDescription VisibleLineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Visibile lines",
@@ -514,7 +507,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Attributes",
             NickName = "A",
-            Description = "Angle Dimension Attributes"
+            Description = "Angle Dimension Attributes (name of file with Tekla settings)"
         };
 
         public static readonly GH_InstanceDescription ObjectMatch = new GH_InstanceDescription
@@ -1269,11 +1262,11 @@ namespace GTDrawingLink.Tools
             Description = "Line attributes"
         };
 
-        public static readonly GH_InstanceDescription LineTypeAttributes2 = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription LineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Line Type",
             NickName = "LTAttr",
-            Description = "Line type attributes"
+            Description = "Line type (type + color)"
         };
 
         public static readonly GH_InstanceDescription Polyline = new GH_InstanceDescription
@@ -1967,6 +1960,139 @@ namespace GTDrawingLink.Tools
             Name = "Content",
             NickName = "C",
             Description = "Returns mark content if available."
+        };
+
+        public static readonly GH_InstanceDescription Circle = new GH_InstanceDescription
+        {
+            Name = "Circle",
+            NickName = "C",
+            Description = "Circle"
+        };
+
+        public static readonly GH_InstanceDescription CircleAttributes = new GH_InstanceDescription
+        {
+            Name = "Circle attributes",
+            NickName = "CAttr",
+            Description = "Circle attributes"
+        };
+
+        public static readonly GH_InstanceDescription TeklaCircle = new GH_InstanceDescription
+        {
+            Name = "Circle",
+            NickName = "C",
+            Description = "Tekla Circle"
+        };
+
+        public static readonly GH_InstanceDescription BehindModelObject = new GH_InstanceDescription
+        {
+            Name = "Behind objects",
+            NickName = "Behind",
+            Description = "Flag indiciating whether the closed graphic object is drawn behind model objects"
+        };
+
+        public static readonly GH_InstanceDescription Arc = new GH_InstanceDescription
+        {
+            Name = "Arc",
+            NickName = "A",
+            Description = "Arc"
+        };
+
+        public static readonly GH_InstanceDescription TeklaArc = new GH_InstanceDescription
+        {
+            Name = "Arc",
+            NickName = "A",
+            Description = "Tekla Arc"
+        };
+
+        public static readonly GH_InstanceDescription ArcAttributes = new GH_InstanceDescription
+        {
+            Name = "Arc attributes",
+            NickName = "AAttr",
+            Description = "Arc attributes"
+        };
+
+        public static readonly GH_InstanceDescription TextFileAttributes = new GH_InstanceDescription
+        {
+            Name = "Rich Text attributes",
+            NickName = "RAttr",
+            Description = "Rich Text attributes"
+        };
+
+        public static readonly GH_InstanceDescription TextFile = new GH_InstanceDescription
+        {
+            Name = "Rich Text",
+            NickName = "RTxt",
+            Description = "Rich Text"
+        };
+
+        public static readonly GH_InstanceDescription Path = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Path to text file (.txt, .rtf)"
+        };
+
+        public static readonly GH_InstanceDescription ArcPoint1 = new GH_InstanceDescription
+        {
+            Name = "Point 1",
+            NickName = "P1",
+            Description = "The first arc point to be used."
+        };
+
+        public static readonly GH_InstanceDescription ArcPoint2 = new GH_InstanceDescription
+        {
+            Name = "Point 2",
+            NickName = "P2",
+            Description = "The second arc point to be used."
+        };
+
+        public static readonly GH_InstanceDescription ArcPoint3 = new GH_InstanceDescription
+        {
+            Name = "Point 3",
+            NickName = "P3",
+            Description = "The third arc point to be used."
+        };
+
+        public static readonly GH_InstanceDescription RadialDimensionDistance = new GH_InstanceDescription
+        {
+            Name = "Distance",
+            NickName = "D",
+            Description = "The distance to be used."
+        };
+
+        public static readonly GH_InstanceDescription RadialDimensionAttributes = new GH_InstanceDescription
+        {
+            Name = "Attributes",
+            NickName = "A",
+            Description = "Radial Dimension Attributes"
+        };
+
+        public static readonly GH_InstanceDescription RadialDimension = new GH_InstanceDescription
+        {
+            Name = "Radial Dimension",
+            NickName = "Dim",
+            Description = "Radial Dimension"
+        };
+
+        public static readonly GH_InstanceDescription CurvedRadialMode = new GH_InstanceDescription
+        {
+            Name = "Radial mode",
+            NickName = "Radial",
+            Description = "Radial reference lines will be used"
+        };
+
+        public static readonly GH_InstanceDescription CurvedOrthogonalMode = new GH_InstanceDescription
+        {
+            Name = "Orthogonal mode",
+            NickName = "Orthogonal",
+            Description = "Orthogonal reference lines will be used"
+        };
+
+        public static readonly GH_InstanceDescription CurvedDimensionSet = new GH_InstanceDescription
+        {
+            Name = "Curved Dimension",
+            NickName = "Dim",
+            Description = "Curved Dimension"
         };
     }
 }
