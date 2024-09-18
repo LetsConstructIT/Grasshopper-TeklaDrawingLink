@@ -21,6 +21,7 @@ namespace DrawingLink.UI.GH
 
         public void AddGroup(IEnumerable<Guid> guids, string name)
         {
+            name = name.Trim();
             if (!guids.Any())
                 return;
 
@@ -32,6 +33,7 @@ namespace DrawingLink.UI.GH
 
         public void AddTab(IEnumerable<Guid> guids, string name)
         {
+            name = name.Trim();
             if (!guids.Any())
                 return;
 
