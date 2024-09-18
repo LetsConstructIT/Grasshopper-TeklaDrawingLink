@@ -196,7 +196,6 @@ namespace DrawingLink.UI
 
             tbDefinitionPath.Focus();
             tbDefinitionPath.Select(tbDefinitionPath.Text.Length, 0);
-            btnSelectGHDefinition.Focus();
         }
 
         private void ReloadGrasshopperFile_Click(object sender, RoutedEventArgs e)
