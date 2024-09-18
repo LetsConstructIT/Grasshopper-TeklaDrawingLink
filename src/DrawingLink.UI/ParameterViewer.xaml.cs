@@ -177,8 +177,9 @@ namespace DrawingLink.UI
                     var button = new Button { Content = "..." };
                     button.Click += delegate
                     {
-                        var value = catalogParam.PickFromCatalog(textb.Text);
-                        OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, value));
+                        var pickedValue = catalogParam.PickFromCatalog(textb.Text);
+                        if (!string.IsNullOrEmpty(pickedValue))
+                            OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, pickedValue));
                     };
 
                     stackPanel.Children.Add(textb);
