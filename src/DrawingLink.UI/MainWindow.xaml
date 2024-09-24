@@ -13,7 +13,7 @@
                            Height="600"
                            MinHeight="400"
                            Width="550"
-                           MinWidth="550"
+                           MinWidth="500"
                            Icon="/icon.png">
 
   <Grid>
@@ -24,22 +24,10 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <DockPanel Grid.Row="0">
-      <UIControls:WpfSaveLoad x:Name="saveLoadPanel"
-                              AttributesLoaded="WpfSaveLoad_AttributesLoaded"
-                              HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink" />
-      <ToggleButton x:Name="btnStayOnTop"
-                    Checked="btnStayOnTop_Checked"
-                    Unchecked="btnStayOnTop_Unchecked"
-                    ToolTip="Set this window always in the foreground"
-                    Height="26"
-                    HorizontalAlignment="Right">
-        <ToggleButton.Content>
-          <Path Data="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z"
-                Height="16" />
-        </ToggleButton.Content>        
-      </ToggleButton>
-    </DockPanel>
+    <UIControls:WpfSaveLoad Grid.Row="0"
+                            x:Name="saveLoadPanel"
+                            AttributesLoaded="WpfSaveLoad_AttributesLoaded"
+                            HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink" />
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />

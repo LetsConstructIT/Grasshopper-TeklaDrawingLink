@@ -25,6 +25,7 @@ namespace DrawingLink.UI
 
             var mainWindowViewModel = new MainWindowViewModel();
             var mainWindow = new MainWindow(mainWindowViewModel, rhinoVersions);
+            new System.Windows.Interop.WindowInteropHelper(mainWindow).Owner = Tekla.Structures.Dialog.MainWindow.Frame.Handle;
             mainWindow.Show();
         }
 
