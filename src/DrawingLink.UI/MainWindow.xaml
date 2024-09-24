@@ -22,10 +22,18 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <UIControls:WpfSaveLoad Grid.Row="0"
-                            x:Name="saveLoadPanel"
-                            AttributesLoaded="WpfSaveLoad_AttributesLoaded"
-                            HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink" />
+    <DockPanel Grid.Row="0">
+      <UIControls:WpfSaveLoad x:Name="saveLoadPanel"
+                              AttributesLoaded="WpfSaveLoad_AttributesLoaded"
+                              HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink" />
+      <ToggleButton x:Name="btnStayOnTop"
+                    Checked="btnStayOnTop_Checked"
+                    Content="Stay on top"
+                    ToolTip="Set this window always in the foreground"
+                    Height="26"
+                    Width="80"
+                    HorizontalAlignment="Right" />
+    </DockPanel>
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />

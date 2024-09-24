@@ -36,6 +36,13 @@ namespace DrawingLink.UI
             PopulateRhinoVersions(rhinoVersions);
 
             ShowInTaskbar = true;
+            SetTopMost();
+        }
+
+        private void SetTopMost()
+        {
+            this.Topmost = Properties.Settings.Default.TopMost;
+            btnStayOnTop.IsChecked = this.Topmost;
         }
 
         private void PopulateRhinoVersions(List<RhinoInfo> rhinoVersions)
@@ -256,6 +263,15 @@ namespace DrawingLink.UI
         private void HideLoadingMessage()
         {
             gridLoading.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnStayOnTop_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!btnStayOnTop.IsChecked.HasValue)
+                return;
+
+            Properties.Settings.Default.TopMost = btnStayOnTop.IsChecked.Value;
+            Properties.Settings.Default.Save();
         }
     }
 }
