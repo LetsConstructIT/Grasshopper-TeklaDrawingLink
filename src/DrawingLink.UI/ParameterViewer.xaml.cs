@@ -154,6 +154,39 @@ namespace DrawingLink.UI
                     dockPanel.Children.Add(slider);
                     SetCell(grid, dockPanel, rowIdx, colIdx);
                     break;
+                case FileInfoParam fileParam:
+                    var fileStackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+
+                    var filePath = fileParam.Value;
+                    var fText = new TextBox { Text = filePath, MinWidth = 110, MaxWidth = 350 };
+                    fText.SetBinding(TextBox.TextProperty, new Binding(param.FieldName));
+                    if (loadValuesFromGh)
+                        OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, filePath));
+
+                    var fButton = new Button { Content = "..." };
+                    fButton.Click += delegate
+                    {
+                        var dlg = new Microsoft.Win32.OpenFileDialog();
+
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            dlg.InitialDirectory = System.IO.Path.GetDirectoryName(filePath);
+                            dlg.FileName = System.IO.Path.GetFileName(filePath);
+                        }
+
+                        if (dlg.ShowDialog() != true)
+                            return;
+
+                        var pickedFileName = dlg.FileName;
+                        if (!string.IsNullOrEmpty(pickedFileName))
+                            OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, pickedFileName));
+                    };
+
+                    fileStackPanel.Children.Add(fText);
+                    fileStackPanel.Children.Add(fButton);
+
+                    SetCell(grid, fileStackPanel, rowIdx, colIdx);
+                    break;
                 case ListParamData listParam:
                     var dockListPanel = new DockPanel() { LastChildFill = true };
                     var combobox = new ComboBox

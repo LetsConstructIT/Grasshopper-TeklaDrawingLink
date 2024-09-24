@@ -40,7 +40,10 @@ namespace DrawingLink.UI.GH
 
                 if (param is Param_FilePath)
                 {
-
+                    group.AddParam(new FileInfoParam(fieldName,
+                                                     param.NickName,
+                                                     ((param as Param_FilePath).PersistentData.AllData(skipNulls: true).FirstOrDefault() as GH_String)?.Value ?? "",
+                                                     top));
                 }
                 else if (param is GH_BooleanToggle toggle)
                 {
