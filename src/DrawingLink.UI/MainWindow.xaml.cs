@@ -99,6 +99,11 @@ namespace DrawingLink.UI
         private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
         {
             var path = GetFullPath(_viewModel.DefinitionPath);
+            if (string.IsNullOrEmpty(path))
+            {
+                DisplayWarning("Before running please provide input Grasshopper script");
+                return;
+            }
 
             var userFormData = _viewModel.ToDataModel();
 
