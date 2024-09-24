@@ -45,19 +45,18 @@ namespace DrawingLink.UI
                 this.cmbRhinoVersion.Items.Add(rhinoVersion.Version);
 
             var neededVersion = rhinoVersions.FirstOrDefault(v => v.Version == Properties.Settings.Default.RhinoVersion);
-            if (neededVersion == null)
-                return;
-
-            var index = rhinoVersions.IndexOf(neededVersion);
-            this.cmbRhinoVersion.SelectedIndex = index;
+            if (neededVersion != null)
+            {
+                var index = rhinoVersions.IndexOf(neededVersion);
+                this.cmbRhinoVersion.SelectedIndex = index;
+            }
 
             this.cmbRhinoVersion.SelectionChanged += cmbRhinoVersion_SelectionChanged;
         }
 
         private void cmbRhinoVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var index = this.cmbRhinoVersion.SelectedIndex;
-            if (index == -1)
+            if (this.cmbRhinoVersion.SelectedIndex == -1)
                 return;
 
             Properties.Settings.Default.RhinoVersion = (int)this.cmbRhinoVersion.SelectedItem;
