@@ -10,7 +10,7 @@
                            Loaded="ApplicationWindowBase_Loaded"
                            Closing="ApplicationWindowBase_Closing"
                            Title="Grasshopper Application"
-                           Height="600"
+                           Height="650"
                            MinHeight="400"
                            Width="550"
                            MinWidth="500"

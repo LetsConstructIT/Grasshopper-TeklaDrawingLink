@@ -202,6 +202,9 @@ namespace DrawingLink.UI
             {
                 Margin = new Thickness(0, 2, 0, 2),
                 VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextWrapping = TextWrapping.Wrap,
+                MaxWidth = 430
             };
 
             foreach (var part in infoParam.Value.Split(null))
