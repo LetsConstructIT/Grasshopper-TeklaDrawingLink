@@ -30,6 +30,7 @@
                               HelpUrl="https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink" />
       <ToggleButton x:Name="btnStayOnTop"
                     Checked="btnStayOnTop_Checked"
+                    Unchecked="btnStayOnTop_Unchecked"
                     ToolTip="Set this window always in the foreground"
                     Height="26"
                     HorizontalAlignment="Right">

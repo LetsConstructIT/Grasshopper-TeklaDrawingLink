@@ -270,8 +270,22 @@ namespace DrawingLink.UI
             if (!btnStayOnTop.IsChecked.HasValue)
                 return;
 
-            Properties.Settings.Default.TopMost = btnStayOnTop.IsChecked.Value;
+            ChangeTopMost(true);
+        }
+
+        private void ChangeTopMost(bool newStatus)
+        {
+            this.Topmost = newStatus;
+            Properties.Settings.Default.TopMost = this.Topmost;
             Properties.Settings.Default.Save();
+        }
+
+        private void btnStayOnTop_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!btnStayOnTop.IsChecked.HasValue)
+                return;
+
+            ChangeTopMost(false);
         }
     }
 }
