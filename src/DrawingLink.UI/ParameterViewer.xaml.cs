@@ -155,16 +155,20 @@ namespace DrawingLink.UI
                     SetCell(grid, dockPanel, rowIdx, colIdx);
                     break;
                 case ListParamData listParam:
+                    var dockListPanel = new DockPanel() { LastChildFill = true };
                     var combobox = new ComboBox
                     {
                         ItemsSource = listParam.Items,
-                        SelectedItem = listParam.SelectedItem
+                        SelectedItem = listParam.SelectedItem,
+                        MinWidth = 110
                     };
                     combobox.SetBinding(ComboBox.SelectedItemProperty, new Binding(param.FieldName));
                     if (loadValuesFromGh)
                         OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, listParam.SelectedItem));
 
-                    SetCell(grid, combobox, rowIdx, colIdx);
+                    dockListPanel.Children.Add(combobox);
+                    dockListPanel.Children.Add(new Label());
+                    SetCell(grid, dockListPanel, rowIdx, colIdx);
                     break;
                 case CatalogParamData catalogParam:
                     var stackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
