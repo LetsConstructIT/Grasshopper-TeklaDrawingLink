@@ -1880,7 +1880,7 @@ namespace GTDrawingLink.Tools
         public static readonly GH_InstanceDescription PolygonAttributes = new GH_InstanceDescription
         {
             Name = "Polygon attributes",
-            NickName = "PLAttr",
+            NickName = "POLYAttr",
             Description = "Polygon attributes"
         };
 
