@@ -47,6 +47,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Params
         };
 
+        public static readonly GH_InstanceDescription TeklaLineSegmentParam = new GH_InstanceDescription
+        {
+            Name = "Line Segment",
+            NickName = "L",
+            Description = "Set a line segment in Tekla Structures drawing to be used in Grasshopper (right-click this component for the options to pick one or several objects in Tekla Structures)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Params
+        };        
+
         public static readonly GH_InstanceDescription ConvertDrawingToModelObjectComponent = new GH_InstanceDescription
         {
             Name = "Drawing to Model Object",

@@ -181,6 +181,11 @@ namespace GTDrawingLink.Extensions
             return new Tekla.Structures.Geometry3d.Line(line.From.ToTekla(), line.To.ToTekla());
         }
 
+        public static Tekla.Structures.Geometry3d.LineSegment ToTeklaSegment(this Rhino.Geometry.Line line)
+        {
+            return new Tekla.Structures.Geometry3d.LineSegment(line.From.ToTekla(), line.To.ToTekla());
+        }
+
         public static Rhino.Geometry.PolylineCurve ToRhino(this Tekla.Structures.Drawing.RectangleBoundingBox boundingBox)
         {
             var points = new List<Rhino.Geometry.Point3d>()

@@ -46,6 +46,10 @@ namespace GTDrawingLink.Tools
                 "315E3AB6-0C7E-445B-B4E4-B6737B4AC02B"
             },
             {
+                typeof(TeklaLineSegmentParam),
+                "FE3CC1C8-FCF6-4C70-8DD4-F0E0D33EE48B"
+            },
+            {
                 typeof(ConvertDrawingToModelObjectComponent),
                 "29F72A64-9760-4E49-92A4-D7CC87DBBB45"
             },
