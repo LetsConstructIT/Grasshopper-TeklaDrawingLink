@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
+using GTDrawingLink.Components.Parts;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -21,36 +22,83 @@ namespace GTDrawingLink.Components.Geometries
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             var reinforcement = _command.GetInputValues();
-            if (reinforcement is null)
+            if (!CheckInput(reinforcement))
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input object could not be casted to Reinforcment");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input object could not be casted to Reinforcment or Rebar Set");
                 return;
             }
 
             var size = string.Empty;
             reinforcement.GetReportProperty("SIZE", ref size);
-            var shape = string.Empty;
-            reinforcement.GetReportProperty("SHAPE", ref shape);
+
+            var shape = GetShape(reinforcement);
+
+            var grade = string.Empty;
+            var name = string.Empty;
+            if (reinforcement is TSM.Reinforcement rebar)
+            {
+                grade = rebar.Grade;
+                name = rebar.Name;
+            }
+            else if (reinforcement is TSM.RebarSet rebarSet)
+            {
+                grade = rebarSet.RebarProperties.Grade;
+                name = rebarSet.RebarProperties.Name;
+                size = rebarSet.RebarProperties.Size;
+            }
 
             var (geometries, radiuses) = GetRebarGeometries(reinforcement);
 
             _command.SetOutputValues(DA,
                                      size,
-                                     reinforcement.Grade,
-                                     reinforcement.Name,
+                                     grade,
+                                     name,
                                      GetRebarType(reinforcement),
                                      shape,
                                      geometries,
                                      radiuses);
         }
 
-        private string GetRebarType(TSM.Reinforcement reinforcement)
+        private bool CheckInput(TSM.ModelObject reinforcement)
+        {
+            if (reinforcement is null)
+                return false;
+
+            if (!(reinforcement is TSM.Reinforcement) && !(reinforcement is TSM.RebarSet))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private string GetShape(TSM.ModelObject reinforcement)
+        {
+            var shape = string.Empty;
+            reinforcement.GetReportProperty("SHAPE", ref shape);
+            if (reinforcement is TSM.RebarSet rebarSet)
+            {
+                var childRebar = GetFirstRebar(rebarSet);
+                childRebar.GetReportProperty("SHAPE", ref shape);
+            }
+
+            return shape;
+        }
+
+        private string GetRebarType(TSM.ModelObject reinforcement)
         {
             var type = reinforcement.GetType().Name;
 
             return type.Replace("Tekla.Structures.Model.", "");
         }
 
+        private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.ModelObject input)
+        {
+            if (input is TSM.RebarSet rebarSet)
+                return GetRebarGeometries(rebarSet);
+
+            return GetRebarGeometries(input as TSM.Reinforcement);
+        }
 
 #if API2020
         private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
@@ -114,6 +162,20 @@ namespace GTDrawingLink.Components.Geometries
         }
 #endif
 
+        private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.RebarSet rebarSet)
+        {
+            var childRebar = GetFirstRebar(rebarSet);
+
+            return GetRebarGeometries(childRebar);
+        }
+
+        private TSM.Reinforcement GetFirstRebar(TSM.RebarSet rebarSet)
+        {
+            var moe = rebarSet.GetReinforcements();
+            moe.MoveNext();
+
+            return moe.Current as TSM.Reinforcement;
+        }
     }
 
     public class GetReinforcementPropertiesCommand : CommandBase
@@ -128,7 +190,7 @@ namespace GTDrawingLink.Components.Geometries
         private readonly OutputListParam<Rhino.Geometry.Polyline> _outGeometry = new OutputListParam<Rhino.Geometry.Polyline>(ParamInfos.ReinforcementGeometry);
         private readonly OutputListParam<double> _outBendingRadiuses = new OutputListParam<double>(ParamInfos.ReinforcementBendingRadius);
 
-        internal TSM.Reinforcement GetInputValues()
+        internal TSM.ModelObject? GetInputValues()
         {
             return GetReinforcementFromInput(_inTeklaObject.Value);
         }
@@ -146,23 +208,25 @@ namespace GTDrawingLink.Components.Geometries
             return SetOutput(DA);
         }
 
-        private TSM.Reinforcement? GetReinforcementFromInput(object inputObject)
+        private TSM.ModelObject? GetReinforcementFromInput(object inputObject)
         {
             if (inputObject is GH_Goo<TSM.ModelObject> modelGoo)
             {
-                return modelGoo.Value as TSM.Reinforcement;
+                return modelGoo.Value;
             }
             else if (inputObject is TSM.ModelObject modelObject)
             {
-                return modelObject as TSM.Reinforcement;
+                return modelObject;
             }
             else if (inputObject is TeklaDatabaseObjectGoo drawingObject)
             {
-                var drawingModelObject = drawingObject.Value as ModelObject;
-                if (drawingModelObject is null)
+                if (!(drawingObject.Value is ModelObject drawingModelObject))
                     return null;
 
-                return ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier) as TSM.Reinforcement;
+                if (drawingModelObject is ReinforcementSetGroup rebarSet)
+                    return ConvertDrawingToModelObjectComponent.GetModelRebarSet(rebarSet);
+                else
+                    return ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier) as TSM.Reinforcement;
             }
 
             return null;
