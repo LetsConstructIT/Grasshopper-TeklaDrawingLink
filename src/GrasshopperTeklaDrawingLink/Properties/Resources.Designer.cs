@@ -763,6 +763,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap HideObject {
+            get {
+                object obj = ResourceManager.GetObject("HideObject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LevelMark {
             get {
                 object obj = ResourceManager.GetObject("LevelMark", resourceCulture);
@@ -1266,6 +1276,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap SetUDA {
             get {
                 object obj = ResourceManager.GetObject("SetUDA", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ShowObject {
+            get {
+                object obj = ResourceManager.GetObject("ShowObject", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
