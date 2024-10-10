@@ -69,6 +69,15 @@ namespace GTDrawingLink.Types
                 target = (Q)(object)new GH_Line(Value.ToRhino());
                 return true;
             }
+            else if (target is GH_Vector)
+            {
+                var dir = Value.ToRhino().Direction;
+                dir.Unitize();
+
+                target = (Q)(object)new GH_Vector(dir);
+                return true;
+            }
+
             return base.CastTo(ref target);
         }
 
