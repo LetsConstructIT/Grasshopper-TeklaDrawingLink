@@ -9,7 +9,7 @@ namespace GTDrawingLink.Components.Parts
 {
     public class DeleteDrawingObjectsComponent : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.quinary;
         protected override Bitmap Icon => Properties.Resources.DeleteObjects;
 
         public DeleteDrawingObjectsComponent() : base(ComponentInfos.DeleteDrawingObjectsComponent)

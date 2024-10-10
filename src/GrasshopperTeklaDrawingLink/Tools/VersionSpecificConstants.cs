@@ -808,6 +808,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SaveDrawingComponent),
                 "8C99963F-EF32-451F-9CEE-D0C34F4B3457"
+            },
+            {
+                typeof(HideObjectComponent),
+                "C74D3969-B764-4B57-BFDD-95EC3B8C801C"
             }
         };
 

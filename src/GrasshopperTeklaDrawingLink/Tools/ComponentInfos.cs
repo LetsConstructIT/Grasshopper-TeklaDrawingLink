@@ -65,6 +65,24 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.DrawingParts
         };
 
+        public static readonly GH_InstanceDescription HideObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Hide Object",
+            NickName = "Hide",
+            Description = "Hide Drawing Objects in Tekla Structures (right-click this component to change mode - view or drawing)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
+
+        public static readonly GH_InstanceDescription ShowObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Show Object",
+            NickName = "Show",
+            Description = "Show Drawing Objects in Tekla Structures (right-click this component to change mode - view or drawing)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
+
         public static readonly GH_InstanceDescription GetViewFromDrawingObjectComponent = new GH_InstanceDescription
         {
             Name = "Father View",
