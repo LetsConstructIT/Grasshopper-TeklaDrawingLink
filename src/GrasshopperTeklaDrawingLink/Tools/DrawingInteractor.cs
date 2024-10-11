@@ -106,6 +106,42 @@ namespace GTDrawingLink.Tools
             }
         }
 
+        public static LineSegment PickLine()
+        {
+            try
+            {
+                var picker = DrawingHandler.GetPicker();
+                picker.PickTwoPoints("Pick 1st point", "Pick 2nd point", out Point firstPt, out Point secondPt, out ViewBase view);
+                return new LineSegment(firstPt, secondPt);
+            }
+            catch (ApplicationException)
+            {
+                return null;
+            }
+        }
+
+        public static IList<LineSegment> PickLines()
+        {
+            var lines = new List<LineSegment>();
+            var picker = DrawingHandler.GetPicker();
+            try
+            {
+                while (true)
+                {
+                    picker.PickTwoPoints("Pick 1st point", "Pick 2nd point", out Point firstPt, out Point secondPt, out ViewBase view);
+                    lines.Add(new LineSegment(firstPt, secondPt));
+                }
+            }
+            catch (PickerInterruptedException)
+            {
+                return lines;
+            }
+            catch (ApplicationException)
+            {
+                return null;
+            }
+        }
+
         public static void Highlight<T>(T drawingObject) where T : DrawingObject
         {
             if (drawingObject != null)

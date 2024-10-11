@@ -47,11 +47,38 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Params
         };
 
+        public static readonly GH_InstanceDescription TeklaLineSegmentParam = new GH_InstanceDescription
+        {
+            Name = "Line Segment",
+            NickName = "L",
+            Description = "Set a line segment in Tekla Structures drawing to be used in Grasshopper (right-click this component for the options to pick one or several objects in Tekla Structures)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Params
+        };        
+
         public static readonly GH_InstanceDescription ConvertDrawingToModelObjectComponent = new GH_InstanceDescription
         {
             Name = "Drawing to Model Object",
             NickName = "DtoM",
             Description = "Converts the Tekla Structures drawing object to associated model object",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
+
+        public static readonly GH_InstanceDescription HideObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Hide Object",
+            NickName = "Hide",
+            Description = "Hide Drawing Objects in Tekla Structures (right-click this component to change mode - view or drawing)",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.DrawingParts
+        };
+
+        public static readonly GH_InstanceDescription ShowObjectComponent = new GH_InstanceDescription
+        {
+            Name = "Show Object",
+            NickName = "Show",
+            Description = "Show Drawing Objects in Tekla Structures (right-click this component to change mode - view or drawing)",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.DrawingParts
         };

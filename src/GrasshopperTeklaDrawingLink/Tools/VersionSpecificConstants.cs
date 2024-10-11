@@ -46,6 +46,10 @@ namespace GTDrawingLink.Tools
                 "315E3AB6-0C7E-445B-B4E4-B6737B4AC02B"
             },
             {
+                typeof(TeklaLineSegmentParam),
+                "FE3CC1C8-FCF6-4C70-8DD4-F0E0D33EE48B"
+            },
+            {
                 typeof(ConvertDrawingToModelObjectComponent),
                 "29F72A64-9760-4E49-92A4-D7CC87DBBB45"
             },
@@ -804,6 +808,14 @@ namespace GTDrawingLink.Tools
             {
                 typeof(SaveDrawingComponent),
                 "8C99963F-EF32-451F-9CEE-D0C34F4B3457"
+            },
+            {
+                typeof(HideObjectComponent),
+                "C74D3969-B764-4B57-BFDD-95EC3B8C801C"
+            },
+            {
+                typeof(ShowObjectComponent),
+                "D4088212-5BFE-44F8-9FE0-D00A97801122"
             }
         };
 

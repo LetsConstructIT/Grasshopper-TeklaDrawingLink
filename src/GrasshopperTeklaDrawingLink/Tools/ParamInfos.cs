@@ -1880,7 +1880,7 @@ namespace GTDrawingLink.Tools
         public static readonly GH_InstanceDescription PolygonAttributes = new GH_InstanceDescription
         {
             Name = "Polygon attributes",
-            NickName = "PLAttr",
+            NickName = "POLYAttr",
             Description = "Polygon attributes"
         };
 
@@ -2093,6 +2093,20 @@ namespace GTDrawingLink.Tools
             Name = "Curved Dimension",
             NickName = "Dim",
             Description = "Curved Dimension"
+        };
+
+        public static readonly GH_InstanceDescription ViewOperation = new GH_InstanceDescription
+        {
+            Name = "View",
+            NickName = "View",
+            Description = "View scope of show/hide operation"
+        };
+
+        public static readonly GH_InstanceDescription DrawingOperation = new GH_InstanceDescription
+        {
+            Name = "Drawing",
+            NickName = "Drawing",
+            Description = "Drawing scope of show/hide operation"
         };
     }
 }
