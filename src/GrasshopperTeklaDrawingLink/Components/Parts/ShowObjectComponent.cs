@@ -22,18 +22,18 @@ namespace GTDrawingLink.Components.Parts
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingPartParam, GH_ParamAccess.item);
+            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingPartParam, GH_ParamAccess.item);
+            AddTeklaDbObjectParameter(pManager, ComponentInfos.DrawingObjectParam, GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             object input = null;
-            DA.GetData(ComponentInfos.DrawingPartParam.Name, ref input);
+            DA.GetData(ComponentInfos.DrawingObjectParam.Name, ref input);
 
             if (input is TeklaDatabaseObjectGoo databaseGoo && databaseGoo.Value is ModelObject modelObject)
             {
@@ -45,7 +45,7 @@ namespace GTDrawingLink.Components.Parts
                 modelObject.Modify();
             }
 
-            DA.SetData(ComponentInfos.DrawingPartParam.Name, input);
+            DA.SetData(ComponentInfos.DrawingObjectParam.Name, input);
         }
 
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
@@ -72,18 +72,12 @@ namespace GTDrawingLink.Components.Parts
 
         private void SetCustomMessage()
         {
-            switch (_mode)
+            Message = _mode switch
             {
-                case OperationMode.View:
-                    Message = "View scope";
-                    break;
-                case OperationMode.Drawing:
-                    Message = "Drawing scope";
-                    break;
-                default:
-                    Message = "";
-                    break;
-            }
+                OperationMode.View => "View scope",
+                OperationMode.Drawing => "Drawing scope",
+                _ => "",
+            };
         }
 
         public override bool Write(GH_IWriter writer)
