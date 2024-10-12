@@ -5,6 +5,7 @@ using GTDrawingLink.Tools;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Obsolete
@@ -53,9 +54,22 @@ namespace GTDrawingLink.Components.Obsolete
 
             if (restrictionBox != null)
             {
-                var xRange = restrictionBox.Value.X.ToTekla();
-                var yRange = restrictionBox.Value.Y.ToTekla();
-                var zRange = restrictionBox.Value.Z.ToTekla();
+                var globalCorners = restrictionBox.Value.GetCorners();
+                var transformation = Transform.ChangeBasis(Plane.WorldXY, view.ViewCoordinateSystem.ToRhino());
+                var localCorners = new List<Point3d>();
+                foreach (var corner in globalCorners)
+                {
+                    corner.Transform(transformation);
+                    localCorners.Add(corner);
+                }
+
+                var xInterval = new Interval(localCorners.Min(p => p.X), localCorners.Max(p => p.X));
+                var yInterval = new Interval(localCorners.Min(p => p.Y), localCorners.Max(p => p.Y));
+                var zInterval = new Interval(localCorners.Min(p => p.Z), localCorners.Max(p => p.Z));
+
+                var xRange = xInterval.ToTekla();
+                var yRange = yInterval.ToTekla();
+                var zRange = zInterval.ToTekla();
 
                 view.RestrictionBox = new Tekla.Structures.Geometry3d.AABB(
                     new Tekla.Structures.Geometry3d.Point(xRange.Min, yRange.Min, zRange.Min),
