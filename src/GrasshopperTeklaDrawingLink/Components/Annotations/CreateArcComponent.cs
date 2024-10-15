@@ -65,11 +65,11 @@ namespace GTDrawingLink.Components.Annotations
         private static Arc InsertArc(ViewBase view,
                                      Rhino.Geometry.Arc rhinoArc,
                                      Arc.ArcAttributes attributes)
-        {
+        {            
             var circle = new Arc(view,
-                                 rhinoArc.StartPoint.ToTekla(),
-                                 rhinoArc.MidPoint.ToTekla(),
                                  rhinoArc.EndPoint.ToTekla(),
+                                 rhinoArc.StartPoint.ToTekla(),
+                                 rhinoArc.Center.ToTekla(),
                                  attributes);
             circle.Insert();
 

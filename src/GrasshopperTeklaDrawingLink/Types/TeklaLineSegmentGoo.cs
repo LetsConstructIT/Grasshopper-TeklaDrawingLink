@@ -64,7 +64,14 @@ namespace GTDrawingLink.Types
 
         public override bool CastTo<Q>(ref Q target)
         {
-            if (target is IGH_GeometricGoo && Value != null)
+            if (target is GH_Curve)
+            {
+                var line = Value.ToRhino().ToNurbsCurve();
+
+                target = (Q)(object)new GH_Curve(line);
+                return true;
+            }
+            else if(target is IGH_GeometricGoo && Value != null)
             {
                 target = (Q)(object)new GH_Line(Value.ToRhino());
                 return true;

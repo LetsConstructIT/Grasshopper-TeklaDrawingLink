@@ -51,10 +51,13 @@ namespace GTDrawingLink.Tools
             var type = obj.GetType();
             foreach (var propertyInfo in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
+                if (propertiesWithValues.ContainsKey(propertyInfo.Name))
+                    continue;
+                
                 propertiesWithValues.Add(propertyInfo.Name, propertyInfo.GetValue(obj).ToString());
             }
 
-            return string.Join("\n", propertiesWithValues.OrderBy(p=>p.Key).Select(p => $"{p.Key}: {p.Value}"));
+            return string.Join("\n", propertiesWithValues.OrderBy(p => p.Key).Select(p => $"{p.Key}: {p.Value}"));
         }
     }
 }
