@@ -19,6 +19,19 @@ namespace GTDrawingLink.Tools
 
         public static readonly DateTime DATETIME_EPOCH = new DateTime(1970, 1, 1);
 
+        public static Attributes Flatten(List<Attributes> input)
+        {
+            var result = new Attributes();
+            foreach (var attribute in input)
+            {
+                foreach (var keyValue in attribute)
+                {
+                    result.Add(keyValue.Key, keyValue.Value);
+                }
+            }
+
+            return result;
+        }
         public static List<Attributes> GetAll(DatabaseObject modelObject)
         {
             var attributes = new List<Attributes>();
