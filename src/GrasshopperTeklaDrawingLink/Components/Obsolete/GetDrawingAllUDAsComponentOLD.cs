@@ -1,19 +1,21 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.UDAs
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class GetDrawingAllUDAsComponent : TeklaComponentBase
+    [Obsolete]
+    public class GetDrawingAllUDAsComponentOLD : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.GetAllUDAs;
 
-        public GetDrawingAllUDAsComponent() : base(ComponentInfos.GetDrawingAllUDAsComponent)
+        public GetDrawingAllUDAsComponentOLD() : base(ComponentInfos.GetDrawingAllUDAsComponent)
         {
         }
 

@@ -230,7 +230,7 @@ namespace GTDrawingLink.Tools
                 "E59C9558-9764-4B6C-8131-73FABF8FECEC"
             },
             {
-                typeof(GetDrawingAllUDAsComponent),
+                typeof(GetDrawingAllUDAsComponentOLD),
                 "220E9AEC-EC8E-48EF-B072-A6425B1B868F"
             },
             {
