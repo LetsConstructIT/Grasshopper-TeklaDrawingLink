@@ -32,6 +32,11 @@ namespace DrawingLink.UI
         private List<Rhino.RhinoInfo> SetupRhinoFolders()
         {
             var versions = Rhino.RhinoInfo.GetAllVersions();
+            if (versions.Count == 0)
+            {
+                MessageBox.Show("No installed Rhino detected. Closing the Grasshopper Application.");
+                Environment.Exit(0);
+            }
 
             var neededVersion = versions.Where(v => v.Version == UI.Properties.Settings.Default.RhinoVersion).OrderByDescending(v => v.ServiceRelease).FirstOrDefault();
             if (neededVersion != null)
