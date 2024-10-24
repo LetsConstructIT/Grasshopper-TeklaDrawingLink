@@ -31,12 +31,28 @@ namespace DrawingLink.UI
 
         private List<Rhino.RhinoInfo> SetupRhinoFolders()
         {
+            var versionToLaunch = UI.Properties.Settings.Default.RhinoVersion;
+
             var versions = Rhino.RhinoInfo.GetAllVersions();
+            if (versions.Count == 0)
+            {
+                MessageBox.Show("No installed Rhino detected. Closing the Grasshopper Application.");
+                Environment.Exit(0);
+            }
 
-            var neededVersion = versions.Where(v => v.Version == UI.Properties.Settings.Default.RhinoVersion).OrderByDescending(v => v.ServiceRelease).FirstOrDefault();
-            if (neededVersion != null)
-                _rhinoFolders = neededVersion.InstallFolders.ToArray();
+            var availableVersions = versions.Select(v => v.Version).Distinct().ToList();
+            if (availableVersions.Count == 1)
+            {
+                versionToLaunch = versions.First().Version;
+                UI.Properties.Settings.Default.RhinoVersion = versionToLaunch;
+            }
 
+            var neededVersion = versions
+                .Where(v => v.Version == versionToLaunch)
+                .OrderByDescending(v => v.ServiceRelease)
+                .FirstOrDefault() ?? versions.First();
+
+            _rhinoFolders = neededVersion.InstallFolders.ToArray();
             return versions.ToList();
         }
 

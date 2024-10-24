@@ -262,5 +262,10 @@ namespace DrawingLink.UI
         {
             gridLoading.Visibility = Visibility.Collapsed;
         }
+
+        private void WpfOkCreateCancel_CancelClicked(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

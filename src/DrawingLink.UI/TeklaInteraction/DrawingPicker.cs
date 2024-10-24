@@ -46,7 +46,7 @@ namespace DrawingLink.UI.TeklaInteraction
                 {
                     while (true)
                     {
-                        var result = picker.PickPoint("Pick point");
+                        var result = picker.PickPoint(prompt);
                         points.Add(result.Item1);
                     }
                 }
@@ -55,12 +55,41 @@ namespace DrawingLink.UI.TeklaInteraction
                     return points;
                 }
             }
+            else
             {
-                var result = picker.PickPoint("Pick point");
+                var result = picker.PickPoint(prompt);
                 points.Add(result.Item1);
             }
 
             return points;
+        }
+
+        internal List<LineSegment> PickLine(bool isMultiple, string prompt)
+        {
+            var picker = new DrawingHandler().GetPicker();
+            var segments = new List<LineSegment>();
+            if (isMultiple)
+            {
+                try
+                {
+                    while (true)
+                    {
+                        picker.PickTwoPoints(prompt, "Pick 2nd point", out Point firstPt, out Point secondPt, out ViewBase view);
+                        segments.Add(new LineSegment(firstPt, secondPt));
+                    }
+                }
+                catch (PickerInterruptedException)
+                {
+                    return segments;
+                }
+            }
+            else
+            {
+                picker.PickTwoPoints(prompt, "Pick 2nd point", out Point firstPt, out Point secondPt, out ViewBase view);
+                segments.Add(new LineSegment(firstPt, secondPt));
+            }
+
+            return segments;
         }
     }
 }

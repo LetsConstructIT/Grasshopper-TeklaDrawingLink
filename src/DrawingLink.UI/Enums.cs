@@ -12,6 +12,7 @@
     public enum DrawingParamType
     {
         Point,
+        Line,
         Object
     }
 }

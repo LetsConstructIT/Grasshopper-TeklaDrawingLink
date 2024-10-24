@@ -46,6 +46,10 @@ namespace DrawingLink.UI.TeklaInteraction
                 {
                     param.Set(_drawingPicker.PickObject(param.IsMultiple, param.Prompt));
                 }
+                else if (param.ParamType == DrawingParamType.Line)
+                {
+                    param.Set(_drawingPicker.PickLine(param.IsMultiple, param.Prompt));
+                }
                 else
                 {
                     param.Set(_drawingPicker.PickPoint(param.IsMultiple, param.Prompt));

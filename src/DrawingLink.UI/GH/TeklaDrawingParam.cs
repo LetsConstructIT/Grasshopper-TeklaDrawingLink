@@ -7,9 +7,6 @@ namespace DrawingLink.UI.GH
     {
         public DrawingParamType ParamType { get; }
 
-        private List<Tekla.Structures.Drawing.DatabaseObject>? _drawingObjects;
-        private List<Tekla.Structures.Geometry3d.Point>? _points;
-
         public TeklaDrawingParam(IGH_ActiveObject activeObject, DrawingParamType paramType, bool isMultiple, string prompt) : base(activeObject, isMultiple, prompt)
         {
             ParamType = paramType;
@@ -26,6 +23,11 @@ namespace DrawingLink.UI.GH
         public void Set(List<Tekla.Structures.Geometry3d.Point> points)
         {
             TeklaObjects.Set(points);
+        }
+
+        public void Set(List<Tekla.Structures.Geometry3d.LineSegment> lines)
+        {
+            TeklaObjects.Set(lines);
         }
     }
 }

@@ -251,7 +251,7 @@ namespace DrawingLink.UI.GH
                     drawingPersistentParam.SetPersistentData(objectsToSet);
                     drawingPersistentParam.ExpireSolution(true);
                 }
-                else if (ighActiveObject.GetType().ToString() == "GTDrawingLink.Types.TeklaDrawingPointParam")
+                else if (ighActiveObject.GetType().ToString() == "GTDrawingLink.Types.TeklaDrawingPointParam" || ighActiveObject.GetType().Name == "TeklaLineSegmentParam")
                 {
                     var type = ighActiveObject.GetType();
 
@@ -381,7 +381,7 @@ namespace DrawingLink.UI.GH
                     continue;
                 }
                 else if (activeObject is GH_PersistentParam<GH_Goo<Tekla.Structures.Drawing.DatabaseObject>> ghDrawingParam ||
-                    activeObject.GetType().Name == "TeklaDrawingPointParam")
+                    activeObject.GetType().Name == "TeklaDrawingPointParam" || activeObject.GetType().Name == "TeklaLineSegmentParam")
                 {
                     drawingParams.Add(TransformToDrawingParam(activeObject, isMultiple));
                     continue;
@@ -443,6 +443,7 @@ namespace DrawingLink.UI.GH
             return paramName switch
             {
                 "TeklaDrawingPointParam" => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Point, isMultiple, prompt),
+                "TeklaLineSegmentParam" => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Line, isMultiple, prompt),
                 _ => new TeklaDrawingParam(ghDrawingParam, DrawingParamType.Object, isMultiple, prompt),
             };
         }

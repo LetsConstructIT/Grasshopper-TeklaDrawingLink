@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TEP Version="2.0">
 
-    <Product Id="GrasshopperApplication" UpgradeCode="59D4F7C4-C2D9-42A5-A3CC-079963B4DB6C" Version="1.1" Language="1033" 
+    <Product Id="GrasshopperApplication" UpgradeCode="59D4F7C4-C2D9-42A5-A3CC-079963B4DB6C" Version="1.2" Language="1033" 
         Name="Grasshopper Application" Manufacturer="Let's Construct IT"  
         Description= "Part of the Grasshopper Drawing Link development project. Enables to utilize Rhino.Inside technology in Tekla Structures."
         IconPath="%TEPDEFINITIONFILEFOLDER%\..\icon.png" Type="Extension">
