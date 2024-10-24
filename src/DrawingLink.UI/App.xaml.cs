@@ -50,11 +50,9 @@ namespace DrawingLink.UI
             var neededVersion = versions
                 .Where(v => v.Version == versionToLaunch)
                 .OrderByDescending(v => v.ServiceRelease)
-                .FirstOrDefault();
+                .FirstOrDefault() ?? versions.First();
 
-            if (neededVersion != null)
-                _rhinoFolders = neededVersion.InstallFolders.ToArray();
-
+            _rhinoFolders = neededVersion.InstallFolders.ToArray();
             return versions.ToList();
         }
 
