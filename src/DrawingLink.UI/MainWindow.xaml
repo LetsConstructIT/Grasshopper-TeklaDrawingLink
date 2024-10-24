@@ -99,6 +99,7 @@
     <UIControls:WpfCreateApplyCancel x:Name="teklaBottomBar"
                                      Grid.Row="3"
                                      CreateClicked="WpfOkCreateCancel_CreateClicked"
-                                     ApplyClicked="WpfOkCreateCancel_ApplyClicked" />
+                                     ApplyClicked="WpfOkCreateCancel_ApplyClicked" 
+                                     CancelClicked="WpfOkCreateCancel_CancelClicked"/>
   </Grid>
 </tsd:ApplicationWindowBase>
