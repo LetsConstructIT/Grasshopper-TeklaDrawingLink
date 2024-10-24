@@ -8,6 +8,7 @@ namespace DrawingLink.UI.GH
         private List<Tekla.Structures.Model.ModelObject>? _modelObjects;
         private List<Tekla.Structures.Drawing.DatabaseObject>? _drawingObjects;
         private List<Tekla.Structures.Geometry3d.Point>? _points;
+        private List<Tekla.Structures.Geometry3d.LineSegment>? _lines;
 
         private readonly bool _isDrawing;
         private DrawingParamType _drawingType;
@@ -32,7 +33,12 @@ namespace DrawingLink.UI.GH
         {
             if (_isDrawing)
             {
-                return _drawingType == DrawingParamType.Point ? _points.ToArray() : _drawingObjects.ToArray();
+                return _drawingType switch
+                {
+                    DrawingParamType.Point => _points.ToArray(),
+                    DrawingParamType.Line => _lines.ToArray(),
+                    _ => _drawingObjects.ToArray(),
+                };
             }
             else
             {
@@ -55,6 +61,11 @@ namespace DrawingLink.UI.GH
         public void Set(List<Tekla.Structures.Geometry3d.Point> points)
         {
             _points = points;
+        }
+
+        public void Set(List<Tekla.Structures.Geometry3d.LineSegment> lines)
+        {
+            _lines = lines;
         }
 
         public void Set(List<Tekla.Structures.Drawing.DatabaseObject> drawingObjects)
