@@ -105,7 +105,7 @@ namespace DrawingLink.UI
                 return;
             }
 
-            var userFormData = _viewModel.ToDataModel();
+            var userFormData = _viewModel.ToDataModel(path);
 
             var teklaParams = _instance.GetInputParams(path).TeklaParams;
 
@@ -132,6 +132,13 @@ namespace DrawingLink.UI
             try
             {
                 messages = _instance.Solve(userFormData, teklaInput);
+                if (messages == null)
+                {
+                    messages = new Dictionary<GH_RuntimeMessageLevel, List<string>>
+                    {
+                        [GH_RuntimeMessageLevel.Error] = new List<string>() { "Something wrong happened during solving script" }
+                    };
+                }
             }
             catch (Exception ex)
             {
@@ -164,10 +171,9 @@ namespace DrawingLink.UI
                 Filter = "Grasshopper file (.gh)|*.gh",
             };
 
-            if (File.Exists(_viewModel.DefinitionPath))
-            {
-                dialog.InitialDirectory = Path.GetDirectoryName(_viewModel.DefinitionPath);
-            }
+            var path = GetFullPath(_viewModel.DefinitionPath);
+            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+                dialog.InitialDirectory = Path.GetDirectoryName(path);
 
             if (dialog.ShowDialog() != true)
                 return;
@@ -187,7 +193,7 @@ namespace DrawingLink.UI
 
         private void DisplayScriptName(string path)
         {
-            if (string.IsNullOrEmpty(tbDefinitionPath.Text))
+            if (string.IsNullOrEmpty(path))
                 return;
 
             Title = Path.GetFileNameWithoutExtension(path);

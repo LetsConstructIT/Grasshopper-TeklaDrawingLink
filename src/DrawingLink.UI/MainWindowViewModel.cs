@@ -4233,7 +4233,7 @@ namespace DrawingLink.UI
         {
         }
 
-        public UserFormData ToDataModel()
+        public UserFormData ToDataModel(string fullGhPath)
         {
             var fields = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var strings = (from f in fields
@@ -4248,7 +4248,7 @@ namespace DrawingLink.UI
                             where f.Name.StartsWith("int_")
                             select f.GetValue(this)).Cast<int>().ToList();
 
-            return new UserFormData(DefinitionPath, strings, doubles, integers);
+            return new UserFormData(fullGhPath, strings, doubles, integers);
         }
     }
 }
