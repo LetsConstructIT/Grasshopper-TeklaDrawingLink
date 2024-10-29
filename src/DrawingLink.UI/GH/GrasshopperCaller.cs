@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using Tekla.Structures.Datatype;
 using Tekla.Structures.Model;
 
 namespace DrawingLink.UI.GH
@@ -20,6 +21,7 @@ namespace DrawingLink.UI.GH
     {
         private static GrasshopperCaller _instance;
         private static RhinoCore _rhinoCore;
+        private static RhinoDoc _rhinoDoc;
         private static GH_RhinoScriptInterface _grasshopperInstance;
         private static readonly Guid _ghPluginGuid = new("b45a29b1-4343-4035-989e-044e8580d9cf");
 
@@ -36,9 +38,50 @@ namespace DrawingLink.UI.GH
             {
                 _instance = new GrasshopperCaller();
                 _rhinoCore = new RhinoCore();
+                SetHeadlessRhinoDoc();
             }
 
             return _instance;
+        }
+        private static void SetHeadlessRhinoDoc()
+        {
+            _rhinoDoc ??= RhinoDoc.CreateHeadless(null);
+
+            if (_rhinoDoc == null)
+            {
+                MessageBox.Show("Failed to create a headless Rhino doc");
+                return;
+            }
+
+            UnitSystem rhinoUnitSystem = UnitSystem.Millimeters;
+            if (Settings.TryGetValue("distance_unit", out var teklaUnit))
+            {
+                switch ((Distance.UnitType)teklaUnit)
+                {
+                    case Distance.UnitType.Millimeter:
+                        rhinoUnitSystem = UnitSystem.Millimeters;
+                        break;
+                    case Distance.UnitType.Centimeter:
+                        rhinoUnitSystem = UnitSystem.Centimeters;
+                        break;
+                    case Distance.UnitType.Meter:
+                        rhinoUnitSystem = UnitSystem.Meters;
+                        break;
+                    case Distance.UnitType.Inch:
+                        rhinoUnitSystem = UnitSystem.Inches;
+                        break;
+                    case Distance.UnitType.Foot:
+                        rhinoUnitSystem = UnitSystem.Feet;
+                        break;
+                    default:
+                        rhinoUnitSystem = UnitSystem.Millimeters;
+                        break;
+                }
+            }
+            _rhinoDoc.ModelUnitSystem = rhinoUnitSystem;
+            _rhinoDoc.ModelAbsoluteTolerance = GetAbsoluteTolerance(0.1, rhinoUnitSystem);
+            _rhinoDoc.ModelAngleToleranceDegrees = 0.1;
+            RhinoDoc.ActiveDoc = _rhinoDoc;
         }
 
         public Dictionary<GH_RuntimeMessageLevel, List<string>> Solve(UserFormData grasshopperData, Dictionary<string, TeklaObjects> teklaInput)
@@ -71,6 +114,7 @@ namespace DrawingLink.UI.GH
                 {
                     component.CollectData();
                     component.ComputeData();
+                    AppendComponentErrorMessages(component, messages);
                 }
                 else if (activeObject is GH_Panel && (activeObject as GH_Panel).Sources.Any())
                 {
@@ -542,6 +586,17 @@ namespace DrawingLink.UI.GH
         {
             var allowedNames = new string[] { "SOLVE", "S", "S:" };
             return allowedNames.Any(n => panelName.StartsWith(n));
+        }
+
+        private void AppendComponentErrorMessages(GH_Component component, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        {
+            var toCheck = new GH_RuntimeMessageLevel[] { GH_RuntimeMessageLevel.Warning, GH_RuntimeMessageLevel.Error };
+
+            foreach (var level in toCheck)
+            {
+                foreach (var message in component.RuntimeMessages(level))
+                    messages[level].Add($"[ {component.NickName} component ] {message}");
+            }
         }
 
         private void AppendOutputMessages(GH_Panel panel, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
