@@ -109,6 +109,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Components\Exports\" />
+  </ItemGroup>
     
   <PropertyGroup>
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
