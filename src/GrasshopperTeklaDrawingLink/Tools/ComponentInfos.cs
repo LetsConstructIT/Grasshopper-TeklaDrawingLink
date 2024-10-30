@@ -1240,5 +1240,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
+
+        public static readonly GH_InstanceDescription ExportIfcComponent = new GH_InstanceDescription
+        {
+            Name = "Export IFC",
+            NickName = "IFC",
+            Description = "Export Tekla elements to IFC",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
     }
 }

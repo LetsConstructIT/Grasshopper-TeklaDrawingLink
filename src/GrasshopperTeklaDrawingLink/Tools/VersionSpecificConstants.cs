@@ -3,6 +3,7 @@ using GTDrawingLink.Components.Attributes;
 using GTDrawingLink.Components.AttributesComponents;
 using GTDrawingLink.Components.Dimensions;
 using GTDrawingLink.Components.Drawings;
+using GTDrawingLink.Components.Exports;
 using GTDrawingLink.Components.Geometries;
 using GTDrawingLink.Components.Miscs;
 using GTDrawingLink.Components.Miscs.Loops;
@@ -820,6 +821,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ShowObjectComponent),
                 "D4088212-5BFE-44F8-9FE0-D00A97801122"
+            },
+            {
+                typeof(ExportIfcComponent),
+                "2FE7B11A-5CC9-4397-9B39-045907B5256E"
             }
         };
 

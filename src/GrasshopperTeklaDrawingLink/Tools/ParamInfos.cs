@@ -2108,5 +2108,26 @@ namespace GTDrawingLink.Tools
             NickName = "Drawing",
             Description = "Drawing scope of show/hide operation"
         };
+
+        public static readonly GH_InstanceDescription ExportPath = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Output file path"
+        };
+
+        public static readonly GH_InstanceDescription ExportSettings = new GH_InstanceDescription
+        {
+            Name = "Settings",
+            NickName = "S",
+            Description = "Name of export settings which should be used"
+        };
+
+        public static readonly GH_InstanceDescription ExportResult = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Path to created file"
+        };
     }
 }
