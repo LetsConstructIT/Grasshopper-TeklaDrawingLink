@@ -1249,5 +1249,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Export
         };
+
+        public static readonly GH_InstanceDescription ExportPdfComponent = new GH_InstanceDescription
+        {
+            Name = "Export PDF",
+            NickName = "PDF",
+            Description = "Export Tekla drawing to PDF",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
     }
 }

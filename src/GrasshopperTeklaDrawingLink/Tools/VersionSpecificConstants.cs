@@ -825,6 +825,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ExportIfcComponent),
                 "2FE7B11A-5CC9-4397-9B39-045907B5256E"
+            },
+            {
+                typeof(ExportPdfComponent),
+                "F381AF18-029F-4057-80B1-5D635884ADB6"
             }
         };
 
