@@ -2,7 +2,6 @@
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.IO;
-using System.Linq;
 
 namespace GTDrawingLink.Components.Exports
 {
@@ -12,6 +11,8 @@ namespace GTDrawingLink.Components.Exports
 
         protected string CreateDirectoryIfNeeded(string path)
         {
+            path = path.Replace("/","_");
+
             var modelPath = $"{ModelInteractor.ModelPath()}\\";
             if (path.StartsWith(".\\"))
                 path = path.Replace(".\\", modelPath);

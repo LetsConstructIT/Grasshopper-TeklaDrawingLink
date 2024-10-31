@@ -2129,5 +2129,26 @@ namespace GTDrawingLink.Tools
             NickName = "P",
             Description = "Path to created file"
         };
+
+        public static readonly GH_InstanceDescription IfcExportMode = new GH_InstanceDescription
+        {
+            Name = "Export mode",
+            NickName = "E",
+            Description = "IFC Export mode (selection / all)"
+        };
+
+        public static readonly GH_InstanceDescription ExportSelection = new GH_InstanceDescription
+        {
+            Name = "Export selection",
+            NickName = "Selection",
+            Description = "Export only provided elements"
+        };
+
+        public static readonly GH_InstanceDescription ExportAll = new GH_InstanceDescription
+        {
+            Name = "Export all",
+            NickName = "All",
+            Description = "Export whole model"
+        };
     }
 }
