@@ -11,11 +11,13 @@ namespace GTDrawingLink.Components.Exports
 
         protected string CreateDirectoryIfNeeded(string path)
         {
-            path = path.Replace("/","_");
+            path = path.Replace("/", "_");
 
             var modelPath = $"{ModelInteractor.ModelPath()}\\";
             if (path.StartsWith(".\\"))
                 path = path.Replace(".\\", modelPath);
+            else if (path.StartsWith("./"))
+                path = path.Replace("./", modelPath);
 
             if (Directory.Exists(path))
                 return path;
