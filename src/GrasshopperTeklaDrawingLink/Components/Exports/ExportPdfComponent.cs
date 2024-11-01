@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -78,21 +79,15 @@ namespace GTDrawingLink.Components.Exports
 
         private void ExportPdf(Drawing drawing, string fullName, string settings)
         {
+            var isActiveDrawing = CheckIfDrawingIsActive(drawing);
+
             var dpmPath = GetDPMPrinterCommand();
             try
             {
+                if (!isActiveDrawing)
+                    DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, false);
 
-                // Check if we are in the drawing and it's active one ->
-                // if so don't close it at the end
-
-
-
-
-
-
-                DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, false);
-
-                var arg = GetPrinterArgs(settings) + string.Format(@"out:""{0}""", fullName);
+                var arg = GetPrinterArgs(settings, fullName);
 
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -109,8 +104,18 @@ namespace GTDrawingLink.Components.Exports
             }
             finally
             {
-                DrawingInteractor.DrawingHandler.CloseActiveDrawing();
+                if (!isActiveDrawing)
+                    DrawingInteractor.DrawingHandler.CloseActiveDrawing();
             }
+        }
+
+        private bool CheckIfDrawingIsActive(Drawing drawing)
+        {
+            var activeDrawing = DrawingInteractor.DrawingHandler.GetActiveDrawing();
+            if (activeDrawing == null)
+                return false;
+
+            return activeDrawing.GetId() == drawing.GetId();
         }
 
         private string GetDPMPrinterCommand()
@@ -121,12 +126,13 @@ namespace GTDrawingLink.Components.Exports
 
             return Path.Combine(binPath.Replace(@"\\", @"\"), dpmPath);
         }
-        private string GetPrinterArgs(string printerTemplate)
+        private string GetPrinterArgs(string printerTemplate, string outputPath)
         {
             StringBuilder arg = new StringBuilder();
             arg.Append("printActive:true ");
             arg.Append("printer:pdf ");
             arg.AppendFormat(@"settingsFile:""{0}"" ", printerTemplate);
+            arg.AppendFormat(@"out:""{0}"" ", outputPath);
 
             return arg.ToString();
         }
