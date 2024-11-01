@@ -6,7 +6,6 @@ using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components.Exports
@@ -31,9 +30,9 @@ namespace GTDrawingLink.Components.Exports
                 return;
             }
 
-            if (!path.EndsWith(".ifc"))
+            if (path.EndsWith(@"\"))
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid path extension. It has to end with '.ifc'");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid path. You must provide a file name, not directory.");
                 return;
             }
 
@@ -49,14 +48,13 @@ namespace GTDrawingLink.Components.Exports
 
         private string SanitizePath(string path)
         {
-            var fullPath = ReplaceRelativeModelPath(path);
+            var absolutePath = ReplaceRelativeModelPath(path);
+            var correctPath = PlaceInTheModelPathIfPlainFile(absolutePath, directory: "IFC");
+            var withExtension = AddExtensionIfMissing(correctPath, extension: ".ifc");
 
-            var initial = CreateDirectoryIfNeeded(path);
+            CreateDirectoryIfNeeded(withExtension);
 
-            if (Directory.Exists(Path.GetDirectoryName(initial)))
-                return initial;
-            else
-                return $"{ModelInteractor.ModelPath()}\\IFC\\{initial}";
+            return withExtension;
         }
 
         private void ExportIFC(string outputFileName, string settings)

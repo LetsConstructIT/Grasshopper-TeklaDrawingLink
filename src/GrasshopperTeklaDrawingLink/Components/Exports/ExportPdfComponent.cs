@@ -64,12 +64,12 @@ namespace GTDrawingLink.Components.Exports
 
         private string SanitizePath(string path)
         {
-            var initial = CreateDirectoryIfNeeded(path);
+            var absolutePath = ReplaceRelativeModelPath(path);
+            var correctPath = PlaceInTheModelPathIfPlainFile(absolutePath, directory: "Plotfiles");
 
-            if (Directory.Exists(Path.GetDirectoryName(initial)))
-                return initial;
-            else
-                return $"{ModelInteractor.ModelPath()}\\{initial}";
+            CreateDirectoryIfNeeded(correctPath);
+
+            return correctPath;
         }
 
         private string ExportPdf(Drawing drawing, string directoryPath, string settings)

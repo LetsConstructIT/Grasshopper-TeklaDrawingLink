@@ -1,6 +1,7 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.IO;
 
 namespace GTDrawingLink.Components.Exports
@@ -33,27 +34,19 @@ namespace GTDrawingLink.Components.Exports
                 return Path.Combine(ModelInteractor.ModelPath(), directory, path);
         }
 
-        protected string CreateDirectoryIfNeeded(string path)
+        protected string AddExtensionIfMissing(string path, string extension)
         {
-            path = path.Replace("/", "_");
-
-            var modelPath = $"{ModelInteractor.ModelPath()}\\";
-            if (path.StartsWith(".\\"))
-                path = path.Replace(".\\", modelPath);
-            else if (path.StartsWith("./"))
-                path = path.Replace("./", modelPath);
-
-            if (Directory.Exists(path))
+            if (path.EndsWith(extension, StringComparison.OrdinalIgnoreCase))
                 return path;
+            else
+                return $"{path}{extension}";
+        }
 
-            if (File.Exists(path))
-                return path;
-
+        protected void CreateDirectoryIfNeeded(string path)
+        {
             var directoryPath = Path.GetDirectoryName(path);
             if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
                 Directory.CreateDirectory(directoryPath);
-
-            return path;
         }
     }
 }
