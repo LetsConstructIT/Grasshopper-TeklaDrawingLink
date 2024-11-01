@@ -53,6 +53,15 @@ namespace GTDrawingLink.Components.Exports
             var fullName = directoryPath;
             try
             {
+
+                // Check if we are in the drawing and it's active one ->
+                // if so don't close it at the end
+
+
+
+
+
+
                 DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, false);
 
                 var fileName = string.Format("{0}.pdf", drawing.GetPlotFileName(false));
