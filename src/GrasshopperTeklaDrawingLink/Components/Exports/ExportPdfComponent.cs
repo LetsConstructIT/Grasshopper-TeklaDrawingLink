@@ -70,8 +70,11 @@ namespace GTDrawingLink.Components.Exports
             }
             catch (Exception)
             {
-                DrawingInteractor.DrawingHandler.CloseActiveDrawing();
                 throw;
+            }
+            finally
+            {
+                DrawingInteractor.DrawingHandler.CloseActiveDrawing();
             }
 
             return fullName;
