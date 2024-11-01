@@ -39,12 +39,23 @@ namespace GTDrawingLink.Components.Exports
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Setting were not found, provide correct name or full path.");
                 return;
             }
-            var includeRevision = false;
+            var includeRevision = CheckIfRevisionShouldBeIncluded(settingsPath);
             var exportPath = SanitizePath(drawing, path, includeRevision);
 
             ExportPdf(drawing, exportPath, settingsPath);
 
             _command.SetOutputValues(DA, exportPath);
+        }
+
+        private bool CheckIfRevisionShouldBeIncluded(string settingsPath)
+        {
+            foreach (var line in File.ReadLines(settingsPath))
+            {
+                if (line.Contains("<IncludeRevision>"))
+                    return line.Contains("true");
+            }
+
+            return false;
         }
 
         private string? SearchSettings(string settings)
