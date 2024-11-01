@@ -9,6 +9,24 @@ namespace GTDrawingLink.Components.Exports
     {
         protected TeklaExportComponentBase(GH_InstanceDescription info) : base(info) { }
 
+        protected string ReplaceRelativeModelPath(string path)
+        {
+            var pathWithCorrectSeparators = path.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+
+            if (pathWithCorrectSeparators.StartsWith(@".\"))
+                return pathWithCorrectSeparators.Replace(@".\", $"{ModelInteractor.ModelPath()}\\");
+            else
+                return pathWithCorrectSeparators;
+        }
+
+        protected string PlaceInTheModelPathIfPlainFile(string path, string directory)
+        {
+            if (!string.IsNullOrEmpty(Path.GetDirectoryName(path)))
+                return path;
+            else
+                return Path.Combine(ModelInteractor.ModelPath(), directory, path);
+        }
+
         protected string CreateDirectoryIfNeeded(string path)
         {
             path = path.Replace("/", "_");
