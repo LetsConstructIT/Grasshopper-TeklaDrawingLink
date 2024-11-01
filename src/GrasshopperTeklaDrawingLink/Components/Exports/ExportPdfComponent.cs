@@ -66,10 +66,13 @@ namespace GTDrawingLink.Components.Exports
             if (File.Exists(settings))
                 return settings;
 
+            if (string.Equals(settings, "standard.PdfPrintOptions.xml", StringComparison.OrdinalIgnoreCase))
+                settings = "PdfPrintOptions.xml";
+
             var fileInfo = new TeklaStructuresFiles(ModelInteractor.ModelPath())
                 .GetAttributeFile(settings);
 
-            return fileInfo.Exists ? fileInfo.FullName : null;
+            return (fileInfo != null && fileInfo.Exists) ? fileInfo.FullName : null;
         }
 
         private string SanitizePath(Drawing drawing, string path, bool includeRevision)
