@@ -24,6 +24,11 @@ namespace GTDrawingLink.Components.Exports
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             var (drawing, path, settings) = _command.GetInputValues();
+            if (drawing is null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No drawing on input. Provide at least one drawing to print.");
+                return;
+            }
 
             var directory = SanitizePath(path);
 
@@ -50,7 +55,7 @@ namespace GTDrawingLink.Components.Exports
             {
                 DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, false);
 
-                var fileName = string.Format("{0}.pdf", drawing.GetPlotFileNameExt(IncludeRevisionMarkEnum.Never));
+                var fileName = string.Format("{0}.pdf", drawing.GetPlotFileName(false));
                 fullName = Path.Combine(directoryPath, fileName);
                 var arg = GetPrinterArgs(settings) + string.Format(@"out:""{0}""", fullName);
 
