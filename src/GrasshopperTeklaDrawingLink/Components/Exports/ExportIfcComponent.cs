@@ -31,6 +31,12 @@ namespace GTDrawingLink.Components.Exports
                 return;
             }
 
+            if (!path.EndsWith(".ifc"))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid path extension. It has to end with '.ifc'");
+                return;
+            }
+
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
