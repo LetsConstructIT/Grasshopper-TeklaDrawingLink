@@ -14,6 +14,7 @@ namespace GTDrawingLink.Components.Exports
         {
             base.AppendAdditionalComponentMenuItems(menu);
             Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+            Menu_AppendSeparator(menu);
         }
 
         protected string ReplaceRelativeModelPath(string path)
@@ -36,7 +37,7 @@ namespace GTDrawingLink.Components.Exports
 
         protected string AddExtensionIfMissing(string path, string extension)
         {
-            if (HasExtension(path, extension))
+            if (HasAnyExtension(path))
                 return path;
             else
                 return $"{path}{extension}";
@@ -44,6 +45,9 @@ namespace GTDrawingLink.Components.Exports
 
         protected bool HasExtension(string path, string extension)
             => path.EndsWith(extension, StringComparison.OrdinalIgnoreCase);
+
+        protected bool HasAnyExtension(string path)
+            => Path.HasExtension(path);
 
         protected string ReplaceInvalidChars(string filename)
             => string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));

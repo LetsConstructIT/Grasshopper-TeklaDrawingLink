@@ -1258,5 +1258,15 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Export
         };
+
+
+        public static readonly GH_InstanceDescription ExportReportComponent = new GH_InstanceDescription
+        {
+            Name = "Export Report",
+            NickName = "RPT",
+            Description = "Export Tekla report",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };        
     }
 }

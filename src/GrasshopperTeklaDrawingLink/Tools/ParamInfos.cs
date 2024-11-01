@@ -2150,5 +2150,12 @@ namespace GTDrawingLink.Tools
             NickName = "All",
             Description = "Export whole model"
         };
+
+        public static readonly GH_InstanceDescription ReportTemplate = new GH_InstanceDescription
+        {
+            Name = "Template",
+            NickName = "T",
+            Description = "Name of report template"
+        };
     }
 }
