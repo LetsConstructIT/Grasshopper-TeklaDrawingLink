@@ -37,10 +37,10 @@ namespace GTDrawingLink.Components.Exports
                 return;
             }
 
+            var outputPath = SanitizePath(path);
+
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
-
-            var outputPath = SanitizePath(path);
 
             ExportIFC(outputPath, settings);
 
