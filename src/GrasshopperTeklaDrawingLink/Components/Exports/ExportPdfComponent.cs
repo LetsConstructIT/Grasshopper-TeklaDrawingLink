@@ -14,6 +14,8 @@ namespace GTDrawingLink.Components.Exports
 {
     public class ExportPdfComponent : TeklaExportComponentBase<ExportPdfCommand>
     {
+        private const string _settingsExtension = "PdfPrintOptions.xml";
+
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.ExportPdf;
 
@@ -32,9 +34,32 @@ namespace GTDrawingLink.Components.Exports
 
             var directory = SanitizePath(path);
 
-            var outputPath = ExportPdf(drawing, directory, settings);
+            var settingsPath = SearchSettings(settings);
+            if (settingsPath is null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Setting were not found, provide correct name or full path.");
+                return;
+            }
+
+
+
+            var outputPath = ExportPdf(drawing, directory, settingsPath);
 
             _command.SetOutputValues(DA, outputPath);
+        }
+
+        private string? SearchSettings(string settings)
+        {
+            if (!settings.EndsWith(_settingsExtension))
+                settings += $".{_settingsExtension}";
+
+            if (File.Exists(settings))
+                return settings;
+
+            var fileInfo = new TeklaStructuresFiles(ModelInteractor.ModelPath())
+                .GetAttributeFile(settings);
+
+            return fileInfo.Exists ? fileInfo.FullName : null;
         }
 
         private string SanitizePath(string path)
