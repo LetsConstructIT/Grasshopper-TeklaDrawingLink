@@ -80,6 +80,7 @@ namespace GTDrawingLink.Components.Exports
             if (!HasExtension(correctPath, ".pdf"))
             {
                 var fileName = $"{drawing.GetPlotFileName(includeRevision)}.pdf";
+                fileName = ReplaceInvalidChars(fileName);
                 correctPath = Path.Combine(correctPath, fileName);
             }
 

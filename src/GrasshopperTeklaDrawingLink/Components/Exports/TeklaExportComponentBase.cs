@@ -45,6 +45,9 @@ namespace GTDrawingLink.Components.Exports
         protected bool HasExtension(string path, string extension)
             => path.EndsWith(extension, StringComparison.OrdinalIgnoreCase);
 
+        protected string ReplaceInvalidChars(string filename)
+            => string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));
+
         protected void CreateDirectoryIfNeeded(string path)
         {
             var directoryPath = Path.GetDirectoryName(path);
