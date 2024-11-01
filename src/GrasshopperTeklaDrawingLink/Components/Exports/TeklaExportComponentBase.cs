@@ -9,6 +9,12 @@ namespace GTDrawingLink.Components.Exports
     {
         protected TeklaExportComponentBase(GH_InstanceDescription info) : base(info) { }
 
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
+        }
+
         protected string ReplaceRelativeModelPath(string path)
         {
             var pathWithCorrectSeparators = path.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);

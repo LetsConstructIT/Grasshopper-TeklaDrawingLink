@@ -49,6 +49,8 @@ namespace GTDrawingLink.Components.Exports
 
         private string SanitizePath(string path)
         {
+            var fullPath = ReplaceRelativeModelPath(path);
+
             var initial = CreateDirectoryIfNeeded(path);
 
             if (Directory.Exists(Path.GetDirectoryName(initial)))
