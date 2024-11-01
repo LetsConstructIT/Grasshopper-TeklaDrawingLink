@@ -23,6 +23,12 @@ namespace GTDrawingLink.Components.Exports
                 return;
             }
 
+            if (!System.IO.File.Exists(path))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Provided file does not exist");
+                return;
+            }
+
             System.Diagnostics.Process.Start(path);
 
             _command.SetOutputValues(DA, path);
