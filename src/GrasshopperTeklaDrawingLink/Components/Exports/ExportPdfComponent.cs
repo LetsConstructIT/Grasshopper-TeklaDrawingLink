@@ -32,20 +32,18 @@ namespace GTDrawingLink.Components.Exports
                 return;
             }
 
-            var directory = SanitizePath(path);
-
             var settingsPath = SearchSettings(settings);
             if (settingsPath is null)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Setting were not found, provide correct name or full path.");
                 return;
             }
+            var includeRevision = false;
+            var exportPath = SanitizePath(drawing, path, includeRevision);
 
+            ExportPdf(drawing, exportPath, settingsPath);
 
-
-            var outputPath = ExportPdf(drawing, directory, settingsPath);
-
-            _command.SetOutputValues(DA, outputPath);
+            _command.SetOutputValues(DA, exportPath);
         }
 
         private string? SearchSettings(string settings)
@@ -62,20 +60,25 @@ namespace GTDrawingLink.Components.Exports
             return fileInfo.Exists ? fileInfo.FullName : null;
         }
 
-        private string SanitizePath(string path)
+        private string SanitizePath(Drawing drawing, string path, bool includeRevision)
         {
             var absolutePath = ReplaceRelativeModelPath(path);
-            var correctPath = PlaceInTheModelPathIfPlainFile(absolutePath, directory: "Plotfiles");
+            var correctPath = PlaceInTheModelPathIfPlainFile(absolutePath == "Plotfiles" ? "" : absolutePath, directory: "Plotfiles");
+
+            if (!HasExtension(correctPath, ".pdf"))
+            {
+                var fileName = $"{drawing.GetPlotFileName(includeRevision)}.pdf";
+                correctPath = Path.Combine(correctPath, fileName);
+            }
 
             CreateDirectoryIfNeeded(correctPath);
 
             return correctPath;
         }
 
-        private string ExportPdf(Drawing drawing, string directoryPath, string settings)
+        private void ExportPdf(Drawing drawing, string fullName, string settings)
         {
             var dpmPath = GetDPMPrinterCommand();
-            var fullName = directoryPath;
             try
             {
 
@@ -89,8 +92,6 @@ namespace GTDrawingLink.Components.Exports
 
                 DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, false);
 
-                var fileName = string.Format("{0}.pdf", drawing.GetPlotFileName(false));
-                fullName = Path.Combine(directoryPath, fileName);
                 var arg = GetPrinterArgs(settings) + string.Format(@"out:""{0}""", fullName);
 
                 ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -110,8 +111,6 @@ namespace GTDrawingLink.Components.Exports
             {
                 DrawingInteractor.DrawingHandler.CloseActiveDrawing();
             }
-
-            return fullName;
         }
 
         private string GetDPMPrinterCommand()

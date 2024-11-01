@@ -28,7 +28,7 @@ namespace GTDrawingLink.Components.Exports
 
         protected string PlaceInTheModelPathIfPlainFile(string path, string directory)
         {
-            if (!string.IsNullOrEmpty(Path.GetDirectoryName(path)))
+            if (!string.IsNullOrEmpty(path) && !string.IsNullOrEmpty(Path.GetDirectoryName(path)))
                 return path;
             else
                 return Path.Combine(ModelInteractor.ModelPath(), directory, path);
@@ -36,11 +36,14 @@ namespace GTDrawingLink.Components.Exports
 
         protected string AddExtensionIfMissing(string path, string extension)
         {
-            if (path.EndsWith(extension, StringComparison.OrdinalIgnoreCase))
+            if (HasExtension(path, extension))
                 return path;
             else
                 return $"{path}{extension}";
         }
+
+        protected bool HasExtension(string path, string extension)
+            => path.EndsWith(extension, StringComparison.OrdinalIgnoreCase);
 
         protected void CreateDirectoryIfNeeded(string path)
         {
