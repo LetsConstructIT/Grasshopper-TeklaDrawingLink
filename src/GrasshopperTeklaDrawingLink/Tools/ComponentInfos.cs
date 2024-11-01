@@ -1267,6 +1267,16 @@ namespace GTDrawingLink.Tools
             Description = "Export Tekla report",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Export
+        };
+
+
+        public static readonly GH_InstanceDescription OpenFileComponent = new GH_InstanceDescription
+        {
+            Name = "Open File",
+            NickName = "Open",
+            Description = "Open file in default viewer",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
         };        
     }
 }

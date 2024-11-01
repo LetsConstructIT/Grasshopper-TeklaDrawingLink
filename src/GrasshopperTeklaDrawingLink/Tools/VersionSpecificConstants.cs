@@ -833,6 +833,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ExportReportComponent),
                 "2CF2C54B-3CD2-4FCD-979F-DF0836191A00"
+            },
+            {
+                typeof(OpenFileComponent),
+                "10B7A29E-9E63-47E2-9F72-91D652D39E32"
             }
         };
 
