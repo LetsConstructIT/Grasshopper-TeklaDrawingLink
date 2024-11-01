@@ -42,9 +42,9 @@ namespace GTDrawingLink.Components.Exports
             var includeRevision = CheckIfRevisionShouldBeIncluded(settingsPath);
             var exportPath = SanitizePath(drawing, path, includeRevision);
 
-            ExportPdf(drawing, exportPath, settingsPath);
+            var output = ExportPdf(drawing, exportPath, settingsPath);
 
-            _command.SetOutputValues(DA, exportPath);
+            _command.SetOutputValues(DA, output);
         }
 
         private bool CheckIfRevisionShouldBeIncluded(string settingsPath)
@@ -92,7 +92,7 @@ namespace GTDrawingLink.Components.Exports
             return correctPath;
         }
 
-        private void ExportPdf(Drawing drawing, string fullName, string settings)
+        private string ExportPdf(Drawing drawing, string fullName, string settings)
         {
             var isActiveDrawing = CheckIfDrawingIsActive(drawing);
 
@@ -113,6 +113,12 @@ namespace GTDrawingLink.Components.Exports
                 proc.Start();
                 proc.WaitForExit();
             }
+            catch (Tekla.Structures.Drawing.CannotPerformOperationDrawingNotUpToDateException)
+            {
+                var message = $"Drawing {drawing.Mark} was not exported due to not being up to date";
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, message);
+                return $"ERROR: {message}";
+            }
             catch (Exception)
             {
                 throw;
@@ -122,6 +128,8 @@ namespace GTDrawingLink.Components.Exports
                 if (!isActiveDrawing)
                     DrawingInteractor.DrawingHandler.CloseActiveDrawing();
             }
+
+            return fullName;
         }
 
         private bool CheckIfDrawingIsActive(Drawing drawing)
