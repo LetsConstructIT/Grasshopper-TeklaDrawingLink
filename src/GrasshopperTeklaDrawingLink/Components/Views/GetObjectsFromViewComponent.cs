@@ -132,6 +132,9 @@ namespace GTDrawingLink.Components.Views
         {
             if (_mode == QueryMode.OnlyVisibleObjects && viewAabb != null && doe.Current is ModelObject modelObject)
             {
+                if (modelObject is Grid)
+                    return false;
+
                 var objectAabb = ModelInteractor.GetAabb(modelObject.ModelIdentifier);
                 if (objectAabb is null)
                     return true;
