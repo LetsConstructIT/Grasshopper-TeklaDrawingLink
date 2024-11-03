@@ -10,7 +10,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Drawing",
             NickName = "D",
-            Description = "Drawing"
+            Description = "Tekla Drawing"
         };
 
         public static readonly GH_InstanceDescription BooleanToogle = new GH_InstanceDescription
@@ -2107,6 +2107,55 @@ namespace GTDrawingLink.Tools
             Name = "Drawing",
             NickName = "Drawing",
             Description = "Drawing scope of show/hide operation"
+        };
+
+        public static readonly GH_InstanceDescription ExportPath = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Output file path"
+        };
+
+        public static readonly GH_InstanceDescription ExportSettings = new GH_InstanceDescription
+        {
+            Name = "Settings",
+            NickName = "S",
+            Description = "Name of export settings which should be used"
+        };
+
+        public static readonly GH_InstanceDescription ExportResult = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Path to created file"
+        };
+
+        public static readonly GH_InstanceDescription IfcExportMode = new GH_InstanceDescription
+        {
+            Name = "Export mode",
+            NickName = "E",
+            Description = "IFC Export mode (selection / all)"
+        };
+
+        public static readonly GH_InstanceDescription ExportSelection = new GH_InstanceDescription
+        {
+            Name = "Export selection",
+            NickName = "Selection",
+            Description = "Export only provided elements"
+        };
+
+        public static readonly GH_InstanceDescription ExportAll = new GH_InstanceDescription
+        {
+            Name = "Export all",
+            NickName = "All",
+            Description = "Export whole model"
+        };
+
+        public static readonly GH_InstanceDescription ReportTemplate = new GH_InstanceDescription
+        {
+            Name = "Template",
+            NickName = "T",
+            Description = "Name of report template"
         };
     }
 }

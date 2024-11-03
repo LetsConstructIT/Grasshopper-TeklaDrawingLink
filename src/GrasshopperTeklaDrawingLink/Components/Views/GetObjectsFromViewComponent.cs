@@ -119,21 +119,32 @@ namespace GTDrawingLink.Components.Views
             var doe = viewBase.GetObjects();
             while (doe.MoveNext())
             {
-                if (_mode == QueryMode.OnlyVisibleObjects && viewAabb != null && doe.Current is ModelObject modelObject)
-                {
-                    var objectAabb = ModelInteractor.GetAabb(modelObject.ModelIdentifier);
-                    if (objectAabb is null)
-                        continue;
-
-                    var transformedObjectAabb = objectAabb.Transform(ModelInteractor.TransformationMatrixToGlobal);
-                    if (!viewAabb.Collide(transformedObjectAabb))
-                        continue;
-                }
+                if (ShouldBeSkipped(viewAabb, doe))
+                    continue;
 
                 childObjects.Add(doe.Current);
             }
 
             return childObjects.GroupBy(o => o.GetType().ToShortString()).OrderBy(o => o.Key);
+        }
+
+        private bool ShouldBeSkipped(AABB viewAabb, DrawingObjectEnumerator doe)
+        {
+            if (_mode == QueryMode.OnlyVisibleObjects && viewAabb != null && doe.Current is ModelObject modelObject)
+            {
+                if (modelObject is Grid)
+                    return false;
+
+                var objectAabb = ModelInteractor.GetAabb(modelObject.ModelIdentifier);
+                if (objectAabb is null)
+                    return true;
+
+                var transformedObjectAabb = objectAabb.Transform(ModelInteractor.TransformationMatrixToGlobal);
+                if (!viewAabb.Collide(transformedObjectAabb))
+                    return true;
+            }
+
+            return false;
         }
 
         private AABB? GetViewAabb(ViewBase viewBase)
