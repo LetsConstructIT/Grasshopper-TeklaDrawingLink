@@ -6,18 +6,19 @@ namespace GTDrawingLink.Tools
     {
         public static class PanelHeadings
         {
-            public static readonly string Params = "             Params";
-            public static readonly string Drawing = "            Drawing";
-            public static readonly string View = "          View";
-            public static readonly string DrawingParts = "         Parts";
-            public static readonly string Attributes = "        Attributes";
-            public static readonly string Geometry = "       Geometry";
-            public static readonly string Misc = "      Misc";
-            public static readonly string Udas = "    UDAs";
-            public static readonly string Plugins = "   Plugins";
-            public static readonly string Dimensions = "  Dimensions";
-            public static readonly string Annotations = " Annotations";
-            public static readonly string Modify = "Modify";
+            public static readonly string Params = "              Params";
+            public static readonly string Drawing = "             Drawing";
+            public static readonly string View = "           View";
+            public static readonly string DrawingParts = "          Parts";
+            public static readonly string Attributes = "         Attributes";
+            public static readonly string Geometry = "        Geometry";
+            public static readonly string Misc = "       Misc";
+            public static readonly string Udas = "     UDAs";
+            public static readonly string Plugins = "    Plugins";
+            public static readonly string Dimensions = "   Dimensions";
+            public static readonly string Annotations = "  Annotations";
+            public static readonly string Modify = " Modify";
+            public static readonly string Export = "Export";
         }
 
         public static readonly GH_InstanceDescription DrawingObjectParam = new GH_InstanceDescription
@@ -1239,5 +1240,43 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Modify
         };
+
+        public static readonly GH_InstanceDescription ExportIfcComponent = new GH_InstanceDescription
+        {
+            Name = "Export IFC",
+            NickName = "IFC",
+            Description = "Export Tekla elements to IFC",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
+
+        public static readonly GH_InstanceDescription ExportPdfComponent = new GH_InstanceDescription
+        {
+            Name = "Export PDF",
+            NickName = "PDF",
+            Description = "Export Tekla drawing to PDF",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
+
+
+        public static readonly GH_InstanceDescription ExportReportComponent = new GH_InstanceDescription
+        {
+            Name = "Export Report",
+            NickName = "RPT",
+            Description = "Export Tekla report",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
+
+
+        public static readonly GH_InstanceDescription OpenFileComponent = new GH_InstanceDescription
+        {
+            Name = "Open File",
+            NickName = "Open",
+            Description = "Open file in default viewer",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };        
     }
 }
