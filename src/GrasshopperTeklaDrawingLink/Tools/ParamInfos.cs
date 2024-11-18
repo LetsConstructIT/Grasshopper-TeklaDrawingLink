@@ -2157,5 +2157,12 @@ namespace GTDrawingLink.Tools
             NickName = "T",
             Description = "Name of report template"
         };
+
+        public static readonly GH_InstanceDescription AttributesForMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Attributes Name",
+            NickName = "A",
+            Description = "Attribute filename (must be saved via the association note dialog)"
+        };
     }
 }
