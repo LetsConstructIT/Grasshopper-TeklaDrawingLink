@@ -36,7 +36,7 @@ namespace GTDrawingLink.Components.Parts
                 var databaseObject = (input as TeklaDatabaseObjectGoo).Value;
                 if (databaseObject is ReinforcementSetGroup rebarSet)
                 {
-                    var modelRebarSet = GetModelRebarSet(rebarSet);
+                    var modelRebarSet = ConvertToModelRebar(rebarSet);
                     if (modelRebarSet is null)
                         return;
 
@@ -50,13 +50,20 @@ namespace GTDrawingLink.Components.Parts
             }
         }
 
-        public static Tekla.Structures.Model.RebarSet? GetModelRebarSet(ReinforcementSetGroup drawingRebarSet)
+        public static Tekla.Structures.Model.Reinforcement? ConvertToModelRebar(ReinforcementBase drawingRebar)
         {
-            var modelIdentifiers = drawingRebarSet.GetModelIdentifiers();
-            if (!modelIdentifiers.Any() || !(ModelInteractor.GetModelObject(modelIdentifiers.First()) is Tekla.Structures.Model.SingleRebar singleRebar))
-                return null;
+            var identifier = drawingRebar.ModelIdentifier;
 
-            return singleRebar.GetRebarSet();
+            if (drawingRebar is ReinforcementSetGroup rebarSet)
+            {
+                var modelIdentifiers = rebarSet.GetModelIdentifiers();
+                if (modelIdentifiers.Count < 1)
+                    return null;
+
+                identifier = modelIdentifiers.First();
+            }
+            
+            return ModelInteractor.GetModelObject(identifier) as Tekla.Structures.Model.Reinforcement;
         }
     }
 }

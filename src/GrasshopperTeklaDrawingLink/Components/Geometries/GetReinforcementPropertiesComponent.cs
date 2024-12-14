@@ -220,13 +220,8 @@ namespace GTDrawingLink.Components.Geometries
             }
             else if (inputObject is TeklaDatabaseObjectGoo drawingObject)
             {
-                if (!(drawingObject.Value is ModelObject drawingModelObject))
-                    return null;
-
-                if (drawingModelObject is ReinforcementSetGroup rebarSet)
-                    return ConvertDrawingToModelObjectComponent.GetModelRebarSet(rebarSet);
-                else
-                    return ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier) as TSM.Reinforcement;
+                if (drawingObject.Value is ReinforcementBase drawingRebar)
+                    return ConvertDrawingToModelObjectComponent.ConvertToModelRebar(drawingRebar);
             }
 
             return null;
