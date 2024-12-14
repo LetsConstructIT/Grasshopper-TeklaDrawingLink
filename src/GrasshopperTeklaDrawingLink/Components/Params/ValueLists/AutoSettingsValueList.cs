@@ -27,7 +27,7 @@ namespace GTDrawingLink.Components.Params.ValueLists
             Category = VersionSpecificConstants.TabHeading;
             SubCategory = ComponentInfos.PanelHeadings.Params;
 
-            ListMode = GH_ValueListMode.CheckList;
+            ListMode = GH_ValueListMode.DropDown;
 
             base.ListItems.Clear();
             base.ListItems.Add(new GH_ValueListItem("Choose type with right-click", "-1"));

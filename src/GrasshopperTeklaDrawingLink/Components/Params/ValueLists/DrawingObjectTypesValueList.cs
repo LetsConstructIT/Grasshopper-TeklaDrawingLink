@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components.Params.ValueLists
             Category = VersionSpecificConstants.TabHeading;
             SubCategory = PanelHeadings.Params;
 
-            ListMode = GH_ValueListMode.CheckList;
+            ListMode = GH_ValueListMode.DropDown;
             PopulateAvailableTypes();
         }
 
