@@ -2164,5 +2164,26 @@ namespace GTDrawingLink.Tools
             NickName = "A",
             Description = "Attribute filename (must be saved via the association note dialog)"
         };
+
+        public static readonly GH_InstanceDescription Title1 = new GH_InstanceDescription
+        {
+            Name = "Title 1",
+            NickName = "T1",
+            Description = "Title 1 used for reports"
+        };
+
+        public static readonly GH_InstanceDescription Title2 = new GH_InstanceDescription
+        {
+            Name = "Title 2",
+            NickName = "T2",
+            Description = "Title 2 used for reports"
+        };
+
+        public static readonly GH_InstanceDescription Title3 = new GH_InstanceDescription
+        {
+            Name = "Title 3",
+            NickName = "T3",
+            Description = "Title 3 used for reports"
+        };
     }
 }

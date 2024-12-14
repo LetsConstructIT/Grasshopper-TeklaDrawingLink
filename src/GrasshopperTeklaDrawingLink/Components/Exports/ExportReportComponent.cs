@@ -24,7 +24,7 @@ namespace GTDrawingLink.Components.Exports
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (modelObjects, path, template) = _command.GetInputValues();
+            var (modelObjects, path, template, title1, title2, title3) = _command.GetInputValues();
             if (_mode == ExportMode.Selection && modelObjects.Count == 0)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No elements on input. Provide them or change mode to All.");
@@ -42,7 +42,7 @@ namespace GTDrawingLink.Components.Exports
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
-            ExportReport(outputPath, template, "", "", "");
+            ExportReport(outputPath, template, title1, title2, title3);
 
             _command.SetOutputValues(DA, outputPath);
         }
@@ -125,16 +125,22 @@ namespace GTDrawingLink.Components.Exports
         private readonly InputOptionalListParam<ModelObject> _inModelObjects = new InputOptionalListParam<ModelObject>(ParamInfos.ModelObject);
         private readonly InputParam<string> _inPath = new InputParam<string>(ParamInfos.ExportPath);
         private readonly InputParam<string> _inTemplate = new InputParam<string>(ParamInfos.ReportTemplate);
+        private readonly InputOptionalParam<string> _inTitle1 = new InputOptionalParam<string>(ParamInfos.Title1);
+        private readonly InputOptionalParam<string> _inTitle2 = new InputOptionalParam<string>(ParamInfos.Title2);
+        private readonly InputOptionalParam<string> _inTitle3 = new InputOptionalParam<string>(ParamInfos.Title3);
 
         private readonly OutputParam<string> _outPath = new OutputParam<string>(ParamInfos.ExportResult);
 
-        internal (List<ModelObject> modelObjects, string path, string template) GetInputValues()
+        internal (List<ModelObject> modelObjects, string path, string template, string? title1, string? title2, string? title3) GetInputValues()
         {
             var modelObjects = _inModelObjects.ValueProvidedByUser ? _inModelObjects.Value : new List<ModelObject>();
             return (
                 modelObjects,
                 _inPath.Value,
-                _inTemplate.Value);
+                _inTemplate.Value,
+                _inTitle1.ValueProvidedByUser ? _inTitle1.Value : string.Empty,
+                _inTitle2.ValueProvidedByUser ? _inTitle2.Value : string.Empty,
+                _inTitle3.ValueProvidedByUser ? _inTitle3.Value : string.Empty);
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, string path)
