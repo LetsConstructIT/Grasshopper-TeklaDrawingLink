@@ -831,7 +831,7 @@ namespace GTDrawingLink.Tools
                 "F381AF18-029F-4057-80B1-5D635884ADB6"
             },
             {
-                typeof(ExportReportComponent),
+                typeof(ExportReportComponentOLD),
                 "2CF2C54B-3CD2-4FCD-979F-DF0836191A00"
             },
             {

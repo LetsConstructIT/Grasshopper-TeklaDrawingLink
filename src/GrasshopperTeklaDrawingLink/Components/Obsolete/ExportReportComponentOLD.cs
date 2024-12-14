@@ -1,5 +1,6 @@
 ﻿using GH_IO.Serialization;
 using Grasshopper.Kernel;
+using GTDrawingLink.Components.Exports;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -9,15 +10,16 @@ using System.Drawing;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
 
-namespace GTDrawingLink.Components.Exports
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ExportReportComponent : TeklaExportComponentBase<ExportReportCommand>
+    [Obsolete]
+    public class ExportReportComponentOLD : TeklaExportComponentBase<ExportReportCommandOLD>
     {
         private ExportMode _mode = ExportMode.Selection;
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.ExportReport;
 
-        public ExportReportComponent() : base(ComponentInfos.ExportReportComponent)
+        public ExportReportComponentOLD() : base(ComponentInfos.ExportReportComponent)
         {
             SetCustomMessage();
         }
@@ -120,7 +122,7 @@ namespace GTDrawingLink.Components.Exports
         }
     }
 
-    public class ExportReportCommand : CommandBase
+    public class ExportReportCommandOLD : CommandBase
     {
         private readonly InputOptionalListParam<ModelObject> _inModelObjects = new InputOptionalListParam<ModelObject>(ParamInfos.ModelObject);
         private readonly InputParam<string> _inPath = new InputParam<string>(ParamInfos.ExportPath);
