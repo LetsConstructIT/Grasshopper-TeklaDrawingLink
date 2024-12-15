@@ -1,9 +1,14 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Components.Parts;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.Geometry3d;
+using Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components.Geometries
 {
@@ -17,6 +22,7 @@ namespace GTDrawingLink.Components.Geometries
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             var drawingRebar = _command.GetInputValues();
+            drawingRebar.Select();
 
             var fatherView = drawingRebar.GetView();
             if (!(fatherView is View view))
@@ -31,7 +37,36 @@ namespace GTDrawingLink.Components.Geometries
             var visibilityType = GetVisiblityType(drawingRebar);
             var customPosition = GetCustomPosition(drawingRebar);
 
-            var coord = view.DisplayCoordinateSystem;
+            var visibleGeometries = PickOnlyVisible(geometries, visibilityType, customPosition);
+            var localGeometries = Transform(visibleGeometries, view.DisplayCoordinateSystem);
+
+            _command.SetOutputValues(DA,
+                                     localGeometries,
+                                     radiuses);
+        }
+
+        private List<Rhino.Geometry.Polyline> PickOnlyVisible(List<Rhino.Geometry.Polyline> geometries, ReinforcementBase.ReinforcementVisibilityTypes visibilityType, double customPosition)
+        {
+            return visibilityType switch
+            {
+                ReinforcementBase.ReinforcementVisibilityTypes.First => new List<Rhino.Geometry.Polyline>() { geometries.First() },
+                ReinforcementBase.ReinforcementVisibilityTypes.Last => new List<Rhino.Geometry.Polyline>() { geometries.Last() },
+                ReinforcementBase.ReinforcementVisibilityTypes.FirstAndLast => new List<Rhino.Geometry.Polyline>() { geometries.First(), geometries.Last() },
+                _ => geometries
+            };
+        }
+
+        private List<Rhino.Geometry.Polyline> Transform(List<Rhino.Geometry.Polyline> geometries, CoordinateSystem displayCoordinateSystem)
+        {
+            var matrix = MatrixFactory.ToCoordinateSystem(displayCoordinateSystem);
+            var result = new List<Rhino.Geometry.Polyline>();
+            foreach (var geometry in geometries)
+            {
+                var localPts = geometry.Select(p => matrix.Transform(p.ToTekla()).ToRhino());
+                result.Add(new Rhino.Geometry.Polyline(localPts));
+            }
+
+            return result;
         }
 
         private static ReinforcementBase.ReinforcementVisibilityTypes GetVisiblityType(ReinforcementBase drawingRebar)
