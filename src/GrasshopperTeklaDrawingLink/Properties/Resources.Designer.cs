@@ -893,6 +893,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MergeMarks {
+            get {
+                object obj = ResourceManager.GetObject("MergeMarks", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MeshAttributes {
             get {
                 object obj = ResourceManager.GetObject("MeshAttributes", resourceCulture);
@@ -1496,6 +1506,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap ViewsAtDrawing {
             get {
                 object obj = ResourceManager.GetObject("ViewsAtDrawing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VisibleRebars {
+            get {
+                object obj = ResourceManager.GetObject("VisibleRebars", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
