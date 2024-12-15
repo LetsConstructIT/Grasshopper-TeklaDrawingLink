@@ -52,9 +52,33 @@ namespace GTDrawingLink.Components.Geometries
                 ReinforcementBase.ReinforcementVisibilityTypes.First => new List<Rhino.Geometry.Polyline>() { geometries.First() },
                 ReinforcementBase.ReinforcementVisibilityTypes.Last => new List<Rhino.Geometry.Polyline>() { geometries.Last() },
                 ReinforcementBase.ReinforcementVisibilityTypes.FirstAndLast => new List<Rhino.Geometry.Polyline>() { geometries.First(), geometries.Last() },
+                ReinforcementBase.ReinforcementVisibilityTypes.OneInTheMiddle => PickOneInTheMiddle(),
+                ReinforcementBase.ReinforcementVisibilityTypes.TwoInTheMiddle => PickTwoInTheMiddle(),
                 _ => geometries
             };
+
+            List<Rhino.Geometry.Polyline> PickOneInTheMiddle()
+            {
+                var index = GetMidIndex(geometries);
+                return new List<Rhino.Geometry.Polyline>() { geometries[index] };
+            }
+
+            List<Rhino.Geometry.Polyline> PickTwoInTheMiddle()
+            {
+                var index = GetMidIndex(geometries);
+                var result = new List<Rhino.Geometry.Polyline>() { geometries[index] };
+                if (geometries.Count > 1)
+                    result.Add(geometries[index + 1]);
+
+                return result;
+            }
+
+            int GetMidIndex(List<Rhino.Geometry.Polyline> geometries)
+            {
+                return (int)(geometries.Count * 0.35);
+            }
         }
+
 
         private List<Rhino.Geometry.Polyline> Transform(List<Rhino.Geometry.Polyline> geometries, CoordinateSystem displayCoordinateSystem)
         {
