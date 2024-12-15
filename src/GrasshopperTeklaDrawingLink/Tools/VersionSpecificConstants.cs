@@ -841,6 +841,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ExportReportComponent),
                 "076B9882-6091-45D3-B563-5092E38E9330"
+            },
+            {
+                typeof(VisibleRebarsComponent),
+                "DB81D09E-98EA-40DD-8E4F-87D449F2F8EF"
             }
         };
 

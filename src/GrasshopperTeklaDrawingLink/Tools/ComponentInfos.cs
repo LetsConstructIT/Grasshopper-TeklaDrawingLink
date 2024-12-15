@@ -1277,6 +1277,15 @@ namespace GTDrawingLink.Tools
             Description = "Open file in default viewer",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Export
+        };
+
+        public static readonly GH_InstanceDescription VisibleRebarsComponent = new GH_InstanceDescription
+        {
+            Name = "Visible Rebars",
+            NickName = "VisReb",
+            Description = "Get geometry of visible rebars in Tekla drawing view",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
         };        
     }
 }

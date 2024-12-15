@@ -2185,5 +2185,12 @@ namespace GTDrawingLink.Tools
             NickName = "T3",
             Description = "Title 3 used for reports"
         };
+
+        public static readonly GH_InstanceDescription DrawingReinforcementObject = new GH_InstanceDescription
+        {
+            Name = "Reinforcement",
+            NickName = "R",
+            Description = "Tekla DRAWING reinforcement object"
+        };
     }
 }
