@@ -25,9 +25,43 @@ namespace GTDrawingLink.Components.Geometries
                 return;
             }
 
-            var coord = view.DisplayCoordinateSystem;
             var modelRebar = ConvertDrawingToModelObjectComponent.ConvertToModelRebar(drawingRebar);
+            var (geometries, radiuses) = GetReinforcementPropertiesComponent.GetRebarGeometries(modelRebar);
 
+            var visibilityType = GetVisiblityType(drawingRebar);
+            var customPosition = GetCustomPosition(drawingRebar);
+
+            var coord = view.DisplayCoordinateSystem;
+        }
+
+        private static ReinforcementBase.ReinforcementVisibilityTypes GetVisiblityType(ReinforcementBase drawingRebar)
+        {
+            var visibilityType = ReinforcementBase.ReinforcementVisibilityTypes.All;
+            if (drawingRebar is ReinforcementSetGroup rebarSet)
+                visibilityType = rebarSet.Attributes.ReinforcementVisibility;
+            else if (drawingRebar is ReinforcementStrand strand)
+                visibilityType = strand.Attributes.ReinforcementVisibility;
+            else if (drawingRebar is ReinforcementGroup group)
+                visibilityType = group.Attributes.ReinforcementVisibility;
+            else if (drawingRebar is ReinforcementMesh mesh)
+                visibilityType = mesh.Attributes.MeshReinforcementVisibilityLongitudinal;
+
+            return visibilityType;
+        }
+
+        private static double GetCustomPosition(ReinforcementBase drawingRebar)
+        {
+            var customPosition = 1.0;
+            if (drawingRebar is ReinforcementSetGroup rebarSet)
+                customPosition = rebarSet.ReinforcementCustomPosition;
+            else if (drawingRebar is ReinforcementStrand strand)
+                customPosition = strand.ReinforcementCustomPosition;
+            else if (drawingRebar is ReinforcementGroup group)
+                customPosition = group.ReinforcementCustomPosition;
+            else if (drawingRebar is ReinforcementMesh mesh)
+                customPosition = mesh.ReinforcementCustomPositionLongitudinal;
+
+            return customPosition;
         }
     }
 

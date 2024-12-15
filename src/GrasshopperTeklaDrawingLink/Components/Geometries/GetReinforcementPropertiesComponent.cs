@@ -101,7 +101,7 @@ namespace GTDrawingLink.Components.Geometries
         }
 
 #if API2020
-        private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
+        public static (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
         {
             var rebarPolylines = new List<Rhino.Geometry.Polyline>();
             var bendingRadiuses = new List<double>();
@@ -129,7 +129,7 @@ namespace GTDrawingLink.Components.Geometries
         }
 
 #else
-        private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
+        public static (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
         {
             var rebarPolylines = new List<Rhino.Geometry.Polyline>();
             var bendingRadiuses = new List<double>();
