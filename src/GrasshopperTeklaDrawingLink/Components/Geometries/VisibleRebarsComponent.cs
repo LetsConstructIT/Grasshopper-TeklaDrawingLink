@@ -4,18 +4,16 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
-using Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components.Geometries
 {
     public class VisibleRebarsComponent : TeklaComponentBaseNew<VisibleRebarsCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.quarternary;
-        protected override Bitmap Icon => Properties.Resources.VisibleRebars;
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.VisibleRebars;
 
         public VisibleRebarsComponent() : base(ComponentInfos.VisibleRebarsComponent) { }
 
@@ -54,6 +52,7 @@ namespace GTDrawingLink.Components.Geometries
                 ReinforcementBase.ReinforcementVisibilityTypes.FirstAndLast => new List<Rhino.Geometry.Polyline>() { geometries.First(), geometries.Last() },
                 ReinforcementBase.ReinforcementVisibilityTypes.OneInTheMiddle => PickOneInTheMiddle(),
                 ReinforcementBase.ReinforcementVisibilityTypes.TwoInTheMiddle => PickTwoInTheMiddle(),
+                ReinforcementBase.ReinforcementVisibilityTypes.Customized => PickCustomized(),
                 _ => geometries
             };
 
@@ -73,12 +72,17 @@ namespace GTDrawingLink.Components.Geometries
                 return result;
             }
 
+            List<Rhino.Geometry.Polyline> PickCustomized()
+            {
+
+                return new List<Rhino.Geometry.Polyline>();
+            }
+
             int GetMidIndex(List<Rhino.Geometry.Polyline> geometries)
             {
                 return (int)(geometries.Count * 0.35);
             }
         }
-
 
         private List<Rhino.Geometry.Polyline> Transform(List<Rhino.Geometry.Polyline> geometries, CoordinateSystem displayCoordinateSystem)
         {
