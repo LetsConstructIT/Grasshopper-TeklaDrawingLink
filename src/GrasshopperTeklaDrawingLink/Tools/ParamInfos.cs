@@ -10,7 +10,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Drawing",
             NickName = "D",
-            Description = "Tekla Drawing"
+            Description = "Tekla Drawing instance"
         };
 
         public static readonly GH_InstanceDescription BooleanToggle = new GH_InstanceDescription
