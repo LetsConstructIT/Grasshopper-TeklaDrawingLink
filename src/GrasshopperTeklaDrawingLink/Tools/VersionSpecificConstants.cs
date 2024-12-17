@@ -845,6 +845,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(VisibleRebarsComponent),
                 "DB81D09E-98EA-40DD-8E4F-87D449F2F8EF"
+            },
+            {
+                typeof(CreateGADrawingComponent),
+                "F0D038CE-CC42-4ED2-9067-A7F9B168C38C"
             }
         };
 

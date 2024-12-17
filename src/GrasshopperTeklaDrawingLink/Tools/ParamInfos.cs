@@ -17,7 +17,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Toggle",
             NickName = "T",
-            Description = "Boolean toogle for launching component"
+            Description = "Boolean toggle to start the component"
         };
 
         public static readonly GH_InstanceDescription ViewBase = new GH_InstanceDescription
