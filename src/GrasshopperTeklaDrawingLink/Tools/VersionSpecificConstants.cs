@@ -179,7 +179,7 @@ namespace GTDrawingLink.Tools
                 "F0AB948C-CB4B-4428-9160-60761FABAEA9"
             },
             {
-                typeof(RunMacroComponent),
+                typeof(RunMacroComponentOLD),
                 "2DDA4F5D-C05A-4566-8716-84788FC88C5D"
             },
             {

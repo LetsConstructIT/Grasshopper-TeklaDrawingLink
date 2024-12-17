@@ -5,15 +5,16 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GTDrawingLink.Components.Miscs
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class RunMacroComponent : TeklaComponentBase
+    [Obsolete]
+    public class RunMacroComponentOLD : TeklaComponentBase
     {
         private MacroMode _mode = MacroMode.Model;
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.RunMacro;
 
-        public RunMacroComponent() : base(ComponentInfos.RunMacroComponent)
+        public RunMacroComponentOLD() : base(ComponentInfos.RunMacroComponent)
         {
             SetCustomMessage();
         }
