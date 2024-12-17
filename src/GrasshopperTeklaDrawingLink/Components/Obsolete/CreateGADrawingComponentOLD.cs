@@ -2,19 +2,21 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Drawings
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class CreateGADrawingComponent : CreateDatabaseObjectComponentBase
+    [Obsolete]
+    public class CreateGADrawingComponentOLD : CreateDatabaseObjectComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.CreateGADrawing;
 
-        public CreateGADrawingComponent() : base(ComponentInfos.CreateGADrawingComponent)
+        public CreateGADrawingComponentOLD() : base(ComponentInfos.CreateGADrawingComponent)
         {
         }
 
