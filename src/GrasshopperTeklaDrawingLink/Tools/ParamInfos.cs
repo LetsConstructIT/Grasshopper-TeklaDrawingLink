@@ -2192,5 +2192,12 @@ namespace GTDrawingLink.Tools
             NickName = "R",
             Description = "Tekla DRAWING reinforcement object"
         };
+
+        public static readonly GH_InstanceDescription MacroInputObjects = new GH_InstanceDescription
+        {
+            Name = "Objects",
+            NickName = "O",
+            Description = "Tekla model or drawing objects that will be automatically selected before executing the macro"
+        };
     }
 }

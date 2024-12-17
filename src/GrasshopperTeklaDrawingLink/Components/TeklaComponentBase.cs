@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -30,9 +31,17 @@ namespace GTDrawingLink.Components
 
         protected int AddGenericParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
         {
-            var index = pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            var index = pManager.AddGenericParameter(paramInfo.Name, paramInfo.NickName, FormatDescription(paramInfo, optional), access);
             SetLastParameterAsOptional(pManager, optional);
             return index;
+        }
+
+        private string FormatDescription(GH_InstanceDescription paramInfo, bool optional)
+        {
+            if (optional)
+                return $"OPTIONAL: {paramInfo.Description}";
+            else
+                return paramInfo.Description;
         }
 
         protected int AddBooleanParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)

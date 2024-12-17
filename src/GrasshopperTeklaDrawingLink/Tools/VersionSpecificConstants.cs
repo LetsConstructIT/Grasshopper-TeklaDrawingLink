@@ -849,6 +849,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreateGADrawingComponent),
                 "F0D038CE-CC42-4ED2-9067-A7F9B168C38C"
+            },
+            {
+                typeof(RunMacroComponent),
+                "2BD2FF13-20CC-4FF7-B56E-71AA1845A8B2"
             }
         };
 
