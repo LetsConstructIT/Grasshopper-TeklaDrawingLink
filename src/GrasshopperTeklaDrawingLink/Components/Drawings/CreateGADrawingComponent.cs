@@ -19,7 +19,7 @@ namespace GTDrawingLink.Components.Drawings
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddBooleanParameter(pManager, ParamInfos.BooleanToogle, GH_ParamAccess.item);
+            AddBooleanParameter(pManager, ParamInfos.BooleanToggle, GH_ParamAccess.item);
             AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.item);
             AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.item);
         }
@@ -32,7 +32,7 @@ namespace GTDrawingLink.Components.Drawings
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             var trigger = false;
-            if (!DA.GetData(ParamInfos.BooleanToogle.Name, ref trigger) || !trigger)
+            if (!DA.GetData(ParamInfos.BooleanToggle.Name, ref trigger) || !trigger)
                 return null;
 
             var viewName = string.Empty;

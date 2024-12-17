@@ -104,7 +104,7 @@ namespace GTDrawingLink.Components.Miscs
 
     public class PerformNumberingCommand : CommandBase
     {
-        private readonly InputStructParam<bool> _inToggle = new InputStructParam<bool>(ParamInfos.BooleanToogle);
+        private readonly InputStructParam<bool> _inToggle = new InputStructParam<bool>(ParamInfos.BooleanToggle);
 
         private readonly OutputParam<bool> _outStatus = new OutputParam<bool>(ParamInfos.NumberingResult);
 

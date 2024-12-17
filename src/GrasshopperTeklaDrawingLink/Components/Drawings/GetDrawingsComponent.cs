@@ -37,7 +37,7 @@ namespace GTDrawingLink.Components.Drawings
 
     public class GetDrawingsCommand : CommandBase
     {
-        private readonly InputStructParam<bool> _inToggle = new InputStructParam<bool>(ParamInfos.BooleanToogle);
+        private readonly InputStructParam<bool> _inToggle = new InputStructParam<bool>(ParamInfos.BooleanToggle);
         private readonly OutputListParam<Drawing> _outDrawings = new OutputListParam<Drawing>(ParamInfos.Drawing);
 
         internal bool GetInputValues()
