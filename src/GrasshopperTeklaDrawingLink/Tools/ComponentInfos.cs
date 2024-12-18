@@ -1286,6 +1286,15 @@ namespace GTDrawingLink.Tools
             Description = "Get geometry of visible rebars in Tekla drawing view",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Geometry
-        };        
+        };
+
+        public static readonly GH_InstanceDescription ExportIfc4Component = new GH_InstanceDescription
+        {
+            Name = "Export IFC4",
+            NickName = "IFC4",
+            Description = "Export Tekla elements to IFC4",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
     }
 }

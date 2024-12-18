@@ -563,6 +563,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ExportIfc4 {
+            get {
+                object obj = ResourceManager.GetObject("ExportIfc4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ExportPdf {
             get {
                 object obj = ResourceManager.GetObject("ExportPdf", resourceCulture);

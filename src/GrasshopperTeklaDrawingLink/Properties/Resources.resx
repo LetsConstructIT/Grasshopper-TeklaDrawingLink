@@ -553,10 +553,13 @@
   <data name="OpenFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\OpenFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-    <data name="VisibleRebars" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>..\Icons\VisibleRebars.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    </data>
-    <data name="MergeMarks" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>..\Icons\MergeMarks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="VisibleRebars" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\VisibleRebars.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MergeMarks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\MergeMarks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+    <data name="ExportIfc4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+        <value>..\Icons\ExportIfc4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     </data>
 </root>

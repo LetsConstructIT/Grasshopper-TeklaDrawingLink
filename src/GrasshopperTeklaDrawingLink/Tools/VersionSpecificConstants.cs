@@ -853,6 +853,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(RunMacroComponent),
                 "2BD2FF13-20CC-4FF7-B56E-71AA1845A8B2"
+            },
+            {
+                typeof(ExportIfc4Component),
+                "90B0DF53-6641-479C-85A0-E64DD0A727EA"
             }
         };
 
