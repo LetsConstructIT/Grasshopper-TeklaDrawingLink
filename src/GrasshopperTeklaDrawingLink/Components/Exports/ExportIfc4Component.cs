@@ -6,12 +6,15 @@ using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using Tekla.Structures;
 using Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components.Exports
 {
     public class ExportIfc4Component : TeklaExportComponentBase<ExportIfc4Command>
     {
+        private const string _settingsExtension = "ifc4export.json";
         private ExportMode _mode = ExportMode.Selection;
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.ExportIfc4;
@@ -23,7 +26,7 @@ namespace GTDrawingLink.Components.Exports
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (modelObjects, path, settings) = _command.GetInputValues();
+            var (modelObjects, path, settingsName) = _command.GetInputValues();
             if (_mode == ExportMode.Selection && modelObjects.Count == 0)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No elements on input. Provide them or change mode to All.");
@@ -41,7 +44,14 @@ namespace GTDrawingLink.Components.Exports
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
-            ExportIFC(outputPath, settings);
+            var jsonSettings = SearchSettings(settingsName);
+            if (string.IsNullOrEmpty(jsonSettings))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "IFC4 export settings file was not found.");
+                return;
+            }
+
+            //ExportIFC(outputPath, jsonSettings);
 
             _command.SetOutputValues(DA, outputPath);
         }
@@ -55,6 +65,20 @@ namespace GTDrawingLink.Components.Exports
             CreateDirectoryIfNeeded(withExtension);
 
             return withExtension;
+        }
+
+        private string? SearchSettings(string settings)
+        {
+            if (!settings.EndsWith(_settingsExtension))
+                settings += $".{_settingsExtension}";
+
+            if (File.Exists(settings))
+                return settings;
+
+            var fileInfo = new TeklaStructuresFiles(ModelInteractor.ModelPath())
+                .GetAttributeFile(settings);
+
+            return (fileInfo != null && fileInfo.Exists) ? fileInfo.FullName : null;
         }
 
         private void ExportIFC(string outputFileName, string settings)
