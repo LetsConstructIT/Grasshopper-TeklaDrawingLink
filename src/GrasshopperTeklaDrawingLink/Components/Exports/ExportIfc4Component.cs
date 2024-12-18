@@ -7,8 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using Tekla.Structures;
 using Tekla.Structures.Model;
+using Tekla.Structures.Model.Operations;
+using ZeroDep;
 
 namespace GTDrawingLink.Components.Exports
 {
@@ -44,14 +47,21 @@ namespace GTDrawingLink.Components.Exports
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
-            var jsonSettings = SearchSettings(settingsName);
-            if (string.IsNullOrEmpty(jsonSettings))
+            var jsonSettingsPath = SearchSettings(settingsName);
+            if (string.IsNullOrEmpty(jsonSettingsPath))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "IFC4 export settings file was not found.");
                 return;
             }
 
-            //ExportIFC(outputPath, jsonSettings);
+            var exportSettings = Json.Deserialize<ExportSettings>(File.ReadAllText(jsonSettingsPath));
+
+            var status = ExportIFC(outputPath, exportSettings);
+            if (!status)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "IFC4 export failed. See session log for additional info in case failure.");
+                return;
+            }
 
             _command.SetOutputValues(DA, outputPath);
         }
@@ -81,22 +91,133 @@ namespace GTDrawingLink.Components.Exports
             return (fileInfo != null && fileInfo.Exists) ? fileInfo.FullName : null;
         }
 
-        private void ExportIFC(string outputFileName, string settings)
+        private bool ExportIFC(string fullPath, ExportSettings settings)
         {
-            var componentInput = new ComponentInput();
-            componentInput.AddOneInputPosition(new Tekla.Structures.Geometry3d.Point(0, 0, 0));
+            var viewType = GetExportViewType(settings.ExportTypeIndex);
+            var propertySets = GetPropertySets(settings.SelectedAdditionalPropertySetName);
+            var basePoint = GetExportBasePoint(settings.BasePointExportIndex);
+            var exportLayersAs = GetExportLayersAs(settings.SelectedExportLayerAsItem);
+            var objectColoring = GetObjectColoring(settings.SelectedObjectColoring);
+            var flags = GetExportFlags(settings);
+            var basePointGuid = GetBasePointGuid(basePoint, settings.BasePointExportIndex);
 
-            var comp = new Component(componentInput)
+            if (_mode == ExportMode.Selection)
+                return Operation.CreateIFC4ExportFromSelected(fullPath,
+                                                              viewType,
+                                                              propertySets,
+                                                              basePoint,
+                                                              exportLayersAs,
+                                                              objectColoring,
+                                                              flags,
+                                                              basePointGuid);
+            else
+                return Operation.CreateIFC4ExportFromAll(fullPath,
+                                                         viewType,
+                                                         propertySets,
+                                                         basePoint,
+                                                         exportLayersAs,
+                                                         objectColoring,
+                                                         flags,
+                                                         basePointGuid);
+        }
+
+        private Operation.IFCExportViewTypeEnum GetExportViewType(int exportTypeIndex)
+        {
+            return exportTypeIndex switch
             {
-                Name = "ExportIFC",
-                Number = BaseComponent.PLUGIN_OBJECT_NUMBER
+                1 => Operation.IFCExportViewTypeEnum.DESIGN_TRANSFER_VIEW,
+                5 => Operation.IFCExportViewTypeEnum.BRIDGE_VIEW,
+                _ => Operation.IFCExportViewTypeEnum.REFERENCE_VIEW
             };
+        }
 
-            comp.LoadAttributesFromFile(settings);
-            comp.SetAttribute("OutputFile", outputFileName);
-            comp.SetAttribute("CreateAll", (int)_mode);
+        private IEnumerable<string> GetPropertySets(string selectedAdditionalPropertySetName)
+        {
+            if (selectedAdditionalPropertySetName == "<new>")
+                return Enumerable.Empty<string>();
 
-            comp.Insert();
+            var allPSets = IfcPSetsFiles.GetAdditionalPSetsFilesFromAllPossibleFolders();
+            var matchingPSet = allPSets.FirstOrDefault(p => Path.GetFileNameWithoutExtension(p.Name) == selectedAdditionalPropertySetName);
+            if (matchingPSet != null)
+                return new string[] { matchingPSet.FullName };
+            else
+                return Enumerable.Empty<string>();
+        }
+
+        private Operation.ExportBasePoint GetExportBasePoint(int basePointExportIndex)
+        {
+            return basePointExportIndex switch
+            {
+                0 => Operation.ExportBasePoint.GLOBAL,
+                1 => Operation.ExportBasePoint.WORK_PLANE,
+                _ => Operation.ExportBasePoint.BASE_POINT
+            };
+        }
+
+        private string GetExportLayersAs(string selectedExportLayerAsItem)
+        {
+            return selectedExportLayerAsItem switch
+            {
+                "Phase" => "__Phase__",
+                _ => "__Name__"
+            };
+        }
+
+        private string GetObjectColoring(string selectedObjectColoring)
+        {
+            if (selectedObjectColoring.Equals("By object class"))
+                return "ByObjectClass";
+            else
+                return selectedObjectColoring;
+        }
+
+        private Operation.IFCExportFlags GetExportFlags(ExportSettings settings)
+        {
+            var flags = new Operation.IFCExportFlags();
+            if (settings.IsLocationFromOrganizer)
+                flags.IsLocationFromOrganizer = true;
+            if (settings.BasePointExportIndex == 0)
+                flags.UseIfcMapConversion = true;
+            if (settings.IsFlatBeamsAsPlates)
+                flags.IsFlatBeamsAsPlates = true;
+            if (settings.IsPoursEnabled)
+                flags.IsPoursEnabled = true;
+            if (GetAreRebarSetGroupsExportedAsIndividualBars())
+                flags.ExportRebarSetGroupAsIndividualBars = true;
+            if (settings.IsAssembliesEnabled)
+                flags.IsAssembliesEnabled = true;
+            if (settings.IsBoltsEnabled)
+                flags.IsBoltsEnabled = true;
+            if (settings.IsWeldsEnabled)
+                flags.IsWeldsEnabled = true;
+            if (settings.IsGridsEnabled)
+                flags.IsGridsEnabled = true;
+            if (settings.IsRebarsEnabled)
+                flags.IsRebarsEnabled = true;
+            if (settings.IsSurfaceTreatmentsAndSurfacesEnabled)
+                flags.IsSurfaceTreatmentsAndSurfacesEnabled = true;
+
+            return flags;
+        }
+
+        private bool GetAreRebarSetGroupsExportedAsIndividualBars()
+        {
+            var variable = string.Empty;
+            TeklaStructuresSettings.GetAdvancedOption("XS_EXPORT_IFC_REBARSET_INDIVIDUAL_BARS", ref variable);
+            return variable.ToLower() == "true";
+        }
+
+        private string GetBasePointGuid(Operation.ExportBasePoint basePoint, int basePointExportIndex)
+        {
+            var reducedIndex = basePointExportIndex - 2;
+            if (basePoint != Operation.ExportBasePoint.BASE_POINT)
+                return string.Empty;
+
+            var basePoints = ProjectInfo.GetBasePoints().OrderBy(b => b.Name).Select(b => b.Name).ToList();
+            if (reducedIndex < 0 || reducedIndex >= basePoints.Count())
+                return string.Empty;
+
+            return basePoints[reducedIndex];
         }
 
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
@@ -150,6 +271,32 @@ namespace GTDrawingLink.Components.Exports
         {
             Selection = 0,
             All = 1
+        }
+
+        private class ExportSettings
+        {
+            public string DialogType { get; set; }
+            public string TargetFileName { get; set; }
+            public string Folder { get; set; }
+            public int LocationByIndex { get; set; }
+            public int SelectionTypeIndex { get; set; }
+            public string SelectedObjectColoring { get; set; }
+            public string SelectedExportLayerAsItem { get; set; }
+            public int ExportTypeIndex { get; set; }
+            public int BasePointExportIndex { get; set; }
+            public int CIPExportListIndex { get; set; }
+            public string SelectedAdditionalPropertySetName { get; set; }
+            public string SelectedExportFormat { get; set; }
+            public int PropertySetsIndex { get; set; }
+            public bool IsFlatBeamsAsPlates { get; set; }
+            public bool IsLocationFromOrganizer { get; set; }
+            public bool IsPoursEnabled { get; set; }
+            public bool IsAssembliesEnabled { get; set; }
+            public bool IsBoltsEnabled { get; set; }
+            public bool IsWeldsEnabled { get; set; }
+            public bool IsGridsEnabled { get; set; }
+            public bool IsRebarsEnabled { get; set; }
+            public bool IsSurfaceTreatmentsAndSurfacesEnabled { get; set; }
         }
     }
 
