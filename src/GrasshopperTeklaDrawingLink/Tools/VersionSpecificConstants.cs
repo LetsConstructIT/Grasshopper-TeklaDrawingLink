@@ -857,6 +857,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(ExportIfc4Component),
                 "90B0DF53-6641-479C-85A0-E64DD0A727EA"
+            },
+            {
+                typeof(CreatePatternLineComponent),
+                "CA5664B9-2FCA-4012-9828-B55DF2045672"
             }
         };
 

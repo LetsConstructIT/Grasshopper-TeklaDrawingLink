@@ -1296,5 +1296,15 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Export
         };
+
+        public static readonly GH_InstanceDescription CreatePatternLineComponent = new GH_InstanceDescription
+        {
+            Name = "Pattern Line",
+            NickName = "Pattern",
+            Description = "Draw Pattern Line in Tekla Structures. Insert as a plugin.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
+        
     }
 }

@@ -2199,5 +2199,12 @@ namespace GTDrawingLink.Tools
             NickName = "O",
             Description = "Tekla model or drawing objects that will be automatically selected before executing the macro"
         };
+
+        public static readonly GH_InstanceDescription PatternLine = new GH_InstanceDescription
+        {
+            Name = "Pattern Line",
+            NickName = "Pattern",
+            Description = "Tekla Pattern Line"
+        };
     }
 }
