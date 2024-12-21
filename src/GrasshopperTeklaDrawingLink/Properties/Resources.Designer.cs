@@ -863,6 +863,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LoopKeeper {
+            get {
+                object obj = ResourceManager.GetObject("LoopKeeper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LoopLink {
             get {
                 object obj = ResourceManager.GetObject("LoopLink", resourceCulture);

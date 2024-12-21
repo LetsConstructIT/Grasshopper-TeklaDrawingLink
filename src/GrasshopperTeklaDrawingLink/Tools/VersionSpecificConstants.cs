@@ -865,6 +865,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(MergeMarksComponent),
                 "6CE14F2E-8909-4991-B2FC-3E725AB68B16"
+            },
+            {
+                typeof(LoopKeeperComponent),
+                "13F89113-6484-485A-A436-EC68C6DE3383"
             }
         };
 

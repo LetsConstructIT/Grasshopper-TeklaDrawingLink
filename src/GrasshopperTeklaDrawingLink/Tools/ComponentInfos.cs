@@ -1314,5 +1314,14 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Annotations
         };
+
+        public static readonly GH_InstanceDescription LoopKeeperComponent = new GH_InstanceDescription
+        {
+            Name = "Loop Keeper",
+            NickName = "Keep",
+            Description = "Synchronization component to simplify merging flow before completing the loop iteration.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };        
     }
 }
