@@ -861,6 +861,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(CreatePatternLineComponent),
                 "CA5664B9-2FCA-4012-9828-B55DF2045672"
+            },
+            {
+                typeof(MergeMarksComponent),
+                "6CE14F2E-8909-4991-B2FC-3E725AB68B16"
             }
         };
 

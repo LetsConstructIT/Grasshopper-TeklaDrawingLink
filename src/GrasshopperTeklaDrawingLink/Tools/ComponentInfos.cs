@@ -1306,5 +1306,13 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Annotations
         };
         
+        public static readonly GH_InstanceDescription MergeMarksComponent = new GH_InstanceDescription
+        {
+            Name = "Merge Marks",
+            NickName = "Merge",
+            Description = "Merge Tekla marks. Does not work with associative notes.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };
     }
 }

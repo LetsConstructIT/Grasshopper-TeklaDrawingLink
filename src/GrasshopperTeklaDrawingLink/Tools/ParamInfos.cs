@@ -2206,5 +2206,26 @@ namespace GTDrawingLink.Tools
             NickName = "Pattern",
             Description = "Tekla Pattern Line"
         };
+
+        public static readonly GH_InstanceDescription MergeResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "Merge result"
+        };
+
+        public static readonly GH_InstanceDescription MergedMarks = new GH_InstanceDescription
+        {
+            Name = "Merged Marks",
+            NickName = "MM",
+            Description = "Merged Tekla Marks"
+        };
+
+        public static readonly GH_InstanceDescription NonMergedMarks = new GH_InstanceDescription
+        {
+            Name = "Non-Merged Marks",
+            NickName = "Non MM",
+            Description = "Non Merged Tekla Marks (Tekla was unable to merge those with others)"
+        };
     }
 }
