@@ -1103,6 +1103,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PatternLine {
+            get {
+                object obj = ResourceManager.GetObject("PatternLine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PerformNumbering {
             get {
                 object obj = ResourceManager.GetObject("PerformNumbering", resourceCulture);
