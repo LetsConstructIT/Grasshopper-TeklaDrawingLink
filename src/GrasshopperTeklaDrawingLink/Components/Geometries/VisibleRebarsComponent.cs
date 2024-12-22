@@ -2,6 +2,7 @@
 using GTDrawingLink.Components.Parts;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,8 +75,29 @@ namespace GTDrawingLink.Components.Geometries
 
             List<Rhino.Geometry.Polyline> PickCustomized()
             {
+                var firstRebar = geometries.First();
+                var lastRebar = geometries.Last();
 
-                return new List<Rhino.Geometry.Polyline>();
+                var spacingDir = lastRebar.First() - firstRebar.First();
+                var customDistance = customPosition * spacingDir.Length;
+
+                for (int i = 0; i < geometries.Count; i++)
+                {
+                    var currentDistance = (geometries[i].First() - firstRebar.First()).Length;
+                    if (currentDistance < customDistance)
+                        continue;
+
+                    var unitDir = new Vector3d(spacingDir);
+                    unitDir.Unitize();
+                    var offsetVector = (currentDistance - customDistance) * unitDir;
+                    var dummyOffseted = new Rhino.Geometry.Polyline(geometries[i].Select(p => p - offsetVector));
+                    return new List<Rhino.Geometry.Polyline>() { dummyOffseted };
+                }
+
+                return new List<Rhino.Geometry.Polyline>()
+                {
+                    lastRebar
+                };
             }
 
             int GetMidIndex(List<Rhino.Geometry.Polyline> geometries)
