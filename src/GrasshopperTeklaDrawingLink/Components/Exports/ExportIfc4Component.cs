@@ -44,6 +44,7 @@ namespace GTDrawingLink.Components.Exports
 
             var outputPath = SanitizePath(path);
 
+#if API2022 || API2023 || API2024
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
@@ -62,10 +63,12 @@ namespace GTDrawingLink.Components.Exports
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "IFC4 export failed. See session log for additional info in case failure.");
                 return;
             }
+#else
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "IFC4 export not available in this Tekla version.");
+#endif
 
             _command.SetOutputValues(DA, outputPath);
         }
-
         private string SanitizePath(string path)
         {
             var absolutePath = ReplaceRelativeModelPath(path);
@@ -76,6 +79,8 @@ namespace GTDrawingLink.Components.Exports
 
             return withExtension;
         }
+
+#if API2022 || API2023 || API2024
 
         private string? SearchSettings(string settings)
         {
@@ -221,7 +226,7 @@ namespace GTDrawingLink.Components.Exports
 
             return basePoints[reducedIndex];
         }
-
+#endif
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
