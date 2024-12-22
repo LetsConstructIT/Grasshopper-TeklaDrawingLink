@@ -2,6 +2,7 @@
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
+using System;
 
 namespace GTDrawingLink.Components.Miscs.Loops
 {
@@ -32,6 +33,8 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
             DA.GetDataTree(0, out GH_Structure<IGH_Goo> dataToBePropagated);
             DA.SetDataTree(0, dataToBePropagated);
+
+            this.Message = $"Last update: {DateTime.Now:HH:mm:ss}";
         }
     }
 }
