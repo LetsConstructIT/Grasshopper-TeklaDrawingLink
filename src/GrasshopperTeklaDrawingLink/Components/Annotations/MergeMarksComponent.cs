@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tekla.Structures.Drawing;
-using Tekla.Structures.Drawing.Operations;
 
 namespace GTDrawingLink.Components.Annotations
 {
@@ -19,7 +18,7 @@ namespace GTDrawingLink.Components.Annotations
         {
             var marksToMerge = _command.GetInputValues();
 
-            var status = Operation.MergeMarks(marksToMerge, out List<MarkBase> mergedMarks);
+            var status = Tekla.Structures.Drawing.Operations.Operation.MergeMarks(marksToMerge, out List<MarkBase> mergedMarks);
             var nonMergedMarks = FindNonMergedMarks(marksToMerge, mergedMarks);
             _command.SetOutputValues(DA, status, mergedMarks, nonMergedMarks);
         }
