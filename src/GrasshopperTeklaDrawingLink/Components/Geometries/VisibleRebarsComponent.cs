@@ -102,7 +102,7 @@ namespace GTDrawingLink.Components.Geometries
 
             int GetMidIndex(List<Rhino.Geometry.Polyline> geometries)
             {
-                return (int)(geometries.Count * 0.35);
+                return (int)((geometries.Count - 1) * 0.35);
             }
         }
 
