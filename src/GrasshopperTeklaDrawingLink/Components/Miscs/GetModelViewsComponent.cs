@@ -79,7 +79,7 @@ namespace GTDrawingLink.Components.Miscs
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddBooleanParameter(pManager, ParamInfos.BooleanToogle, GH_ParamAccess.item);
+            AddBooleanParameter(pManager, ParamInfos.BooleanToggle, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -90,7 +90,7 @@ namespace GTDrawingLink.Components.Miscs
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var trigger = false;
-            DA.GetData(ParamInfos.BooleanToogle.Name, ref trigger);
+            DA.GetData(ParamInfos.BooleanToggle.Name, ref trigger);
 
             if (!trigger)
                 return;

@@ -33,7 +33,7 @@ namespace GTDrawingLink.Components.Miscs
     public class BakeToTeklaCommand : CommandBase
     {
         private readonly InputTreeParam<IGH_Goo> _inComponent = new InputTreeParam<IGH_Goo>(ParamInfos.TeklaComponent);
-        private readonly InputStructParam<bool> _inTrigger = new InputStructParam<bool>(ParamInfos.BooleanToogle);
+        private readonly InputStructParam<bool> _inTrigger = new InputStructParam<bool>(ParamInfos.BooleanToggle);
 
         private readonly OutputTreeParam<IGH_Goo> _outComponent = new OutputTreeParam<IGH_Goo>(ParamInfos.TeklaComponent, 0);
 

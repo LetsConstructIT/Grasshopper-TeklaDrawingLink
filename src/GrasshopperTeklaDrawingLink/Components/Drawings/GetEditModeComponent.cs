@@ -34,7 +34,7 @@ namespace GTDrawingLink.Components.Drawings
 
     public class GetEditModeCommand : CommandBase
     {
-        private readonly InputStructParam<bool> _inTrigger = new InputStructParam<bool>(ParamInfos.BooleanToogle);
+        private readonly InputStructParam<bool> _inTrigger = new InputStructParam<bool>(ParamInfos.BooleanToggle);
 
         private readonly OutputParam<bool> _outModel = new OutputParam<bool>(ParamInfos.ModelMode);
         private readonly OutputParam<bool> _outDrawing = new OutputParam<bool>(ParamInfos.DrawingMode);

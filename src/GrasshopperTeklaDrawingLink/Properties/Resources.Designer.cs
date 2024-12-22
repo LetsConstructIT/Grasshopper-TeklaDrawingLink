@@ -563,6 +563,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ExportIfc4 {
+            get {
+                object obj = ResourceManager.GetObject("ExportIfc4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ExportPdf {
             get {
                 object obj = ResourceManager.GetObject("ExportPdf", resourceCulture);
@@ -853,6 +863,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LoopKeeper {
+            get {
+                object obj = ResourceManager.GetObject("LoopKeeper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LoopLink {
             get {
                 object obj = ResourceManager.GetObject("LoopLink", resourceCulture);
@@ -886,6 +906,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap MarkAttributes {
             get {
                 object obj = ResourceManager.GetObject("MarkAttributes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MergeMarks {
+            get {
+                object obj = ResourceManager.GetObject("MergeMarks", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1076,6 +1106,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap PartViewTypes {
             get {
                 object obj = ResourceManager.GetObject("PartViewTypes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PatternLine {
+            get {
+                object obj = ResourceManager.GetObject("PatternLine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1496,6 +1536,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap ViewsAtDrawing {
             get {
                 object obj = ResourceManager.GetObject("ViewsAtDrawing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VisibleRebars {
+            get {
+                object obj = ResourceManager.GetObject("VisibleRebars", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

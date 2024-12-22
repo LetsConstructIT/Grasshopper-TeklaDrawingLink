@@ -139,7 +139,7 @@ namespace GTDrawingLink.Tools
                 "7B9407BF-DC5A-441E-9FFD-E314E32AC9B1"
             },
             {
-                typeof(CreateGADrawingComponent),
+                typeof(CreateGADrawingComponentOLD),
                 "0BC4FB66-6CA3-4D5E-B5A9-87DE7C2535FF"
             },
             {
@@ -179,7 +179,7 @@ namespace GTDrawingLink.Tools
                 "F0AB948C-CB4B-4428-9160-60761FABAEA9"
             },
             {
-                typeof(RunMacroComponent),
+                typeof(RunMacroComponentOLD),
                 "2DDA4F5D-C05A-4566-8716-84788FC88C5D"
             },
             {
@@ -831,12 +831,44 @@ namespace GTDrawingLink.Tools
                 "F381AF18-029F-4057-80B1-5D635884ADB6"
             },
             {
-                typeof(ExportReportComponent),
+                typeof(ExportReportComponentOLD),
                 "2CF2C54B-3CD2-4FCD-979F-DF0836191A00"
             },
             {
                 typeof(OpenFileComponent),
                 "10B7A29E-9E63-47E2-9F72-91D652D39E32"
+            },
+            {
+                typeof(ExportReportComponent),
+                "076B9882-6091-45D3-B563-5092E38E9330"
+            },
+            {
+                typeof(VisibleRebarsComponent),
+                "DB81D09E-98EA-40DD-8E4F-87D449F2F8EF"
+            },
+            {
+                typeof(CreateGADrawingComponent),
+                "F0D038CE-CC42-4ED2-9067-A7F9B168C38C"
+            },
+            {
+                typeof(RunMacroComponent),
+                "2BD2FF13-20CC-4FF7-B56E-71AA1845A8B2"
+            },
+            {
+                typeof(ExportIfc4Component),
+                "90B0DF53-6641-479C-85A0-E64DD0A727EA"
+            },
+            {
+                typeof(CreatePatternLineComponent),
+                "CA5664B9-2FCA-4012-9828-B55DF2045672"
+            },
+            {
+                typeof(MergeMarksComponent),
+                "6CE14F2E-8909-4991-B2FC-3E725AB68B16"
+            },
+            {
+                typeof(LoopKeeperComponent),
+                "13F89113-6484-485A-A436-EC68C6DE3383"
             }
         };
 

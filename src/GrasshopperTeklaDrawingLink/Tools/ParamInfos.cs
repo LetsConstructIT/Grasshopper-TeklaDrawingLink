@@ -10,14 +10,14 @@ namespace GTDrawingLink.Tools
         {
             Name = "Drawing",
             NickName = "D",
-            Description = "Tekla Drawing"
+            Description = "Tekla Drawing instance"
         };
 
-        public static readonly GH_InstanceDescription BooleanToogle = new GH_InstanceDescription
+        public static readonly GH_InstanceDescription BooleanToggle = new GH_InstanceDescription
         {
             Name = "Toggle",
             NickName = "T",
-            Description = "Boolean toogle for launching component"
+            Description = "Boolean toggle to start the component"
         };
 
         public static readonly GH_InstanceDescription ViewBase = new GH_InstanceDescription
@@ -2156,6 +2156,76 @@ namespace GTDrawingLink.Tools
             Name = "Template",
             NickName = "T",
             Description = "Name of report template"
+        };
+
+        public static readonly GH_InstanceDescription AttributesForMarkAttributes = new GH_InstanceDescription
+        {
+            Name = "Attributes Name",
+            NickName = "A",
+            Description = "Attribute filename (must be saved via the association note dialog)"
+        };
+
+        public static readonly GH_InstanceDescription Title1 = new GH_InstanceDescription
+        {
+            Name = "Title 1",
+            NickName = "T1",
+            Description = "Title 1 used for reports"
+        };
+
+        public static readonly GH_InstanceDescription Title2 = new GH_InstanceDescription
+        {
+            Name = "Title 2",
+            NickName = "T2",
+            Description = "Title 2 used for reports"
+        };
+
+        public static readonly GH_InstanceDescription Title3 = new GH_InstanceDescription
+        {
+            Name = "Title 3",
+            NickName = "T3",
+            Description = "Title 3 used for reports"
+        };
+
+        public static readonly GH_InstanceDescription DrawingReinforcementObject = new GH_InstanceDescription
+        {
+            Name = "Reinforcement",
+            NickName = "R",
+            Description = "Tekla DRAWING reinforcement object"
+        };
+
+        public static readonly GH_InstanceDescription MacroInputObjects = new GH_InstanceDescription
+        {
+            Name = "Objects",
+            NickName = "O",
+            Description = "Tekla model or drawing objects that will be automatically selected before executing the macro"
+        };
+
+        public static readonly GH_InstanceDescription PatternLine = new GH_InstanceDescription
+        {
+            Name = "Pattern Line",
+            NickName = "Pattern",
+            Description = "Tekla Pattern Line"
+        };
+
+        public static readonly GH_InstanceDescription MergeResult = new GH_InstanceDescription
+        {
+            Name = "Result",
+            NickName = "R",
+            Description = "Merge result"
+        };
+
+        public static readonly GH_InstanceDescription MergedMarks = new GH_InstanceDescription
+        {
+            Name = "Merged Marks",
+            NickName = "MM",
+            Description = "Merged Tekla Marks"
+        };
+
+        public static readonly GH_InstanceDescription NonMergedMarks = new GH_InstanceDescription
+        {
+            Name = "Non-Merged Marks",
+            NickName = "Non MM",
+            Description = "Non Merged Tekla Marks (Tekla was unable to merge those with others)"
         };
     }
 }

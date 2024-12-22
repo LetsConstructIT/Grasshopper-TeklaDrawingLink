@@ -1,21 +1,20 @@
 ﻿using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
-using GTDrawingLink.Types;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GTDrawingLink.Components.Miscs
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class RunMacroComponent : TeklaComponentBase
+    [Obsolete]
+    public class RunMacroComponentOLD : TeklaComponentBase
     {
         private MacroMode _mode = MacroMode.Model;
-        public override GH_Exposure Exposure => GH_Exposure.quarternary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.RunMacro;
 
-        public RunMacroComponent() : base(ComponentInfos.RunMacroComponent)
+        public RunMacroComponentOLD() : base(ComponentInfos.RunMacroComponent)
         {
             SetCustomMessage();
         }
@@ -88,7 +87,6 @@ namespace GTDrawingLink.Components.Miscs
         {
             pManager.AddBooleanParameter("Run", "R", "Trigger to run macro", GH_ParamAccess.item, true);
             pManager.AddTextParameter("Macro", "M", "Macro name or content (for dynamic mode)", GH_ParamAccess.item);
-            AddGenericParameter(pManager, ParamInfos.MacroInputObjects, GH_ParamAccess.list, optional: true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -99,15 +97,14 @@ namespace GTDrawingLink.Components.Miscs
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             var run = false;
-            if (!DA.GetData("Run", ref run) || !run)
+            DA.GetData("Run", ref run);
+            if (!run)
                 return;
 
             var macro = "";
-            if (!DA.GetData("Macro", ref macro) || string.IsNullOrEmpty(macro))
+            DA.GetData("Macro", ref macro);
+            if (string.IsNullOrEmpty(macro))
                 return;
-
-            var inputObjects = new List<dynamic>();
-            DA.GetDataList(ParamInfos.MacroInputObjects.Name, inputObjects);
 
             var macroPath = macro;
             switch (_mode)
@@ -127,31 +124,10 @@ namespace GTDrawingLink.Components.Miscs
                     break;
             }
 
-            if (inputObjects != null && inputObjects.Count > 0)
-                SelectObjects(inputObjects);
-
             var status = Tekla.Structures.Model.Operations.Operation.RunMacro(macroPath);
             DA.SetData("Result", status);
         }
 
-        private void SelectObjects(List<dynamic> inputObjects)
-        {
-            var modelObjects = new List<Tekla.Structures.Model.ModelObject>();
-            var drawingObjects = new List<Tekla.Structures.Drawing.DrawingObject>();
-
-            foreach (var inputObject in inputObjects)
-            {
-                if (inputObject.Value is Tekla.Structures.Model.ModelObject modelObject)
-                    modelObjects.Add(modelObject);
-                else if (inputObject.Value is Tekla.Structures.Drawing.DrawingObject drawingObject)
-                    drawingObjects.Add(drawingObject);
-            }
-
-            if (modelObjects.Count > 0)
-                ModelInteractor.SelectModelObjects(modelObjects);
-            else if (drawingObjects.Count > 0)
-                DrawingInteractor.Highlight(drawingObjects);
-        }
 
         private string GetPathWithExtension(string path)
         {

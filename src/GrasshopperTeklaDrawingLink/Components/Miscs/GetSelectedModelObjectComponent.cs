@@ -38,7 +38,7 @@ namespace GTDrawingLink.Components.Miscs
 
     public class GetSelectedModelObjectCommand : CommandBase
     {
-        private readonly InputStructParam<bool> _inTrigger = new InputStructParam<bool>(ParamInfos.BooleanToogle);
+        private readonly InputStructParam<bool> _inTrigger = new InputStructParam<bool>(ParamInfos.BooleanToggle);
 
         private readonly OutputListParam<TSM.ModelObject> _outSelectedObjects = new OutputListParam<TSM.ModelObject>(ParamInfos.ModelObject);
 

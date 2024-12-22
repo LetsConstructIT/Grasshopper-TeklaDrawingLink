@@ -126,5 +126,21 @@
     
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2020|AnyCPU'">
     <DefineConstants>$(DefineConstants);API2020</DefineConstants>
-  </PropertyGroup>  
+  </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2021|AnyCPU'">
+        <DefineConstants>$(DefineConstants);API2021</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2022|AnyCPU'">
+        <DefineConstants>$(DefineConstants);API2022</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2023|AnyCPU'">
+        <DefineConstants>$(DefineConstants);API2023</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_2024|AnyCPU'">
+        <DefineConstants>$(DefineConstants);API2024</DefineConstants>
+    </PropertyGroup>
 </Project>

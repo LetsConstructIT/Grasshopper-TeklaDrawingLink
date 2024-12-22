@@ -17,7 +17,7 @@ namespace GTDrawingLink.Components.Drawings
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddBooleanParameter(pManager, ParamInfos.BooleanToogle, GH_ParamAccess.item);
+            AddBooleanParameter(pManager, ParamInfos.BooleanToggle, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)

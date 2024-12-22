@@ -101,7 +101,7 @@ namespace GTDrawingLink.Components.Geometries
         }
 
 #if API2020
-        private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
+        public static (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
         {
             var rebarPolylines = new List<Rhino.Geometry.Polyline>();
             var bendingRadiuses = new List<double>();
@@ -129,7 +129,7 @@ namespace GTDrawingLink.Components.Geometries
         }
 
 #else
-        private (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
+        public static (List<Rhino.Geometry.Polyline> geometries, List<double> radiuses) GetRebarGeometries(TSM.Reinforcement reinforcement)
         {
             var rebarPolylines = new List<Rhino.Geometry.Polyline>();
             var bendingRadiuses = new List<double>();
@@ -220,13 +220,8 @@ namespace GTDrawingLink.Components.Geometries
             }
             else if (inputObject is TeklaDatabaseObjectGoo drawingObject)
             {
-                if (!(drawingObject.Value is ModelObject drawingModelObject))
-                    return null;
-
-                if (drawingModelObject is ReinforcementSetGroup rebarSet)
-                    return ConvertDrawingToModelObjectComponent.GetModelRebarSet(rebarSet);
-                else
-                    return ModelInteractor.GetModelObject(drawingModelObject.ModelIdentifier) as TSM.Reinforcement;
+                if (drawingObject.Value is ReinforcementBase drawingRebar)
+                    return ConvertDrawingToModelObjectComponent.ConvertToModelRebar(drawingRebar);
             }
 
             return null;

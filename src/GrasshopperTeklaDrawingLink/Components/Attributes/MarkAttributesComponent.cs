@@ -49,7 +49,7 @@ namespace GTDrawingLink.Components.AttributesComponents
     public class MarkAttributesCommand : CommandBase
     {
         private readonly InputOptionalParam<Mark.MarkAttributes> _inMarkAttributes = new InputOptionalParam<Mark.MarkAttributes>(ParamInfos.MarkAttributes);
-        private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.Attributes);
+        private readonly InputOptionalParam<string> _inAttributesFileName = new InputOptionalParam<string>(ParamInfos.AttributesForMarkAttributes);
         private readonly InputOptionalParam<ModelObject> _inModel = new InputOptionalParam<ModelObject>(ParamInfos.DrawingModelObject);
         private readonly InputOptionalParam<Frame> _inFrameType = new InputOptionalParam<Frame>(ParamInfos.FrameAtributes);
         private readonly InputOptionalParam<ArrowheadAttributes> _inArrowAttributes = new InputOptionalParam<ArrowheadAttributes>(ParamInfos.ArrowAttributes);

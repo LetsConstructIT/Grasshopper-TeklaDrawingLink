@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using Rhino.Runtime;
 
 namespace GTDrawingLink.Components.Params.ValueLists
 {
@@ -25,7 +27,7 @@ namespace GTDrawingLink.Components.Params.ValueLists
             Category = VersionSpecificConstants.TabHeading;
             SubCategory = ComponentInfos.PanelHeadings.Params;
 
-            ListMode = GH_ValueListMode.CheckList;
+            ListMode = GH_ValueListMode.DropDown;
 
             base.ListItems.Clear();
             base.ListItems.Add(new GH_ValueListItem("Choose type with right-click", "-1"));
@@ -34,6 +36,8 @@ namespace GTDrawingLink.Components.Params.ValueLists
         public override void AppendAdditionalMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalMenuItems(menu);
+            Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, RecomputeComponent).ToolTipText = ParamInfos.RecomputeObjects.Description;
             Menu_AppendSeparator(menu);
             foreach (AutoSettingsMode mode in Enum.GetValues(typeof(AutoSettingsMode)))
             {
@@ -50,6 +54,22 @@ namespace GTDrawingLink.Components.Params.ValueLists
             }
 
             Menu_AppendSeparator(menu);
+        }
+
+        private void RecomputeComponent(object sender, EventArgs e)
+        {
+            var preSelection = this.VolatileData.AllData(skipNulls: true).ToList();
+            var desc = _mode.GetAttributeOfType<DescriptionWithExtensionAttribute>();
+            RefreshAvailableAttributes(desc);
+
+            foreach (var initial in preSelection)
+            {
+                var indexOfExisting = ListItems.FindIndex(i => i.Name == initial.ToString());
+                if (indexOfExisting == -1)
+                    continue;
+
+                ToggleItem(indexOfExisting);
+            }
         }
 
         private void RefreshAvailableAttributes(DescriptionWithExtensionAttribute descriptionWithExtension)

@@ -27,7 +27,7 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddBooleanParameter(pManager, ParamInfos.BooleanToogle, GH_ParamAccess.item);
+            AddBooleanParameter(pManager, ParamInfos.BooleanToggle, GH_ParamAccess.item);
             pManager.AddGenericParameter("Data", "D", "Data to loop", GH_ParamAccess.tree);
         }
 

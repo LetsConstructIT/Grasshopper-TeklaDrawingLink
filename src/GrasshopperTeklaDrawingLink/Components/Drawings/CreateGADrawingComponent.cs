@@ -1,5 +1,4 @@
 ﻿using Grasshopper.Kernel;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Collections.Generic;
@@ -20,43 +19,37 @@ namespace GTDrawingLink.Components.Drawings
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.list);
-            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
+            AddBooleanParameter(pManager, ParamInfos.BooleanToggle, GH_ParamAccess.item);
+            AddTextParameter(pManager, ParamInfos.Name, GH_ParamAccess.item);
+            AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.Drawing, GH_ParamAccess.list);
+            AddTeklaDbObjectParameter(pManager, ParamInfos.Drawing, GH_ParamAccess.item);
         }
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var viewNames = new List<string>();
-            if (!DA.GetDataList(ParamInfos.Name.Name, viewNames))
+            var trigger = false;
+            if (!DA.GetData(ParamInfos.BooleanToggle.Name, ref trigger) || !trigger)
                 return null;
 
-            var attributeFileNames = new List<string>();
-            DA.GetDataList(ParamInfos.Attributes.Name, attributeFileNames);
+            var viewName = string.Empty;
+            if (!DA.GetData(ParamInfos.Name.Name, ref viewName))
+                return null;
 
-            var drawingsNumber = new int[]
-            {
-                viewNames.Count,
-                attributeFileNames.Count
-            }.Max();
+            var attributeFileName = string.Empty;
+            if (!DA.GetData(ParamInfos.Attributes.Name, ref attributeFileName))
+                return null;
 
-            var createdDrawings = new Drawing[drawingsNumber];
-            for (int i = 0; i < drawingsNumber; i++)
-            {
-                var createdDrawing = CreateGADrawing(
-                    viewNames.ElementAtOrLast(i),
-                    attributeFileNames.Count > 0 ? attributeFileNames.ElementAtOrLast(i) : null);
+            var createdDrawing = CreateGADrawing(
+                viewName,
+                attributeFileName);
 
-                createdDrawings[i] = createdDrawing;
-            }
+            DA.SetData(ParamInfos.Drawing.Name, new TeklaDatabaseObjectGoo(createdDrawing));
 
-            DA.SetDataList(ParamInfos.Drawing.Name, createdDrawings.Select(d => new TeklaDatabaseObjectGoo(d)));
-
-            return createdDrawings;
+            return new DatabaseObject[] { createdDrawing };
         }
 
         private GADrawing CreateGADrawing(string viewName, string attributesFileName)
