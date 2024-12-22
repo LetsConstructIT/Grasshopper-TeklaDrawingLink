@@ -17,10 +17,13 @@ namespace GTDrawingLink.Components.Annotations
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             var marksToMerge = _command.GetInputValues();
-
+#if API2020
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Merging marks not available in this Tekla version.");
+#else
             var status = Tekla.Structures.Drawing.Operations.Operation.MergeMarks(marksToMerge, out List<MarkBase> mergedMarks);
             var nonMergedMarks = FindNonMergedMarks(marksToMerge, mergedMarks);
             _command.SetOutputValues(DA, status, mergedMarks, nonMergedMarks);
+#endif
         }
 
         private List<MarkBase> FindNonMergedMarks(List<MarkBase> marksToMerge, List<MarkBase> mergedMarks)

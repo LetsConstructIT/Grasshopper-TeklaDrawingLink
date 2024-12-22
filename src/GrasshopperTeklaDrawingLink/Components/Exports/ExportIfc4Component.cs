@@ -44,7 +44,10 @@ namespace GTDrawingLink.Components.Exports
 
             var outputPath = SanitizePath(path);
 
-#if API2022 || API2023 || API2024
+#if API2020 || API2021
+
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "IFC4 export not available in this Tekla version.");
+#else
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
@@ -63,8 +66,6 @@ namespace GTDrawingLink.Components.Exports
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "IFC4 export failed. See session log for additional info in case failure.");
                 return;
             }
-#else
-            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "IFC4 export not available in this Tekla version.");
 #endif
 
             _command.SetOutputValues(DA, outputPath);
