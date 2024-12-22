@@ -176,8 +176,10 @@ namespace GTDrawingLink.Components.Exports
             var flags = new Operation.IFCExportFlags();
             if (settings.IsLocationFromOrganizer)
                 flags.IsLocationFromOrganizer = true;
+#if API2023 || API2024
             if (settings.BasePointExportIndex == 0)
                 flags.UseIfcMapConversion = true;
+#endif
             if (settings.IsFlatBeamsAsPlates)
                 flags.IsFlatBeamsAsPlates = true;
             if (settings.IsPoursEnabled)
