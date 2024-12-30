@@ -4,6 +4,7 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -82,7 +83,8 @@ namespace GTDrawingLink.Components.Views
             if (scale > 1)
                 viewAttributes.Scale = scale;
 
-            var boundaryPoint = centerPoint + new Point3d(radius, 0, 0);
+            var distance = radius / Math.Sqrt(2);
+            var boundaryPoint = centerPoint + new Point3d(distance, distance, 0);
             View.CreateDetailView(
                 view,
                 centerPoint.ToTekla(),

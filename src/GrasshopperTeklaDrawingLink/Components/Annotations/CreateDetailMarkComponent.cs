@@ -4,6 +4,7 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Tekla.Structures.Drawing;
@@ -55,7 +56,8 @@ namespace GTDrawingLink.Components.Annotations
 
         private static DetailMark InsertDetailMark(View view, Point3d centerPoint, double radius, Point3d labelPoint, string attribute, string name)
         {
-            var boundaryPoint = centerPoint + new Point3d(radius, 0, 0);
+            var distance = radius / Math.Sqrt(2);
+            var boundaryPoint = centerPoint + new Point3d(distance, distance, 0);
             var detailAttributes = new DetailMark.DetailMarkAttributes(attribute)
             {
                 MarkName = name
