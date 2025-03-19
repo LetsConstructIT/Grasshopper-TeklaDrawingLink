@@ -7,6 +7,7 @@ using GTDrawingLink.Components.Exports;
 using GTDrawingLink.Components.Geometries;
 using GTDrawingLink.Components.Miscs;
 using GTDrawingLink.Components.Miscs.Loops;
+using GTDrawingLink.Components.Modify;
 using GTDrawingLink.Components.ModifyComponents;
 using GTDrawingLink.Components.Obsolete;
 using GTDrawingLink.Components.Parts;
@@ -808,6 +809,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(ModifyViewComponent),
+                "A6FE9AA6-5D6D-4333-A35E-37FEB7167FD7"
+            },
+            {
+                typeof(ModifyViewComponentOLD),
                 "07317AF8-FCA3-41FF-8F7A-63B8BE0CC729"
             },
             {
