@@ -874,6 +874,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(LoopKeeperComponent),
                 "13F89113-6484-485A-A436-EC68C6DE3383"
+            },
+            {
+                typeof(GetProjectPropertiesComponent),
+                "9C9430D8-4F4C-4219-AB1A-61EF0C143A74"
             }
         };
 

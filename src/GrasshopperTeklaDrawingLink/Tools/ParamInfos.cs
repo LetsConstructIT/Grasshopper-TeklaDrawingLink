@@ -2227,5 +2227,34 @@ namespace GTDrawingLink.Tools
             NickName = "Non MM",
             Description = "Non Merged Tekla Marks (Tekla was unable to merge those with others)"
         };
+
+        public static readonly GH_InstanceDescription ModelName = new GH_InstanceDescription
+        {
+            Name = "Model Name",
+            NickName = "MN",
+            Description = "The name of the Tekla Structures model"
+        };
+
+        public static readonly GH_InstanceDescription ModelPath = new GH_InstanceDescription
+        {
+            Name = "Model Path",
+            NickName = "MP",
+            Description = "The path to the Tekla Structures model"
+        };
+
+        public static readonly GH_InstanceDescription ProjectInfo = new GH_InstanceDescription
+        {
+            Name = "Project Info",
+            NickName = "PI",
+            Description = "Information about the current Tekla model's project. Use Expand Object component from Live-Link to query for details."
+        };
+
+        public static readonly GH_InstanceDescription FakeProjectObject = new GH_InstanceDescription
+        {
+            Name = "Project Object",
+            NickName = "PO",
+            Description = "Fake project object needed for getting and setting UDAs"
+        };
+        
     }
 }

@@ -1322,6 +1322,15 @@ namespace GTDrawingLink.Tools
             Description = "Synchronization component to simplify merging flow before completing the loop iteration.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
-        };        
+        };
+
+        public static readonly GH_InstanceDescription GetProjectPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Project Properties",
+            NickName = "Props",
+            Description = "Get Tekla project properties.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
     }
 }
