@@ -1,10 +1,5 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
-using System.Collections.Generic;
-using TSM = Tekla.Structures.Model;
-using TSD = Tekla.Structures.Drawing;
 using Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components.Miscs
