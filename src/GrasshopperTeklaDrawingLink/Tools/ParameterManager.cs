@@ -697,7 +697,7 @@ namespace GTDrawingLink.Tools
         }
 
         internal bool IsEmpty()
-            => _paths.Count == 0;
+            => _paths is null || _paths.Count == 0;
     }
 
     public class InputTreePoint : InputTreeBaseParam<Point3d>
@@ -747,9 +747,10 @@ namespace GTDrawingLink.Tools
 
     public class InputTreeGeometry : InputTreeBaseParam<IGH_GeometricGoo>
     {
-        public InputTreeGeometry(GH_InstanceDescription instanceDescription)
+        public InputTreeGeometry(GH_InstanceDescription instanceDescription, bool isOptional = false)
             : base(instanceDescription)
         {
+            IsOptional = isOptional;
         }
 
         public override Result EvaluateInput(IGH_DataAccess DA)
@@ -1096,7 +1097,7 @@ namespace GTDrawingLink.Tools
     {
         public List<List<T>> Objects { get; }
 
-        public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths) : base(paths, objects[0].Count)
+        public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths) : base(paths, objects.Count == 0 ? 0 : objects[0].Count)
         {
             Objects = objects ?? throw new ArgumentNullException(nameof(objects));
         }

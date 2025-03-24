@@ -20,13 +20,22 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var geometries, var attributes) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var geometries, var attributes) = _command.GetInputValues();
+
+            if (DeleteIfInputIsEmpty && (IsEmptyInput(inputViews) || IsEmptyInput(geometries)))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, Messages.Remark_EmptyInput);
+                DrawingInteractor.CommitChanges();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(false, geometries, attributes);
             var inputMode = strategy.Mode;
 
@@ -76,15 +85,15 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateLineCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreeGeometry _inGeometricGoo = new InputTreeGeometry(ParamInfos.Curve);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
+        private readonly InputTreeGeometry _inGeometricGoo = new InputTreeGeometry(ParamInfos.Curve, isOptional: true);
         private readonly InputTreeParam<Line.LineAttributes> _inAttributes = new InputTreeParam<Line.LineAttributes>(ParamInfos.LineAttributes);
 
         private readonly OutputTreeParam<Line> _outLines = new OutputTreeParam<Line>(ParamInfos.Line, 0);
 
-        internal (ViewCollection<ViewBase> views, TreeData<IGH_GeometricGoo> geometries, TreeData<Line.LineAttributes> atrributes) GetInputValues()
+        internal (List<ViewBase> views, TreeData<IGH_GeometricGoo> geometries, TreeData<Line.LineAttributes> atrributes) GetInputValues()
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
+            return (_inView.GetValueFromUserOrNull(),
                     _inGeometricGoo.AsTreeData(),
                     _inAttributes.AsTreeData());
         }
