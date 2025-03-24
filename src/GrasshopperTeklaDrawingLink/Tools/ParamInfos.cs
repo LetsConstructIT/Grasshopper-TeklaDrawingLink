@@ -2255,6 +2255,12 @@ namespace GTDrawingLink.Tools
             NickName = "PO",
             Description = "Fake project object needed for getting and setting UDAs"
         };
-        
+
+        public static readonly GH_InstanceDescription DeleteIfInputIsEmpty = new GH_InstanceDescription
+        {
+            Name = "Remove when input is empty",
+            NickName = "RemoveEmpty",
+            Description = "Remove all generated objects when the geometry or main input is empty. The objects will be recreated the next time the input contains valid data."
+        };
     }
 }
