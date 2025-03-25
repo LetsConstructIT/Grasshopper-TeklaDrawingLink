@@ -82,6 +82,7 @@ namespace GTDrawingLink.Components
         private void DeleteIfInputIsEmptyMenuItem_Clicked(object sender, EventArgs e)
         {
             _deleteIfInputIsEmpty = !_deleteIfInputIsEmpty;
+            ExpireSolution(recompute: true);
         }
 
         public void BakeToTekla()
