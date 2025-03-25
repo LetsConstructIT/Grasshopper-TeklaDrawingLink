@@ -1,11 +1,13 @@
 ﻿using GH_IO.Serialization;
 using Grasshopper.Kernel;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
 
@@ -25,7 +27,7 @@ namespace GTDrawingLink.Components.Exports
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
             var (modelObjects, path, template, title1, title2, title3) = _command.GetInputValues();
-            if (_mode == ExportMode.Selection && modelObjects.Count == 0)
+            if (_mode == ExportMode.Selection && modelObjects.None(o => o != null))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No elements on input. Provide them or change mode to All.");
                 return;

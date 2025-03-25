@@ -21,6 +21,17 @@ namespace GTDrawingLink.Extensions
                 yield return item;
         }
 
+        public static bool None<TSource>(this IEnumerable<TSource> source)
+        {
+            return !source.Any();
+        }
+
+        public static bool None<TSource>(this IEnumerable<TSource> source,
+                                         Func<TSource, bool> predicate)
+        {
+            return !source.Any(predicate);
+        }
+
         public static bool HasItems<T>(this IEnumerable<T> source) => source != null && source.Any();
 
         public static bool HasItems(this TreeData source) => source != null && source.Paths.Any();
