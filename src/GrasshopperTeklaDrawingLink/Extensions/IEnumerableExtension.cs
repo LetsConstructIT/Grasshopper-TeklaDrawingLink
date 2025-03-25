@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GTDrawingLink.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,5 +22,7 @@ namespace GTDrawingLink.Extensions
         }
 
         public static bool HasItems<T>(this IEnumerable<T> source) => source != null && source.Any();
+
+        public static bool HasItems(this TreeData source) => source != null && source.Paths.Any();
     }
 }

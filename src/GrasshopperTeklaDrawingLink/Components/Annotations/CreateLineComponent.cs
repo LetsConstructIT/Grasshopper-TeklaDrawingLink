@@ -1,8 +1,10 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
+using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -20,12 +22,11 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var inputViews, var geometries, var attributes) = _command.GetInputValues();
+            (var inputViews, var geometries, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
 
-            if (DeleteIfInputIsEmpty && (IsEmptyInput(inputViews) || IsEmptyInput(geometries)))
+            if (!mainInputIsCorrect)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, Messages.Remark_EmptyInput);
-                DrawingInteractor.CommitChanges();
+                HandleMissingInput();
                 return null;
             }
 
@@ -91,11 +92,15 @@ namespace GTDrawingLink.Components.Annotations
 
         private readonly OutputTreeParam<Line> _outLines = new OutputTreeParam<Line>(ParamInfos.Line, 0);
 
-        internal (List<ViewBase> views, TreeData<IGH_GeometricGoo> geometries, TreeData<Line.LineAttributes> atrributes) GetInputValues()
+        internal (List<ViewBase> views, TreeData<IGH_GeometricGoo> geometries, TreeData<Line.LineAttributes> atrributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (_inView.GetValueFromUserOrNull(),
+            var result = (_inView.GetValueFromUserOrNull(),
                     _inGeometricGoo.AsTreeData(),
                     _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure lines)
