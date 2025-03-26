@@ -154,4 +154,8 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2025|AnyCPU'">
       <DefineConstants>$(DefineConstants);API2025</DefineConstants>
     </PropertyGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy /Y &quot;$(TargetDir)$(MSBuildProjectName).$(Configuration).dll&quot; &quot;C:\Users\grzeg\AppData\Roaming\Grasshopper\Libraries\$(MSBuildProjectName).$(Configuration).dll&quot;" />
+    </Target>
 </Project>
