@@ -125,34 +125,50 @@
     
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2019|AnyCPU'">
     <DefineConstants>$(DefineConstants);API2020</DefineConstants>
+    <IsPublishable>False</IsPublishable>
   </PropertyGroup>
     
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2019i|AnyCPU'">
     <DefineConstants>$(DefineConstants);API2020</DefineConstants>
+    <IsPublishable>False</IsPublishable>
   </PropertyGroup>
     
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2020|AnyCPU'">
     <DefineConstants>$(DefineConstants);API2020</DefineConstants>
+    <IsPublishable>False</IsPublishable>
   </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2021|AnyCPU'">
         <DefineConstants>$(DefineConstants);API2021</DefineConstants>
+        <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2022|AnyCPU'">
         <DefineConstants>$(DefineConstants);API2022</DefineConstants>
+        <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2023|AnyCPU'">
         <DefineConstants>$(DefineConstants);API2023</DefineConstants>
+        <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2024|AnyCPU'">
         <DefineConstants>$(DefineConstants);API2024</DefineConstants>
+        <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2025|AnyCPU'">
       <DefineConstants>$(DefineConstants);API2025</DefineConstants>
+      <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

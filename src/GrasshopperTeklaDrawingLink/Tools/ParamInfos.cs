@@ -146,6 +146,13 @@ namespace GTDrawingLink.Tools
             Description = $"Line type:\n{EnumHelpers.EnumToString<LineTypesEnum>()}\nRight-click to set"
         };
 
+        public static readonly GH_InstanceDescription CustomLineName = new GH_InstanceDescription
+        {
+            Name = "Custom Name",
+            NickName = "N",
+            Description = "Name of the custom line"
+        };
+
         public static readonly GH_InstanceDescription VisibleLineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Visibile lines",

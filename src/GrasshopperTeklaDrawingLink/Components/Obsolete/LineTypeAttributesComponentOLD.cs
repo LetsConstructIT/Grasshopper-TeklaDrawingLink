@@ -2,17 +2,19 @@
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Attributes
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class LineTypeAttributesComponent : TeklaComponentBase
+    [Obsolete]
+    public class LineTypeAttributesComponentOLD : TeklaComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.LineTypeAttributes;
 
-        public LineTypeAttributesComponent()
+        public LineTypeAttributesComponentOLD()
             : base(ComponentInfos.LineTypeAttributesComponent)
         {
         }
@@ -21,7 +23,6 @@ namespace GTDrawingLink.Components.Attributes
         {
             pManager.AddParameter(new EnumParam<LineTypesEnum>(ParamInfos.LineType, GH_ParamAccess.item));
             pManager.AddParameter(new EnumParam<DrawingColors>(ParamInfos.DrawingColor, GH_ParamAccess.item));
-            AddTextParameter(pManager, ParamInfos.CustomLineName, GH_ParamAccess.item);
 
             for (int i = 0; i < pManager.ParamCount; i++)
                 pManager[i].Optional = true;
@@ -41,16 +42,7 @@ namespace GTDrawingLink.Components.Attributes
             if (lineType != null)
             {
                 var lineTypeValue = EnumHelpers.ObjectToEnumValue<LineTypesEnum>(lineType);
-                if (lineTypeValue == LineTypesEnum.Custom)
-                {
-                    var customName = "";
-                    DA.GetData(ParamInfos.CustomLineName.Name, ref customName);
-                    lineTypeAttributes.Type = LineTypes.Custom(customName);
-                }
-                else
-                {
-                    lineTypeAttributes.Type = GetLineTypeBasedOnEnum(lineTypeValue);
-                }
+                lineTypeAttributes.Type = GetLineTypeBasedOnEnum(lineTypeValue);
             }
 
             object color = null;

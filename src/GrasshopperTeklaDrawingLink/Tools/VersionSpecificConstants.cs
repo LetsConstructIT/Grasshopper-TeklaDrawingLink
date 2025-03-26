@@ -197,6 +197,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(LineTypeAttributesComponent),
+                "DBDD76A6-33BE-422B-86A0-DB65364A7F36"
+            },
+            {
+                typeof(LineTypeAttributesComponentOLD),
                 "0DF6013A-F529-46C9-BC2A-B2585A8267F8"
             },
             {
