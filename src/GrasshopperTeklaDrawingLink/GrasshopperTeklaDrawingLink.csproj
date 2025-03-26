@@ -6,13 +6,13 @@
 	<LangVersion>8.0</LangVersion>
     <Nullable>annotations</Nullable>
     <Description>Description of GrasshopperTestAssembly</Description>
-    <TargetExt>.gha</TargetExt>
+    <TargetExt>.dll</TargetExt>
     <UseWpf>true</UseWpf>
     <RootNamespace>GTDrawingLink</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Deterministic>false</Deterministic>
     <Configurations>Debug;Release;2019;2019i;2020;2021;2022;2023;2024;2025</Configurations>
-    <AssemblyName>$(MSBuildProjectName)$(Configuration)</AssemblyName>
+    <AssemblyName>$(MSBuildProjectName).$(Configuration)</AssemblyName>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   
