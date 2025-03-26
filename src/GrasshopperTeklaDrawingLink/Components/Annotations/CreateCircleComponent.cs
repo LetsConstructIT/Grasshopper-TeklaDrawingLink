@@ -6,6 +6,7 @@ using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Annotations
@@ -19,13 +20,20 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var circles, var attributes) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var circles, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(false, circles, attributes);
             var inputMode = strategy.Mode;
 
@@ -75,17 +83,19 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateCircleCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreeGeometry _inGeometricGoo = new InputTreeGeometry(ParamInfos.Circle);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
+        private readonly InputTreeGeometry _inGeometricGoo = new InputTreeGeometry(ParamInfos.Circle, isOptional: true);
         private readonly InputTreeParam<Circle.CircleAttributes> _inAttributes = new InputTreeParam<Circle.CircleAttributes>(ParamInfos.CircleAttributes);
 
         private readonly OutputTreeParam<Circle> _outCircles = new OutputTreeParam<Circle>(ParamInfos.TeklaCircle, 0);
 
-        internal (ViewCollection<ViewBase> views, TreeData<IGH_GeometricGoo> geometries, TreeData<Circle.CircleAttributes> atrributes) GetInputValues()
+        internal (List<ViewBase> views, TreeData<IGH_GeometricGoo> geometries, TreeData<Circle.CircleAttributes> atrributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
-                    _inGeometricGoo.AsTreeData(),
-                    _inAttributes.AsTreeData());
+            var result = (_inView.GetValueFromUserOrNull(), _inGeometricGoo.AsTreeData(), _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure circles)

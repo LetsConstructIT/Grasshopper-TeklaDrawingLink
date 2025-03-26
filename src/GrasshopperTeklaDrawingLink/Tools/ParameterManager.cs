@@ -702,9 +702,10 @@ namespace GTDrawingLink.Tools
 
     public class InputTreePoint : InputTreeBaseParam<Point3d>
     {
-        public InputTreePoint(GH_InstanceDescription instanceDescription)
+        public InputTreePoint(GH_InstanceDescription instanceDescription, bool isOptional = false)
             : base(instanceDescription)
         {
+            IsOptional = isOptional;
         }
 
         public override Result EvaluateInput(IGH_DataAccess DA)

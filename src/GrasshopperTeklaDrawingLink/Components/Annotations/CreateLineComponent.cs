@@ -4,7 +4,6 @@ using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -23,7 +22,6 @@ namespace GTDrawingLink.Components.Annotations
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
             (var inputViews, var geometries, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
-
             if (!mainInputIsCorrect)
             {
                 HandleMissingInput();
@@ -94,9 +92,7 @@ namespace GTDrawingLink.Components.Annotations
 
         internal (List<ViewBase> views, TreeData<IGH_GeometricGoo> geometries, TreeData<Line.LineAttributes> atrributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            var result = (_inView.GetValueFromUserOrNull(),
-                    _inGeometricGoo.AsTreeData(),
-                    _inAttributes.AsTreeData());
+            var result = (_inView.GetValueFromUserOrNull(), _inGeometricGoo.AsTreeData(), _inAttributes.AsTreeData());
 
             mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems();
 
