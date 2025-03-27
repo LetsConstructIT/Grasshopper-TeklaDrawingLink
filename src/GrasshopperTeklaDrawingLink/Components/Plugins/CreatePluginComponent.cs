@@ -24,13 +24,20 @@ namespace GTDrawingLink.Components.Plugins
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var (views, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            var (inputViews, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(true, names, pickerInput, attributeFileNames, pluginAttributes, objectsToSelect);
             var inputMode = strategy.Mode;
 
@@ -123,23 +130,27 @@ namespace GTDrawingLink.Components.Plugins
 
     public class CreatePluginCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreeString _inNames = new InputTreeString(ParamInfos.PluginName);
-        private readonly InputTreeParam<PluginPickerInput> _pickerInput = new InputTreeParam<PluginPickerInput>(ParamInfos.PickerInput);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
+        private readonly InputTreeString _inNames = new InputTreeString(ParamInfos.PluginName, isOptional: true);
+        private readonly InputOptionalTreeParam<PluginPickerInput> _pickerInput = new InputOptionalTreeParam<PluginPickerInput>(ParamInfos.PickerInput);
         private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.Attributes, isOptional: true);
         private readonly InputTreeString _inPluginAttributes = new InputTreeString(ParamInfos.PluginAttributes, isOptional: true);
         private readonly InputOptionalTreeParam<DrawingObject> _objectsToSelect = new InputOptionalTreeParam<DrawingObject>(ParamInfos.ObjectsToSelect);
 
         private readonly OutputTreeParam<Plugin> _outDimensions = new OutputTreeParam<Plugin>(ParamInfos.Plugin, 0);
 
-        internal (ViewCollection<ViewBase> views, TreeData<string> names, TreeData<PluginPickerInput> pickerInput, TreeData<string> attributeFileNames, TreeData<string> pluginAttributes, TreeData<DrawingObject> objectsToSelect) GetInputValues()
+        internal (List<ViewBase> views, TreeData<string> names, TreeData<PluginPickerInput> pickerInput, TreeData<string> attributeFileNames, TreeData<string> pluginAttributes, TreeData<DrawingObject> objectsToSelect) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                 _inNames.AsTreeData(),
                 _pickerInput.AsTreeData(),
                 _inAttributes.IsEmpty() ? _inAttributes.GetDefault(string.Empty) : _inAttributes.AsTreeData(),
                 _inPluginAttributes.IsEmpty() ? _inPluginAttributes.GetDefault(string.Empty) : _inPluginAttributes.AsTreeData(),
                 _objectsToSelect.IsEmpty() ? _objectsToSelect.GetDefault(null) : _objectsToSelect.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure dimensions)

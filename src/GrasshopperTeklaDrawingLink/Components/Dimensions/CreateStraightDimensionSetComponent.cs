@@ -30,13 +30,20 @@ namespace GTDrawingLink.Components.Dimensions
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var dimPts, var locations, var attributes) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var dimPts, var locations, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(true, dimPts, locations, attributes);
             var inputMode = strategy.Mode;
 
@@ -179,19 +186,23 @@ namespace GTDrawingLink.Components.Dimensions
 
     public class CreateStraightDimensionSetCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inDimPoints = new InputTreePoint(ParamInfos.DimensionPoints);
         private readonly InputTreeLine _inLocations = new InputTreeLine(ParamInfos.DimensionLocation);
         private readonly InputOptionalTreeParam<StraightDimensionSet.StraightDimensionSetAttributes> _inAttributes = new InputOptionalTreeParam<StraightDimensionSet.StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
 
         private readonly OutputTreeParam<StraightDimensionSet> _outDimensions = new OutputTreeParam<StraightDimensionSet>(ParamInfos.StraightDimensionSet, 0);
 
-        internal (ViewCollection<ViewBase> views, TreeData<Point3d> dimPts, TreeData<Rhino.Geometry.Line> locations, TreeData<StraightDimensionSet.StraightDimensionSetAttributes> attributes) GetInputValues()
+        internal (List<ViewBase> views, TreeData<Point3d> dimPts, TreeData<Rhino.Geometry.Line> locations, TreeData<StraightDimensionSet.StraightDimensionSetAttributes> attributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                 _inDimPoints.AsTreeData(),
                 _inLocations.AsTreeData(),
                 _inAttributes.IsEmpty() ? _inAttributes.GetDefault(new StraightDimensionSet.StraightDimensionSetAttributes(null, "standard")) : _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure dimensions)
