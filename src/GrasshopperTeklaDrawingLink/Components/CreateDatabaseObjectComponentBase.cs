@@ -42,10 +42,15 @@ namespace GTDrawingLink.Components
             return base.Read(reader);
         }
 
-        public bool DeleteIfInputIsEmpty
+        protected void HandleMissingInput()
         {
-            get { return _deleteIfInputIsEmpty; }
-            protected set { _deleteIfInputIsEmpty = value; }
+            if (_deleteIfInputIsEmpty)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, Messages.Remark_EmptyInput);
+                DrawingInteractor.CommitChanges();
+            }
+            else
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, Messages.Warning_NecessaryInputIsMissing);
         }
 
         private void RecomputeObjectsMenuItem_Clicked(object sender, EventArgs e)
@@ -66,6 +71,7 @@ namespace GTDrawingLink.Components
         private void DeleteIfInputIsEmptyMenuItem_Clicked(object sender, EventArgs e)
         {
             _deleteIfInputIsEmpty = !_deleteIfInputIsEmpty;
+            ExpireSolution(recompute: true);
         }
 
         public void BakeToTekla()
