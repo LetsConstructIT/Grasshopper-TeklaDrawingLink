@@ -679,7 +679,7 @@ namespace GTDrawingLink.Tools
 
         protected Result ProcessResults(Type typeOfInput, IGH_Structure tree, IEnumerable<List<T>> castedToExpectedType)
         {
-            if (castedToExpectedType.Any(o => o.Any(e => e is null)))
+            if (!IsOptional && castedToExpectedType.Any(o => o.Any(e => e is null)))
             {
                 return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
             }
@@ -918,7 +918,7 @@ namespace GTDrawingLink.Tools
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
                 {
                     _tree = tree;
-                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i?.Value as T).ToList());
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
@@ -1128,6 +1128,11 @@ namespace GTDrawingLink.Tools
         public List<T> GetBranch(int index)
         {
             return Objects.ElementAtOrLast(index);
+        }
+
+        public bool HasItems()
+        {
+            return Objects.Any() && Objects.First().First() != null;
         }
     }
 }

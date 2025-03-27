@@ -32,8 +32,6 @@ namespace GTDrawingLink.Extensions
             return !source.Any(predicate);
         }
 
-        public static bool HasItems<T>(this IEnumerable<T> source) => source != null && source.Any();
-
-        public static bool HasItems(this TreeData source) => source != null && source.Paths.Any();
+        public static bool HasItems<T>(this IEnumerable<T> source) => source != null && source.Any() && source.First() != null;
     }
 }

@@ -18,7 +18,13 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var (modelObjectsTree, attributeFiles) = _command.GetInputValues();
+            var (modelObjectsTree, attributeFiles) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
             if (!DrawingInteractor.IsInTheActiveDrawing(modelObjectsTree.First()?.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
@@ -115,15 +121,19 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateMarkCommand : CommandBase
     {
-        private readonly InputTreeParam<ModelObject> _inModel = new InputTreeParam<ModelObject>(ParamInfos.DrawingModelObject);
+        private readonly InputOptionalTreeParam<ModelObject> _inModel = new InputOptionalTreeParam<ModelObject>(ParamInfos.DrawingModelObject);
         private readonly InputListParam<string> _inAttributes = new InputListParam<string>(ParamInfos.MarkAttributesFile);
 
         private readonly OutputListParam<Mark> _outMark = new OutputListParam<Mark>(ParamInfos.Mark);
 
-        internal (List<List<ModelObject>> modelObjects, List<string> attributeFiles) GetInputValues()
+        internal (List<List<ModelObject>> modelObjects, List<string> attributeFiles) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (_inModel.Value,
+            var result = (_inModel.Value,
                     _inAttributes.Value);
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item1.First().HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, List<Mark> marks)
