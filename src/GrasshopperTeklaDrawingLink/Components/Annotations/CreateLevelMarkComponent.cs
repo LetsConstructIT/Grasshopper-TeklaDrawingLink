@@ -6,6 +6,7 @@ using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Annotations
@@ -19,13 +20,20 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var basePoints, var insertionPoints, var attributes) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var basePoints, var insertionPoints, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<View>(inputViews);
             var strategy = GetSolverStrategy(false, insertionPoints, basePoints, attributes);
             var inputMode = strategy.Mode;
 
@@ -69,20 +77,24 @@ namespace GTDrawingLink.Components.Annotations
     {
         private const string _defaultAttributes = "standard";
 
-        private readonly InputListParam<View> _inView = new InputListParam<View>(ParamInfos.View);
+        private readonly InputOptionalListParam<View> _inView = new InputOptionalListParam<View>(ParamInfos.View);
 
-        private readonly InputTreePoint _inBasePoint = new InputTreePoint(ParamInfos.LevelMarkBasePoint);
-        private readonly InputTreePoint _inInsertionPoint = new InputTreePoint(ParamInfos.LevelMarkInsertionPoint);
+        private readonly InputTreePoint _inBasePoint = new InputTreePoint(ParamInfos.LevelMarkBasePoint, isOptional: true);
+        private readonly InputTreePoint _inInsertionPoint = new InputTreePoint(ParamInfos.LevelMarkInsertionPoint, isOptional: true);
         private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.LevelMarkAttributes, isOptional: true);
 
         private readonly OutputTreeParam<DatabaseObject> _outMark = new OutputTreeParam<DatabaseObject>(ParamInfos.Mark, 0);
 
-        internal (ViewCollection<View> views, TreeData<Point3d> basePoint, TreeData<Point3d> insertionPoint, TreeData<string> attributes) GetInputValues()
+        internal (List<View> views, TreeData<Point3d> basePoint, TreeData<Point3d> insertionPoint, TreeData<string> attributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<View>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                     _inBasePoint.AsTreeData(),
                     _inInsertionPoint.AsTreeData(),
                     _inAttributes.IsEmpty() ? _inAttributes.GetDefault(_defaultAttributes) : _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure marks)
