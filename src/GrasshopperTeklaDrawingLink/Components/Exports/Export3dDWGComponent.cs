@@ -1,33 +1,30 @@
 ﻿using GH_IO.Serialization;
 using Grasshopper.Kernel;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using Tekla.Structures.Model;
-using Tekla.Structures.Model.Operations;
 
 namespace GTDrawingLink.Components.Exports
 {
-    public class ExportReportComponent : TeklaExportComponentBase<ExportReportCommand>
+    public class Export3dDwgComponent : TeklaExportComponentBase<Export3dDwgCommand>
     {
         private ExportMode _mode = ExportMode.Selection;
         public override GH_Exposure Exposure => GH_Exposure.primary;
-        protected override Bitmap Icon => Resources.ExportReport;
+        protected override Bitmap Icon => Resources.Export3dDWG;
 
-        public ExportReportComponent() : base(ComponentInfos.ExportReportComponent)
+        public Export3dDwgComponent() : base(ComponentInfos.Export3dDwgComponent)
         {
             SetCustomMessage();
         }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (modelObjects, path, template, title1, title2, title3) = _command.GetInputValues();
-            if (_mode == ExportMode.Selection && modelObjects.None(o => o != null))
+            var (modelObjects, path, settings) = _command.GetInputValues();
+            if (_mode == ExportMode.Selection && modelObjects.Count == 0)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No elements on input. Provide them or change mode to All.");
                 return;
@@ -44,7 +41,7 @@ namespace GTDrawingLink.Components.Exports
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
-            ExportReport(outputPath, template, title1, title2, title3);
+            Export3dDwg(outputPath, settings);
 
             _command.SetOutputValues(DA, outputPath);
         }
@@ -52,20 +49,29 @@ namespace GTDrawingLink.Components.Exports
         private string SanitizePath(string path)
         {
             var absolutePath = ReplaceRelativeModelPath(path);
-            var correctPath = PlaceInTheModelPathIfPlainFile(absolutePath, directory: "Reports");
-            var withExtension = AddExtensionIfMissing(correctPath, extension: ".xsr");
+            var correctPath = PlaceInTheModelPathIfPlainFile(absolutePath, directory: "3Ddwg");
 
-            CreateDirectoryIfNeeded(withExtension);
+            CreateDirectoryIfNeeded(correctPath);
 
-            return withExtension;
+            return correctPath;
         }
 
-        private void ExportReport(string outputPath, string templateName, string title1, string title2, string title3)
+        private void Export3dDwg(string outputFileName, string settings)
         {
-            if (_mode == ExportMode.Selection)
-                Operation.CreateReportFromSelected(templateName, outputPath, title1, title2, title3);
-            else
-                Operation.CreateReportFromAll(templateName, outputPath, title1, title2, title3);
+            var componentInput = new ComponentInput();
+            componentInput.AddOneInputPosition(new Tekla.Structures.Geometry3d.Point(0, 0, 0));
+
+            var comp = new Component(componentInput)
+            {
+                Name = "Tekla Structures DWG-DXF Export",
+                Number = 440000004
+            };
+
+            comp.LoadAttributesFromFile(settings);
+            comp.SetAttribute("outfile", outputFileName);
+            comp.SetAttribute("includedobjects", (int)_mode);
+
+            comp.Insert();
         }
 
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
@@ -117,32 +123,26 @@ namespace GTDrawingLink.Components.Exports
 
         enum ExportMode
         {
-            Selection = 0,
-            All = 1
+            Selection = 1,
+            All = 0
         }
     }
 
-    public class ExportReportCommand : CommandBase
+    public class Export3dDwgCommand : CommandBase
     {
         private readonly InputOptionalListParam<ModelObject> _inModelObjects = new InputOptionalListParam<ModelObject>(ParamInfos.ModelObject);
         private readonly InputParam<string> _inPath = new InputParam<string>(ParamInfos.ExportPath);
-        private readonly InputParam<string> _inTemplate = new InputParam<string>(ParamInfos.ReportTemplate);
-        private readonly InputOptionalParam<string> _inTitle1 = new InputOptionalParam<string>(ParamInfos.Title1);
-        private readonly InputOptionalParam<string> _inTitle2 = new InputOptionalParam<string>(ParamInfos.Title2);
-        private readonly InputOptionalParam<string> _inTitle3 = new InputOptionalParam<string>(ParamInfos.Title3);
+        private readonly InputParam<string> _inSettings = new InputParam<string>(ParamInfos.ExportSettings);
 
         private readonly OutputParam<string> _outPath = new OutputParam<string>(ParamInfos.ExportResult);
 
-        internal (List<ModelObject> modelObjects, string path, string template, string? title1, string? title2, string? title3) GetInputValues()
+        internal (List<ModelObject> modelObjects, string path, string settings) GetInputValues()
         {
             var modelObjects = _inModelObjects.ValueProvidedByUser ? _inModelObjects.Value : new List<ModelObject>();
             return (
                 modelObjects,
                 _inPath.Value,
-                _inTemplate.Value,
-                _inTitle1.ValueProvidedByUser ? _inTitle1.Value : string.Empty,
-                _inTitle2.ValueProvidedByUser ? _inTitle2.Value : string.Empty,
-                _inTitle3.ValueProvidedByUser ? _inTitle3.Value : string.Empty);
+                _inSettings.Value);
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, string path)

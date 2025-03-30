@@ -30,13 +30,20 @@ namespace GTDrawingLink.Components.Dimensions
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var dimPts, var pts1, var pts2, var pts3, var distances, var attributes) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var dimPts, var pts1, var pts2, var pts3, var distances, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(true, dimPts, pts1, pts2, pts3, distances, attributes);
             var inputMode = strategy.Mode;
 
@@ -143,7 +150,7 @@ namespace GTDrawingLink.Components.Dimensions
 
     public class CreateCurvedDimensionSetCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inDimPoints = new InputTreePoint(ParamInfos.DimensionPoints);
         private readonly InputTreePoint _inArcPoint1 = new InputTreePoint(ParamInfos.ArcPoint1);
         private readonly InputTreePoint _inArcPoint2 = new InputTreePoint(ParamInfos.ArcPoint2);
@@ -153,15 +160,19 @@ namespace GTDrawingLink.Components.Dimensions
 
         private readonly OutputTreeParam<CurvedDimensionSetBase> _outDimensions = new OutputTreeParam<CurvedDimensionSetBase>(ParamInfos.CurvedDimensionSet, 0);
 
-        internal (ViewCollection<ViewBase> views, TreeData<Point3d> dimPts, TreeData<Point3d> pts1, TreeData<Point3d> pts2, TreeData<Point3d> pts3, TreeData<double> distances, TreeData<string> attributes) GetInputValues()
+        internal (List<ViewBase> views, TreeData<Point3d> dimPts, TreeData<Point3d> pts1, TreeData<Point3d> pts2, TreeData<Point3d> pts3, TreeData<double> distances, TreeData<string> attributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                 _inDimPoints.AsTreeData(),
                 _inArcPoint1.AsTreeData(),
                 _inArcPoint2.AsTreeData(),
                 _inArcPoint3.AsTreeData(),
                 _inDistances.AsTreeData(),
                 _inAttributes.IsEmpty() ? _inAttributes.GetDefault("standard") : _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems() && result.Item4.HasItems() && result.Item5.HasItems() && result.Item6.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure dimensions)

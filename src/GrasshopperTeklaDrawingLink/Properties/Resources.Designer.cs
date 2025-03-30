@@ -553,6 +553,26 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Export3dDWG {
+            get {
+                object obj = ResourceManager.GetObject("Export3dDWG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ExportDWG {
+            get {
+                object obj = ResourceManager.GetObject("ExportDWG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ExportIfc {
             get {
                 object obj = ResourceManager.GetObject("ExportIfc", resourceCulture);
@@ -1206,6 +1226,16 @@ namespace GTDrawingLink.Properties {
         internal static System.Drawing.Bitmap PolylineAttributes {
             get {
                 object obj = ResourceManager.GetObject("PolylineAttributes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ProjectProperties {
+            get {
+                object obj = ResourceManager.GetObject("ProjectProperties", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

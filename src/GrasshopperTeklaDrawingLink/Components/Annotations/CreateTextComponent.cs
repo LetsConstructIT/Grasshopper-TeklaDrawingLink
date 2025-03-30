@@ -7,6 +7,7 @@ using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 using TSD = Tekla.Structures.Drawing;
 
@@ -21,13 +22,20 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<TSD.DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var texts, var insertionPoints, var placings, var textAttributes) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var texts, var insertionPoints, var placings, var textAttributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(false, texts, insertionPoints, placings, textAttributes);
             var inputMode = strategy.Mode;
 
@@ -68,21 +76,25 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateTextCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreeString _inText = new InputTreeString(ParamInfos.Text);
-        private readonly InputTreePoint _inInsertionPoints = new InputTreePoint(ParamInfos.MarkInsertionPoint);
-        private readonly InputTreeParam<PlacingBase> _inPlacingTypes = new InputTreeParam<PlacingBase>(ParamInfos.PlacingType);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
+        private readonly InputTreeString _inText = new InputTreeString(ParamInfos.Text, isOptional: true);
+        private readonly InputTreePoint _inInsertionPoints = new InputTreePoint(ParamInfos.MarkInsertionPoint, isOptional: true);
+        private readonly InputOptionalTreeParam<PlacingBase> _inPlacingTypes = new InputOptionalTreeParam<PlacingBase>(ParamInfos.PlacingType);
         private readonly InputTreeParam<Text.TextAttributes> _inAttributes = new InputTreeParam<Text.TextAttributes>(ParamInfos.TextAttributes);
 
         private readonly OutputTreeParam<TSD.Text> _outText = new OutputTreeParam<TSD.Text>(ParamInfos.Text, 0);
 
-        internal (ViewCollection<ViewBase> views, TreeData<string> texts, TreeData<Point3d> insertionPoints, TreeData<PlacingBase> placings, TreeData<Text.TextAttributes> textAttributes) GetInputValues()
+        internal (List<ViewBase> views, TreeData<string> texts, TreeData<Point3d> insertionPoints, TreeData<PlacingBase> placings, TreeData<Text.TextAttributes> textAttributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                 _inText.AsTreeData(),
                 _inInsertionPoints.AsTreeData(),
                 _inPlacingTypes.AsTreeData(),
                 _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems() && result.Item4.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure texts)

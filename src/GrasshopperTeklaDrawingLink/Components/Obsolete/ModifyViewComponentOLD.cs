@@ -3,22 +3,24 @@ using Grasshopper.Kernel.Types;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Modify
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ModifyViewComponent : TeklaComponentBaseNew<ModifyViewCommand>
+    [Obsolete]
+    public class ModifyViewComponentOLD : TeklaComponentBaseNew<ModifyViewCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Properties.Resources.ModifyView;
-        public ModifyViewComponent() : base(ComponentInfos.ModifyViewComponent) { }
+        public ModifyViewComponentOLD() : base(ComponentInfos.ModifyViewComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (views, attributes, names, viewCss, displayCss, restrictionBoxes, scales) = _command.GetInputValues();
+            var (views, attributes, names, viewCss, displayCss, restrictionBoxes) = _command.GetInputValues();
 
             for (int i = 0; i < views.Count; i++)
             {
@@ -27,9 +29,8 @@ namespace GTDrawingLink.Components.Modify
                 var viewCs = viewCss.HasItems() ? viewCss.ElementAtOrLast(i) : null;
                 var displayCs = displayCss.HasItems() ? displayCss.ElementAtOrLast(i) : null;
                 var restrictionBox = restrictionBoxes.HasItems() ? restrictionBoxes.ElementAtOrLast(i) : null;
-                var scale = scales.HasItems() ? scales.ElementAtOrLast(i) : null;
 
-                ApplyAttributes(views[i], attribute, name, viewCs, displayCs, restrictionBox, scale);
+                ApplyAttributes(views[i], attribute, name, viewCs, displayCs, restrictionBox);
             }
 
             DrawingInteractor.CommitChanges();
@@ -37,7 +38,7 @@ namespace GTDrawingLink.Components.Modify
             _command.SetOutputValues(DA, views);
         }
 
-        private void ApplyAttributes(View view, string? attributes, string? name, GH_Plane viewCs, GH_Plane displayCs, GH_Box restrictionBox, GH_Integer scale)
+        private void ApplyAttributes(View view, string? attributes, string? name, GH_Plane viewCs, GH_Plane displayCs, GH_Box restrictionBox)
         {
             view.Select();
 
@@ -77,14 +78,11 @@ namespace GTDrawingLink.Components.Modify
                     new Tekla.Structures.Geometry3d.Point(xRange.Max, yRange.Max, zRange.Max));
             }
 
-            if (scale != null)
-                view.Attributes.Scale = scale.Value;
-
             view.Modify();
         }
     }
 
-    public class ModifyViewCommand : CommandBase
+    public class ModifyViewCommandOLD : CommandBase
     {
         private readonly InputListParam<View> _inViews = new InputListParam<View>(ParamInfos.View);
         private readonly InputOptionalListParam<string> _inAttributes = new InputOptionalListParam<string>(ParamInfos.Attributes);
@@ -92,11 +90,10 @@ namespace GTDrawingLink.Components.Modify
         private readonly InputOptionalListParam<GH_Plane> _inViewCs = new InputOptionalListParam<GH_Plane>(ParamInfos.ViewCoordinateSystem);
         private readonly InputOptionalListParam<GH_Plane> _inDisplayCs = new InputOptionalListParam<GH_Plane>(ParamInfos.DisplayCoordinateSystem);
         private readonly InputOptionalListParam<GH_Box> _inRestrictionBoxes = new InputOptionalListParam<GH_Box>(ParamInfos.ViewRestrictionBox);
-        private readonly InputOptionalListParam<GH_Integer> _inScales = new InputOptionalListParam<GH_Integer>(ParamInfos.Scale);
 
         private readonly OutputListParam<View> _outViews = new OutputListParam<View>(ParamInfos.View);
 
-        internal (List<View> views, List<string>? attributes, List<string>? names, List<GH_Plane> viewCs, List<GH_Plane> displayCs, List<GH_Box> restrictionBoxes, List<GH_Integer> scales) GetInputValues()
+        internal (List<View> views, List<string>? attributes, List<string>? names, List<GH_Plane> viewCs, List<GH_Plane> displayCs, List<GH_Box> restrictionBoxes) GetInputValues()
         {
             return (
                 _inViews.Value,
@@ -104,8 +101,7 @@ namespace GTDrawingLink.Components.Modify
                 _inNames.GetValueFromUserOrNull(),
                 _inViewCs.GetValueFromUserOrNull(),
                 _inDisplayCs.GetValueFromUserOrNull(),
-                _inRestrictionBoxes.GetValueFromUserOrNull(),
-                _inScales.GetValueFromUserOrNull());
+                _inRestrictionBoxes.GetValueFromUserOrNull());
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, List<View> reinforcements)

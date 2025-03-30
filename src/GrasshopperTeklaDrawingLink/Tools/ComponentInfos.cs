@@ -1322,6 +1322,35 @@ namespace GTDrawingLink.Tools
             Description = "Synchronization component to simplify merging flow before completing the loop iteration.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
-        };        
+        };
+
+        public static readonly GH_InstanceDescription GetProjectPropertiesComponent = new GH_InstanceDescription
+        {
+            Name = "Project Properties",
+            NickName = "Props",
+            Description = "Get Tekla project properties.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };
+
+        public static readonly GH_InstanceDescription Export3dDwgComponent = new GH_InstanceDescription
+        {
+            Name = "Export 3D DWG",
+            NickName = "3d DWG",
+            Description = "Export Tekla elements to 3d DWG",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
+
+        public static readonly GH_InstanceDescription ExportDwgComponent = new GH_InstanceDescription
+        {
+            Name = "Export DWG",
+            NickName = "DWG",
+            Description = "Export Tekla drawing to DWG",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
+
+        
     }
 }

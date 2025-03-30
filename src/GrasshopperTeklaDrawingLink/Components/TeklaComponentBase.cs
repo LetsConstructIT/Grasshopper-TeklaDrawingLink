@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
@@ -243,5 +243,14 @@ namespace GTDrawingLink.Components
             foreach (int index in indices)
                 pManager[index].Optional = true;
         }
+
+        protected bool IsEmptyInput(IList input)
+            => input is null || input.Count == 0;
+
+        protected bool IsEmptyInput(object input)
+            => input is null;
+
+        protected bool IsEmptyInput(TreeData input)
+            => input is null || input.PathCount == 0;
     }
 }

@@ -531,7 +531,7 @@ namespace GTDrawingLink.Tools
                     return Result.Ok();
                 }
             }
-            else if (typeOfInput == typeof(GH_Number) || typeOfInput == typeof(GH_Point) || typeOfInput == typeof(GH_Plane) || typeOfInput == typeof(GH_Box))
+            else if (typeOfInput == typeof(GH_Number) || typeOfInput == typeof(GH_Integer) || typeOfInput == typeof(GH_Point) || typeOfInput == typeof(GH_Plane) || typeOfInput == typeof(GH_Box))
             {
                 var objectsGoo = new List<T>();
                 if (DA.GetDataList(InstanceDescription.Name, objectsGoo))
@@ -679,7 +679,7 @@ namespace GTDrawingLink.Tools
 
         protected Result ProcessResults(Type typeOfInput, IGH_Structure tree, IEnumerable<List<T>> castedToExpectedType)
         {
-            if (castedToExpectedType.Any(o => o.Any(e => e is null)))
+            if (!IsOptional && castedToExpectedType.Any(o => o.Any(e => e is null)))
             {
                 return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
             }
@@ -697,14 +697,15 @@ namespace GTDrawingLink.Tools
         }
 
         internal bool IsEmpty()
-            => _paths.Count == 0;
+            => _paths is null || _paths.Count == 0;
     }
 
     public class InputTreePoint : InputTreeBaseParam<Point3d>
     {
-        public InputTreePoint(GH_InstanceDescription instanceDescription)
+        public InputTreePoint(GH_InstanceDescription instanceDescription, bool isOptional = false)
             : base(instanceDescription)
         {
+            IsOptional = isOptional;
         }
 
         public override Result EvaluateInput(IGH_DataAccess DA)
@@ -747,9 +748,10 @@ namespace GTDrawingLink.Tools
 
     public class InputTreeGeometry : InputTreeBaseParam<IGH_GeometricGoo>
     {
-        public InputTreeGeometry(GH_InstanceDescription instanceDescription)
+        public InputTreeGeometry(GH_InstanceDescription instanceDescription, bool isOptional = false)
             : base(instanceDescription)
         {
+            IsOptional = isOptional;
         }
 
         public override Result EvaluateInput(IGH_DataAccess DA)
@@ -916,7 +918,7 @@ namespace GTDrawingLink.Tools
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Goo<T>> tree))
                 {
                     _tree = tree;
-                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value as T).ToList());
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i?.Value as T).ToList());
                     return ProcessResults(typeOfInput, tree, castedToExpectedType);
                 }
             }
@@ -1096,7 +1098,7 @@ namespace GTDrawingLink.Tools
     {
         public List<List<T>> Objects { get; }
 
-        public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths) : base(paths, objects[0].Count)
+        public TreeData(List<List<T>> objects, IReadOnlyList<GH_Path> paths) : base(paths, objects.Count == 0 ? 0 : objects[0].Count)
         {
             Objects = objects ?? throw new ArgumentNullException(nameof(objects));
         }
@@ -1126,6 +1128,11 @@ namespace GTDrawingLink.Tools
         public List<T> GetBranch(int index)
         {
             return Objects.ElementAtOrLast(index);
+        }
+
+        public bool HasItems()
+        {
+            return Objects.Any() && Objects.First().First() != null;
         }
     }
 }

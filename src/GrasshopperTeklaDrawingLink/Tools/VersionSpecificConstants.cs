@@ -7,6 +7,7 @@ using GTDrawingLink.Components.Exports;
 using GTDrawingLink.Components.Geometries;
 using GTDrawingLink.Components.Miscs;
 using GTDrawingLink.Components.Miscs.Loops;
+using GTDrawingLink.Components.Modify;
 using GTDrawingLink.Components.ModifyComponents;
 using GTDrawingLink.Components.Obsolete;
 using GTDrawingLink.Components.Parts;
@@ -196,6 +197,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(LineTypeAttributesComponent),
+                "DBDD76A6-33BE-422B-86A0-DB65364A7F36"
+            },
+            {
+                typeof(LineTypeAttributesComponentOLD),
                 "0DF6013A-F529-46C9-BC2A-B2585A8267F8"
             },
             {
@@ -808,6 +813,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(ModifyViewComponent),
+                "A6FE9AA6-5D6D-4333-A35E-37FEB7167FD7"
+            },
+            {
+                typeof(ModifyViewComponentOLD),
                 "07317AF8-FCA3-41FF-8F7A-63B8BE0CC729"
             },
             {
@@ -869,6 +878,18 @@ namespace GTDrawingLink.Tools
             {
                 typeof(LoopKeeperComponent),
                 "13F89113-6484-485A-A436-EC68C6DE3383"
+            },
+            {
+                typeof(GetProjectPropertiesComponent),
+                "9C9430D8-4F4C-4219-AB1A-61EF0C143A74"
+            },
+            {
+                typeof(Export3dDwgComponent),
+                "37B6A506-8BA0-4422-9705-E930F46E9FD3"
+            },
+            {
+                typeof(ExportDwgComponent),
+                "208B3B99-E189-4ED2-80A0-276A793C6D57"
             }
         };
 

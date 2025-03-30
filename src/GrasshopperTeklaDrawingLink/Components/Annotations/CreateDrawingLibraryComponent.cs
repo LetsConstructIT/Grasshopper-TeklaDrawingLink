@@ -7,6 +7,7 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Obsolete
@@ -20,13 +21,20 @@ namespace GTDrawingLink.Components.Obsolete
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var points, var filePaths, var scales) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var points, var filePaths, var scales) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(false, points, filePaths, scales);
             var inputMode = strategy.Mode;
 
@@ -90,19 +98,23 @@ namespace GTDrawingLink.Components.Obsolete
     {
         private const double _defaultScale = 1;
 
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreePoint _inPoint = new InputTreePoint(ParamInfos.InsertionPoint);
-        private readonly InputTreeString _inFilePath = new InputTreeString(ParamInfos.DetailPath);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
+        private readonly InputTreePoint _inPoint = new InputTreePoint(ParamInfos.InsertionPoint, isOptional: true);
+        private readonly InputTreeString _inFilePath = new InputTreeString(ParamInfos.DetailPath, isOptional: true);
         private readonly InputTreeNumber _inScale = new InputTreeNumber(ParamInfos.DetailScale, isOptional: true);
 
         private readonly OutputTreeParam<DatabaseObject> _outPlugin = new OutputTreeParam<DatabaseObject>(ParamInfos.LibraryPlugin, 0);
 
-        internal (ViewCollection<ViewBase> View, TreeData<Point3d> point, TreeData<string> filePath, TreeData<double> scale) GetInputValues()
+        internal (List<ViewBase> View, TreeData<Point3d> point, TreeData<string> filePath, TreeData<double> scale) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                     _inPoint.AsTreeData(),
                     _inFilePath.AsTreeData(),
                     _inScale.IsEmpty() ? _inScale.GetDefault(_defaultScale) : _inScale.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure plugin)

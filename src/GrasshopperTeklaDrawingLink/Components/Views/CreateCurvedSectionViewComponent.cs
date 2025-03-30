@@ -6,6 +6,7 @@ using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Views
@@ -19,13 +20,20 @@ namespace GTDrawingLink.Components.Views
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var (views, startPoints, midPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            var (inputViews, startPoints, midPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<View>(inputViews);
             var strategy = GetSolverStrategy(false, startPoints, endPoints, insertPoints, depthsUp, depthsDown, viewAttributes, markAttributes, scales, names);
             var inputMode = strategy.Mode;
 
@@ -120,8 +128,8 @@ namespace GTDrawingLink.Components.Views
         private double _defaultDepth = 500;
         private const string _defaultAttributes = "standard";
 
-        private readonly InputListParam<View> _inView = new InputListParam<View>(ParamInfos.View);
-
+        private readonly InputOptionalListParam<View> _inView = new InputOptionalListParam<View>(ParamInfos.View);
+            
         private readonly InputTreePoint _inStartPoint = new InputTreePoint(ParamInfos.SectionStartPoint);
         private readonly InputTreePoint _inMidPoint = new InputTreePoint(ParamInfos.CurvedSectionMidPoint);
         private readonly InputTreePoint _inEndPoint = new InputTreePoint(ParamInfos.SectionEndPoint);
@@ -143,9 +151,9 @@ namespace GTDrawingLink.Components.Views
             _defaultDepth = depthInMm.ToRhino();
         }
 
-        internal (ViewCollection<View> views, TreeData<Point3d> startPoints, TreeData<Point3d> midPoints, TreeData<Point3d> endPoints, TreeData<Point3d> insertPoints, TreeData<double> depthsUp, TreeData<double> depthsDown, TreeData<string> viewAttributes, TreeData<string> markAttributes, TreeData<double> scales, TreeData<string> names) GetInputValues()
+        internal (List<View> views, TreeData<Point3d> startPoints, TreeData<Point3d> midPoints, TreeData<Point3d> endPoints, TreeData<Point3d> insertPoints, TreeData<double> depthsUp, TreeData<double> depthsDown, TreeData<string> viewAttributes, TreeData<string> markAttributes, TreeData<double> scales, TreeData<string> names) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<View>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                     _inStartPoint.AsTreeData(),
                     _inMidPoint.AsTreeData(),
                     _inEndPoint.AsTreeData(),
@@ -156,6 +164,10 @@ namespace GTDrawingLink.Components.Views
                     _inMarkAttributes.IsEmpty() ? _inMarkAttributes.GetDefault(_defaultAttributes) : _inMarkAttributes.AsTreeData(),
                     _inScale.IsEmpty() ? _inScale.GetDefault(0) : _inScale.AsTreeData(),
                     _inName.IsEmpty() ? _inName.GetDefault(string.Empty) : _inName.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure views, IGH_Structure marks)

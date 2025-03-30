@@ -7,6 +7,7 @@ using GTDrawingLink.Types;
 using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 using TSD = Tekla.Structures.Drawing;
 
@@ -21,13 +22,20 @@ namespace GTDrawingLink.Components.Dimensions
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var originPts, var pts1, var pts2, var distances, var attributes) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var originPts, var pts1, var pts2, var distances, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<ViewBase>(inputViews);
             var strategy = GetSolverStrategy(false, originPts, pts1, pts2, distances, attributes);
             var inputMode = strategy.Mode;
 
@@ -75,7 +83,7 @@ namespace GTDrawingLink.Components.Dimensions
 
     public class CreateAngleDimensionCommand : CommandBase
     {
-        private readonly InputListParam<ViewBase> _inView = new InputListParam<ViewBase>(ParamInfos.View);
+        private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inOriginPoints = new InputTreePoint(ParamInfos.AngleDimensionOriginPoint);
         private readonly InputTreePoint _inDimPoints1 = new InputTreePoint(ParamInfos.AngleDimensionPoint1);
         private readonly InputTreePoint _inDimPoints2 = new InputTreePoint(ParamInfos.AngleDimensionPoint2);
@@ -84,14 +92,18 @@ namespace GTDrawingLink.Components.Dimensions
 
         private readonly OutputTreeParam<AngleDimension> _outDimensions = new OutputTreeParam<AngleDimension>(ParamInfos.AngleDimension, 0);
 
-        internal (ViewCollection<ViewBase> views, TreeData<Point3d> originPts, TreeData<Point3d> pts1, TreeData<Point3d> pts2, TreeData<double> distances, TreeData<string> attributes) GetInputValues()
+        internal (List<ViewBase> views, TreeData<Point3d> originPts, TreeData<Point3d> pts1, TreeData<Point3d> pts2, TreeData<double> distances, TreeData<string> attributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<ViewBase>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                 _inOriginPoints.AsTreeData(),
                 _inDimPoints1.AsTreeData(),
                 _inDimPoints2.AsTreeData(),
                 _inDistances.AsTreeData(),
                 _inAttributes.IsEmpty() ? _inAttributes.GetDefault("standard") : _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems() && result.Item4.HasItems() && result.Item5.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure dimensions)

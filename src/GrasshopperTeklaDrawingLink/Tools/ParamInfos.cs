@@ -146,6 +146,13 @@ namespace GTDrawingLink.Tools
             Description = $"Line type:\n{EnumHelpers.EnumToString<LineTypesEnum>()}\nRight-click to set"
         };
 
+        public static readonly GH_InstanceDescription CustomLineName = new GH_InstanceDescription
+        {
+            Name = "Custom Name",
+            NickName = "N",
+            Description = "Name of the custom line"
+        };
+
         public static readonly GH_InstanceDescription VisibleLineTypeAttributes = new GH_InstanceDescription
         {
             Name = "Visibile lines",
@@ -2116,6 +2123,13 @@ namespace GTDrawingLink.Tools
             Description = "Output file path"
         };
 
+        public static readonly GH_InstanceDescription ExportDirectory = new GH_InstanceDescription
+        {
+            Name = "Directory",
+            NickName = "D",
+            Description = "Output directory"
+        };
+
         public static readonly GH_InstanceDescription ExportSettings = new GH_InstanceDescription
         {
             Name = "Settings",
@@ -2226,6 +2240,41 @@ namespace GTDrawingLink.Tools
             Name = "Non-Merged Marks",
             NickName = "Non MM",
             Description = "Non Merged Tekla Marks (Tekla was unable to merge those with others)"
+        };
+
+        public static readonly GH_InstanceDescription ModelName = new GH_InstanceDescription
+        {
+            Name = "Model Name",
+            NickName = "MN",
+            Description = "The name of the Tekla Structures model"
+        };
+
+        public static readonly GH_InstanceDescription ModelPath = new GH_InstanceDescription
+        {
+            Name = "Model Path",
+            NickName = "MP",
+            Description = "The path to the Tekla Structures model"
+        };
+
+        public static readonly GH_InstanceDescription ProjectInfo = new GH_InstanceDescription
+        {
+            Name = "Project Info",
+            NickName = "PI",
+            Description = "Information about the current Tekla model's project. Use Expand Object component from Live-Link to query for details."
+        };
+
+        public static readonly GH_InstanceDescription FakeProjectObject = new GH_InstanceDescription
+        {
+            Name = "Project Object",
+            NickName = "PO",
+            Description = "Fake project object needed for getting and setting UDAs"
+        };
+
+        public static readonly GH_InstanceDescription DeleteIfInputIsEmpty = new GH_InstanceDescription
+        {
+            Name = "Remove when input is empty",
+            NickName = "RemoveEmpty",
+            Description = "Remove all generated objects when the geometry or main input is empty. The objects will be recreated the next time the input contains valid data."
         };
     }
 }

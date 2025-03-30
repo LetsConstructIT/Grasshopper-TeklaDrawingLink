@@ -7,6 +7,7 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Annotations
@@ -20,13 +21,20 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var views, var centerPoints, var radiuses, var labelPoints, var attributes, var names) = _command.GetInputValues();
-            if (!DrawingInteractor.IsInTheActiveDrawing(views.First()))
+            (var inputViews, var centerPoints, var radiuses, var labelPoints, var attributes, var names) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            if (!DrawingInteractor.IsInTheActiveDrawing(inputViews.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
                 return null;
             }
 
+            var views = new ViewCollection<View>(inputViews);
             var strategy = GetSolverStrategy(false, centerPoints, radiuses, labelPoints, attributes, names);
             var inputMode = strategy.Mode;
 
@@ -74,24 +82,28 @@ namespace GTDrawingLink.Components.Annotations
         private const double _defaultRadius = 500;
         private const string _defaultAttributes = "standard";
 
-        private readonly InputListParam<View> _inView = new InputListParam<View>(ParamInfos.View);
+        private readonly InputOptionalListParam<View> _inView = new InputOptionalListParam<View>(ParamInfos.View);
 
-        private readonly InputTreePoint _inCenterPoint = new InputTreePoint(ParamInfos.DetailCenterPoint);
+        private readonly InputTreePoint _inCenterPoint = new InputTreePoint(ParamInfos.DetailCenterPoint, isOptional: true);
         private readonly InputTreeNumber _inRadius = new InputTreeNumber(ParamInfos.DetailRadius, isOptional: true);
-        private readonly InputTreePoint _inLabelPoint = new InputTreePoint(ParamInfos.DetailLabelPoint);
+        private readonly InputTreePoint _inLabelPoint = new InputTreePoint(ParamInfos.DetailLabelPoint, isOptional: true);
         private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.DetailMarkAttributes, isOptional: true);
-        private readonly InputTreeString _inName = new InputTreeString(ParamInfos.Name);
+        private readonly InputTreeString _inName = new InputTreeString(ParamInfos.Name, isOptional: true);
 
         private readonly OutputTreeParam<DatabaseObject> _outMark = new OutputTreeParam<DatabaseObject>(ParamInfos.Mark, 0);
 
-        internal (ViewCollection<View> views, TreeData<Point3d> centerPoint, TreeData<double> radius, TreeData<Point3d> labelPoint, TreeData<string> attributes, TreeData<string> name) GetInputValues()
+        internal (List<View> views, TreeData<Point3d> centerPoint, TreeData<double> radius, TreeData<Point3d> labelPoint, TreeData<string> attributes, TreeData<string> name) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (new ViewCollection<View>(_inView.Value),
+            var result = (_inView.GetValueFromUserOrNull(),
                     _inCenterPoint.AsTreeData(),
                     _inRadius.IsEmpty() ? _inRadius.GetDefault(_defaultRadius) : _inRadius.AsTreeData(),
                     _inLabelPoint.AsTreeData(),
                     _inAttributes.IsEmpty() ? _inAttributes.GetDefault(_defaultAttributes) : _inAttributes.AsTreeData(),
                     _inName.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item4.HasItems() && result.Item6.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure marks)

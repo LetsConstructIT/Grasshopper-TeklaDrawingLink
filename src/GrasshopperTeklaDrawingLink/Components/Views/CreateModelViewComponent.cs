@@ -21,7 +21,7 @@ namespace GTDrawingLink.Components.Views
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.Drawing, GH_ParamAccess.item);
+            AddTeklaDbObjectParameter(pManager, ParamInfos.Drawing, GH_ParamAccess.item, optional: true);
             pManager.AddParameter(new TeklaViewParam(ParamInfos.ModelView, GH_ParamAccess.list));
             AddTextParameter(pManager, ParamInfos.Attributes, GH_ParamAccess.list, true);
             AddIntegerParameter(pManager, ParamInfos.Scale, GH_ParamAccess.list, true);
@@ -38,7 +38,7 @@ namespace GTDrawingLink.Components.Views
             var drawing = DA.GetGooValue<DatabaseObject>(ParamInfos.Drawing) as Drawing;
             if (drawing == null)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input drawing not specified");
+                HandleMissingInput();
                 return null;
             }
 

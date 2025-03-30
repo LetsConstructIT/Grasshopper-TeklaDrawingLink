@@ -19,7 +19,13 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var (modelObjects, attributes, basePoints, placings) = _command.GetInputValues();
+            var (modelObjects, basePoints, placings, attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            if (!mainInputIsCorrect)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
             if (!DrawingInteractor.IsInTheActiveDrawing(modelObjects.Objects?.First()?.First()))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Messages.Error_ViewFromDifferentDrawing);
@@ -67,20 +73,23 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateAssociativeNoteCommand : CommandBase
     {
-        private readonly InputTreeParam<ModelObject> _inModel = new InputTreeParam<ModelObject>(ParamInfos.DrawingModelObject);
-        private readonly InputTreePoint _inInsertionPoints = new InputTreePoint(ParamInfos.MarkInsertionPoint);
-        private readonly InputTreeParam<PlacingBase> _inPlacingTypes = new InputTreeParam<PlacingBase>(ParamInfos.PlacingType);
-        private readonly InputTreeParam<Mark.MarkAttributes> _inAttributes = new InputTreeParam<Mark.MarkAttributes>(ParamInfos.MarkAttributes);
+        private readonly InputOptionalTreeParam<ModelObject> _inModel = new InputOptionalTreeParam<ModelObject>(ParamInfos.DrawingModelObject);
+        private readonly InputTreePoint _inInsertionPoints = new InputTreePoint(ParamInfos.MarkInsertionPoint, isOptional: true);
+        private readonly InputOptionalTreeParam<PlacingBase> _inPlacingTypes = new InputOptionalTreeParam<PlacingBase>(ParamInfos.PlacingType);
+        private readonly InputOptionalTreeParam<Mark.MarkAttributes> _inAttributes = new InputOptionalTreeParam<Mark.MarkAttributes>(ParamInfos.MarkAttributes);
 
         private readonly OutputTreeParam<Mark> _outMark = new OutputTreeParam<Mark>(ParamInfos.AssociativeNote, 0);
 
-        internal (TreeData<ModelObject> modelObjects, TreeData<Mark.MarkAttributes> attributes, TreeData<Point3d> basePoints, TreeData<PlacingBase> placingBases) GetInputValues()
+        internal (TreeData<ModelObject> modelObjects, TreeData<Point3d> basePoints, TreeData<PlacingBase> placingBases, TreeData<Mark.MarkAttributes> attributes) GetInputValues(out bool mainInputIsCorrect)
         {
-            return (
-                _inModel.AsTreeData(),
-                _inAttributes.AsTreeData(),
+            var result = (_inModel.AsTreeData(),
                 _inInsertionPoints.AsTreeData(),
-                _inPlacingTypes.AsTreeData());
+                _inPlacingTypes.AsTreeData(),
+                _inAttributes.AsTreeData());
+
+            mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems() && result.Item3.HasItems() && result.Item4.HasItems();
+
+            return result;
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, IGH_Structure marks)

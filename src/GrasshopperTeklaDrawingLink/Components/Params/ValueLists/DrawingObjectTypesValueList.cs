@@ -36,6 +36,7 @@ namespace GTDrawingLink.Components.Params.ValueLists
             ListItems.Add(new GH_ValueListItem("Container View", "\"Container View\""));
             ListItems.Add(new GH_ValueListItem("Detail Mark", "\"Detail Mark\""));
             ListItems.Add(new GH_ValueListItem("Dwg Object", "\"Dwg Object\""));
+            ListItems.Add(new GH_ValueListItem("Edge Chamfer", "\"Edge Chamfer\""));
             ListItems.Add(new GH_ValueListItem("Grid", "\"Grid\""));
             ListItems.Add(new GH_ValueListItem("Hyper Link", "\"Hyper Link\""));
             ListItems.Add(new GH_ValueListItem("Leader Line", "\"Leader Line\""));
