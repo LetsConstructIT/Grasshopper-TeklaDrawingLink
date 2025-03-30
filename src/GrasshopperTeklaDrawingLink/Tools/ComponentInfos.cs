@@ -1342,6 +1342,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Export
         };
 
+        public static readonly GH_InstanceDescription ExportDwgComponent = new GH_InstanceDescription
+        {
+            Name = "Export DWG",
+            NickName = "DWG",
+            Description = "Export Tekla drawing to DWG",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
+
         
     }
 }

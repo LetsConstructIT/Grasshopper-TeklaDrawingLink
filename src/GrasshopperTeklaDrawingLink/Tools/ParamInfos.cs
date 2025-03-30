@@ -2123,6 +2123,13 @@ namespace GTDrawingLink.Tools
             Description = "Output file path"
         };
 
+        public static readonly GH_InstanceDescription ExportDirectory = new GH_InstanceDescription
+        {
+            Name = "Directory",
+            NickName = "D",
+            Description = "Output directory"
+        };
+
         public static readonly GH_InstanceDescription ExportSettings = new GH_InstanceDescription
         {
             Name = "Settings",
