@@ -882,6 +882,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GetProjectPropertiesComponent),
                 "9C9430D8-4F4C-4219-AB1A-61EF0C143A74"
+            },
+            {
+                typeof(Export3dDwgComponent),
+                "37B6A506-8BA0-4422-9705-E930F46E9FD3"
             }
         };
 

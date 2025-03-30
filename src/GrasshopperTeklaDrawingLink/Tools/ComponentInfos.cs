@@ -1332,5 +1332,16 @@ namespace GTDrawingLink.Tools
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };
+
+        public static readonly GH_InstanceDescription Export3dDwgComponent = new GH_InstanceDescription
+        {
+            Name = "Export 3D DWG",
+            NickName = "3d DWG",
+            Description = "Export Tekla elements to 3d DWG",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Export
+        };
+
+        
     }
 }
