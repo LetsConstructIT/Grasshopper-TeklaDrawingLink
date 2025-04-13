@@ -593,6 +593,16 @@ namespace GTDrawingLink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ExportNew3dDWG {
+            get {
+                object obj = ResourceManager.GetObject("ExportNew3dDWG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ExportPdf {
             get {
                 object obj = ResourceManager.GetObject("ExportPdf", resourceCulture);
