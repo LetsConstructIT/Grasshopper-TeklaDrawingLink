@@ -9,6 +9,6 @@ msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2023 /t:R
 msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2024 /t:Rebuild
 msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2025 /t:Rebuild
 
-for /R .\bin %%f in (*.gha) do copy %%f .\bin\
+for /R .\bin %%f in (*.dll) do copy %%f .\bin\
 
 echo
