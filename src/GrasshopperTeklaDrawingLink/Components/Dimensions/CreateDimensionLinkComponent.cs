@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Media;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Dimensions
@@ -21,7 +22,7 @@ namespace GTDrawingLink.Components.Dimensions
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            AddTeklaDbObjectParameter(pManager, ParamInfos.StraightDimensionSet, GH_ParamAccess.list);
+            AddTeklaDbObjectParameter(pManager, ParamInfos.StraightDimensionSet, GH_ParamAccess.list, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -31,7 +32,14 @@ namespace GTDrawingLink.Components.Dimensions
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            var straightDimensions = DA.GetGooListValue<DatabaseObject>(ParamInfos.StraightDimensionSet).Cast<StraightDimensionSet>().ToList();
+            var input = DA.GetGooListValue<DatabaseObject>(ParamInfos.StraightDimensionSet);
+            if (input == null)
+            {
+                HandleMissingInput();
+                return null;
+            }
+
+            var straightDimensions = input.Cast<StraightDimensionSet>().ToList();
             if (straightDimensions == null)
                 return null;
 

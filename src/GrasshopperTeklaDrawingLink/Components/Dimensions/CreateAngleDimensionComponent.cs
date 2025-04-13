@@ -84,10 +84,10 @@ namespace GTDrawingLink.Components.Dimensions
     public class CreateAngleDimensionCommand : CommandBase
     {
         private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreePoint _inOriginPoints = new InputTreePoint(ParamInfos.AngleDimensionOriginPoint);
-        private readonly InputTreePoint _inDimPoints1 = new InputTreePoint(ParamInfos.AngleDimensionPoint1);
-        private readonly InputTreePoint _inDimPoints2 = new InputTreePoint(ParamInfos.AngleDimensionPoint2);
-        private readonly InputTreeNumber _inDistances = new InputTreeNumber(ParamInfos.AngleDimensionDistance);
+        private readonly InputTreePoint _inOriginPoints = new InputTreePoint(ParamInfos.AngleDimensionOriginPoint, isOptional: true);
+        private readonly InputTreePoint _inDimPoints1 = new InputTreePoint(ParamInfos.AngleDimensionPoint1, isOptional: true);
+        private readonly InputTreePoint _inDimPoints2 = new InputTreePoint(ParamInfos.AngleDimensionPoint2, isOptional: true);
+        private readonly InputTreeNumber _inDistances = new InputTreeNumber(ParamInfos.AngleDimensionDistance, isOptional: true);
         private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.AngleDimensionAttributes, isOptional: true);
 
         private readonly OutputTreeParam<AngleDimension> _outDimensions = new OutputTreeParam<AngleDimension>(ParamInfos.AngleDimension, 0);

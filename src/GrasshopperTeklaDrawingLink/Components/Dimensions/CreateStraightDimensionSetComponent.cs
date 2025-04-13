@@ -187,8 +187,8 @@ namespace GTDrawingLink.Components.Dimensions
     public class CreateStraightDimensionSetCommand : CommandBase
     {
         private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreePoint _inDimPoints = new InputTreePoint(ParamInfos.DimensionPoints);
-        private readonly InputTreeLine _inLocations = new InputTreeLine(ParamInfos.DimensionLocation);
+        private readonly InputTreePoint _inDimPoints = new InputTreePoint(ParamInfos.DimensionPoints, isOptional: true);
+        private readonly InputTreeLine _inLocations = new InputTreeLine(ParamInfos.DimensionLocation, isOptional: true);
         private readonly InputOptionalTreeParam<StraightDimensionSet.StraightDimensionSetAttributes> _inAttributes = new InputOptionalTreeParam<StraightDimensionSet.StraightDimensionSetAttributes>(ParamInfos.StraightDimensionSetAttributes);
 
         private readonly OutputTreeParam<StraightDimensionSet> _outDimensions = new OutputTreeParam<StraightDimensionSet>(ParamInfos.StraightDimensionSet, 0);

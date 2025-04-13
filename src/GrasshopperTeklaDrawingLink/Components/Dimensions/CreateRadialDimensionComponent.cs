@@ -83,10 +83,10 @@ namespace GTDrawingLink.Components.Dimensions
     public class CreateRadialDimensionCommand : CommandBase
     {
         private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
-        private readonly InputTreePoint _inArcPoint1 = new InputTreePoint(ParamInfos.ArcPoint1);
-        private readonly InputTreePoint _inArcPoint2 = new InputTreePoint(ParamInfos.ArcPoint2);
-        private readonly InputTreePoint _inArcPoint3 = new InputTreePoint(ParamInfos.ArcPoint3);
-        private readonly InputTreeNumber _inDistances = new InputTreeNumber(ParamInfos.RadialDimensionDistance);
+        private readonly InputTreePoint _inArcPoint1 = new InputTreePoint(ParamInfos.ArcPoint1, isOptional: true);
+        private readonly InputTreePoint _inArcPoint2 = new InputTreePoint(ParamInfos.ArcPoint2, isOptional: true);
+        private readonly InputTreePoint _inArcPoint3 = new InputTreePoint(ParamInfos.ArcPoint3, isOptional: true);
+        private readonly InputTreeNumber _inDistances = new InputTreeNumber(ParamInfos.RadialDimensionDistance, isOptional: true);
         private readonly InputTreeString _inAttributes = new InputTreeString(ParamInfos.RadialDimensionAttributes, isOptional: true);
 
         private readonly OutputTreeParam<RadiusDimension> _outDimensions = new OutputTreeParam<RadiusDimension>(ParamInfos.RadialDimension, 0);

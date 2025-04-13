@@ -725,9 +725,10 @@ namespace GTDrawingLink.Tools
 
     public class InputTreeLine : InputTreeBaseParam<Rhino.Geometry.Line>
     {
-        public InputTreeLine(GH_InstanceDescription instanceDescription)
+        public InputTreeLine(GH_InstanceDescription instanceDescription, bool isOptional = false)
             : base(instanceDescription)
         {
+            IsOptional = isOptional;
         }
 
         public override Result EvaluateInput(IGH_DataAccess DA)
