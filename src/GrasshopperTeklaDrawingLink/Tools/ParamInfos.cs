@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Components.Obsolete;
+using GTDrawingLink.Components.Views;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Tools
@@ -2275,6 +2276,20 @@ namespace GTDrawingLink.Tools
             Name = "Remove when input is empty",
             NickName = "RemoveEmpty",
             Description = "Remove all generated objects when the geometry or main input is empty. The objects will be recreated the next time the input contains valid data."
+        };
+
+        public static readonly GH_InstanceDescription DestinationPoint = new GH_InstanceDescription
+        {
+            Name = "Point",
+            NickName = "P",
+            Description = "Destination point. The place where the view should be placed."
+        };
+
+        public static readonly GH_InstanceDescription ViewMovementType = new GH_InstanceDescription
+        {
+            Name = "Anchor",
+            NickName = "A",
+            Description = $"View movement type.\n{EnumHelpers.EnumToString<ViewMovementType>()}\nRight-click to set"
         };
     }
 }

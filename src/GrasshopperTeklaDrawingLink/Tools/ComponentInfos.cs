@@ -202,6 +202,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.View
         };
 
+        public static readonly GH_InstanceDescription MoveViewToPointComponent = new GH_InstanceDescription
+        {
+            Name = "Move View to Point",
+            NickName = "MoveViewToPoint",
+            Description = "Move View to point by specyfing anchor type",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.View
+        };        
+
         public static readonly GH_InstanceDescription CloseDrawingComponent = new GH_InstanceDescription
         {
             Name = "Close Drawing",
