@@ -32,7 +32,7 @@ namespace GTDrawingLink.Components.Exports
 
             var exportDirectory = SanitizePath(directory);
 
-            var output = ExportPdf(drawing, exportDirectory, settings);
+            var output = ExportDwg(drawing, exportDirectory, settings);
 
             _command.SetOutputValues(DA, output);
         }
@@ -47,7 +47,7 @@ namespace GTDrawingLink.Components.Exports
             return correctPath;
         }
 
-        private string ExportPdf(Drawing drawing, string fullName, string settings)
+        private string ExportDwg(Drawing drawing, string fullName, string settings)
         {
             var isActiveDrawing = CheckIfDrawingIsActive(drawing);
 
