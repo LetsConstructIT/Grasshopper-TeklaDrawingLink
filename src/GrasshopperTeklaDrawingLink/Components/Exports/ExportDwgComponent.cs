@@ -44,6 +44,9 @@ namespace GTDrawingLink.Components.Exports
 
             CreateDirectoryIfNeeded(correctPath);
 
+            if (correctPath.EndsWith(@"\"))
+                correctPath = correctPath.Substring(0, correctPath.Length - 1);
+
             return correctPath;
         }
 
