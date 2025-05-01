@@ -10,6 +10,7 @@ namespace GTDrawingLink.Components.Geometries
 {
     public class BrepProjectionBorderComponent : TeklaComponentBaseNew<BrepProjectionBorderCommand>
     {
+        private readonly ProjectionLogic _projectionLogic = new ProjectionLogic();
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.BrepProjectionBorder;
         public BrepProjectionBorderComponent() : base(ComponentInfos.BrepProjectionBorderComponent) { }
@@ -20,22 +21,83 @@ namespace GTDrawingLink.Components.Geometries
 
             var mesh = GetMesh(brep);
 
-            var orientedMesh = ApplyOrientation(mesh, plane);
-            var shadow = GetShadowOutlines(orientedMesh);
-            if (shadow.Item1 is null)
+            var (outer, inners, unionRectangle) = _projectionLogic.CalculateProjection(mesh, plane);
+            if (outer is null)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The outline of a mesh projected against a plane has failed.");
                 return;
             }
+
+            _command.SetOutputValues(DA, outer, inners, unionRectangle);
+        }
+
+        private Mesh GetMesh(Brep brep)
+        {
+            var meshParameters = MeshingParameters.QualityRenderMesh;
+            var meshes = Mesh.CreateFromBrep(brep, meshParameters);
+
+            var mesh = new Mesh();
+            foreach (var item in meshes)
+                mesh.Append(item);
+
+            if (!mesh.IsClosed && brep.IsSolid)
+                mesh.HealNakedEdges(DocumentTolerance() * 100.0);
+
+            return mesh;
+        }
+    }
+
+    public class BrepProjectionBorderCommand : CommandBase
+    {
+        private readonly InputParam<Brep> _inBrep = new InputParam<Brep>(ParamInfos.Brep);
+        private readonly InputOptionalStructParam<Plane> _inPlane = new InputOptionalStructParam<Plane>(ParamInfos.ProjectionPlane, Plane.WorldXY);
+
+        private readonly OutputParam<Polyline> _outOuterBorder = new OutputParam<Polyline>(ParamInfos.ProjectedBoundary);
+        private readonly OutputListParam<Polyline> _outInnerBorder = new OutputListParam<Polyline>(ParamInfos.ProjectedHole);
+        private readonly OutputParam<Polyline> _unionRectangle = new OutputParam<Polyline>(ParamInfos.UnionRectangle);
+
+        internal (Brep Brep, Plane Plane) GetInputValues()
+        {
+            return (_inBrep.Value,
+                    _inPlane.Value);
+        }
+
+        internal Result SetOutputValues(IGH_DataAccess DA, Polyline outer, List<Polyline> inners, Polyline unionRectangle)
+        {
+            _outOuterBorder.Value = outer;
+            _outInnerBorder.Value = inners;
+            _unionRectangle.Value = unionRectangle;
+
+            return SetOutput(DA);
+        }
+    }
+
+    public class ProjectionLogic
+    {
+        public (Polyline outer, List<Polyline> inners, Polyline unionRectangle) CalculateProjection(Mesh mesh, Plane plane)
+        {
+            var orientedMesh = ApplyOrientation(mesh, plane);
+            var shadow = GetShadowOutlines(orientedMesh);
+            if (shadow.Item1 is null)
+                return (null, null, null);
 
             var outer = SimplifyPolyline(shadow.Item1);
             var inners = shadow.Item2.Select(SimplifyPolyline).ToList();
 
             var unionRectangle = Union(new List<Polyline>() { outer });
 
-            _command.SetOutputValues(DA, outer, inners, unionRectangle);
+            return (outer, inners, unionRectangle);
         }
 
+        private (Polyline, IEnumerable<Polyline>) GetShadowOutlines(Mesh mesh)
+        {
+            var plane = new Plane(Plane.WorldXY.Origin, new Vector3d(0, 0, -1));
+            var outlines = mesh.GetOutlines(plane);
+            if (outlines.Length == 0)
+                return (null, null);
+
+            return (outlines.First(), outlines.Skip(1));
+        }
         private Polyline SimplifyPolyline(Polyline polyline)
         {
             var angleTolerance = RhinoDoc.ActiveDoc.ModelAngleToleranceRadians;
@@ -87,31 +149,6 @@ namespace GTDrawingLink.Components.Geometries
             return orientedBrep;
         }
 
-        private Mesh GetMesh(Brep brep)
-        {
-            var meshParameters = MeshingParameters.QualityRenderMesh;
-            var meshes = Mesh.CreateFromBrep(brep, meshParameters);
-
-            var mesh = new Mesh();
-            foreach (var item in meshes)
-                mesh.Append(item);
-
-            if (!mesh.IsClosed && brep.IsSolid)
-                mesh.HealNakedEdges(DocumentTolerance() * 100.0);
-
-            return mesh;
-        }
-
-        private (Polyline, IEnumerable<Polyline>) GetShadowOutlines(Mesh mesh)
-        {
-            var plane = new Plane(Plane.WorldXY.Origin, new Vector3d(0, 0, -1));
-            var outlines = mesh.GetOutlines(plane);
-            if (outlines.Length == 0)
-                return (null, null);
-
-            return (outlines.First(), outlines.Skip(1));
-        }
-
         private Polyline Union(List<Polyline> polylines)
         {
             var boundingBox = BoundingBox.Unset;
@@ -124,28 +161,4 @@ namespace GTDrawingLink.Components.Geometries
         }
     }
 
-    public class BrepProjectionBorderCommand : CommandBase
-    {
-        private readonly InputParam<Brep> _inBrep = new InputParam<Brep>(ParamInfos.Brep);
-        private readonly InputOptionalStructParam<Plane> _inPlane = new InputOptionalStructParam<Plane>(ParamInfos.ProjectionPlane, Plane.WorldXY);
-
-        private readonly OutputParam<Polyline> _outOuterBorder = new OutputParam<Polyline>(ParamInfos.ProjectedBoundary);
-        private readonly OutputListParam<Polyline> _outInnerBorder = new OutputListParam<Polyline>(ParamInfos.ProjectedHole);
-        private readonly OutputParam<Polyline> _unionRectangle = new OutputParam<Polyline>(ParamInfos.UnionRectangle);
-
-        internal (Brep Brep, Plane Plane) GetInputValues()
-        {
-            return (_inBrep.Value,
-                    _inPlane.Value);
-        }
-
-        internal Result SetOutputValues(IGH_DataAccess DA, Polyline outer, List<Polyline> inners, Polyline unionRectangle)
-        {
-            _outOuterBorder.Value = outer;
-            _outInnerBorder.Value = inners;
-            _unionRectangle.Value = unionRectangle;
-
-            return SetOutput(DA);
-        }
-    }
 }
