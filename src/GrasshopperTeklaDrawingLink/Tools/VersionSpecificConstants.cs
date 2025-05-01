@@ -898,6 +898,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(MoveViewToPointComponent),
                 "5579CBB5-2D99-40A4-8A0B-8C19489D866E"
+            },
+            {
+                typeof(MeshProjectionBorderComponent),
+                "66FD832E-81AC-45DF-B6E4-BE248DD91D93"
             }
         };
 

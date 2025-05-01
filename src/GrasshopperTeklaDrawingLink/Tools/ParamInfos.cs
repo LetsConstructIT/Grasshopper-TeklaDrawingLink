@@ -1459,6 +1459,14 @@ namespace GTDrawingLink.Tools
             Description = "Brep to project and obtain border of"
         };
 
+
+        public static readonly GH_InstanceDescription RhinoMesh = new GH_InstanceDescription
+        {
+            Name = "Mesh",
+            NickName = "M",
+            Description = "Mesh to project and obtain border of"
+        };
+
         public static readonly GH_InstanceDescription ProjectionPlane = new GH_InstanceDescription
         {
             Name = "Plane",

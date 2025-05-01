@@ -981,6 +981,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Geometry
         };
 
+        public static readonly GH_InstanceDescription MeshProjectionBorderCommand = new GH_InstanceDescription
+        {
+            Name = "Mesh Projection Border",
+            NickName = "Border",
+            Description = "Gets the outer border and all inner borders of mesh projection",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Geometry
+        };        
+
         public static readonly GH_InstanceDescription SearchUsingKeyComponent = new GH_InstanceDescription
         {
             Name = "Search using Key",
