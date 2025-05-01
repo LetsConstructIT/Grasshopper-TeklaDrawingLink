@@ -18,9 +18,15 @@ namespace GTDrawingLink.Components.Geometries
         {
             (Brep brep, Plane plane) = _command.GetInputValues();
 
-            var orientedBrep = ApplyOrientation(brep, plane);
-            var mesh = GetMesh(orientedBrep);
-            var shadow = GetShadowOutlines(mesh);
+            var mesh = GetMesh(brep);
+
+            var orientedMesh = ApplyOrientation(mesh, plane);
+            var shadow = GetShadowOutlines(orientedMesh);
+            if (shadow.Item1 is null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The outline of a mesh projected against a plane has failed.");
+                return;
+            }
 
             var outer = SimplifyPolyline(shadow.Item1);
             var inners = shadow.Item2.Select(SimplifyPolyline).ToList();
@@ -69,14 +75,14 @@ namespace GTDrawingLink.Components.Geometries
             return new Polyline(cornerPts);
         }
 
-        private Brep ApplyOrientation(Brep brep, Plane plane)
+        private Mesh ApplyOrientation(Mesh mesh, Plane plane)
         {
             if (plane == Plane.WorldXY)
-                return brep;
+                return mesh;
 
             var transformation = new Orientation(plane, Plane.WorldXY);
 
-            var orientedBrep = brep.DuplicateBrep();
+            var orientedBrep = mesh.DuplicateMesh();
             orientedBrep.Transform(transformation.ToMatrix());
             return orientedBrep;
         }
@@ -100,6 +106,9 @@ namespace GTDrawingLink.Components.Geometries
         {
             var plane = new Plane(Plane.WorldXY.Origin, new Vector3d(0, 0, -1));
             var outlines = mesh.GetOutlines(plane);
+            if (outlines.Length == 0)
+                return (null, null);
+
             return (outlines.First(), outlines.Skip(1));
         }
 
