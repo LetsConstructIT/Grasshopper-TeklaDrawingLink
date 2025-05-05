@@ -474,7 +474,10 @@ namespace GTDrawingLink.Tools
                 var value = new List<GH_Goo<DatabaseObject>>();
                 if (DA.GetDataList(InstanceDescription.Name, value))
                 {
-                    if (typeOfInput == typeof(ViewBase) && value.First() != null && value.First().Value.GetType().InheritsFrom(typeof(Drawing)))
+                    if (typeOfInput == typeof(ViewBase)
+                        && value.Any()
+                        && value.First() != null
+                        && value.First().Value.GetType().InheritsFrom(typeof(Drawing)))
                     {
                         var castedToExpectedType = value.Select(v => (v.Value as Drawing).GetSheet() as T);
                         if (castedToExpectedType.Any(o => o is null))
@@ -715,7 +718,7 @@ namespace GTDrawingLink.Tools
             if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Point> tree))
             {
                 _tree = tree;
-                var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i.Value).ToList());
+                var castedToExpectedType = tree.Branches.Select(b => b.Where(i => i != null).Select(i => i.Value).ToList());
                 return ProcessResults(typeOfInput, tree, castedToExpectedType);
             }
 
