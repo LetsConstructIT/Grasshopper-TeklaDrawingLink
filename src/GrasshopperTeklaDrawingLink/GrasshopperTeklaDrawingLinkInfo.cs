@@ -25,7 +25,7 @@ namespace GTDrawingLink
         {
             var assembly = typeof(GrasshopperTeklaDrawingLinkInfo).Assembly;
             var version = assembly.GetName().Version;
-            LinkVersion = $"{version.Major}.{version.Minor}.{version.Build}";
+            LinkVersion = $"{version.Major}.{version.Minor}";
 
             var teklaLibrariesVersion = assembly.GetReferencedAssemblies().First((AssemblyName a) => a.Name == "Tekla.Structures.Model").Version;
             TSVersion = $"{teklaLibrariesVersion.Major}";

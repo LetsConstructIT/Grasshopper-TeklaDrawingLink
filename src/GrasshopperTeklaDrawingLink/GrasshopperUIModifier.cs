@@ -26,13 +26,13 @@ namespace GTDrawingLink
             if (documentEditor != null)
             {
                 documentEditor.MainMenuStrip.Items.Add(GetTeklaMenu());
-            }           
+            }
         }
 
         private ToolStripItem GetTeklaMenu()
         {
             var teklaMenu = new ToolStripMenuItem("Drawing Link");
-            teklaMenu.DropDownItems.AddRange(new ToolStripMenuItem[]
+            teklaMenu.DropDownItems.AddRange(new ToolStripItem[]
             {
                 new ToolStripMenuItem(ParamInfos.SelectAllTeklaObjects.Name, null, SelectObjectsMenuItem_Clicked)
                 {
@@ -45,7 +45,13 @@ namespace GTDrawingLink
                 new ToolStripMenuItem(ParamInfos.BakeAllToTekla.Name, null, BakeMenuItem_Clicked)
                 {
                     ToolTipText = ParamInfos.BakeAllToTekla.Description
-                }
+                },
+                new ToolStripSeparator(),
+                new ToolStripMenuItem($"Grasshopper-Tekla Drawing Link {GrasshopperTeklaDrawingLinkInfo.TSVersion}.{GrasshopperTeklaDrawingLinkInfo.LinkVersion}", null)
+                {
+                    ToolTipText = "Developed by Greg Olszewski",
+                    Enabled =false
+                },
             });
             return teklaMenu;
         }
