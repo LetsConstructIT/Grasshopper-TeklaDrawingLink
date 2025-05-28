@@ -1136,7 +1136,7 @@ namespace GTDrawingLink.Tools
 
         public bool HasItems()
         {
-            return Objects.Any() && Objects.First().First() != null;
+            return Objects.Any() && Objects.First().Any() && Objects.First().First() != null;
         }
     }
 }
