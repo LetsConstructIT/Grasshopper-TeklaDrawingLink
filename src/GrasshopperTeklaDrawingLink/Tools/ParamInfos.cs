@@ -2299,5 +2299,12 @@ namespace GTDrawingLink.Tools
             NickName = "A",
             Description = $"View movement type.\n{EnumHelpers.EnumToString<ViewMovementType>()}\nRight-click to set"
         };
+
+        public static readonly GH_InstanceDescription StraightDimensions = new GH_InstanceDescription
+        {
+            Name = "Dimensions",
+            NickName = "D",
+            Description = "Each straight dimension set contains one or multiple straight dimensions, which are returned as this parameter"
+        };
     }
 }

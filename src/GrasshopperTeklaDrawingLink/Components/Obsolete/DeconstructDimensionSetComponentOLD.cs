@@ -2,19 +2,19 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using Tekla.Structures.Drawing;
 using TSD = Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Dimensions
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class DeconstructDimensionSetComponent : DeconstructDatabaseObjectComponentBase
+    [Obsolete]
+    public class DeconstructDimensionSetComponentOLD : DeconstructDatabaseObjectComponentBase
     {
-        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.DeconstructDimensionSet;
 
-        public DeconstructDimensionSetComponent() : base(ComponentInfos.DeconstructDimensionSetComponent)
+        public DeconstructDimensionSetComponentOLD() : base(ComponentInfos.DeconstructDimensionSetComponent)
         {
         }
 
@@ -34,7 +34,6 @@ namespace GTDrawingLink.Components.Dimensions
             pManager.AddPointParameter(ParamInfos.DimensionPoints.Name, ParamInfos.DimensionPoints.NickName, ParamInfos.DimensionPoints.Description, GH_ParamAccess.list);
             pManager.AddLineParameter(ParamInfos.DimensionLocation.Name, ParamInfos.DimensionLocation.NickName, ParamInfos.DimensionLocation.Description, GH_ParamAccess.item);
             pManager.AddParameter(new StraightDimensionSetAttributesParam(ParamInfos.StraightDimensionSetAttributes, GH_ParamAccess.item));
-            AddTeklaDbObjectParameter(pManager, ParamInfos.StraightDimensions, GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -45,25 +44,10 @@ namespace GTDrawingLink.Components.Dimensions
             sds.Select();
 
             var dimensionPoints = sds.GetPoints();
-            var dimensions = GetStraightDimensions(sds);
 
             DA.SetDataList(ParamInfos.DimensionPoints.Name, dimensionPoints.Select(p => p.ToRhino()));
             DA.SetData(ParamInfos.DimensionLocation.Name, sds.GetDimensionLocation(dimensionPoints).ToRhino());
             DA.SetData(ParamInfos.StraightDimensionSetAttributes.Name, new StraightDimensionSetAttributesGoo(sds.Attributes));
-            DA.SetDataList(ParamInfos.StraightDimensions.Name, dimensions);
-        }
-
-        private List<StraightDimension> GetStraightDimensions(StraightDimensionSet sds)
-        {
-            var result = new List<StraightDimension>();
-            var doe = sds.GetObjects();
-            while (doe.MoveNext())
-            {
-                if (doe.Current is StraightDimension straightDimension)
-                    result.Add(straightDimension);
-            }
-
-            return result;
         }
     }
 }
