@@ -4,6 +4,7 @@ using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -119,7 +120,18 @@ namespace GTDrawingLink.Components.Views
                 createdView.Modify();
             }
 
+            FixCurvedSection(createdView);
+
             return (createdView, createdMark);
+        }
+
+        private void FixCurvedSection(View createdView)
+        {
+            createdView.RestrictionBox.MaxPoint.Z += 1;
+            createdView.Modify();
+
+            createdView.RestrictionBox.MaxPoint.Z -= 1;
+            createdView.Modify();
         }
     }
 
