@@ -132,6 +132,9 @@ namespace DrawingLink.UI
                         IsSnapToTickEnabled = true
                     };
 
+                    if (sliderParam.DecimalPlaces != 0)
+                        slider.TickFrequency = sliderParam.GetSmallChange();
+
                     slider.SetBinding(Slider.ValueProperty, new Binding(param.FieldName));
 
                     var textBox = new TextBox() { MinWidth = 80, Text = slider.Value.ToString() };
