@@ -1,28 +1,34 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using Tekla.Structures.Drawing;
+using System.Collections.Generic;
 
 namespace GTDrawingLink.Types
 {
-    public class ReinforcementAttributesParam : GH_Param<GH_Goo<ReinforcementBase.ReinforcementSingleAttributes>>
+    public class ReinforcementAttributesParam : GH_PersistentParam<ReinforcementAttributesGoo>
 	{
 		public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-		public ReinforcementAttributesParam(IGH_InstanceDescription tag)
+		public ReinforcementAttributesParam(GH_InstanceDescription tag)
 			: base(tag)
 		{
 		}
 
-		public ReinforcementAttributesParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-			: base(tag, access)
+		public ReinforcementAttributesParam(GH_InstanceDescription tag, GH_ParamAccess access)
+			: base(tag)
 		{
+			Access = access;
 		}
 
-		protected override GH_Goo<ReinforcementBase.ReinforcementSingleAttributes> InstantiateT()
+		protected override ReinforcementAttributesGoo InstantiateT()
 		{
 			return new ReinforcementAttributesGoo();
-		}
-	}
+        }
+
+        protected override GH_GetterResult Prompt_Singular(ref ReinforcementAttributesGoo value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<ReinforcementAttributesGoo> values)
+            => GH_GetterResult.cancel;
+    }
 }

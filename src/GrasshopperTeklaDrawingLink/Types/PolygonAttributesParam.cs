@@ -1,30 +1,34 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using Tekla.Structures.Drawing;
+using System.Collections.Generic;
 
 namespace GTDrawingLink.Types
 {
-    public class PolygonAttributesParam : GH_Param<GH_Goo<Polygon.PolygonAttributes>>
+    public class PolygonAttributesParam : GH_PersistentParam<PolygonAttributesGoo>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-        public PolygonAttributesParam(IGH_InstanceDescription tag)
+        public PolygonAttributesParam(GH_InstanceDescription tag)
             : base(tag)
         {
         }
 
-        public PolygonAttributesParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-            : base(tag, access)
+        public PolygonAttributesParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : base(tag)
         {
+            Access = access;
         }
 
-        protected override GH_Goo<Polygon.PolygonAttributes> InstantiateT()
+        protected override PolygonAttributesGoo InstantiateT()
         {
             return new PolygonAttributesGoo();
         }
+
+        protected override GH_GetterResult Prompt_Singular(ref PolygonAttributesGoo value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<PolygonAttributesGoo> values)
+            => GH_GetterResult.cancel;
     }
-
-
 }

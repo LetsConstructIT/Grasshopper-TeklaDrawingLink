@@ -1,30 +1,34 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using Tekla.Structures.Drawing;
+using System.Collections.Generic;
 
 namespace GTDrawingLink.Types
 {
-    public class TextFileAttributesParam : GH_Param<GH_Goo<TextFile.TextFileAttributes>>
+    public class TextFileAttributesParam : GH_PersistentParam<TextFileAttributesGoo>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-        public TextFileAttributesParam(IGH_InstanceDescription tag)
+        public TextFileAttributesParam(GH_InstanceDescription tag)
             : base(tag)
         {
         }
 
-        public TextFileAttributesParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-            : base(tag, access)
+        public TextFileAttributesParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : base(tag)
         {
+            Access = access;
         }
 
-        protected override GH_Goo<TextFile.TextFileAttributes> InstantiateT()
+        protected override TextFileAttributesGoo InstantiateT()
         {
             return new TextFileAttributesGoo();
         }
-    }
 
-    
+        protected override GH_GetterResult Prompt_Singular(ref TextFileAttributesGoo value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<TextFileAttributesGoo> values)
+            => GH_GetterResult.cancel;
+    }
 }
