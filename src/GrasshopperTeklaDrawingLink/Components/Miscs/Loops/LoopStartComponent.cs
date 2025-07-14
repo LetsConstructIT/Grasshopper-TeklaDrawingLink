@@ -1,14 +1,10 @@
-﻿using Grasshopper;
-using Grasshopper.Kernel;
+﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTDrawingLink.Components.Miscs.Loops
 {
@@ -20,6 +16,7 @@ namespace GTDrawingLink.Components.Miscs.Loops
         private bool _isActive;
         private int _currentLoop;
         private int _loopCount;
+        private bool _invokedByLoopEnd;
 
         public LoopStartComponent() : base(ComponentInfos.LoopStartComponent)
         {
@@ -55,6 +52,11 @@ namespace GTDrawingLink.Components.Miscs.Loops
             DA.GetDataTree<IGH_Goo>(1, out GH_Structure<IGH_Goo> dataTree);
             SetTotalLoopCount(dataTree);
 
+            if (!_invokedByLoopEnd)
+                _currentLoop = 0;
+
+            _invokedByLoopEnd = false;
+
             DA.SetData(1, _currentLoop);
             DA.SetDataTree(2, GetCurrentItem(dataTree));
         }
@@ -70,6 +72,8 @@ namespace GTDrawingLink.Components.Miscs.Loops
                 return false;
 
             _currentLoop++;
+
+            _invokedByLoopEnd = true;
             ExpireSolution(true);
             return true;
         }
