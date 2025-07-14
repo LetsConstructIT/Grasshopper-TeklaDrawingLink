@@ -1,11 +1,12 @@
 ﻿using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
+using System.Reflection;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class ModelObjectHatchAttributesGoo : GH_Goo<ModelObjectHatchAttributes>
+    public class ModelObjectHatchAttributesGoo : TeklaAttributesBaseGoo<ModelObjectHatchAttributes>
     {
         public override bool IsValid => true;
 
@@ -21,9 +22,27 @@ namespace GTDrawingLink.Types
             : base(attr)
         {
         }
+
         public override IGH_Goo Duplicate()
         {
-            throw new NotImplementedException();
+            if (Value == null)
+                throw new NotImplementedException();
+
+            var type = typeof(ModelObjectHatchAttributes);
+            var duplicate = (ModelObjectHatchAttributes)type.GetConstructor(
+                  BindingFlags.NonPublic | BindingFlags.Instance,
+                  null, Type.EmptyTypes, null).Invoke(null);
+
+            foreach (var hatchProperty in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (!hatchProperty.CanRead || !hatchProperty.CanWrite)
+                    continue;
+
+                var existingValue = hatchProperty.GetValue(Value);
+                hatchProperty.SetValue(duplicate, existingValue);
+            }
+
+            return new ModelObjectHatchAttributesGoo(duplicate);
         }
 
         public override bool CastFrom(object source)

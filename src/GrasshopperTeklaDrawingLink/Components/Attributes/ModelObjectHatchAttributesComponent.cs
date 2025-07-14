@@ -23,7 +23,7 @@ namespace GTDrawingLink.Components.AttributesComponents
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter(_hatchNameParameter, "N", "Hatch name", GH_ParamAccess.item);
-            pManager.AddParameter(new EnumParam<DrawingHatchColors>(ParamInfos.DrawingHatchColor, GH_ParamAccess.item));
+            AddOptionalParameter(pManager, new EnumParam<DrawingHatchColors>(ParamInfos.DrawingHatchColor, GH_ParamAccess.item));
             AddOptionalParameter(pManager, new EnumParam<DrawingHatchColors>(ParamInfos.DrawingBackgroundHatchColor, GH_ParamAccess.item));
         }
 
