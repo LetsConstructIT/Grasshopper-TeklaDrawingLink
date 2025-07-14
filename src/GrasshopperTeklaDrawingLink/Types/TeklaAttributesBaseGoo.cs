@@ -72,32 +72,6 @@ namespace GTDrawingLink.Types
             return base.Write(writer);
         }
 
-        class ValueWithType
-        {
-            public object Value { get; }
-            public Type Type { get; }
-
-            private ValueWithType(object value, Type type)
-            {
-                Value = value ?? throw new ArgumentNullException(nameof(value));
-                Type = type ?? throw new ArgumentNullException(nameof(type));
-            }
-
-            public static ValueWithType Integer(object value)
-                => new ValueWithType(value, typeof(int));
-
-            public static ValueWithType Double(object value)
-                => new ValueWithType(value, typeof(double));
-
-            public static ValueWithType Boolean(object value)
-                => new ValueWithType(value, typeof(bool));
-
-            public static ValueWithType String(object value)
-                => new ValueWithType(value, typeof(string));
-            public static ValueWithType Enum(object value)
-                => new ValueWithType(value, typeof(Enum));
-        }
-
         private void SplitPropertiesIntoPrimitives(object inputObject, ref Dictionary<string, ValueWithType> outPropertyValues)
         {
             if (inputObject == null)
@@ -106,9 +80,10 @@ namespace GTDrawingLink.Types
             var type = inputObject.GetType();
             foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).OrderBy(p => p.Name))
             {
-                var propType = property.PropertyType;
-                if (propType == typeof(System.Drawing.Color))
+                if (!property.CanWrite)
                     continue;
+
+                var propType = property.PropertyType;
 
                 var propertyValue = property.GetValue(inputObject);
                 var key = GetKey(type, property);
@@ -121,15 +96,16 @@ namespace GTDrawingLink.Types
                     outPropertyValues[key] = ValueWithType.String(propertyValue);
                 else if (propType == typeof(bool))
                     outPropertyValues[key] = ValueWithType.Boolean(propertyValue);
+#if API2024 || API2025
+                else if (propType == typeof(Tekla.Structures.Drawing.TeklaDrawingColor))
+                    outPropertyValues[key] = ValueWithType.Color(((Tekla.Structures.Drawing.TeklaDrawingColor)propertyValue).RGBColor.ToArgb());
+#endif
                 else if (propType.IsEnum)
                     outPropertyValues[key] = ValueWithType.Enum(propertyValue);
                 else
                     SplitPropertiesIntoPrimitives(propertyValue, ref outPropertyValues);
             }
         }
-
-        private string GetKey(Type type, PropertyInfo propertyInfo)
-            => $"{type.FullName}_{propertyInfo.Name}";
 
         public override bool Read(GH_IReader reader)
         {
@@ -142,19 +118,18 @@ namespace GTDrawingLink.Types
             return base.Read(reader);
         }
 
+        private string GetKey(Type type, PropertyInfo propertyInfo)
+            => $"{type.FullName}_{propertyInfo.Name}";
+
         private void FillProperties(object inputObject, GH_IReader reader)
         {
             var type = inputObject.GetType();
             foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
-                var propType = property.PropertyType;
-                if (propType == typeof(System.Drawing.Color))
-                    continue;
-
                 if (!property.CanWrite)
                     continue;
 
-                var propertyValue = property.GetValue(inputObject);
+                var propType = property.PropertyType;
                 var key = GetKey(type, property);
 
                 if (propType == typeof(int))
@@ -181,6 +156,18 @@ namespace GTDrawingLink.Types
                     if (reader.TryGetBoolean(key, ref value))
                         property.SetValue(inputObject, value);
                 }
+#if API2024 || API2025
+                else if (propType == typeof(Tekla.Structures.Drawing.TeklaDrawingColor))
+                {
+                    var value = 0;
+                    if (reader.TryGetInt32(key, ref value))
+                    {
+                        var color = System.Drawing.Color.FromArgb(value);
+                        var teklaColor = new Tekla.Structures.Drawing.TeklaDrawingColor(color);
+                        property.SetValue(inputObject, teklaColor);
+                    }
+                }
+#endif
                 else if (propType.IsEnum)
                 {
                     var value = 0;
@@ -188,8 +175,38 @@ namespace GTDrawingLink.Types
                         property.SetValue(inputObject, value);
                 }
                 else
-                    FillProperties(propertyValue, reader);
+                    FillProperties(property.GetValue(inputObject), reader);
             }
+        }
+
+        private class ValueWithType
+        {
+            public object Value { get; }
+            public Type Type { get; }
+
+            private ValueWithType(object value, Type type)
+            {
+                Value = value ?? throw new ArgumentNullException(nameof(value));
+                Type = type ?? throw new ArgumentNullException(nameof(type));
+            }
+
+            public static ValueWithType Integer(object value)
+                => new ValueWithType(value, typeof(int));
+
+            public static ValueWithType Double(object value)
+                => new ValueWithType(value, typeof(double));
+
+            public static ValueWithType Boolean(object value)
+                => new ValueWithType(value, typeof(bool));
+
+            public static ValueWithType String(object value)
+                => new ValueWithType(value, typeof(string));
+
+            public static ValueWithType Color(int argb)
+                => new ValueWithType(argb, typeof(int));
+
+            public static ValueWithType Enum(object value)
+                => new ValueWithType(value, typeof(Enum));
         }
     }
 }
