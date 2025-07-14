@@ -1,6 +1,4 @@
-﻿using GH_IO.Serialization;
-using Grasshopper.Kernel.Types;
-using System;
+﻿using Grasshopper.Kernel.Types;
 using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
