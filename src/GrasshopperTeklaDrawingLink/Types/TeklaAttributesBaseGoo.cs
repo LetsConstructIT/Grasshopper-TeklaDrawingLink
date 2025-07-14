@@ -1,6 +1,11 @@
-﻿using Grasshopper.Kernel.Types;
+﻿using GH_IO.Serialization;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace GTDrawingLink.Types
 {
@@ -41,6 +46,150 @@ namespace GTDrawingLink.Types
                 return "No value";
 
             return ReflectionHelper.GetPropertiesWithValues(Value);
+        }
+
+        public override bool Write(GH_IWriter writer)
+        {
+            if (Value != null)
+            {
+                var propertyValues = new Dictionary<string, ValueWithType>();
+                SplitPropertiesIntoPrimitives(Value, ref propertyValues);
+
+                foreach (var propertyValue in propertyValues)
+                {
+                    if (propertyValue.Value.Type == typeof(int) ||
+                        propertyValue.Value.Type == typeof(Enum))
+                        writer.SetInt32(propertyValue.Key, (int)propertyValue.Value.Value);
+                    else if (propertyValue.Value.Type == typeof(double))
+                        writer.SetDouble(propertyValue.Key, (double)propertyValue.Value.Value);
+                    else if (propertyValue.Value.Type == typeof(string))
+                        writer.SetString(propertyValue.Key, (string)propertyValue.Value.Value);
+                    else if (propertyValue.Value.Type == typeof(bool))
+                        writer.SetBoolean(propertyValue.Key, (bool)propertyValue.Value.Value);
+                }
+            }
+
+            return base.Write(writer);
+        }
+
+        class ValueWithType
+        {
+            public object Value { get; }
+            public Type Type { get; }
+
+            private ValueWithType(object value, Type type)
+            {
+                Value = value ?? throw new ArgumentNullException(nameof(value));
+                Type = type ?? throw new ArgumentNullException(nameof(type));
+            }
+
+            public static ValueWithType Integer(object value)
+                => new ValueWithType(value, typeof(int));
+
+            public static ValueWithType Double(object value)
+                => new ValueWithType(value, typeof(double));
+
+            public static ValueWithType Boolean(object value)
+                => new ValueWithType(value, typeof(bool));
+
+            public static ValueWithType String(object value)
+                => new ValueWithType(value, typeof(string));
+            public static ValueWithType Enum(object value)
+                => new ValueWithType(value, typeof(Enum));
+        }
+
+        private void SplitPropertiesIntoPrimitives(object inputObject, ref Dictionary<string, ValueWithType> outPropertyValues)
+        {
+            if (inputObject == null)
+                return;
+
+            var type = inputObject.GetType();
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).OrderBy(p => p.Name))
+            {
+                var propType = property.PropertyType;
+                if (propType == typeof(System.Drawing.Color))
+                    continue;
+
+                var propertyValue = property.GetValue(inputObject);
+                var key = GetKey(type, property);
+
+                if (propType == typeof(int))
+                    outPropertyValues[key] = ValueWithType.Integer(propertyValue);
+                else if (propType == typeof(double))
+                    outPropertyValues[key] = ValueWithType.Double(propertyValue);
+                else if (propType == typeof(string))
+                    outPropertyValues[key] = ValueWithType.String(propertyValue);
+                else if (propType == typeof(bool))
+                    outPropertyValues[key] = ValueWithType.Boolean(propertyValue);
+                else if (propType.IsEnum)
+                    outPropertyValues[key] = ValueWithType.Enum(propertyValue);
+                else
+                    SplitPropertiesIntoPrimitives(propertyValue, ref outPropertyValues);
+            }
+        }
+
+        private string GetKey(Type type, PropertyInfo propertyInfo)
+            => $"{type.FullName}_{propertyInfo.Name}";
+
+        public override bool Read(GH_IReader reader)
+        {
+            var neededType = typeof(T);
+            Value = (T)Activator.CreateInstance(neededType);
+
+            if (reader.ItemCount > 1) // there is always one property set by GH, TypeName
+                FillProperties(Value, reader);
+
+            return base.Read(reader);
+        }
+
+        private void FillProperties(object inputObject, GH_IReader reader)
+        {
+            var type = inputObject.GetType();
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            {
+                var propType = property.PropertyType;
+                if (propType == typeof(System.Drawing.Color))
+                    continue;
+
+                if (!property.CanWrite)
+                    continue;
+
+                var propertyValue = property.GetValue(inputObject);
+                var key = GetKey(type, property);
+
+                if (propType == typeof(int))
+                {
+                    var value = 0;
+                    if (reader.TryGetInt32(key, ref value))
+                        property.SetValue(inputObject, value);
+                }
+                else if (propType == typeof(double))
+                {
+                    var value = 0.0;
+                    if (reader.TryGetDouble(key, ref value))
+                        property.SetValue(inputObject, value);
+                }
+                else if (propType == typeof(string))
+                {
+                    var value = string.Empty;
+                    if (reader.TryGetString(key, ref value))
+                        property.SetValue(inputObject, value);
+                }
+                else if (propType == typeof(bool))
+                {
+                    var value = false;
+                    if (reader.TryGetBoolean(key, ref value))
+                        property.SetValue(inputObject, value);
+                }
+                else if (propType.IsEnum)
+                {
+                    var value = 0;
+                    if (reader.TryGetInt32(key, ref value))
+                        property.SetValue(inputObject, value);
+                }
+                else
+                    FillProperties(propertyValue, reader);
+            }
         }
     }
 }
