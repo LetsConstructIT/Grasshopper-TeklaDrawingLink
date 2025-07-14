@@ -1,7 +1,5 @@
 ﻿using Grasshopper.Kernel;
-
 using GTDrawingLink.Tools;
-
 using System;
 using System.Collections.Generic;
 

@@ -110,7 +110,7 @@ namespace GTDrawingLink.Types
         public override bool Read(GH_IReader reader)
         {
             var neededType = typeof(T);
-            Value = (T)Activator.CreateInstance(neededType);
+            Value = (T)Activator.CreateInstance(neededType, nonPublic: true);
 
             if (reader.ItemCount > 1) // there is always one property set by GH, TypeName
                 FillProperties(Value, reader);

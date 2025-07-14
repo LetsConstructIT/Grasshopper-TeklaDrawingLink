@@ -1,17 +1,19 @@
-﻿using Tekla.Structures.Drawing;
+﻿using Grasshopper.Kernel.Types;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
     public class LineTypeAttributesGoo : TeklaAttributesBaseGoo<LineTypeAttributes>
     {
-        public LineTypeAttributesGoo() : base()
-        {
+        public LineTypeAttributesGoo() { }
 
+        public LineTypeAttributesGoo(LineTypeAttributes attributes)
+        {
+            Value = attributes;
         }
-
-        public LineTypeAttributesGoo(LineTypeAttributes attributes) : base(attributes)
+        public override IGH_Goo Duplicate()
         {
-
+            return new LineTypeAttributesGoo(Value);
         }
     }
 }

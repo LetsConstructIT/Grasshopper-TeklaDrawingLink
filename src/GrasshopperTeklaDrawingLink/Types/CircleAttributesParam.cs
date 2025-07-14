@@ -1,28 +1,34 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using Tekla.Structures.Drawing;
+using System.Collections.Generic;
 
 namespace GTDrawingLink.Types
 {
-    public class CircleAttributesParam : GH_Param<GH_Goo<Circle.CircleAttributes>>
+    public class CircleAttributesParam : GH_PersistentParam<CircleAttributesGoo>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-        public CircleAttributesParam(IGH_InstanceDescription tag)
+        public CircleAttributesParam(GH_InstanceDescription tag)
             : base(tag)
         {
         }
 
-        public CircleAttributesParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-            : base(tag, access)
+        public CircleAttributesParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : base(tag)
         {
+            Access = access;
         }
 
-        protected override GH_Goo<Circle.CircleAttributes> InstantiateT()
+        protected override CircleAttributesGoo InstantiateT()
         {
             return new CircleAttributesGoo();
         }
+
+        protected override GH_GetterResult Prompt_Singular(ref CircleAttributesGoo value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<CircleAttributesGoo> values)
+            => GH_GetterResult.cancel;
     }
 }
