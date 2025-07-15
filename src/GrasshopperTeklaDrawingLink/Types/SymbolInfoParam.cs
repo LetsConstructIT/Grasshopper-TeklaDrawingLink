@@ -1,28 +1,34 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using Tekla.Structures.Drawing;
+using System.Collections.Generic;
 
 namespace GTDrawingLink.Types
 {
-    public class SymbolInfoParam : GH_Param<GH_Goo<SymbolInfo>>
+    public class SymbolInfoParam : GH_PersistentParam<SymbolInfoGoo>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-        public SymbolInfoParam(IGH_InstanceDescription tag)
+        public SymbolInfoParam(GH_InstanceDescription tag)
             : base(tag)
         {
         }
 
-        public SymbolInfoParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-            : base(tag, access)
+        public SymbolInfoParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : base(tag)
         {
+            Access = access;
         }
 
-        protected override GH_Goo<SymbolInfo> InstantiateT()
+        protected override SymbolInfoGoo InstantiateT()
         {
             return new SymbolInfoGoo();
         }
+
+        protected override GH_GetterResult Prompt_Singular(ref SymbolInfoGoo value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<SymbolInfoGoo> values)
+            => GH_GetterResult.cancel;
     }
 }

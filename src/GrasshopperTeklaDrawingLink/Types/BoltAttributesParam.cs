@@ -1,28 +1,34 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using Tekla.Structures.Drawing;
+using System.Collections.Generic;
 
 namespace GTDrawingLink.Types
 {
-    public class BoltAttributesParam : GH_Param<GH_Goo<Bolt.BoltAttributes>>
+    public class BoltAttributesParam : GH_PersistentParam<BoltAttributesGoo>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-        public BoltAttributesParam(IGH_InstanceDescription tag)
+        public BoltAttributesParam(GH_InstanceDescription tag)
             : base(tag)
         {
         }
 
-        public BoltAttributesParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-            : base(tag, access)
+        public BoltAttributesParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : base(tag)
         {
+            Access = access;
         }
 
-        protected override GH_Goo<Bolt.BoltAttributes> InstantiateT()
+        protected override BoltAttributesGoo InstantiateT()
         {
             return new BoltAttributesGoo();
         }
+
+        protected override GH_GetterResult Prompt_Singular(ref BoltAttributesGoo value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<BoltAttributesGoo> values)
+            => GH_GetterResult.cancel;
     }
 }

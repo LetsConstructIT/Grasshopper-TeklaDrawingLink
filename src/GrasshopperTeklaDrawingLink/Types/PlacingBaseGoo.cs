@@ -1,4 +1,5 @@
-﻿using Tekla.Structures.Drawing;
+﻿using Grasshopper.Kernel.Types;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
@@ -11,6 +12,11 @@ namespace GTDrawingLink.Types
         public PlacingBaseGoo(PlacingBase placingBase)
         {
             Value = placingBase;
+        }
+
+        public override IGH_Goo Duplicate()
+        {
+            return new PlacingBaseGoo(Value);
         }
 
         public override string ToString()

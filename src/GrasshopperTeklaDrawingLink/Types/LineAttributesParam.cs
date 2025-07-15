@@ -1,28 +1,34 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using Tekla.Structures.Drawing;
+using System.Collections.Generic;
 
 namespace GTDrawingLink.Types
 {
-    public class LineAttributesParam : GH_Param<GH_Goo<Line.LineAttributes>>
+    public class LineAttributesParam : GH_PersistentParam<LineAttributesGoo>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-        public LineAttributesParam(IGH_InstanceDescription tag)
+        public LineAttributesParam(GH_InstanceDescription tag)
             : base(tag)
         {
         }
 
-        public LineAttributesParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-            : base(tag, access)
+        public LineAttributesParam(GH_InstanceDescription tag, GH_ParamAccess access)
+            : base(tag)
         {
+            Access = access;
         }
 
-        protected override GH_Goo<Line.LineAttributes> InstantiateT()
+        protected override LineAttributesGoo InstantiateT()
         {
             return new LineAttributesGoo();
         }
+
+        protected override GH_GetterResult Prompt_Singular(ref LineAttributesGoo value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<LineAttributesGoo> values)
+            => GH_GetterResult.cancel;
     }
 }
