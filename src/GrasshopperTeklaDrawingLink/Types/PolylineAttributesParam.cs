@@ -1,11 +1,13 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class PolylineAttributesParam : GH_PersistentParam<PolylineAttributesGoo>
+    public class PolylineAttributesParam : GH_PersistentParam<GH_Goo<Polyline.PolylineAttributes>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -20,15 +22,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override PolylineAttributesGoo InstantiateT()
+        protected override GH_Goo<Polyline.PolylineAttributes> InstantiateT()
         {
             return new PolylineAttributesGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref PolylineAttributesGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<Polyline.PolylineAttributes> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<PolylineAttributesGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<Polyline.PolylineAttributes>> values)
             => GH_GetterResult.cancel;
     }
 }

@@ -1,11 +1,13 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class ArcAttributesParam : GH_PersistentParam<ArcAttributesGoo>
+    public class ArcAttributesParam : GH_PersistentParam<GH_Goo<Arc.ArcAttributes>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -20,15 +22,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override ArcAttributesGoo InstantiateT()
+        protected override GH_Goo<Arc.ArcAttributes>  InstantiateT()
         {
             return new ArcAttributesGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref ArcAttributesGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<Arc.ArcAttributes> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<ArcAttributesGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<Arc.ArcAttributes>> values)
             => GH_GetterResult.cancel;
     }
 }

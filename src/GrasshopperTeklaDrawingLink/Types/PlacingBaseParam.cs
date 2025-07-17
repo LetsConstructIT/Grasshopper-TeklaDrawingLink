@@ -1,11 +1,13 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class PlacingBaseParam : GH_PersistentParam<PlacingBaseGoo>
+    public class PlacingBaseParam : GH_PersistentParam<GH_Goo<PlacingBase>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -20,15 +22,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override PlacingBaseGoo InstantiateT()
+        protected override GH_Goo<PlacingBase> InstantiateT()
         {
             return new PlacingBaseGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref PlacingBaseGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<PlacingBase> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<PlacingBaseGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<PlacingBase>> values)
             => GH_GetterResult.cancel;
     }
 }

@@ -1,11 +1,13 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class FrameAttributesParam : GH_PersistentParam<FrameAttributesGoo>
+    public class FrameAttributesParam : GH_PersistentParam<GH_Goo<Frame>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -20,15 +22,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override FrameAttributesGoo InstantiateT()
+        protected override GH_Goo<Frame> InstantiateT()
         {
             return new FrameAttributesGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref FrameAttributesGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<Frame> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<FrameAttributesGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<Frame>> values)
             => GH_GetterResult.cancel;
     }
 }

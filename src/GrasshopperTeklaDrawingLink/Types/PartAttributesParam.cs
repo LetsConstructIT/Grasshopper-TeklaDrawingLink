@@ -7,7 +7,7 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class PartAttributesParam : GH_PersistentParam<PartAttributesGoo>
+    public class PartAttributesParam : GH_PersistentParam<GH_Goo<Part.PartAttributes>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -22,15 +22,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override PartAttributesGoo InstantiateT()
+        protected override GH_Goo<Part.PartAttributes> InstantiateT()
         {
             return new PartAttributesGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref PartAttributesGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<Part.PartAttributes> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<PartAttributesGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<Part.PartAttributes>> values)
             => GH_GetterResult.cancel;
     }
 }

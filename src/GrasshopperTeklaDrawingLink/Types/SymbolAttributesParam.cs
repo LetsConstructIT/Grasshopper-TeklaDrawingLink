@@ -1,11 +1,13 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class SymbolAttributesParam : GH_PersistentParam<SymbolAttributesGoo>
+    public class SymbolAttributesParam : GH_PersistentParam<GH_Goo<SymbolAttributes>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -20,15 +22,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override SymbolAttributesGoo InstantiateT()
+        protected override GH_Goo<SymbolAttributes> InstantiateT()
         {
             return new SymbolAttributesGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref SymbolAttributesGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<SymbolAttributes> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<SymbolAttributesGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<SymbolAttributes>> values)
             => GH_GetterResult.cancel;
     }
 }

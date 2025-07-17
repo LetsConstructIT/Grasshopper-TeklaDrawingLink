@@ -1,11 +1,13 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class ReinforcementMeshAttributesParam : GH_PersistentParam<ReinforcementMeshAttributesGoo>
+    public class ReinforcementMeshAttributesParam : GH_PersistentParam<GH_Goo<ReinforcementBase.ReinforcementMeshAttributes>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -20,15 +22,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override ReinforcementMeshAttributesGoo InstantiateT()
+        protected override GH_Goo<ReinforcementBase.ReinforcementMeshAttributes> InstantiateT()
         {
             return new ReinforcementMeshAttributesGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref ReinforcementMeshAttributesGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<ReinforcementBase.ReinforcementMeshAttributes> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<ReinforcementMeshAttributesGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<ReinforcementBase.ReinforcementMeshAttributes>> values)
             => GH_GetterResult.cancel;
     }
 }

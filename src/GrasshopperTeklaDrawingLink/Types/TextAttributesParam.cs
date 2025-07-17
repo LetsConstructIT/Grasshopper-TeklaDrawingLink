@@ -1,11 +1,13 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
 using System.Collections.Generic;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-    public class TextAttributesParam : GH_PersistentParam<TextAttributesGoo>
+    public class TextAttributesParam : GH_PersistentParam<GH_Goo<Text.TextAttributes>>
     {
         public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
@@ -19,15 +21,15 @@ namespace GTDrawingLink.Types
             Access = access;
         }
 
-        protected override TextAttributesGoo InstantiateT()
+        protected override GH_Goo<Text.TextAttributes> InstantiateT()
         {
             return new TextAttributesGoo();
         }
 
-        protected override GH_GetterResult Prompt_Singular(ref TextAttributesGoo value)
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<Text.TextAttributes> value)
             => GH_GetterResult.cancel;
 
-        protected override GH_GetterResult Prompt_Plural(ref List<TextAttributesGoo> values)
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<Text.TextAttributes>> values)
             => GH_GetterResult.cancel;
     }
 }
