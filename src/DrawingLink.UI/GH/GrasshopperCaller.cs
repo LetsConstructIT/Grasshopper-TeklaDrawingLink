@@ -1,4 +1,5 @@
-﻿using GH_IO.Serialization;
+﻿using DrawingLink.UI.Utils;
+using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
@@ -108,7 +109,9 @@ namespace DrawingLink.UI.GH
 
             var activeObjects = document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked).ToList();
             DisableTeklaLiveness(activeObjects);
-            foreach (var activeObject in activeObjects)
+
+            var loops = FindLoops(activeObjects, messages);
+            foreach (var activeObject in activeObjects.Except(loops.GetAllObjects()))
             {
                 if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => allowedComponentTypes.Contains(t.Name)))
                 {
@@ -135,6 +138,63 @@ namespace DrawingLink.UI.GH
             }
 
             return messages;
+        }
+
+        private Loops FindLoops(List<IGH_ActiveObject> activeObjects, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        {
+            var loops = new Loops();
+
+            var loopStarts = Loops.FindLoopStarts(activeObjects);
+            var loopEnds = Loops.FindLoopEnds(activeObjects);
+            if (!loopStarts.Any())
+                return loops;
+
+
+            foreach (var component in loopStarts)
+            {
+                CalculateComponent(component, messages);
+            }
+
+            foreach (var component in loopEnds)
+            {
+                CalculateComponent(component, messages);
+
+                var loopStart = LoopReflection.FindLoopStart(component);
+                if (loopStart != null)
+                {
+                    var existingStart = loopStarts.Where(l => l == loopStart).FirstOrDefault();
+                    if (existingStart != null)
+                        loops.Add(new Loop(existingStart, component));
+                }
+            }
+
+            while (true)
+            {
+                foreach (var loop in loops.Where(l => !l.HasFinished))
+                {
+                    loop.ResetComponents();
+
+                    CalculateComponent(loop.LoopStart, messages);
+                    CalculateComponent(loop.LoopEnd, messages);
+
+                    if (LoopReflection.HasLoopEnded(loop.LoopEnd))
+                        loop.MarkAsCompleted();
+                    else
+                        loop.IncreaseIteration();
+                }
+
+                if (loops.All(l => l.HasFinished))
+                    break;
+            }
+
+            return loops;
+
+            void CalculateComponent(IGH_Component component, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+            {
+                component.CollectData();
+                component.ComputeData();
+                AppendComponentErrorMessages(component, messages);
+            }
         }
 
         private void SetValuesInGrasshopper(GHParams inputParams, UserFormData data, Dictionary<string, TeklaObjects> teklaInput)
@@ -588,7 +648,7 @@ namespace DrawingLink.UI.GH
             return allowedNames.Any(n => panelName.StartsWith(n));
         }
 
-        private void AppendComponentErrorMessages(GH_Component component, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private void AppendComponentErrorMessages(IGH_Component component, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
             var toCheck = new GH_RuntimeMessageLevel[] { GH_RuntimeMessageLevel.Warning, GH_RuntimeMessageLevel.Error };
 

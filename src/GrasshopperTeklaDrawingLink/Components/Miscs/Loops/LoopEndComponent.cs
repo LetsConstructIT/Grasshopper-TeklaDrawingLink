@@ -40,15 +40,19 @@ namespace GTDrawingLink.Components.Miscs.Loops
             if (!FindStart())
                 return;
 
+            DA.GetDataTree(1, out GH_Structure<IGH_Goo> dataTree);
+            dataTree = dataTree.Duplicate();
+
             var controlReturnedToStart = _loopStart.TryIncrement(out int iteration);
             var loopFinished = !controlReturnedToStart;
             AdjustComponentName(loopFinished, iteration);
 
             DA.SetData(ParamInfos.LoopCompletition.Name, loopFinished);
 
-            DA.GetDataTree<IGH_Goo>(1, out GH_Structure<IGH_Goo> dataTree);
             AppendCurrentLoopResult(dataTree, iteration);
-            DA.SetDataTree(1, _mergedData);
+
+            if (loopFinished)
+                DA.SetDataTree(1, _mergedData);
         }
 
         private bool FindStart()
