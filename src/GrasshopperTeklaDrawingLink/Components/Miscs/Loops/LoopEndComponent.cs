@@ -37,7 +37,7 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            if (!FindStart())
+            if (!FindStart() || !StartIsNotActive())
                 return;
 
             DA.GetDataTree(1, out GH_Structure<IGH_Goo> dataTree);
@@ -72,6 +72,11 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
             _loopStart = potentialStart as LoopStartComponent;
             return true;
+        }
+
+        private bool StartIsNotActive()
+        {
+            return _loopStart.IsToggleOn();
         }
 
         private void AdjustComponentName(bool loopFinished, int iteration)

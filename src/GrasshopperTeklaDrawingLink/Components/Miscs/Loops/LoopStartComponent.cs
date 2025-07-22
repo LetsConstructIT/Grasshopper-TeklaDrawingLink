@@ -78,6 +78,12 @@ namespace GTDrawingLink.Components.Miscs.Loops
             return true;
         }
 
+        internal bool IsToggleOn()
+        {
+            var startToggle = (GH_Boolean)this.Params.Input.First().VolatileData.AllData(true).First();
+            return startToggle.Value;
+        }
+
         private void SetTotalLoopCount(GH_Structure<IGH_Goo> dataTree)
         {
             _loopCount = dataTree.Branches.Count == 1 ?
@@ -125,6 +131,7 @@ namespace GTDrawingLink.Components.Miscs.Loops
             base.AppendAdditionalComponentMenuItems(menu);
             Menu_AppendItem(menu, ParamInfos.RecomputeObjects.Name, LoopRecompute).ToolTipText = ParamInfos.RecomputeObjects.Description;
         }
+
         protected void LoopRecompute(object sender, EventArgs e)
         {
             _loopCount = 0;
