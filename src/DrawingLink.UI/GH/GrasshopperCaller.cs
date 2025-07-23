@@ -101,7 +101,7 @@ namespace DrawingLink.UI.GH
             var activeObjects = document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked).ToList();
             DisableTeklaLiveness(activeObjects);
 
-            var loopStarts = activeObjects.Where(o => o.Name.StartsWith("Loop Start")).ToList();
+            var loopStarts = CollectLoopStarts(activeObjects);
             if (loopStarts.Any())
                 WaitUntilLoopsFinish(loopStarts, document);
 
@@ -132,6 +132,13 @@ namespace DrawingLink.UI.GH
             }
 
             return messages;
+        }
+
+        private static Guid _loopGuids = new("3368FCF5-A321-4B54-944E-36A20DD01ED0");
+
+        private static List<IGH_ActiveObject> CollectLoopStarts(List<IGH_ActiveObject> activeObjects)
+        {
+            return activeObjects.Where(o => o.ComponentGuid == _loopGuids).ToList();
         }
 
         private void WaitUntilLoopsFinish(List<IGH_ActiveObject> loopStarts, GH_Document document)
