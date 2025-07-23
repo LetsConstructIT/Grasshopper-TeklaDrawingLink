@@ -102,18 +102,8 @@ namespace DrawingLink.UI.GH
             DisableTeklaLiveness(activeObjects);
 
             var loopStarts = activeObjects.Where(o => o.Name.StartsWith("Loop Start")).ToList();
-            document.Enabled = true;
-            document.NewSolution(true);
-
-            for (int i = 0; i < _maxNumberOfLoops; i++)
-            {
-                document.NewSolution(false);
-                if (HaveLoopsFinished(loopStarts))
-                {
-                    System.Diagnostics.Debug.WriteLine($"----COMPLETED AFTER {i} iterations");
-                    break;
-                }
-            }
+            if (loopStarts.Any())
+                WaitUntilLoopsFinish(loopStarts, document);
 
             foreach (var activeObject in activeObjects)
             {
@@ -144,9 +134,22 @@ namespace DrawingLink.UI.GH
             return messages;
         }
 
-        private bool HaveLoopsFinished(List<IGH_ActiveObject> loopStarts)
+        private void WaitUntilLoopsFinish(List<IGH_ActiveObject> loopStarts, GH_Document document)
         {
-            return loopStarts.All(l => (bool)((dynamic)l).Completed);
+            document.Enabled = true;
+            document.NewSolution(true);
+
+            for (int i = 0; i < _maxNumberOfLoops; i++)
+            {
+                document.NewSolution(false);
+                if (HaveLoopsFinished(loopStarts))
+                    break;
+            }
+
+            static bool HaveLoopsFinished(List<IGH_ActiveObject> loopStarts)
+            {
+                return loopStarts.All(l => (bool)((dynamic)l).Completed);
+            }
         }
 
         private void SetValuesInGrasshopper(GHParams inputParams, UserFormData data, Dictionary<string, TeklaObjects> teklaInput)
