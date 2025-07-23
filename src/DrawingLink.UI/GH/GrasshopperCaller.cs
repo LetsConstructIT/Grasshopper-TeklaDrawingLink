@@ -28,6 +28,9 @@ namespace DrawingLink.UI.GH
 
         private const string STRING_SETTING_TOLERANCE = "RHINO TOLERANCE";
         private const string STRING_SETTING_ANGLE_TOLERANCE = "RHINO ANGLE TOLERANCE";
+        private const string STRING_SETTING_MAX_NUMBER_OF_LOOPS = "MAX NUMBER OF LOOPS";
+
+        private int _maxNumberOfLoops = 10000;
 
         private GrasshopperCaller()
         {
@@ -114,8 +117,7 @@ namespace DrawingLink.UI.GH
             document.Enabled = true;
             document.NewSolution(true);
 
-            var maxLoopCount = 10000;
-            for (int i = 0; i < maxLoopCount; i++)
+            for (int i = 0; i < _maxNumberOfLoops; i++)
             {
                 document.NewSolution(false);
                 if (HaveLoopsFinished(loopStarts))
@@ -201,18 +203,13 @@ namespace DrawingLink.UI.GH
                         panel.ExpireSolution(true);
                         if (IsSettingsPanel(panel))
                         {
-                            string text4 = panel.NickName.Trim().ToUpperInvariant();
-                            if (text4.StartsWith(STRING_SETTING_TOLERANCE))
-                            {
-                                if (double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoTolerance))
-                                {
-                                    SetRhinoTolerance(rhinoTolerance);
-                                }
-                            }
-                            else if (text4.StartsWith(STRING_SETTING_ANGLE_TOLERANCE) && double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoAngleTolerance))
-                            {
+                            var settingText = panel.NickName.Trim().ToUpperInvariant();
+                            if (settingText.StartsWith(STRING_SETTING_TOLERANCE) && double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoTolerance))
+                                SetRhinoTolerance(rhinoTolerance);
+                            else if (settingText.StartsWith(STRING_SETTING_ANGLE_TOLERANCE) && double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoAngleTolerance))
                                 SetRhinoAngleTolerance(rhinoAngleTolerance);
-                            }
+                            else if (settingText.StartsWith(STRING_SETTING_MAX_NUMBER_OF_LOOPS) && int.TryParse(panelText, out int maxLoopNumber))
+                                _maxNumberOfLoops = maxLoopNumber;
                         }
                     }
                 }
