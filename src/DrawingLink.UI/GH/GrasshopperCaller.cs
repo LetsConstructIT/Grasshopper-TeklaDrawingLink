@@ -60,27 +60,15 @@ namespace DrawingLink.UI.GH
             UnitSystem rhinoUnitSystem = UnitSystem.Millimeters;
             if (Settings.TryGetValue("distance_unit", out var teklaUnit))
             {
-                switch ((Distance.UnitType)teklaUnit)
+                rhinoUnitSystem = (Distance.UnitType)teklaUnit switch
                 {
-                    case Distance.UnitType.Millimeter:
-                        rhinoUnitSystem = UnitSystem.Millimeters;
-                        break;
-                    case Distance.UnitType.Centimeter:
-                        rhinoUnitSystem = UnitSystem.Centimeters;
-                        break;
-                    case Distance.UnitType.Meter:
-                        rhinoUnitSystem = UnitSystem.Meters;
-                        break;
-                    case Distance.UnitType.Inch:
-                        rhinoUnitSystem = UnitSystem.Inches;
-                        break;
-                    case Distance.UnitType.Foot:
-                        rhinoUnitSystem = UnitSystem.Feet;
-                        break;
-                    default:
-                        rhinoUnitSystem = UnitSystem.Millimeters;
-                        break;
-                }
+                    Distance.UnitType.Millimeter => UnitSystem.Millimeters,
+                    Distance.UnitType.Centimeter => UnitSystem.Centimeters,
+                    Distance.UnitType.Meter => UnitSystem.Meters,
+                    Distance.UnitType.Inch => UnitSystem.Inches,
+                    Distance.UnitType.Foot => UnitSystem.Feet,
+                    _ => UnitSystem.Millimeters,
+                };
             }
             _rhinoDoc.ModelUnitSystem = rhinoUnitSystem;
             _rhinoDoc.ModelAbsoluteTolerance = GetAbsoluteTolerance(0.1, rhinoUnitSystem);
