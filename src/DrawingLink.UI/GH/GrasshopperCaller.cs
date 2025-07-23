@@ -110,8 +110,22 @@ namespace DrawingLink.UI.GH
             var activeObjects = document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked).ToList();
             DisableTeklaLiveness(activeObjects);
 
-            var loops = FindLoops(activeObjects, messages);
-            foreach (var activeObject in activeObjects.Except(loops.GetAllObjects()))
+            var loopStarts = activeObjects.Where(o => o.Name.StartsWith("Loop Start")).ToList();
+            document.Enabled = true;
+            document.NewSolution(true);
+
+            var maxLoopCount = 10000;
+            for (int i = 0; i < maxLoopCount; i++)
+            {
+                document.NewSolution(false);
+                if (HaveLoopsFinished(loopStarts))
+                {
+                    System.Diagnostics.Debug.WriteLine($"----COMPLETED AFTER {i} iterations");
+                    break;
+                }
+            }
+
+            foreach (var activeObject in activeObjects)
             {
                 if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => allowedComponentTypes.Contains(t.Name)))
                 {
@@ -140,61 +154,9 @@ namespace DrawingLink.UI.GH
             return messages;
         }
 
-        private Loops FindLoops(List<IGH_ActiveObject> activeObjects, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private bool HaveLoopsFinished(List<IGH_ActiveObject> loopStarts)
         {
-            var loops = new Loops();
-
-            var loopStarts = Loops.FindLoopStarts(activeObjects);
-            var loopEnds = Loops.FindLoopEnds(activeObjects);
-            if (!loopStarts.Any())
-                return loops;
-
-
-            foreach (var component in loopStarts)
-            {
-                CalculateComponent(component, messages);
-            }
-
-            foreach (var component in loopEnds)
-            {
-                CalculateComponent(component, messages);
-
-                var loopStart = LoopReflection.FindLoopStart(component);
-                if (loopStart != null)
-                {
-                    var existingStart = loopStarts.Where(l => l == loopStart).FirstOrDefault();
-                    if (existingStart != null)
-                        loops.Add(new Loop(existingStart, component));
-                }
-            }
-
-            while (true)
-            {
-                foreach (var loop in loops.Where(l => !l.HasFinished))
-                {
-                    loop.ResetComponents();
-
-                    CalculateComponent(loop.LoopStart, messages);
-                    CalculateComponent(loop.LoopEnd, messages);
-
-                    if (LoopReflection.HasLoopEnded(loop.LoopEnd))
-                        loop.MarkAsCompleted();
-                    else
-                        loop.IncreaseIteration();
-                }
-
-                if (loops.All(l => l.HasFinished))
-                    break;
-            }
-
-            return loops;
-
-            void CalculateComponent(IGH_Component component, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
-            {
-                component.CollectData();
-                component.ComputeData();
-                AppendComponentErrorMessages(component, messages);
-            }
+            return loopStarts.All(l => (bool)((dynamic)l).Completed);
         }
 
         private void SetValuesInGrasshopper(GHParams inputParams, UserFormData data, Dictionary<string, TeklaObjects> teklaInput)

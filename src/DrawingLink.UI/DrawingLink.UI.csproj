@@ -31,6 +31,7 @@
         <PackageReference Include="Grasshopper" Version="7.0.20314.3001">
             <ExcludeAssets>runtime</ExcludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="Tekla.Structures.Drawing" Version="2024.0.4">
             <ExcludeAssets>runtime</ExcludeAssets>
         </PackageReference>

@@ -18,6 +18,8 @@ namespace GTDrawingLink.Components.Miscs.Loops
         private int _loopCount;
         private bool _invokedByLoopEnd;
 
+        public bool Completed { get; private set; }
+
         public LoopStartComponent() : base(ComponentInfos.LoopStartComponent)
         {
         }
@@ -37,6 +39,7 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            Completed = false;
             var trigger = false;
             if (!DA.GetData(0, ref trigger) || !trigger)
             {
@@ -50,7 +53,7 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
             _isActive = true;
             DA.GetDataTree<IGH_Goo>(1, out GH_Structure<IGH_Goo> dataTree);
-            SetTotalLoopCount(dataTree);
+            _loopCount = GetTotalLoopCount(dataTree);
 
             if (!_invokedByLoopEnd)
                 _currentLoop = 0;
@@ -69,7 +72,10 @@ namespace GTDrawingLink.Components.Miscs.Loops
                 return false;
 
             if (_currentLoop + 1 >= _loopCount)
+            {
+                Completed = true;
                 return false;
+            }
 
             _currentLoop++;
 
@@ -84,9 +90,9 @@ namespace GTDrawingLink.Components.Miscs.Loops
             return startToggle.Value;
         }
 
-        private void SetTotalLoopCount(GH_Structure<IGH_Goo> dataTree)
+        private int GetTotalLoopCount(GH_Structure<IGH_Goo> dataTree)
         {
-            _loopCount = dataTree.Branches.Count == 1 ?
+            return dataTree.Branches.Count == 1 ?
                 dataTree.Branches.First().Count :
                 dataTree.Branches.Count;
         }
