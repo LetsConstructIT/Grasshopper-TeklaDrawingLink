@@ -83,6 +83,8 @@ namespace DrawingLink.UI.GH
 
         private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData userFormData, Dictionary<string, TeklaObjects> teklaInput)
         {
+            GH_Document.EnableSolutions = true;
+            
             var messages = InitializeMessageDictionary();
 
             var allowedComponentTypes = new string[]
