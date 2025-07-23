@@ -565,14 +565,13 @@ namespace DrawingLink.UI.GH
 
         private bool IsSettingsPanel(IGH_ActiveObject param)
         {
-            if (param is GH_Panel panel)
-            {
-                var name = panel.NickName.Trim().ToUpperInvariant();
-                return name.StartsWith(STRING_SETTING_TOLERANCE) ||
-                       name.StartsWith(STRING_SETTING_ANGLE_TOLERANCE);
-            }
+            if (param is not GH_Panel panel)
+                return false;
 
-            return false;
+            var name = panel.NickName.Trim().ToUpperInvariant();
+            return name.StartsWith(STRING_SETTING_TOLERANCE) ||
+                   name.StartsWith(STRING_SETTING_ANGLE_TOLERANCE) ||
+                   name.StartsWith(STRING_SETTING_MAX_NUMBER_OF_LOOPS);
         }
 
         private bool IsInfoPanel(IGH_ActiveObject param)
