@@ -32,6 +32,17 @@ namespace DrawingLink.UI.GH
 
         private int _maxNumberOfLoops = 10000;
 
+        private readonly string[] _allowedComponentTypes = new string[]
+        {
+                "CreateModelObjectComponent",
+                "DeconstructModelObjectBaseComponent",
+                "Component_CSNET_Script",
+                "Component_VBNET_Script",
+                "ZuiPythonComponent",
+                "TeklaComponentBase",
+                "CSharpComponent"
+        };
+
         private GrasshopperCaller()
         {
         }
@@ -87,16 +98,6 @@ namespace DrawingLink.UI.GH
             
             var messages = InitializeMessageDictionary();
 
-            var allowedComponentTypes = new string[]
-            {
-                "CreateModelObjectComponent",
-                "DeconstructModelObjectBaseComponent",
-                "Component_CSNET_Script",
-                "Component_VBNET_Script",
-                "ZuiPythonComponent",
-                "TeklaComponentBase"
-            };
-
             var docParams = GetInputParams(document);
             SetValuesInGrasshopper(docParams, userFormData, teklaInput);
 
@@ -109,7 +110,7 @@ namespace DrawingLink.UI.GH
 
             foreach (var activeObject in activeObjects)
             {
-                if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => allowedComponentTypes.Contains(t.Name)))
+                if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => _allowedComponentTypes.Contains(t.Name)))
                 {
                     component.CollectData();
                     component.ComputeData();
