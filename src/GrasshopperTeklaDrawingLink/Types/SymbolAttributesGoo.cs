@@ -1,9 +1,21 @@
-﻿using Tekla.Structures.Drawing;
+﻿using Grasshopper.Kernel.Types;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
     public class SymbolAttributesGoo : TeklaAttributesBaseGoo<SymbolAttributes>
     {
+        public SymbolAttributesGoo() { }
+
+        public SymbolAttributesGoo(SymbolAttributes attributes)
+        {
+            Value = attributes;
+        }
+        public override IGH_Goo Duplicate()
+        {
+            return new SymbolAttributesGoo(Value);
+        }
+
         public override bool CastFrom(object source)
         {
             if (source is SymbolAttributes)

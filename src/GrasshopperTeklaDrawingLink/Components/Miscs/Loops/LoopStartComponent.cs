@@ -17,7 +17,7 @@ namespace GTDrawingLink.Components.Miscs.Loops
         private int _iteration;
         private int _loopCount;
         private bool _invokedByLoopEnd;
-
+        
         public bool Completed { get; private set; }
 
         public LoopStartComponent() : base(ComponentInfos.LoopStartComponent)

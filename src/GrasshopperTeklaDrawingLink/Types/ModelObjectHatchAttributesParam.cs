@@ -10,23 +10,30 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
-	public class ModelObjectHatchAttributesParam : GH_Param<GH_Goo<ModelObjectHatchAttributes>>
+	public class ModelObjectHatchAttributesParam : GH_PersistentParam<GH_Goo<ModelObjectHatchAttributes>>
 	{
 		public override Guid ComponentGuid => VersionSpecificConstants.GetGuid(GetType());
 
-		public ModelObjectHatchAttributesParam(IGH_InstanceDescription tag)
+		public ModelObjectHatchAttributesParam(GH_InstanceDescription tag)
 			: base(tag)
 		{
 		}
 
-		public ModelObjectHatchAttributesParam(IGH_InstanceDescription tag, GH_ParamAccess access)
-			: base(tag, access)
+		public ModelObjectHatchAttributesParam(GH_InstanceDescription tag, GH_ParamAccess access)
+			: base(tag)
 		{
+			Access = access;
 		}
 
 		protected override GH_Goo<ModelObjectHatchAttributes> InstantiateT()
 		{
 			return new ModelObjectHatchAttributesGoo();
-		}
-	}
+        }
+
+        protected override GH_GetterResult Prompt_Singular(ref GH_Goo<ModelObjectHatchAttributes> value)
+            => GH_GetterResult.cancel;
+
+        protected override GH_GetterResult Prompt_Plural(ref List<GH_Goo<ModelObjectHatchAttributes>> values)
+            => GH_GetterResult.cancel;
+    }
 }

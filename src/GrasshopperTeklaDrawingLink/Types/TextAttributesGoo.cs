@@ -1,4 +1,5 @@
-﻿using Tekla.Structures.Drawing;
+﻿using Grasshopper.Kernel.Types;
+using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Types
 {
@@ -9,6 +10,10 @@ namespace GTDrawingLink.Types
         public TextAttributesGoo(Text.TextAttributes attributes)
         {
             Value = attributes;
+        }
+        public override IGH_Goo Duplicate()
+        {
+            return new TextAttributesGoo(Value);
         }
     }
 }
