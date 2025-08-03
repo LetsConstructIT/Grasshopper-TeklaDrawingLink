@@ -62,7 +62,7 @@ namespace DrawingLink.UI
             Properties.Settings.Default.RhinoVersion = (int)this.cmbRhinoVersion.SelectedItem;
             Properties.Settings.Default.Save();
 
-            MessageBox.Show(this, "Restart application to load new Rhino version");
+            MessageBox.Show(this, "Restart Grasshopper Application to load new Rhino version");
         }
 
         private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)

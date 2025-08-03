@@ -132,6 +132,9 @@ namespace DrawingLink.UI
                         IsSnapToTickEnabled = true
                     };
 
+                    if (sliderParam.DecimalPlaces != 0)
+                        slider.TickFrequency = sliderParam.GetSmallChange();
+
                     slider.SetBinding(Slider.ValueProperty, new Binding(param.FieldName));
 
                     var textBox = new TextBox() { MinWidth = 80, Text = slider.Value.ToString() };
@@ -186,6 +189,38 @@ namespace DrawingLink.UI
                     fileStackPanel.Children.Add(fButton);
 
                     SetCell(grid, fileStackPanel, rowIdx, colIdx);
+                    break;
+                case DirectoryInfoParam directoryParam:
+                    var dirStackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+
+                    var dirPath = directoryParam.Value;
+                    var dText = new TextBox { Text = dirPath, MinWidth = 110, MaxWidth = 350 };
+                    dText.SetBinding(TextBox.TextProperty, new Binding(param.FieldName));
+                    if (loadValuesFromGh)
+                        OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, dirPath));
+
+                    var dButton = new Button { Content = "..." };
+                    dButton.Click += delegate
+                    {
+                        var dlg = new System.Windows.Forms.FolderBrowserDialog();
+
+                        if (System.IO.Directory.Exists(dirPath))
+                        {
+                            dlg.SelectedPath = dirPath;
+                        }
+
+                        if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                            return;
+
+                        var pickedDirectory = dlg.SelectedPath;
+                        if (!string.IsNullOrEmpty(pickedDirectory))
+                            OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, pickedDirectory));
+                    };
+
+                    dirStackPanel.Children.Add(dText);
+                    dirStackPanel.Children.Add(dButton);
+
+                    SetCell(grid, dirStackPanel, rowIdx, colIdx);
                     break;
                 case ListParamData listParam:
                     var dockListPanel = new DockPanel() { LastChildFill = true };

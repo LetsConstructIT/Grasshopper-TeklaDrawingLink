@@ -1,4 +1,5 @@
-﻿using GH_IO.Serialization;
+﻿using DrawingLink.UI.Utils;
+using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
@@ -27,6 +28,20 @@ namespace DrawingLink.UI.GH
 
         private const string STRING_SETTING_TOLERANCE = "RHINO TOLERANCE";
         private const string STRING_SETTING_ANGLE_TOLERANCE = "RHINO ANGLE TOLERANCE";
+        private const string STRING_SETTING_MAX_NUMBER_OF_LOOPS = "MAX NUMBER OF LOOPS";
+
+        private int _maxNumberOfLoops = 10000;
+
+        private readonly string[] _allowedComponentTypes = new string[]
+        {
+                "CreateModelObjectComponent",
+                "DeconstructModelObjectBaseComponent",
+                "Component_CSNET_Script",
+                "Component_VBNET_Script",
+                "ZuiPythonComponent",
+                "TeklaComponentBase",
+                "CSharpComponent"
+        };
 
         private GrasshopperCaller()
         {
@@ -56,27 +71,15 @@ namespace DrawingLink.UI.GH
             UnitSystem rhinoUnitSystem = UnitSystem.Millimeters;
             if (Settings.TryGetValue("distance_unit", out var teklaUnit))
             {
-                switch ((Distance.UnitType)teklaUnit)
+                rhinoUnitSystem = (Distance.UnitType)teklaUnit switch
                 {
-                    case Distance.UnitType.Millimeter:
-                        rhinoUnitSystem = UnitSystem.Millimeters;
-                        break;
-                    case Distance.UnitType.Centimeter:
-                        rhinoUnitSystem = UnitSystem.Centimeters;
-                        break;
-                    case Distance.UnitType.Meter:
-                        rhinoUnitSystem = UnitSystem.Meters;
-                        break;
-                    case Distance.UnitType.Inch:
-                        rhinoUnitSystem = UnitSystem.Inches;
-                        break;
-                    case Distance.UnitType.Foot:
-                        rhinoUnitSystem = UnitSystem.Feet;
-                        break;
-                    default:
-                        rhinoUnitSystem = UnitSystem.Millimeters;
-                        break;
-                }
+                    Distance.UnitType.Millimeter => UnitSystem.Millimeters,
+                    Distance.UnitType.Centimeter => UnitSystem.Centimeters,
+                    Distance.UnitType.Meter => UnitSystem.Meters,
+                    Distance.UnitType.Inch => UnitSystem.Inches,
+                    Distance.UnitType.Foot => UnitSystem.Feet,
+                    _ => UnitSystem.Millimeters,
+                };
             }
             _rhinoDoc.ModelUnitSystem = rhinoUnitSystem;
             _rhinoDoc.ModelAbsoluteTolerance = GetAbsoluteTolerance(0.1, rhinoUnitSystem);
@@ -91,26 +94,23 @@ namespace DrawingLink.UI.GH
 
         private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData userFormData, Dictionary<string, TeklaObjects> teklaInput)
         {
+            GH_Document.EnableSolutions = true;
+            
             var messages = InitializeMessageDictionary();
-
-            var allowedComponentTypes = new string[]
-            {
-                "CreateModelObjectComponent",
-                "DeconstructModelObjectBaseComponent",
-                "Component_CSNET_Script",
-                "Component_VBNET_Script",
-                "ZuiPythonComponent",
-                "TeklaComponentBase"
-            };
 
             var docParams = GetInputParams(document);
             SetValuesInGrasshopper(docParams, userFormData, teklaInput);
 
             var activeObjects = document.Objects.OfType<IGH_ActiveObject>().Where(o => !o.Locked).ToList();
             DisableTeklaLiveness(activeObjects);
+
+            var loopStarts = CollectLoopStarts(activeObjects);
+            if (loopStarts.Any())
+                WaitUntilLoopsFinish(loopStarts, document);
+
             foreach (var activeObject in activeObjects)
             {
-                if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => allowedComponentTypes.Contains(t.Name)))
+                if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => _allowedComponentTypes.Contains(t.Name)))
                 {
                     component.CollectData();
                     component.ComputeData();
@@ -135,6 +135,31 @@ namespace DrawingLink.UI.GH
             }
 
             return messages;
+        }
+
+        private static Guid _loopGuids = new("3368FCF5-A321-4B54-944E-36A20DD01ED0");
+
+        private static List<IGH_ActiveObject> CollectLoopStarts(List<IGH_ActiveObject> activeObjects)
+        {
+            return activeObjects.Where(o => o.ComponentGuid == _loopGuids).ToList();
+        }
+
+        private void WaitUntilLoopsFinish(List<IGH_ActiveObject> loopStarts, GH_Document document)
+        {
+            document.Enabled = true;
+            document.NewSolution(true);
+
+            for (int i = 0; i < _maxNumberOfLoops; i++)
+            {
+                document.NewSolution(false);
+                if (HaveLoopsFinished(loopStarts))
+                    break;
+            }
+
+            static bool HaveLoopsFinished(List<IGH_ActiveObject> loopStarts)
+            {
+                return loopStarts.All(l => (bool)((dynamic)l).Completed);
+            }
         }
 
         private void SetValuesInGrasshopper(GHParams inputParams, UserFormData data, Dictionary<string, TeklaObjects> teklaInput)
@@ -179,18 +204,13 @@ namespace DrawingLink.UI.GH
                         panel.ExpireSolution(true);
                         if (IsSettingsPanel(panel))
                         {
-                            string text4 = panel.NickName.Trim().ToUpperInvariant();
-                            if (text4.StartsWith(STRING_SETTING_TOLERANCE))
-                            {
-                                if (double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoTolerance))
-                                {
-                                    SetRhinoTolerance(rhinoTolerance);
-                                }
-                            }
-                            else if (text4.StartsWith(STRING_SETTING_ANGLE_TOLERANCE) && double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoAngleTolerance))
-                            {
+                            var settingText = panel.NickName.Trim().ToUpperInvariant();
+                            if (settingText.StartsWith(STRING_SETTING_TOLERANCE) && double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoTolerance))
+                                SetRhinoTolerance(rhinoTolerance);
+                            else if (settingText.StartsWith(STRING_SETTING_ANGLE_TOLERANCE) && double.TryParse(panelText.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double rhinoAngleTolerance))
                                 SetRhinoAngleTolerance(rhinoAngleTolerance);
-                            }
+                            else if (settingText.StartsWith(STRING_SETTING_MAX_NUMBER_OF_LOOPS) && int.TryParse(panelText, out int maxLoopNumber))
+                                _maxNumberOfLoops = maxLoopNumber;
                         }
                     }
                 }
@@ -558,14 +578,13 @@ namespace DrawingLink.UI.GH
 
         private bool IsSettingsPanel(IGH_ActiveObject param)
         {
-            if (param is GH_Panel panel)
-            {
-                var name = panel.NickName.Trim().ToUpperInvariant();
-                return name.StartsWith(STRING_SETTING_TOLERANCE) ||
-                       name.StartsWith(STRING_SETTING_ANGLE_TOLERANCE);
-            }
+            if (param is not GH_Panel panel)
+                return false;
 
-            return false;
+            var name = panel.NickName.Trim().ToUpperInvariant();
+            return name.StartsWith(STRING_SETTING_TOLERANCE) ||
+                   name.StartsWith(STRING_SETTING_ANGLE_TOLERANCE) ||
+                   name.StartsWith(STRING_SETTING_MAX_NUMBER_OF_LOOPS);
         }
 
         private bool IsInfoPanel(IGH_ActiveObject param)
@@ -588,7 +607,7 @@ namespace DrawingLink.UI.GH
             return allowedNames.Any(n => panelName.StartsWith(n));
         }
 
-        private void AppendComponentErrorMessages(GH_Component component, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
+        private void AppendComponentErrorMessages(IGH_Component component, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)
         {
             var toCheck = new GH_RuntimeMessageLevel[] { GH_RuntimeMessageLevel.Warning, GH_RuntimeMessageLevel.Error };
 

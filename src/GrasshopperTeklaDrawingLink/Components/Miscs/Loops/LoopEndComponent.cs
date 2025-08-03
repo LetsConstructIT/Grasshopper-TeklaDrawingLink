@@ -3,11 +3,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using GTDrawingLink.Tools;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTDrawingLink.Components.Miscs.Loops
 {
@@ -37,8 +33,11 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            if (!FindStart())
+            if (!FindStart() || !StartIsNotActive())
                 return;
+
+            DA.GetDataTree(1, out GH_Structure<IGH_Goo> dataTree);
+            dataTree = dataTree.Duplicate();
 
             var controlReturnedToStart = _loopStart.TryIncrement(out int iteration);
             var loopFinished = !controlReturnedToStart;
@@ -46,9 +45,10 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
             DA.SetData(ParamInfos.LoopCompletition.Name, loopFinished);
 
-            DA.GetDataTree<IGH_Goo>(1, out GH_Structure<IGH_Goo> dataTree);
             AppendCurrentLoopResult(dataTree, iteration);
-            DA.SetDataTree(1, _mergedData);
+
+            if (loopFinished)
+                DA.SetDataTree(1, _mergedData);
         }
 
         private bool FindStart()
@@ -68,6 +68,11 @@ namespace GTDrawingLink.Components.Miscs.Loops
 
             _loopStart = potentialStart as LoopStartComponent;
             return true;
+        }
+
+        private bool StartIsNotActive()
+        {
+            return _loopStart.IsToggleOn();
         }
 
         private void AdjustComponentName(bool loopFinished, int iteration)

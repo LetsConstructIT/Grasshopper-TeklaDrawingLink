@@ -38,12 +38,18 @@ namespace DrawingLink.UI.GH
                     tab.AddGroup(group);
                 }
 
-                if (param is Param_FilePath)
+                if (param is Param_FilePath paramFilePath)
                 {
-                    group.AddParam(new FileInfoParam(fieldName,
+                    if (CheckIfDirectory(param))
+                        group.AddParam(new DirectoryInfoParam(fieldName,
                                                      param.NickName,
-                                                     ((param as Param_FilePath).PersistentData.AllData(skipNulls: true).FirstOrDefault() as GH_String)?.Value ?? "",
+                                                     (paramFilePath.PersistentData.AllData(skipNulls: true).FirstOrDefault() as GH_String)?.Value ?? "",
                                                      top));
+                    else
+                        group.AddParam(new FileInfoParam(fieldName,
+                                                         param.NickName,
+                                                         (paramFilePath.PersistentData.AllData(skipNulls: true).FirstOrDefault() as GH_String)?.Value ?? "",
+                                                         top));
                 }
                 else if (param is GH_BooleanToggle toggle)
                 {
@@ -122,6 +128,12 @@ namespace DrawingLink.UI.GH
 
             SetMissingNameForTab(root);
             return root;
+        }
+
+        private static bool CheckIfDirectory(IGH_ActiveObject activeObject)
+        {
+            var nickName = activeObject.NickName.Trim().ToUpperInvariant();
+            return nickName.StartsWith("DIRECTORY") || nickName.StartsWith("DIR:");
         }
 
         private static void SetMissingNameForTab(ParametersRoot root)

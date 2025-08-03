@@ -18,7 +18,7 @@ namespace DrawingLink.UI.GH.Models
         }
 
         public double GetSmallChange()
-            => Math.Pow(10.0, DecimalPlaces);
+            => Math.Pow(10.0, -DecimalPlaces);
 
         public double GetLargeChange()
             => 0.01 * Math.Pow(10.0, Math.Floor(Math.Log10(Math.Abs(Maximum - Minimum) / 0.9)));
