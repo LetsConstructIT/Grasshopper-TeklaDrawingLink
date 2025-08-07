@@ -98,43 +98,61 @@ namespace GTDrawingLink.Components.Geometries
 
             return (outlines.First(), outlines.Skip(1));
         }
+
         private Polyline SimplifyPolyline(Polyline polyline)
         {
-            var angleTolerance = RhinoDoc.ActiveDoc.ModelAngleToleranceRadians;
-            var segmentCount = polyline.SegmentCount;
-            var cornerPts = new List<Point3d>();
+            MergeColinearSegments(polyline, RhinoDoc.ActiveDoc.ModelAngleToleranceRadians, true);
+            return polyline;
+        }
 
-            int num2 = 0;
-            Line val3;
-            for (int i = 0; i < segmentCount - 2; i++)
+        private int MergeColinearSegments(Polyline polyline, double angleTolerance, bool includeSeam)
+        {
+            var initialSegmentCount = polyline.SegmentCount;
+            if (initialSegmentCount < 2)
+                return 0;
+
+            for (int num = initialSegmentCount - 1; num > 0; num--)
             {
-                val3 = polyline.SegmentAt(i);
-                Vector3d direction = val3.Direction;
-                val3 = polyline.SegmentAt(i + 1);
-                if (Vector3d.VectorAngle(direction, val3.Direction) > angleTolerance)
+                if (AreColinear(num - 1, num, num + 1))
+                    polyline.RemoveAt(num);
+            }
+
+            if (!includeSeam || !polyline.IsClosed)
+                return initialSegmentCount - polyline.SegmentCount;
+
+            while (true)
+            {
+                var count = polyline.Count;
+                if (count <= 1)
                 {
-                    cornerPts.Add(polyline[i + 1]);
-                    num2 = i + 1;
+                    polyline.Clear();
                     break;
                 }
-            }
-            int num3 = 0;
-            for (int j = 0; j < segmentCount - 1; j++)
-            {
-                int num4 = (num2 + j) % segmentCount;
-                int num5 = (num4 + 1) % segmentCount;
-                val3 = polyline.SegmentAt(num4);
-                Vector3d direction2 = val3.Direction;
-                val3 = polyline.SegmentAt(num5);
-                if (Vector3d.VectorAngle(direction2, val3.Direction) > angleTolerance)
-                {
-                    cornerPts.Add(polyline[num4 + 1]);
-                    num3++;
-                }
+
+                if (!AreColinear(count - 2, 0, 1))
+                    break;
+
+                polyline.RemoveAt(0);
+                polyline[count - 2] = polyline[0];
             }
 
-            cornerPts.Add(cornerPts.First());
-            return new Polyline(cornerPts);
+            return initialSegmentCount - polyline.SegmentCount;
+
+            bool AreColinear(int i0, int i1, int i2)
+            {
+                var point3d = polyline[i0];
+                var point3d2 = polyline[i1];
+                var point3d3 = polyline[i2];
+                if (point3d2.Equals(point3d) || point3d2.Equals(point3d3))
+                    return true;
+
+                var a = point3d2 - point3d;
+                var b = point3d3 - point3d2;
+                if (Vector3d.VectorAngle(a, b) <= angleTolerance)
+                    return true;
+
+                return false;
+            }
         }
 
         private Mesh ApplyOrientation(Mesh mesh, Plane plane)
