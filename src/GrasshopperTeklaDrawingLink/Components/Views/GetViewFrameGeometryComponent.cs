@@ -36,7 +36,7 @@ namespace GTDrawingLink.Components.Views
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var viewBase = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as View;
+            var viewBase = DA.GetGooValue<DatabaseObject>(ParamInfos.View) as ViewBase;
             if (viewBase == null)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided View is null");
