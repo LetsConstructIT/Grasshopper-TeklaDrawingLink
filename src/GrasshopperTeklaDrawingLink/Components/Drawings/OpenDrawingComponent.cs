@@ -2,6 +2,7 @@
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
+using System;
 using System.Drawing;
 using Tekla.Structures.Drawing;
 
@@ -41,6 +42,9 @@ namespace GTDrawingLink.Components.Drawings
 
             var show = true;
             DA.GetData("Show", ref show);
+
+            if (drawing.UpToDateStatus == DrawingUpToDateStatus.PartsWereModified)
+                DrawingInteractor.DrawingHandler.UpdateDrawing(drawing);
 
             DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, show);
 
