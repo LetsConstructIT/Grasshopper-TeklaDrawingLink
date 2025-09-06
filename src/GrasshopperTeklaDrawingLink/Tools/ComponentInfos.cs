@@ -1382,7 +1382,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Group Domains",
             NickName = "GrDomains",
-            Description = "Group domains by their overlap",
+            Description = "Group domains by their overlap. Enter the domains as a list. The result will be a tree where each branch will contain overlapping domains. Other outputs should help in faster filtering with Tree Item component.",
             Category = VersionSpecificConstants.TabHeading,
             SubCategory = PanelHeadings.Misc
         };        
