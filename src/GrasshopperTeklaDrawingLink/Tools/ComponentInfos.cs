@@ -1378,6 +1378,13 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Export
         };
 
-        
+        public static readonly GH_InstanceDescription GroupDomainsComponent = new GH_InstanceDescription
+        {
+            Name = "Group Domains",
+            NickName = "GrDomains",
+            Description = "Group domains by their overlap",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Misc
+        };        
     }
 }

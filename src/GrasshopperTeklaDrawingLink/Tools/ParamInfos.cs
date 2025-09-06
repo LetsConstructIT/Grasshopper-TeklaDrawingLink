@@ -2306,5 +2306,26 @@ namespace GTDrawingLink.Tools
             NickName = "D",
             Description = "Each straight dimension set contains one or multiple straight dimensions, which are returned as this parameter"
         };
+
+        public static readonly GH_InstanceDescription Domain = new GH_InstanceDescription
+        {
+            Name = "Domain",
+            NickName = "I",
+            Description = "Numeric domain between {A} and {B}"
+        };
+
+        public static readonly GH_InstanceDescription SummaryDomain = new GH_InstanceDescription
+        {
+            Name = "Summary Domain",
+            NickName = "SumI",
+            Description = "Summary of found domains"
+        };
+
+        public static readonly GH_InstanceDescription GhPath = new GH_InstanceDescription
+        {
+            Name = "Path",
+            NickName = "P",
+            Description = "Branch path"
+        };
     }
 }

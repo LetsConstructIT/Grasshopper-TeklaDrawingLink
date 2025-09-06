@@ -78,6 +78,20 @@ namespace GTDrawingLink.Components
             return index;
         }
 
+        protected int AddIntervalParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddIntervalParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
+        protected int AddPathParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, bool optional = false)
+        {
+            var index = pManager.AddPathParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+            SetLastParameterAsOptional(pManager, optional);
+            return index;
+        }
+
         protected int AddIntegerParameter(GH_InputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access, int defaultValue)
         {
             var index = pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access, defaultValue);
@@ -233,6 +247,16 @@ namespace GTDrawingLink.Components
         {
             return pManager.AddIntegerParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
         }
+
+        protected int AddIntervalParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddIntervalParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }
+
+        protected int AddPathParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
+        {
+            return pManager.AddPathParameter(paramInfo.Name, paramInfo.NickName, paramInfo.Description, access);
+        }        
 
         protected int AddTeklaDbObjectParameter(GH_OutputParamManager pManager, GH_InstanceDescription paramInfo, GH_ParamAccess access)
         {

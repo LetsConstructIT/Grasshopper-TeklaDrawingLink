@@ -534,7 +534,7 @@ namespace GTDrawingLink.Tools
                     return Result.Ok();
                 }
             }
-            else if (typeOfInput == typeof(GH_Number) || typeOfInput == typeof(GH_Integer) || typeOfInput == typeof(GH_Point) || typeOfInput == typeof(GH_Plane) || typeOfInput == typeof(GH_Box))
+            else if (typeOfInput == typeof(GH_Number) || typeOfInput == typeof(GH_Interval) || typeOfInput == typeof(GH_StructurePath) || typeOfInput == typeof(GH_Integer) || typeOfInput == typeof(GH_Point) || typeOfInput == typeof(GH_Plane) || typeOfInput == typeof(GH_Box))
             {
                 var objectsGoo = new List<T>();
                 if (DA.GetDataList(InstanceDescription.Name, objectsGoo))
@@ -884,6 +884,24 @@ namespace GTDrawingLink.Tools
             else if (typeOfInput == typeof(GH_Number))
             {
                 if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Number> tree))
+                {
+                    _tree = tree;
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
+                }
+            }
+            else if (typeOfInput == typeof(GH_Interval))
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_Interval> tree))
+                {
+                    _tree = tree;
+                    var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());
+                    return ProcessResults(typeOfInput, tree, castedToExpectedType);
+                }
+            }
+            else if (typeOfInput == typeof(GH_StructurePath))
+            {
+                if (DA.GetDataTree(InstanceDescription.Name, out GH_Structure<GH_StructurePath> tree))
                 {
                     _tree = tree;
                     var castedToExpectedType = tree.Branches.Select(b => b.Select(i => i as T).ToList());

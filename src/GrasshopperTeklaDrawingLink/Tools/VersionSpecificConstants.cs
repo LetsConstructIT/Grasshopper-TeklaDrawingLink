@@ -906,6 +906,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(MeshProjectionBorderComponent),
                 "66FD832E-81AC-45DF-B6E4-BE248DD91D93"
+            },
+            {
+                typeof(GroupDomainsComponent),
+                "30908FD6-497F-480C-B254-2E3F71672E70"
             }
         };
 
