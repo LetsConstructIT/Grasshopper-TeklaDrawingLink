@@ -1,20 +1,21 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
-using GTDrawingLink.Extensions;
 using GTDrawingLink.Tools;
 using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GTDrawingLink.Components.Miscs
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class SearchUsingKeyComponent : TeklaComponentBaseNew<SearchUsingKeyCommand>
+    [Obsolete]
+    public class SearchUsingKeyComponentOLD : TeklaComponentBaseNew<SearchUsingKeyCommandOLD>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override System.Drawing.Bitmap Icon => Properties.Resources.SearchUsingKey;
-        public SearchUsingKeyComponent() : base(ComponentInfos.SearchUsingKeyComponent) { }
+        public SearchUsingKeyComponentOLD() : base(ComponentInfos.SearchUsingKeyComponent) { }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
@@ -27,24 +28,13 @@ namespace GTDrawingLink.Components.Miscs
             var output = new GH_Structure<IGH_Goo>();
             if (inputType == InputType.Tree)
             {
-                for (int i = 0; i < objectsTree.PathCount; i++)
+                var matchingIndicies = GetMatchingPaths(keys, search);
+                if (matchingIndicies.Count == 0)
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No matching key found");
+
+                foreach (var path in matchingIndicies)
                 {
-                    var objectsBranch = objectsTree.GetBranch(i);
-                    var keysBranch = keys.GetBranch(i);
-
-                    var matchingObjects = new List<IGH_Goo>();
-                    for (int j = 0; j < objectsBranch.Count; j++)
-                    {
-                        var key = keysBranch.ElementAtOrLast(j);
-                        var matchingObject = AnyKeyMeetsCriteria(key, search) ? 
-                            objectsBranch[j] : 
-                            null;
-
-                        matchingObjects.Add(matchingObject);
-                    }
-
-                    if (matchingObjects.Any(o => o != null))
-                        output.AppendRange(matchingObjects, objectsTree.Paths[i]);
+                    output.AppendRange(objectsTree.Objects[path.index], path.path);
                 }
             }
             else if (inputType == InputType.ListWithCorrespondingKeys)
@@ -104,6 +94,20 @@ namespace GTDrawingLink.Components.Miscs
             return true;
         }
 
+        private List<(int index, GH_Path path)> GetMatchingPaths(TreeData<string> keys, List<string> search)
+        {
+            var paths = new List<(int index, GH_Path)>();
+
+            for (int i = 0; i < keys.Objects.Count; i++)
+            {
+                var key = keys.Objects[i].First();
+                if (AnyKeyMeetsCriteria(key, search))
+                    paths.Add((i, keys.Paths[i]));
+            }
+
+            return paths;
+        }
+
         private List<int> GetMatchingIndicies(List<string> keys, List<string> search)
         {
             var indicies = new List<int>();
@@ -130,7 +134,7 @@ namespace GTDrawingLink.Components.Miscs
         }
     }
 
-    public class SearchUsingKeyCommand : CommandBase
+    public class SearchUsingKeyCommandOLD : CommandBase
     {
         private readonly InputTreeParam<IGH_Goo> _inObjects = new InputTreeParam<IGH_Goo>(ParamInfos.Values);
         private readonly InputTreeParam<string> _inKeys = new InputTreeParam<string>(ParamInfos.GroupingKeys);

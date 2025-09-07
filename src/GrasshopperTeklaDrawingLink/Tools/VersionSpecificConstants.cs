@@ -661,6 +661,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(SearchUsingKeyComponent),
+                "64987FCA-E9F3-4FAF-B5DF-D4396F981B4E"
+            },
+            {
+                typeof(SearchUsingKeyComponentOLD),
                 "9B5CF5F4-0B09-4E47-A07F-38155EDCBEC8"
             },
             {
