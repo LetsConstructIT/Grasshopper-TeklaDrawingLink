@@ -537,7 +537,7 @@ namespace GTDrawingLink.Tools
             Name = "Insert always",
             NickName = "Always",
             Description = "Dimension line will be created despite of projection result"
-        };
+        };        
 
         public static readonly GH_InstanceDescription DimensionLineMoreThan2PointsMode = new GH_InstanceDescription
         {
@@ -2326,6 +2326,22 @@ namespace GTDrawingLink.Tools
             Name = "Path",
             NickName = "P",
             Description = "Branch path"
+        };
+
+
+        public static readonly GH_InstanceDescription CutAndFittingModeSkip = new GH_InstanceDescription
+        {
+            Name = "Skip cuts and fittings",
+            NickName = "Skip",
+            Description = "Obtained part lines will not include cuts and fittings"
+        };
+
+
+        public static readonly GH_InstanceDescription CutAndFittingModeInclude = new GH_InstanceDescription
+        {
+            Name = "Include cuts and fittings",
+            NickName = "Include",
+            Description = "Obtained part lines will include cuts and fittings"
         };
     }
 }
