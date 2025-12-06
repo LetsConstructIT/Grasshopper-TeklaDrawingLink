@@ -214,7 +214,10 @@ namespace DrawingLink.UI
 
                         var pickedDirectory = dlg.SelectedPath;
                         if (!string.IsNullOrEmpty(pickedDirectory))
+                        {
+                            pickedDirectory += "\\";
                             OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, pickedDirectory));
+                        }
                     };
 
                     dirStackPanel.Children.Add(dText);
