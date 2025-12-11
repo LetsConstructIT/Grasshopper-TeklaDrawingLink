@@ -1,4 +1,5 @@
-﻿using DrawingLink.UI.Utils;
+﻿using DrawingLink.UI.GH.Models;
+using DrawingLink.UI.Utils;
 using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
@@ -12,6 +13,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Tekla.Structures.Datatype;
 using Tekla.Structures.Model;
@@ -466,7 +468,9 @@ namespace DrawingLink.UI.GH
                         new ObjectConnectivity(param.SourceCount, param.Recipients.Count()) :
                         new ObjectConnectivity(0, 0);
 
-                    attributeParams.Add(new ActiveObjectWrapper(activeObject, new TabAndGroup(tab, group), connectivity));
+                    var tableColumnInfo = groups.GetTableColumnInfo(activeObject.InstanceGuid);
+
+                    attributeParams.Add(new ActiveObjectWrapper(activeObject, new TabAndGroup(tab, group), connectivity, tableColumnInfo));
                 }
             }
 
@@ -557,7 +561,9 @@ namespace DrawingLink.UI.GH
 
         private GHGroups GetInputGroups(GH_Document doc)
         {
-            var gHGroups = new GHGroups();
+            var tableMapping = ReadTableDetails(doc);
+
+            var gHGroups = new GHGroups(tableMapping);
             foreach (var group in doc.Objects.OfType<GH_Group>())
             {
                 var guids = group.ObjectsRecursive().Select(o => o.InstanceGuid);
@@ -578,6 +584,28 @@ namespace DrawingLink.UI.GH
             }
 
             return gHGroups;
+        }
+
+        private Dictionary<Guid, TableColumnInfo> ReadTableDetails(GH_Document doc)
+        {
+            var tableMapping = new Dictionary<Guid, TableColumnInfo>();
+            foreach (var ghGroup in doc.Objects.OfType<GH_Group>())
+            {
+                foreach (var innerGroup in
+                    ghGroup.Objects().OfType<GH_Group>().Where(o => Regex.IsMatch(o.NickName, "^C\\d", RegexOptions.IgnoreCase)))
+                {
+                    var nameSubParts = innerGroup.NickName.Split(' ');
+                    var columnInfo = new TableColumnInfo(ghGroup.InstanceGuid,
+                                                         innerGroup.InstanceGuid,
+                                                         int.Parse(nameSubParts[0].Substring(1)) - 1,
+                                                         (nameSubParts.Length > 1) ? nameSubParts[1].Trim() : null);
+
+                    foreach (IGH_DocumentObject documentObject in innerGroup.Objects())
+                        tableMapping[documentObject.InstanceGuid] = columnInfo;
+                }
+            }
+
+            return tableMapping;
         }
 
         private bool IsSettingsPanel(IGH_ActiveObject param)
