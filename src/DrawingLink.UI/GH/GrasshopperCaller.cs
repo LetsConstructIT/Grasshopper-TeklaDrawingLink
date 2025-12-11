@@ -109,7 +109,7 @@ namespace DrawingLink.UI.GH
             if (loopStarts.Any())
                 WaitUntilLoopsFinish(loopStarts, document);
 
-            var suppressedComponentGuids = GetSuppressedOutputObjects(activeObjects);
+            var suppressedComponentGuids = GetSuppressedOutputObjects(document.Objects);
 
             foreach (var activeObject in activeObjects)
             {
