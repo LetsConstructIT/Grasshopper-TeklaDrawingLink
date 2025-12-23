@@ -19,7 +19,7 @@ namespace DrawingLink.UI.GH
 
         public TableColumnInfo? GetTableColumnInfo(Guid id)
         {
-            return _tables.ContainsKey(id) ? _tables[id] : null;
+            return _tables.ContainsKey(id) ? _tables[id] : TableColumnInfo.Empty();
         }
 
         public bool WithoutTabsAndGroups()

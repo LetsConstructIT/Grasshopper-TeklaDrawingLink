@@ -19,4 +19,11 @@ public class TableColumnInfo
         ColumnNumber = columnNumber;
         ColumnStyle = columnStyle;
     }
+
+    internal static TableColumnInfo Empty()
+    {
+        return new TableColumnInfo(Guid.Empty, Guid.Empty, -1, string.Empty);
+    }
+
+    public bool IsValidTable() => TableContainerId != Guid.Empty;
 }
