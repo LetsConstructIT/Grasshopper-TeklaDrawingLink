@@ -140,6 +140,9 @@ namespace DrawingLink.UI
 
                 if (param is ImageParam imageParam)
                 {
+                    if (!param.TableColumnInfo.IsValidTable())
+                        colIdx = 0;
+
                     DisplayImage(imageParam, gridToPlace, rowIdx, colIdx);
                     continue;
                 }
@@ -439,8 +442,8 @@ namespace DrawingLink.UI
             {
                 Source = imageParam.Value.ToBitmapImage(),
                 Stretch = System.Windows.Media.Stretch.UniformToFill,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(5)
             };
 
@@ -450,16 +453,42 @@ namespace DrawingLink.UI
             if (imageParam.ImageStyle.Height != 0)
                 image.Height = imageParam.ImageStyle.Height;
 
+            if (imageParam.ImageStyle.PaddingX != 0 || imageParam.ImageStyle.PaddingY != 0)
+                image.Margin = new Thickness(imageParam.ImageStyle.PaddingX, imageParam.ImageStyle.PaddingY, 0, 0);
 
             grid.Children.Add(image);
             Grid.SetRow(image, rowIdx);
             Grid.SetColumn(image, colIdx);
 
             if (!imageParam.TableColumnInfo.IsValidTable())
+            {
+                image.HorizontalAlignment = HorizontalAlignment.Center;
+                image.VerticalAlignment = VerticalAlignment.Center;
                 Grid.SetColumnSpan(image, 2);
+            }
 
             if (imageParam.ImageStyle.IsBackground)
-                Grid.SetRowSpan(image, 10);
+            {
+                Grid.SetRowSpan(image, 99);
+                if (!imageParam.TableColumnInfo.IsValidTable())
+                    Grid.SetColumnSpan(image, 2);
+            }
+
+            image.HorizontalAlignment = imageParam.ImageStyle.PositionX switch
+            {
+                "LEFT" => HorizontalAlignment.Left,
+                "CENTER" => HorizontalAlignment.Center,
+                "RIGHT" => HorizontalAlignment.Right,
+                _ => HorizontalAlignment.Left
+            };
+
+            image.VerticalAlignment = imageParam.ImageStyle.PositionY switch
+            {
+                "TOP" => VerticalAlignment.Top,
+                "MIDDLE" => VerticalAlignment.Center,
+                "BOTTOM" => VerticalAlignment.Bottom,
+                _ => VerticalAlignment.Top
+            };
         }
 
         private void SetCell(Grid grid, UIElement control, int rowIdx, int colIdx)
