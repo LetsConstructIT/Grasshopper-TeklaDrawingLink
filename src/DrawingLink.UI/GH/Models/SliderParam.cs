@@ -9,7 +9,7 @@ namespace DrawingLink.UI.GH.Models
         public double Value { get; }
         public int DecimalPlaces { get; }
 
-        public SliderParam(string fieldName, string name, double minValue, double maxValue, double value, int decimalPlaces, float top) : base(fieldName, name, top)
+        public SliderParam(string fieldName, string name, double minValue, double maxValue, double value, int decimalPlaces, float top, TableColumnInfo tableColumnInfo) : base(fieldName, name, top, tableColumnInfo)
         {
             Minimum = minValue;
             Maximum = maxValue;

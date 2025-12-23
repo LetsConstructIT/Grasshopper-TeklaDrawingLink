@@ -6,7 +6,7 @@ namespace DrawingLink.UI.GH.Models
     {
         public string FieldName { get; }
 
-        protected PersistableParam(string fieldName, string name, float top) : base(name, top)
+        protected PersistableParam(string fieldName, string name, float top, TableColumnInfo tableColumnInfo) : base(name, top, tableColumnInfo)
         {
             FieldName = fieldName ?? throw new ArgumentNullException(nameof(fieldName));
         }

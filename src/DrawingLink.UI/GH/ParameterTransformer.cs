@@ -45,12 +45,14 @@ namespace DrawingLink.UI.GH
                         group.AddParam(new DirectoryInfoParam(fieldName,
                                                      param.NickName,
                                                      (paramFilePath.PersistentData.AllData(skipNulls: true).FirstOrDefault() as GH_String)?.Value ?? "",
-                                                     top));
+                                                     top,
+                                                     item.TableColumnInfo));
                     else
                         group.AddParam(new FileInfoParam(fieldName,
                                                          param.NickName,
                                                          (paramFilePath.PersistentData.AllData(skipNulls: true).FirstOrDefault() as GH_String)?.Value ?? "",
-                                                         top));
+                                                         top,
+                                                     item.TableColumnInfo));
                 }
                 else if (param is GH_BooleanToggle toggle)
                 {
@@ -58,7 +60,8 @@ namespace DrawingLink.UI.GH
                                                      param.NickName,
                                                      new string[2] { "False", "True" },
                                                      toggle.Value ? "True" : "False",
-                                                     top));
+                                                     top,
+                                                     item.TableColumnInfo));
                 }
                 else if (param is GH_Panel panel)
                 {
@@ -67,14 +70,17 @@ namespace DrawingLink.UI.GH
                         group.AddParam(new TextParam(fieldName,
                                                      param.NickName,
                                                      panel.UserText,
-                                                     top));
+                                                     top,
+                                                     item.TableColumnInfo));
                     else
-                        group.AddParam(new InfoParam(panel.UserText, top));
+                        group.AddParam(new InfoParam(panel.UserText, top,
+                                                     item.TableColumnInfo));
                 }
                 else if (param is GH_ImageSampler imageSampler)
                 {
                     var style = ParseImageStyle(param.NickName);
-                    group.AddParam(new ImageParam(imageSampler.Image, top, style));
+                    group.AddParam(new ImageParam(imageSampler.Image, top, style,
+                                                     item.TableColumnInfo));
                 }
                 else if (param is GH_ValueList valueList)
                 {
@@ -82,7 +88,8 @@ namespace DrawingLink.UI.GH
                                                      param.NickName,
                                                      valueList.ListItems.Select((GH_ValueListItem i) => i.Name),
                                                      valueList.FirstSelectedItem.Name,
-                                                     top));
+                                                     top,
+                                                     item.TableColumnInfo));
                 }
                 else if (param is GH_NumberSlider slider)
                 {
@@ -92,28 +99,32 @@ namespace DrawingLink.UI.GH
                                                    Convert.ToDouble(slider.Slider.Maximum),
                                                    Convert.ToDouble(slider.CurrentValue),
                                                    (slider.Slider.Type == Grasshopper.GUI.Base.GH_SliderAccuracy.Float) ? slider.Slider.DecimalPlaces : 0,
-                                                   top));
+                                                   top,
+                                                   item.TableColumnInfo));
                 }
                 else if (param is GH_PersistentParam<GH_String>)
                 {
                     group.AddParam(new TextParam(fieldName,
                                                  param.NickName,
                                                  ((GH_Goo<string>)param)?.Value ?? "",
-                                                 top));
+                                                 top,
+                                                 item.TableColumnInfo));
                 }
                 else if (param is GH_PersistentParam<GH_Integer>)
                 {
                     group.AddParam(new TextParam(fieldName,
                                                  param.NickName,
                                                  ((GH_Goo<int>)param)?.Value.ToString(CultureInfo.InvariantCulture) ?? "",
-                                                 top));
+                                                 top,
+                                                 item.TableColumnInfo));
                 }
                 else if (param is GH_PersistentParam<GH_Number>)
                 {
                     group.AddParam(new TextParam(fieldName,
                                                  param.NickName,
                                                  ((GH_Goo<int>)param)?.Value.ToString(CultureInfo.InvariantCulture) ?? "",
-                                                 top));
+                                                 top,
+                                                 item.TableColumnInfo));
                 }
                 else if (param.GetType().BaseType.Name == "CatalogBaseComponent")
                 {
@@ -124,7 +135,7 @@ namespace DrawingLink.UI.GH
                         return (string)method.Invoke(param, new string[1] { currentValue });
                     };
 
-                    group.AddParam(new CatalogParamData(fieldName, param.NickName, textValue, pickFromCatalog, top));
+                    group.AddParam(new CatalogParamData(fieldName, param.NickName, textValue, pickFromCatalog, top, item.TableColumnInfo));
                 }
             }
 
@@ -155,10 +166,10 @@ namespace DrawingLink.UI.GH
             var isBackground = source.Any((string c) => c == "BACKGROUND" || c == "BG");
             var positionX = (source.Any((string c) => c == "LEFT" || c == "L" || Regex.IsMatch(c, "^L-?(\\d+)")) ? "LEFT" : (source.Any((string c) => c == "RIGHT" || c == "R" || Regex.IsMatch(c, "^R-?(\\d+)")) ? "RIGHT" : (source.Any((string c) => c == "CENTER") ? "CENTER" : "CENTER")));
             var positionY = (source.Any((string c) => c == "TOP" || c == "T" || Regex.IsMatch(c, "^T-?(\\d+)")) ? "TOP" : (source.Any((string c) => c == "BOTTOM" || c == "B" || Regex.IsMatch(c, "^B-?(\\d+)")) ? "BOTTOM" : (source.Any((string c) => c == "MIDDLE") ? "MIDDLE" : "TOP")));
-            
+
             int.TryParse(source.FirstOrDefault((string c) => Regex.IsMatch(c, "^L-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("LEFT"))?.Substring(4) ?? source.FirstOrDefault((string c) => Regex.IsMatch(c, "^R-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("RIGHT"))?.Substring(5), out int paddingX);
             int.TryParse(source.FirstOrDefault((string c) => Regex.IsMatch(c, "^T-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("TOP"))?.Substring(3) ?? source.FirstOrDefault((string c) => Regex.IsMatch(c, "^B-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("BOTTOM"))?.Substring(6), out int paddingY);
-            
+
             int width = 0;
             bool sizeTypePercent = false;
             string text = source.FirstOrDefault((string c) => Regex.IsMatch(c, "^W?(\\d+)"));
