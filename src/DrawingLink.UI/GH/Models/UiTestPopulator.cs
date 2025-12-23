@@ -20,8 +20,10 @@ namespace DrawingLink.UI.GH.Models
             geoGroup.AddParam(new TextParam($"int_{intCounter++}", "Integer param", "10", 3));
             geoGroup.AddParam(new SliderParam($"double_{doubleCounter++}", "Slider", 0, 500, 20, 2, 4));
 
+
+            var style = new ImageStyle(false, "0", "0", 0, 0, 100, 100, true);
             var bitmapImage = (Bitmap)Image.FromFile(@"C:\Users\grzeg\Downloads\tekla.png");
-            geoGroup.AddParam(new ImageParam(bitmapImage, 5));
+            geoGroup.AddParam(new ImageParam(bitmapImage, 5, style));
             modelTab.AddGroup(geoGroup);
 
             var secondGroup = new UiGroup("Second");

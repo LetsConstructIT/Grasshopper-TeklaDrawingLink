@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace DrawingLink.UI.GH
 {
@@ -72,7 +73,8 @@ namespace DrawingLink.UI.GH
                 }
                 else if (param is GH_ImageSampler imageSampler)
                 {
-                    group.AddParam(new ImageParam(imageSampler.Image, top));
+                    var style = ParseImageStyle(param.NickName);
+                    group.AddParam(new ImageParam(imageSampler.Image, top, style));
                 }
                 else if (param is GH_ValueList valueList)
                 {
@@ -144,6 +146,41 @@ namespace DrawingLink.UI.GH
             var tab = root.Tabs[0];
             if (string.IsNullOrEmpty(tab.Name))
                 tab.ChangeName("Attributes");
+        }
+
+        private static ImageStyle ParseImageStyle(string imageStyleString)
+        {
+            var source = (from c in imageStyleString.Split(new char[1] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                          select c.Trim().ToUpperInvariant()).ToList();
+            var isBackground = source.Any((string c) => c == "BACKGROUND" || c == "BG");
+            var positionX = (source.Any((string c) => c == "LEFT" || c == "L" || Regex.IsMatch(c, "^L-?(\\d+)")) ? "LEFT" : (source.Any((string c) => c == "RIGHT" || c == "R" || Regex.IsMatch(c, "^R-?(\\d+)")) ? "RIGHT" : (source.Any((string c) => c == "CENTER") ? "CENTER" : "CENTER")));
+            var positionY = (source.Any((string c) => c == "TOP" || c == "T" || Regex.IsMatch(c, "^T-?(\\d+)")) ? "TOP" : (source.Any((string c) => c == "BOTTOM" || c == "B" || Regex.IsMatch(c, "^B-?(\\d+)")) ? "BOTTOM" : (source.Any((string c) => c == "MIDDLE") ? "MIDDLE" : "TOP")));
+            
+            int.TryParse(source.FirstOrDefault((string c) => Regex.IsMatch(c, "^L-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("LEFT"))?.Substring(4) ?? source.FirstOrDefault((string c) => Regex.IsMatch(c, "^R-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("RIGHT"))?.Substring(5), out int paddingX);
+            int.TryParse(source.FirstOrDefault((string c) => Regex.IsMatch(c, "^T-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("TOP"))?.Substring(3) ?? source.FirstOrDefault((string c) => Regex.IsMatch(c, "^B-?(\\d+)"))?.Substring(1) ?? source.FirstOrDefault((string c) => c.StartsWith("BOTTOM"))?.Substring(6), out int paddingY);
+            
+            int width = 0;
+            bool sizeTypePercent = false;
+            string text = source.FirstOrDefault((string c) => Regex.IsMatch(c, "^W?(\\d+)"));
+            if (text != null)
+            {
+                int.TryParse(text.TrimStart('W').TrimEnd('%'), out width);
+                sizeTypePercent = text[text.Length - 1] == '%';
+            }
+
+            int.TryParse(source.FirstOrDefault((string c) => Regex.IsMatch(c, "^H(\\d+)"))?.Substring(1), out int height);
+
+            return new ImageStyle
+            (
+                 isBackground,
+                 positionX,
+                 positionY,
+                 paddingX,
+                 paddingY,
+                 width,
+                 height,
+                 sizeTypePercent
+            );
         }
     }
 }
