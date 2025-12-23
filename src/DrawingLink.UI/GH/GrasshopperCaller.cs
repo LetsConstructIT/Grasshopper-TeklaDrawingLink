@@ -595,13 +595,15 @@ namespace DrawingLink.UI.GH
                     ghGroup.Objects().OfType<GH_Group>().Where(o => Regex.IsMatch(o.NickName, "^C\\d", RegexOptions.IgnoreCase)))
                 {
                     var nameSubParts = innerGroup.NickName.Split(' ');
-                    var columnInfo = new TableColumnInfo(ghGroup.InstanceGuid,
-                                                         innerGroup.InstanceGuid,
-                                                         int.Parse(nameSubParts[0].Substring(1)) - 1,
-                                                         (nameSubParts.Length > 1) ? nameSubParts[1].Trim() : null);
 
                     foreach (IGH_DocumentObject documentObject in innerGroup.Objects())
-                        tableMapping[documentObject.InstanceGuid] = columnInfo;
+                    {
+                        tableMapping[documentObject.InstanceGuid] = 
+                            new TableColumnInfo(ghGroup.InstanceGuid,
+                                                innerGroup.InstanceGuid,
+                                                int.Parse(nameSubParts[0].Substring(1)) - 1,
+                                                (nameSubParts.Length > 1) ? nameSubParts[1].Trim() : null);
+                    }
                 }
             }
 

@@ -1,6 +1,7 @@
 ﻿using DrawingLink.UI.GH;
 using DrawingLink.UI.GH.Models;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -73,33 +74,55 @@ namespace DrawingLink.UI
         private UIElement PopulateGroup(UiGroup group, bool loadValuesFromGh)
         {
             var groupBox = new GroupBox() { Header = group.Name };
-            var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            var topGrid = new Grid();
+            topGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            topGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 
-            groupBox.Content = grid;
+            groupBox.Content = topGrid;
+
+            AssignInternalRowNumbers(group.Params);
 
             foreach (var param in group.Params)
             {
-                var rowIdx = AddRow(grid);
+                var rowIdx = AddRow(topGrid);
                 if (param is ImageParam imageParam)
                 {
-                    DisplayImage(imageParam, grid, rowIdx);
+                    DisplayImage(imageParam, topGrid, rowIdx);
                     continue;
                 }
                 else if (param is InfoParam infoParam)
                 {
-                    DisplayInfo(infoParam, grid, rowIdx);
+                    DisplayInfo(infoParam, topGrid, rowIdx);
                     continue;
                 }
                 else if (param is PersistableParam persistableParam)
                 {
-                    InsertEditableParam(persistableParam, grid, rowIdx, loadValuesFromGh);
+                    InsertEditableParam(persistableParam, topGrid, rowIdx, loadValuesFromGh);
                     continue;
                 }
             }
 
             return groupBox;
+        }
+
+        private void AssignInternalRowNumbers(IReadOnlyList<Param> parameters)
+        {
+            var tableRowCounterDictionary = new Dictionary<Guid, Dictionary<Guid, int>>();
+            foreach (var param in parameters)
+            {
+                var tableColumnInfo = param.TableColumnInfo;
+                if (!tableColumnInfo.IsValidTable())
+                    continue;
+
+                if (!tableRowCounterDictionary.ContainsKey(tableColumnInfo.TableContainerId))
+                    tableRowCounterDictionary[tableColumnInfo.TableContainerId] = new Dictionary<Guid, int>();
+
+                tableColumnInfo.RowNumber = (tableRowCounterDictionary[tableColumnInfo.TableContainerId].ContainsKey(tableColumnInfo.ColumnId) ? tableRowCounterDictionary[tableColumnInfo.TableContainerId][tableColumnInfo.ColumnId] : 0);
+                if (param is not ImageParam imageParamData || !imageParamData.ImageStyle.IsBackground)
+                {
+                    tableRowCounterDictionary[tableColumnInfo.TableContainerId][tableColumnInfo.ColumnId] = tableColumnInfo.RowNumber + 1;
+                }
+            }
         }
 
         private void InsertEditableParam(PersistableParam param, Grid grid, int rowIdx, bool loadValuesFromGh)
