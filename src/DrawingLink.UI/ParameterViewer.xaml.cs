@@ -102,7 +102,6 @@ namespace DrawingLink.UI
                             .Where(p => p.TableColumnInfo.TableContainerId == param.TableColumnInfo.TableContainerId)
                             .DistinctBy(p => p.TableColumnInfo.ColumnNumber)
                             .OrderBy(p => p.TableColumnInfo.ColumnNumber)
-                            .Where(p => !string.IsNullOrEmpty(p.TableColumnInfo.ColumnStyle))
                             .ToList();
 
                         if (!columnStyles.Any())
@@ -111,7 +110,7 @@ namespace DrawingLink.UI
                         for (var i = 0; i <= columnStyles.Max(c => c.TableColumnInfo.ColumnNumber); i++)
                         {
                             var columnStyle = columnStyles.FirstOrDefault(c => c.TableColumnInfo.ColumnNumber == i);
-                            if (columnStyle != null)
+                            if (columnStyle != null && columnStyle.TableColumnInfo.ColumnStyle != null)
                             {
                                 var gridUnitType = columnStyle.TableColumnInfo.ColumnStyle.Contains("%") ? GridUnitType.Star : GridUnitType.Pixel;
                                 var width = double.Parse(columnStyle.TableColumnInfo.ColumnStyle.Replace("%", ""));
@@ -412,7 +411,6 @@ namespace DrawingLink.UI
             grid.Children.Add(textBlock);
             Grid.SetRow(textBlock, rowIdx);
             Grid.SetColumn(textBlock, colIdx);
-            // Grid.SetColumnSpan(textBlock, 2);
 
             bool TryGetCorrectUri(string phrase, out Uri uri)
             {
