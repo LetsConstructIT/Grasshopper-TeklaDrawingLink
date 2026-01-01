@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrawingLink.UI.GH.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +10,17 @@ namespace DrawingLink.UI.GH
         private readonly Dictionary<string, HashSet<Guid>> _tabs = new();
         private readonly Dictionary<string, HashSet<Guid>> _groups = new();
         private readonly HashSet<Guid> _hidden = new();
+        private readonly Dictionary<Guid, TableColumnInfo> _tables;
+
+        public GHGroups(Dictionary<Guid, TableColumnInfo> tables)
+        {
+            _tables = tables ?? throw new ArgumentNullException(nameof(tables));
+        }
+
+        public TableColumnInfo? GetTableColumnInfo(Guid id)
+        {
+            return _tables.ContainsKey(id) ? _tables[id] : TableColumnInfo.Empty();
+        }
 
         public bool WithoutTabsAndGroups()
             => !_tabs.Any() && !_groups.Any();

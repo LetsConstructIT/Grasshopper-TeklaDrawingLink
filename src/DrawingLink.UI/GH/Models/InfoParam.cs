@@ -6,7 +6,7 @@ namespace DrawingLink.UI.GH.Models
     {
         public string Value { get; }
 
-        public InfoParam(string value, float top) : base(string.Empty, top)
+        public InfoParam(string value, float top, TableColumnInfo tableColumnInfo) : base(string.Empty, top, tableColumnInfo)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
         }

@@ -1,6 +1,7 @@
 ﻿using DrawingLink.UI.GH;
 using DrawingLink.UI.GH.Models;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -73,28 +74,88 @@ namespace DrawingLink.UI
         private UIElement PopulateGroup(UiGroup group, bool loadValuesFromGh)
         {
             var groupBox = new GroupBox() { Header = group.Name };
-            var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            var topGrid = GetEmptyGridWithTwoColumns();
 
-            groupBox.Content = grid;
+            groupBox.Content = topGrid;
+
+            AssignInternalRowNumbers(group.Params);
+
+            var internalGrids = new Dictionary<Guid, Grid>();
 
             foreach (var param in group.Params)
             {
-                var rowIdx = AddRow(grid);
+                var gridToPlace = topGrid;
+                var rowIdx = 0;
+                var colIdx = 1;
+
+                if (param.TableColumnInfo.IsValidTable())
+                {
+                    colIdx = param.TableColumnInfo.ColumnNumber;
+
+                    if (internalGrids.ContainsKey(param.TableColumnInfo.TableContainerId))
+                        gridToPlace = internalGrids[param.TableColumnInfo.TableContainerId];
+                    else
+                    {
+                        gridToPlace = new Grid();
+
+                        var columnStyles = group.Params
+                            .Where(p => p.TableColumnInfo.TableContainerId == param.TableColumnInfo.TableContainerId)
+                            .DistinctBy(p => p.TableColumnInfo.ColumnNumber)
+                            .OrderBy(p => p.TableColumnInfo.ColumnNumber)
+                            .ToList();
+
+                        if (!columnStyles.Any())
+                            gridToPlace.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+
+                        for (var i = 0; i <= columnStyles.Max(c => c.TableColumnInfo.ColumnNumber); i++)
+                        {
+                            var columnStyle = columnStyles.FirstOrDefault(c => c.TableColumnInfo.ColumnNumber == i);
+                            if (columnStyle != null && columnStyle.TableColumnInfo.ColumnStyle != null)
+                            {
+                                var gridUnitType = columnStyle.TableColumnInfo.ColumnStyle.Contains("%") ? GridUnitType.Star : GridUnitType.Pixel;
+                                var width = double.Parse(columnStyle.TableColumnInfo.ColumnStyle.Replace("%", ""));
+                                gridToPlace.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(width, gridUnitType) });
+                            }
+                            else
+                                gridToPlace.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                        }
+
+                        internalGrids[param.TableColumnInfo.TableContainerId] = gridToPlace;
+
+                        rowIdx = AddRow(topGrid);
+                        topGrid.Children.Add(gridToPlace);
+                        Grid.SetRow(gridToPlace, rowIdx);
+                        Grid.SetColumn(gridToPlace, 0);
+                        Grid.SetColumnSpan(gridToPlace, 2);
+                    }
+
+                    if (param.TableColumnInfo.RowNumber >= gridToPlace.RowDefinitions.Count)
+                        AddRow(gridToPlace);
+
+                    rowIdx = param.TableColumnInfo.RowNumber;
+                }
+                else
+                    rowIdx = AddRow(gridToPlace);
+
                 if (param is ImageParam imageParam)
                 {
-                    DisplayImage(imageParam, grid, rowIdx);
+                    if (!param.TableColumnInfo.IsValidTable())
+                        colIdx = 0;
+
+                    DisplayImage(imageParam, gridToPlace, rowIdx, colIdx);
                     continue;
                 }
                 else if (param is InfoParam infoParam)
                 {
-                    DisplayInfo(infoParam, grid, rowIdx);
+                    if (!param.TableColumnInfo.IsValidTable())
+                        colIdx = 0;
+
+                    DisplayInfo(infoParam, gridToPlace, rowIdx, colIdx);
                     continue;
                 }
                 else if (param is PersistableParam persistableParam)
                 {
-                    InsertEditableParam(persistableParam, grid, rowIdx, loadValuesFromGh);
+                    InsertEditableParam(persistableParam, gridToPlace, rowIdx, colIdx, loadValuesFromGh);
                     continue;
                 }
             }
@@ -102,16 +163,54 @@ namespace DrawingLink.UI
             return groupBox;
         }
 
-        private void InsertEditableParam(PersistableParam param, Grid grid, int rowIdx, bool loadValuesFromGh)
+        private static Grid GetEmptyGridWithTwoColumns()
         {
-            var colIdx = 1;
-            SetCell(grid, CreateAttributeCheckBox(param.Name, param.FieldName), rowIdx, 0);
+            var grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            return grid;
+        }
+
+        private void AssignInternalRowNumbers(IReadOnlyList<Param> parameters)
+        {
+            var tableRowCounterDictionary = new Dictionary<Guid, Dictionary<Guid, int>>();
+            foreach (var param in parameters)
+            {
+                var tableColumnInfo = param.TableColumnInfo;
+                if (!tableColumnInfo.IsValidTable())
+                    continue;
+
+                if (!tableRowCounterDictionary.ContainsKey(tableColumnInfo.TableContainerId))
+                    tableRowCounterDictionary[tableColumnInfo.TableContainerId] = new Dictionary<Guid, int>();
+
+                tableColumnInfo.RowNumber = (tableRowCounterDictionary[tableColumnInfo.TableContainerId].ContainsKey(tableColumnInfo.ColumnId) ? tableRowCounterDictionary[tableColumnInfo.TableContainerId][tableColumnInfo.ColumnId] : 0);
+                if (param is not ImageParam imageParamData || !imageParamData.ImageStyle.IsBackground)
+                {
+                    tableRowCounterDictionary[tableColumnInfo.TableContainerId][tableColumnInfo.ColumnId] = tableColumnInfo.RowNumber + 1;
+                }
+            }
+        }
+
+        private void InsertEditableParam(PersistableParam param, Grid parentGrid, int rowIdx, int colIdx, bool loadValuesFromGh)
+        {
+            if (param.TableColumnInfo.IsValidTable())
+            {
+                var fakeGrid = GetEmptyGridWithTwoColumns();
+                fakeGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                SetCell(parentGrid, fakeGrid, rowIdx, colIdx);
+                parentGrid = fakeGrid;
+
+                rowIdx = 0;
+                colIdx = 1;
+            }
+
+            SetCell(parentGrid, CreateAttributeCheckBox(param.Name, param.FieldName), rowIdx, 0);
 
             switch (param)
             {
                 case TextParam textParam:
                     var tb = new TextBox() { Text = textParam.Value, MinWidth = 110 };
-                    SetCell(grid, tb, rowIdx, colIdx);
+                    SetCell(parentGrid, tb, rowIdx, colIdx);
 
                     if (param.HasValidFieldName())
                     {
@@ -121,41 +220,54 @@ namespace DrawingLink.UI
                     }
                     break;
                 case SliderParam sliderParam:
-                    var dockPanel = new DockPanel() { LastChildFill = true };
-                    var slider = new Slider()
+                    if (param.TableColumnInfo.IsValidTable())
                     {
-                        Minimum = sliderParam.Minimum,
-                        Maximum = sliderParam.Maximum,
-                        Value = sliderParam.Value,
-                        SmallChange = sliderParam.GetSmallChange(),
-                        LargeChange = sliderParam.GetLargeChange(),
-                        IsSnapToTickEnabled = true
-                    };
+                        var textBox = new TextBox() { MinWidth = 80, Text = sliderParam.Value.ToString() };
+                        textBox.SetBinding(TextBox.TextProperty, new Binding(param.FieldName));
 
-                    if (sliderParam.DecimalPlaces != 0)
-                        slider.TickFrequency = sliderParam.GetSmallChange();
+                        if (loadValuesFromGh)
+                            OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, sliderParam.Value));
 
-                    slider.SetBinding(Slider.ValueProperty, new Binding(param.FieldName));
-
-                    var textBox = new TextBox() { MinWidth = 80, Text = slider.Value.ToString() };
-                    textBox.TextChanged += (sender, e) =>
+                        SetCell(parentGrid, textBox, rowIdx, colIdx);
+                    }
+                    else
                     {
-                        if (double.TryParse(textBox.Text, out double result))
-                            slider.Value = result;
-                        else
-                            textBox.Text = "Wrong input";
-                    };
-                    slider.ValueChanged += (sender, e) =>
-                    {
-                        textBox.Text = slider.Value.ToString();
-                    };
+                        var dockPanel = new DockPanel() { LastChildFill = true };
+                        var slider = new Slider()
+                        {
+                            Minimum = sliderParam.Minimum,
+                            Maximum = sliderParam.Maximum,
+                            Value = sliderParam.Value,
+                            SmallChange = sliderParam.GetSmallChange(),
+                            LargeChange = sliderParam.GetLargeChange(),
+                            IsSnapToTickEnabled = true
+                        };
 
-                    if (loadValuesFromGh)
-                        OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, sliderParam.Value));
+                        if (sliderParam.DecimalPlaces != 0)
+                            slider.TickFrequency = sliderParam.GetSmallChange();
 
-                    dockPanel.Children.Add(textBox);
-                    dockPanel.Children.Add(slider);
-                    SetCell(grid, dockPanel, rowIdx, colIdx);
+                        slider.SetBinding(Slider.ValueProperty, new Binding(param.FieldName));
+
+                        var textBox = new TextBox() { MinWidth = 80, Text = slider.Value.ToString() };
+                        textBox.TextChanged += (sender, e) =>
+                        {
+                            if (double.TryParse(textBox.Text, out double result))
+                                slider.Value = result;
+                            else
+                                textBox.Text = "Wrong input";
+                        };
+                        slider.ValueChanged += (sender, e) =>
+                        {
+                            textBox.Text = slider.Value.ToString();
+                        };
+
+                        if (loadValuesFromGh)
+                            OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, sliderParam.Value));
+
+                        dockPanel.Children.Add(textBox);
+                        dockPanel.Children.Add(slider);
+                        SetCell(parentGrid, dockPanel, rowIdx, colIdx);
+                    }
                     break;
                 case FileInfoParam fileParam:
                     var fileStackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
@@ -188,7 +300,7 @@ namespace DrawingLink.UI
                     fileStackPanel.Children.Add(fText);
                     fileStackPanel.Children.Add(fButton);
 
-                    SetCell(grid, fileStackPanel, rowIdx, colIdx);
+                    SetCell(parentGrid, fileStackPanel, rowIdx, colIdx);
                     break;
                 case DirectoryInfoParam directoryParam:
                     var dirStackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
@@ -214,13 +326,16 @@ namespace DrawingLink.UI
 
                         var pickedDirectory = dlg.SelectedPath;
                         if (!string.IsNullOrEmpty(pickedDirectory))
+                        {
+                            pickedDirectory += "\\";
                             OnGhAttributeLoaded(new SetAttributeEventArgs(param.FieldName, pickedDirectory));
+                        }
                     };
 
                     dirStackPanel.Children.Add(dText);
                     dirStackPanel.Children.Add(dButton);
 
-                    SetCell(grid, dirStackPanel, rowIdx, colIdx);
+                    SetCell(parentGrid, dirStackPanel, rowIdx, colIdx);
                     break;
                 case ListParamData listParam:
                     var dockListPanel = new DockPanel() { LastChildFill = true };
@@ -236,7 +351,7 @@ namespace DrawingLink.UI
 
                     dockListPanel.Children.Add(combobox);
                     dockListPanel.Children.Add(new Label());
-                    SetCell(grid, dockListPanel, rowIdx, colIdx);
+                    SetCell(parentGrid, dockListPanel, rowIdx, colIdx);
                     break;
                 case CatalogParamData catalogParam:
                     var stackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
@@ -257,14 +372,14 @@ namespace DrawingLink.UI
                     stackPanel.Children.Add(textb);
                     stackPanel.Children.Add(button);
 
-                    SetCell(grid, stackPanel, rowIdx, colIdx);
+                    SetCell(parentGrid, stackPanel, rowIdx, colIdx);
                     break;
                 default:
                     break;
             }
         }
 
-        private void DisplayInfo(InfoParam infoParam, Grid grid, int rowIdx)
+        private void DisplayInfo(InfoParam infoParam, Grid grid, int rowIdx, int colIdx)
         {
             var textBlock = new TextBlock()
             {
@@ -295,8 +410,7 @@ namespace DrawingLink.UI
 
             grid.Children.Add(textBlock);
             Grid.SetRow(textBlock, rowIdx);
-            Grid.SetColumn(textBlock, 0);
-            Grid.SetColumnSpan(textBlock, 2);
+            Grid.SetColumn(textBlock, colIdx);
 
             bool TryGetCorrectUri(string phrase, out Uri uri)
             {
@@ -320,21 +434,59 @@ namespace DrawingLink.UI
             }
         }
 
-        private void DisplayImage(ImageParam imageParam, Grid grid, int rowIdx)
+        private void DisplayImage(ImageParam imageParam, Grid grid, int rowIdx, int colIdx)
         {
             var image = new Image()
             {
                 Source = imageParam.Value.ToBitmapImage(),
-                Stretch = System.Windows.Media.Stretch.None,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
+                Stretch = System.Windows.Media.Stretch.UniformToFill,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(5)
             };
 
+            if (imageParam.ImageStyle.Width != 0)
+                image.Width = imageParam.ImageStyle.Width;
+
+            if (imageParam.ImageStyle.Height != 0)
+                image.Height = imageParam.ImageStyle.Height;
+
+            if (imageParam.ImageStyle.PaddingX != 0 || imageParam.ImageStyle.PaddingY != 0)
+                image.Margin = new Thickness(imageParam.ImageStyle.PaddingX, imageParam.ImageStyle.PaddingY, 0, 0);
+
             grid.Children.Add(image);
             Grid.SetRow(image, rowIdx);
-            Grid.SetColumn(image, 0);
-            Grid.SetColumnSpan(image, 2);
+            Grid.SetColumn(image, colIdx);
+
+            if (!imageParam.TableColumnInfo.IsValidTable())
+            {
+                image.HorizontalAlignment = HorizontalAlignment.Center;
+                image.VerticalAlignment = VerticalAlignment.Center;
+                Grid.SetColumnSpan(image, 2);
+            }
+
+            if (imageParam.ImageStyle.IsBackground)
+            {
+                Grid.SetRowSpan(image, 99);
+                if (!imageParam.TableColumnInfo.IsValidTable())
+                    Grid.SetColumnSpan(image, 2);
+            }
+
+            image.HorizontalAlignment = imageParam.ImageStyle.PositionX switch
+            {
+                "LEFT" => HorizontalAlignment.Left,
+                "CENTER" => HorizontalAlignment.Center,
+                "RIGHT" => HorizontalAlignment.Right,
+                _ => HorizontalAlignment.Left
+            };
+
+            image.VerticalAlignment = imageParam.ImageStyle.PositionY switch
+            {
+                "TOP" => VerticalAlignment.Top,
+                "MIDDLE" => VerticalAlignment.Center,
+                "BOTTOM" => VerticalAlignment.Bottom,
+                _ => VerticalAlignment.Top
+            };
         }
 
         private void SetCell(Grid grid, UIElement control, int rowIdx, int colIdx)
@@ -348,7 +500,7 @@ namespace DrawingLink.UI
         {
             return new WpfFilterCheckBox()
             {
-                Content = content,
+                Content = content == "." ? "" : content,
                 VerticalAlignment = VerticalAlignment.Center,
                 AttributeName = fieldName
             };

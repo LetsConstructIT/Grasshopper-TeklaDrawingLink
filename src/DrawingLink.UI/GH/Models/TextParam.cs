@@ -6,7 +6,7 @@ namespace DrawingLink.UI.GH.Models
     {
         public string Value { get; }
 
-        public TextParam(string fieldName, string name, string value, float top) : base(fieldName, name, top)
+        public TextParam(string fieldName, string name, string value, float top, TableColumnInfo tableColumnInfo) : base(fieldName, name, top, tableColumnInfo)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
         }

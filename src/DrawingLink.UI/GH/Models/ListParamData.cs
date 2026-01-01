@@ -8,7 +8,7 @@ namespace DrawingLink.UI.GH.Models
         public IReadOnlyList<string> Items { get; }
         public string SelectedItem { get; }
 
-        public ListParamData(string fieldName, string name, IEnumerable<string> items, string selectedItem, float top) : base(fieldName, name, top)
+        public ListParamData(string fieldName, string name, IEnumerable<string> items, string selectedItem, float top, TableColumnInfo tableColumnInfo) : base(fieldName, name, top, tableColumnInfo)
         {
             Items = items.ToArray();
             SelectedItem = selectedItem;

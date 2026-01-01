@@ -1,4 +1,5 @@
-﻿using DrawingLink.UI.Utils;
+﻿using DrawingLink.UI.GH.Models;
+using DrawingLink.UI.Utils;
 using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
@@ -12,6 +13,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Tekla.Structures.Datatype;
 using Tekla.Structures.Model;
@@ -40,7 +42,8 @@ namespace DrawingLink.UI.GH
                 "Component_VBNET_Script",
                 "ZuiPythonComponent",
                 "TeklaComponentBase",
-                "CSharpComponent"
+                "CSharpComponent",
+                "BaseScriptComponent",
         };
 
         private GrasshopperCaller()
@@ -95,7 +98,7 @@ namespace DrawingLink.UI.GH
         private Dictionary<GH_RuntimeMessageLevel, List<string>> SolveDocument(GH_Document document, UserFormData userFormData, Dictionary<string, TeklaObjects> teklaInput)
         {
             GH_Document.EnableSolutions = true;
-            
+
             var messages = InitializeMessageDictionary();
 
             var docParams = GetInputParams(document);
@@ -108,13 +111,16 @@ namespace DrawingLink.UI.GH
             if (loopStarts.Any())
                 WaitUntilLoopsFinish(loopStarts, document);
 
+            var suppressedComponentGuids = GetSuppressedOutputObjects(document.Objects);
+
             foreach (var activeObject in activeObjects)
             {
                 if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => _allowedComponentTypes.Contains(t.Name)))
                 {
                     component.CollectData();
                     component.ComputeData();
-                    AppendComponentErrorMessages(component, messages);
+                    if (!suppressedComponentGuids.Contains(component.InstanceGuid))
+                        AppendComponentErrorMessages(component, messages);
                 }
                 else if (activeObject is GH_Panel && (activeObject as GH_Panel).Sources.Any())
                 {
@@ -462,7 +468,9 @@ namespace DrawingLink.UI.GH
                         new ObjectConnectivity(param.SourceCount, param.Recipients.Count()) :
                         new ObjectConnectivity(0, 0);
 
-                    attributeParams.Add(new ActiveObjectWrapper(activeObject, new TabAndGroup(tab, group), connectivity));
+                    var tableColumnInfo = groups.GetTableColumnInfo(activeObject.InstanceGuid);
+
+                    attributeParams.Add(new ActiveObjectWrapper(activeObject, new TabAndGroup(tab, group), connectivity, tableColumnInfo));
                 }
             }
 
@@ -553,7 +561,9 @@ namespace DrawingLink.UI.GH
 
         private GHGroups GetInputGroups(GH_Document doc)
         {
-            var gHGroups = new GHGroups();
+            var tableMapping = ReadTableDetails(doc);
+
+            var gHGroups = new GHGroups(tableMapping);
             foreach (var group in doc.Objects.OfType<GH_Group>())
             {
                 var guids = group.ObjectsRecursive().Select(o => o.InstanceGuid);
@@ -574,6 +584,30 @@ namespace DrawingLink.UI.GH
             }
 
             return gHGroups;
+        }
+
+        private Dictionary<Guid, TableColumnInfo> ReadTableDetails(GH_Document doc)
+        {
+            var tableMapping = new Dictionary<Guid, TableColumnInfo>();
+            foreach (var ghGroup in doc.Objects.OfType<GH_Group>())
+            {
+                foreach (var innerGroup in
+                    ghGroup.Objects().OfType<GH_Group>().Where(o => Regex.IsMatch(o.NickName, "^C\\d", RegexOptions.IgnoreCase)))
+                {
+                    var nameSubParts = innerGroup.NickName.Split(' ');
+
+                    foreach (IGH_DocumentObject documentObject in innerGroup.Objects())
+                    {
+                        tableMapping[documentObject.InstanceGuid] = 
+                            new TableColumnInfo(ghGroup.InstanceGuid,
+                                                innerGroup.InstanceGuid,
+                                                int.Parse(nameSubParts[0].Substring(1)) - 1,
+                                                (nameSubParts.Length > 1) ? nameSubParts[1].Trim() : null);
+                    }
+                }
+            }
+
+            return tableMapping;
         }
 
         private bool IsSettingsPanel(IGH_ActiveObject param)
@@ -616,6 +650,50 @@ namespace DrawingLink.UI.GH
                 foreach (var message in component.RuntimeMessages(level))
                     messages[level].Add($"[ {component.NickName} component ] {message}");
             }
+        }
+
+        private HashSet<Guid> GetSuppressedOutputObjects(IEnumerable<IGH_DocumentObject> allObjects)
+        {
+            var hashSet = new HashSet<Guid>();
+            foreach (var group in allObjects.OfType<GH_Group>())
+            {
+                var groupName = group.NickName.Trim().ToUpperInvariant();
+                if (!groupName.StartsWith("HIDE") && !groupName.StartsWith("HIDDEN") && !groupName.StartsWith("SUPPRESS"))
+                    continue;
+
+                var source = group.ObjectsRecursive();
+                hashSet.UnionWith(source.Select(o => o.InstanceGuid));
+
+                foreach (var cluster in source.OfType<GH_Cluster>())
+                {
+                    var clusteredObjects = GetDocumentsRecursive(GetClusterDocument(cluster)).SelectMany((GH_Document d) => d.Objects);
+                    hashSet.UnionWith(clusteredObjects.Select(o => o.InstanceGuid));
+                }
+            }
+
+            return hashSet;
+        }
+
+        private List<GH_Document> GetDocumentsRecursive(GH_Document document)
+        {
+            var list = new List<GH_Document>();
+            if (document == null)
+                return list;
+
+            list.Add(document);
+
+            foreach (var item in document.Objects.OfType<GH_Cluster>())
+            {
+                GH_Document clusterDocument = GetClusterDocument(item);
+                list.AddRange(GetDocumentsRecursive(clusterDocument));
+            }
+
+            return list;
+        }
+
+        private GH_Document GetClusterDocument(GH_Cluster cluster)
+        {
+            return cluster.Document(null) ?? typeof(GH_Cluster).GetField("m_internalDocument", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(cluster) as GH_Document;
         }
 
         private void AppendOutputMessages(GH_Panel panel, Dictionary<GH_RuntimeMessageLevel, List<string>> messages)

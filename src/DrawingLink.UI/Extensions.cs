@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -18,6 +20,17 @@ namespace DrawingLink.UI
             bitmapimage.EndInit();
 
             return bitmapimage;
+        }
+
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            var keys = new HashSet<TKey>();
+            foreach (var element in source)
+            {
+                if (keys.Contains(keySelector(element))) continue;
+                keys.Add(keySelector(element));
+                yield return element;
+            }
         }
     }
 }
