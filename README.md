@@ -6,9 +6,17 @@ Based on great job done by Sebastian Lindholm from Trimble available in [Tekla W
 Originally, drawing part was not under the scope of link. I hope that as a Tekla community we can fill this gap - **LetsConstructIT!**
 
 ## Installation
-You have to point .gha file with drawing components to Rhino. It can be done in exactly same manner as the [Model link](https://support.tekla.com/pl/node/107964#setup). List of available releases of Drawing link can be found at [Releases](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/releases) section.
+Drawing Link uses the Grasshopper-Tekla Live Link mechanism to select the correct version at runtime. Therefore, you should use a .dll file instead of the typical .gha file.
+In Live Link there is a file GrasshopperTeklaLink.Loader.gha which is responsible for loading behavior.
 
-Video instruction can be found on:
+After successful installing of the [Live Link](https://support.tekla.com/pl/node/107964#setup) you should:
+- Download needed Drawing Link version (according to your Tekla) from [Releases](https://github.com/LetsConstructIT/Grasshopper-TeklaDrawingLink/releases) section.
+- Unblock the downloaded .dll file by right-clicking -> Properties -> Unblock
+- Move the .dll file into %AppData%\Grasshopper\Libraries
+
+*If you're not using Live Link... You should. To fully utilize Drawing Link's potential, you need to query the model data. But okay, let's assume you only want to use Drawing Link. In that case, you'll need to rename the downloaded version of Drawing Link (.dll -> .gha). Then you have to accommodate the changed Tekla DLL mechanism, which is tricky. The easiest way is to place Drawing Link in the Tekla bin directory and point Grasshopper to use it. But really, use the Live Link and life will be much easier :) 
+
+[OBSOLETE] Video instruction can be found on:
 [YouTube](https://www.youtube.com/watch?v=IkuimFKCGMw)
 
 ## License
