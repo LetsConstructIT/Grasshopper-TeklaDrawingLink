@@ -529,7 +529,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Filter",
             NickName = "F",
-            Description = "Tekla Object Selection Filter"
+            Description = "Selection filter name or expression.\n\nTemporary filters: If you input a filter expression, it will create a temporary filter. A filter expression is a text string like\n    (Part.Name == BEAM1 || Part.Name == COLUMN*)\nwhich gets all parts whose name is BEAM1 or whose name starts with COLUMN.\n\nFor more syntax, use the Get Filter Expression component to examine existing filters.\n\nNOTE: User-defined attributes can't be used in temporary filters. There are some other properties that might result in errors as well due to API limitations especially in earlier Tekla versions, e.g. pour-related properties."
         };
 
         public static readonly GH_InstanceDescription DimensionLineAlwaysMode = new GH_InstanceDescription

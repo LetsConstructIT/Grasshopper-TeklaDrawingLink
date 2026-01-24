@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Tekla.Structures.Drawing;
 using TSM = Tekla.Structures.Model;
 
@@ -495,6 +496,22 @@ namespace GTDrawingLink.Tools
                         }
                         _value = castedToExpectedType.ToList();
                     }
+
+                    _properlySet = true;
+                    return Result.Ok();
+                }
+            }
+            else if (typeOfInput.InheritsFrom(typeof(TSM.ModelObject)))
+            {
+                var value = new List<TSM.ModelObject>();
+                if (DA.GetDataList(InstanceDescription.Name, value))
+                {
+                    var castedToExpectedType = value.Select(v => v as T);
+                    if (castedToExpectedType.Any(o => o is null))
+                    {
+                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                    }
+                    _value = castedToExpectedType.ToList();
 
                     _properlySet = true;
                     return Result.Ok();
