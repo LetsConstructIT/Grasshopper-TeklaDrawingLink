@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Tekla.Structures;
 using Tekla.Structures.Drawing;
@@ -16,6 +17,8 @@ namespace GTDrawingLink.Components.Exports
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.ExportDWG;
+
+        private readonly string[] _allowedExtensions = new string[] {".dwg", ".dxf", ".dgn" };
 
         public ExportDwgComponent() : base(ComponentInfos.ExportDwgComponent)
         {
@@ -30,9 +33,14 @@ namespace GTDrawingLink.Components.Exports
                 return;
             }
 
-            var exportDirectory = SanitizePath(path);
+            var exportPath = SanitizePath(path);
 
-            var output = ExportDwg(drawing, exportDirectory, settings);
+            var timeBeforeExport = DateTime.UtcNow;
+            var status = ExportDwg(drawing, exportPath, settings);
+
+            var output = exportPath;
+            if (status)
+                output = RenameIfNeeded(exportPath, timeBeforeExport);
 
             _command.SetOutputValues(DA, output);
         }
@@ -50,17 +58,19 @@ namespace GTDrawingLink.Components.Exports
             return correctPath;
         }
 
-        private string ExportDwg(Drawing drawing, string fullName, string settings)
+        private bool ExportDwg(Drawing drawing, string fullName, string settings)
         {
             var isActiveDrawing = CheckIfDrawingIsActive(drawing);
 
             var dwgExporterPath = GetDwgExporterCommand();
+
+            var directoryName = GetDirectoryName(fullName);
             try
             {
                 if (!isActiveDrawing)
                     DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, false);
 
-                var arg = GetExportArgs(fullName, settings);
+                var arg = GetExportArgs(directoryName, settings);
 
                 var startInfo = new ProcessStartInfo
                 {
@@ -77,7 +87,7 @@ namespace GTDrawingLink.Components.Exports
             {
                 var message = $"Drawing {drawing.Mark} was not exported due to not being up to date";
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, message);
-                return $"ERROR: {message}";
+                return false;
             }
             catch (Exception)
             {
@@ -89,7 +99,45 @@ namespace GTDrawingLink.Components.Exports
                     DrawingInteractor.DrawingHandler.CloseActiveDrawing();
             }
 
-            return fullName;
+            return true;
+        }
+
+        private string GetDirectoryName(string fullName)
+        {
+            if (string.IsNullOrEmpty(Path.GetExtension(fullName)))
+                return fullName;
+            else
+                return Path.GetDirectoryName(fullName);
+        }
+
+        private string RenameIfNeeded(string exportPath, DateTime timeBeforeExport)
+        {
+            var dirInfo = new DirectoryInfo(GetDirectoryName(exportPath));
+            var filesCreatedAfter = dirInfo
+                .GetFiles()
+                .Where(f => _allowedExtensions.Contains(f.Extension) &&
+                            f.LastWriteTimeUtc >= timeBeforeExport).ToList();
+
+            if (!Path.HasExtension(exportPath))
+            {
+                if (filesCreatedAfter.Count == 1)
+                    return filesCreatedAfter.First().FullName;
+                else
+                    return exportPath;
+            }
+
+            if (filesCreatedAfter.Count != 1)
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, $"Renaming of DWG file failed for {exportPath}");
+                return exportPath;
+            }
+
+            if (File.Exists(exportPath))
+                File.Delete(exportPath);
+
+            File.Move(filesCreatedAfter.First().FullName, exportPath);
+
+            return exportPath;
         }
 
         private bool CheckIfDrawingIsActive(Drawing drawing)
