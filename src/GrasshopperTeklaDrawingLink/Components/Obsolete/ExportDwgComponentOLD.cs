@@ -13,9 +13,10 @@ using Tekla.Structures.Drawing;
 
 namespace GTDrawingLink.Components.Obsolete
 {
+    [Obsolete]
     public class ExportDwgComponentOLD : TeklaExportComponentBase<ExportDwgCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.ExportDWG;
 
         public ExportDwgComponentOLD() : base(ComponentInfos.ExportDwgComponent)
