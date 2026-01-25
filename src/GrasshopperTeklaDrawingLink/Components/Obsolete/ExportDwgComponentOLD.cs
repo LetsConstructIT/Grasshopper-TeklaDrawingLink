@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Components.Exports;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
@@ -10,14 +11,14 @@ using System.Text;
 using Tekla.Structures;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Exports
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ExportDwgComponent : TeklaExportComponentBase<ExportDwgCommand>
+    public class ExportDwgComponentOLD : TeklaExportComponentBase<ExportDwgCommand>
     {
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.ExportDWG;
 
-        public ExportDwgComponent() : base(ComponentInfos.ExportDwgComponent)
+        public ExportDwgComponentOLD() : base(ComponentInfos.ExportDwgComponent)
         {
         }
 
@@ -73,7 +74,7 @@ namespace GTDrawingLink.Components.Exports
                 proc.Start();
                 proc.WaitForExit();
             }
-            catch (Tekla.Structures.Drawing.CannotPerformOperationDrawingNotUpToDateException)
+            catch (CannotPerformOperationDrawingNotUpToDateException)
             {
                 var message = $"Drawing {drawing.Mark} was not exported due to not being up to date";
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, message);
