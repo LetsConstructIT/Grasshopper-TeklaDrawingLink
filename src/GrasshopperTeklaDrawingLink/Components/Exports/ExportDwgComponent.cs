@@ -23,14 +23,14 @@ namespace GTDrawingLink.Components.Exports
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (drawing, directory, settings) = _command.GetInputValues();
+            var (drawing, path, settings) = _command.GetInputValues();
             if (drawing is null)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No drawing on input. Provide at least one drawing to print.");
                 return;
             }
 
-            var exportDirectory = SanitizePath(directory);
+            var exportDirectory = SanitizePath(path);
 
             var output = ExportDwg(drawing, exportDirectory, settings);
 
@@ -125,16 +125,16 @@ namespace GTDrawingLink.Components.Exports
     public class ExportDwgCommand : CommandBase
     {
         private readonly InputParam<Drawing> _inDrawing = new InputParam<Drawing>(ParamInfos.Drawing);
-        private readonly InputParam<string> _inDirectory = new InputParam<string>(ParamInfos.ExportDirectory);
+        private readonly InputParam<string> _inPath = new InputParam<string>(ParamInfos.ExportPath);
         private readonly InputParam<string> _inSettings = new InputParam<string>(ParamInfos.ExportSettings);
 
         private readonly OutputParam<string> _outPath = new OutputParam<string>(ParamInfos.ExportResult);
 
-        internal (Drawing drawing, string directory, string settings) GetInputValues()
+        internal (Drawing drawing, string path, string settings) GetInputValues()
         {
             return (
                 _inDrawing.Value,
-                _inDirectory.Value,
+                _inPath.Value,
                 _inSettings.Value);
         }
 
