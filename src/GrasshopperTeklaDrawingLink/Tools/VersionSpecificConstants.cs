@@ -896,6 +896,10 @@ namespace GTDrawingLink.Tools
                 "37B6A506-8BA0-4422-9705-E930F46E9FD3"
             },
             {
+                typeof(ExportDwgComponent),
+                "1514C8EB-C4AC-4D95-B230-255E458ADA51"
+            },
+            {
                 typeof(ExportDwgComponentOLD),
                 "208B3B99-E189-4ED2-80A0-276A793C6D57"
             },
