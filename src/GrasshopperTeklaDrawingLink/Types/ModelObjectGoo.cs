@@ -26,6 +26,23 @@ namespace GTDrawingLink.Types
             throw new NotImplementedException();
         }
 
+        public override bool CastTo<Q>(ref Q target)
+        {
+            if (target is GH_Guid)
+            {
+                GH_Guid gh_Guid = new GH_Guid(this.Value.Identifier.GUID);
+                target = (Q)((object)gh_Guid);
+                return true;
+            }
+            else if(typeof(Q) == typeof(ModelObject))
+            {
+                target = (Q)(object)this.Value;
+                return true;
+            }
+
+            return base.CastTo<Q>(ref target);
+        }
+
         public override bool CastFrom(object source)
         {
             if (source is ModelObject)
