@@ -897,6 +897,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(ExportDwgComponent),
+                "1514C8EB-C4AC-4D95-B230-255E458ADA51"
+            },
+            {
+                typeof(ExportDwgComponentOLD),
                 "208B3B99-E189-4ED2-80A0-276A793C6D57"
             },
             {
@@ -914,6 +918,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GroupDomainsComponent),
                 "30908FD6-497F-480C-B254-2E3F71672E70"
+            },
+            {
+                typeof(CreateImageComponent),
+                "3B9EE706-C965-4CEE-AC64-B3B0943CB6D1"
             }
         };
 

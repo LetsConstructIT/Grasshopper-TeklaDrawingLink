@@ -1232,6 +1232,15 @@ namespace GTDrawingLink.Tools
             SubCategory = PanelHeadings.Annotations
         };
 
+        public static readonly GH_InstanceDescription CreateImageComponent = new GH_InstanceDescription
+        {
+            Name = "Image",
+            NickName = "Img",
+            Description = "Create Tekla image.",
+            Category = VersionSpecificConstants.TabHeading,
+            SubCategory = PanelHeadings.Annotations
+        };        
+
         public static readonly GH_InstanceDescription CreateRadialDimensionComponent = new GH_InstanceDescription
         {
             Name = "Radial Dimension",

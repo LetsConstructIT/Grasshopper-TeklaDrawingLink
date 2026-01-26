@@ -1,4 +1,5 @@
 ﻿using Grasshopper.Kernel;
+using GTDrawingLink.Components.Exports;
 using GTDrawingLink.Extensions;
 using GTDrawingLink.Properties;
 using GTDrawingLink.Tools;
@@ -6,41 +7,34 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Tekla.Structures;
 using Tekla.Structures.Drawing;
 
-namespace GTDrawingLink.Components.Exports
+namespace GTDrawingLink.Components.Obsolete
 {
-    public class ExportDwgComponent : TeklaExportComponentBase<ExportDwgCommand>
+    [Obsolete]
+    public class ExportDwgComponentOLD : TeklaExportComponentBase<ExportDwgCommand>
     {
-        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override GH_Exposure Exposure => GH_Exposure.hidden;
         protected override Bitmap Icon => Resources.ExportDWG;
 
-        private readonly string[] _allowedExtensions = new string[] {".dwg", ".dxf", ".dgn" };
-
-        public ExportDwgComponent() : base(ComponentInfos.ExportDwgComponent)
+        public ExportDwgComponentOLD() : base(ComponentInfos.ExportDwgComponent)
         {
         }
 
         protected override void InvokeCommand(IGH_DataAccess DA)
         {
-            var (drawing, path, settings) = _command.GetInputValues();
+            var (drawing, directory, settings) = _command.GetInputValues();
             if (drawing is null)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No drawing on input. Provide at least one drawing to print.");
                 return;
             }
 
-            var exportPath = SanitizePath(path);
+            var exportDirectory = SanitizePath(directory);
 
-            var timeBeforeExport = DateTime.UtcNow;
-            var status = ExportDwg(drawing, exportPath, settings);
-
-            var output = exportPath;
-            if (status)
-                output = RenameIfNeeded(exportPath, timeBeforeExport);
+            var output = ExportDwg(drawing, exportDirectory, settings);
 
             _command.SetOutputValues(DA, output);
         }
@@ -58,19 +52,17 @@ namespace GTDrawingLink.Components.Exports
             return correctPath;
         }
 
-        private bool ExportDwg(Drawing drawing, string fullName, string settings)
+        private string ExportDwg(Drawing drawing, string fullName, string settings)
         {
             var isActiveDrawing = CheckIfDrawingIsActive(drawing);
 
             var dwgExporterPath = GetDwgExporterCommand();
-
-            var directoryName = GetDirectoryName(fullName);
             try
             {
                 if (!isActiveDrawing)
                     DrawingInteractor.DrawingHandler.SetActiveDrawing(drawing, false);
 
-                var arg = GetExportArgs(directoryName, settings);
+                var arg = GetExportArgs(fullName, settings);
 
                 var startInfo = new ProcessStartInfo
                 {
@@ -83,11 +75,11 @@ namespace GTDrawingLink.Components.Exports
                 proc.Start();
                 proc.WaitForExit();
             }
-            catch (Tekla.Structures.Drawing.CannotPerformOperationDrawingNotUpToDateException)
+            catch (CannotPerformOperationDrawingNotUpToDateException)
             {
                 var message = $"Drawing {drawing.Mark} was not exported due to not being up to date";
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, message);
-                return false;
+                return $"ERROR: {message}";
             }
             catch (Exception)
             {
@@ -99,45 +91,7 @@ namespace GTDrawingLink.Components.Exports
                     DrawingInteractor.DrawingHandler.CloseActiveDrawing();
             }
 
-            return true;
-        }
-
-        private string GetDirectoryName(string fullName)
-        {
-            if (string.IsNullOrEmpty(Path.GetExtension(fullName)))
-                return fullName;
-            else
-                return Path.GetDirectoryName(fullName);
-        }
-
-        private string RenameIfNeeded(string exportPath, DateTime timeBeforeExport)
-        {
-            var dirInfo = new DirectoryInfo(GetDirectoryName(exportPath));
-            var filesCreatedAfter = dirInfo
-                .GetFiles()
-                .Where(f => _allowedExtensions.Contains(f.Extension) &&
-                            f.LastWriteTimeUtc >= timeBeforeExport).ToList();
-
-            if (!Path.HasExtension(exportPath))
-            {
-                if (filesCreatedAfter.Count == 1)
-                    return filesCreatedAfter.First().FullName;
-                else
-                    return exportPath;
-            }
-
-            if (filesCreatedAfter.Count != 1)
-            {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, $"Renaming of DWG file failed for {exportPath}");
-                return exportPath;
-            }
-
-            if (File.Exists(exportPath))
-                File.Delete(exportPath);
-
-            File.Move(filesCreatedAfter.First().FullName, exportPath);
-
-            return exportPath;
+            return fullName;
         }
 
         private bool CheckIfDrawingIsActive(Drawing drawing)
@@ -173,16 +127,16 @@ namespace GTDrawingLink.Components.Exports
     public class ExportDwgCommand : CommandBase
     {
         private readonly InputParam<Drawing> _inDrawing = new InputParam<Drawing>(ParamInfos.Drawing);
-        private readonly InputParam<string> _inPath = new InputParam<string>(ParamInfos.ExportPath);
+        private readonly InputParam<string> _inDirectory = new InputParam<string>(ParamInfos.ExportDirectory);
         private readonly InputParam<string> _inSettings = new InputParam<string>(ParamInfos.ExportSettings);
 
         private readonly OutputParam<string> _outPath = new OutputParam<string>(ParamInfos.ExportResult);
 
-        internal (Drawing drawing, string path, string settings) GetInputValues()
+        internal (Drawing drawing, string directory, string settings) GetInputValues()
         {
             return (
                 _inDrawing.Value,
-                _inPath.Value,
+                _inDirectory.Value,
                 _inSettings.Value);
         }
 

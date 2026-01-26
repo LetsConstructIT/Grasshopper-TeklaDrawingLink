@@ -529,7 +529,7 @@ namespace GTDrawingLink.Tools
         {
             Name = "Filter",
             NickName = "F",
-            Description = "Tekla Object Selection Filter"
+            Description = "Selection filter name or expression.\n\nTemporary filters: If you input a filter expression, it will create a temporary filter. A filter expression is a text string like\n    (Part.Name == BEAM1 || Part.Name == COLUMN*)\nwhich gets all parts whose name is BEAM1 or whose name starts with COLUMN.\n\nFor more syntax, use the Get Filter Expression component to examine existing filters.\n\nNOTE: User-defined attributes can't be used in temporary filters. There are some other properties that might result in errors as well due to API limitations especially in earlier Tekla versions, e.g. pour-related properties."
         };
 
         public static readonly GH_InstanceDescription DimensionLineAlwaysMode = new GH_InstanceDescription
@@ -649,6 +649,12 @@ namespace GTDrawingLink.Tools
             NickName = "IP",
             Description = "The insertion point of the mark."
         };
+        public static readonly GH_InstanceDescription ImageInsertionPoint = new GH_InstanceDescription
+        {
+            Name = "Insertion Point",
+            NickName = "IP",
+            Description = "The insertion point of the image."
+        };        
         public static readonly GH_InstanceDescription MarkLeaderLineEndPoint = new GH_InstanceDescription
         {
             Name = "Text Base Point",
@@ -686,6 +692,7 @@ namespace GTDrawingLink.Tools
             NickName = "FATR",
             Description = "The attributes of the font used."
         };
+        
         public static readonly GH_InstanceDescription FontWeight = new GH_InstanceDescription
         {
             Name = "Font Weight",
@@ -1296,6 +1303,13 @@ namespace GTDrawingLink.Tools
             Name = "DWG Attributes",
             NickName = "A",
             Description = "DWG attributes"
+        };
+
+        public static readonly GH_InstanceDescription ImageAttributes = new GH_InstanceDescription
+        {
+            Name = "Image Attributes",
+            NickName = "IAttr",
+            Description = "Image attributes (from DWG Attributes component)"
         };
 
         public static readonly GH_InstanceDescription DwgScaling = new GH_InstanceDescription
@@ -2041,6 +2055,13 @@ namespace GTDrawingLink.Tools
             Description = "Rich Text"
         };
 
+        public static readonly GH_InstanceDescription Image = new GH_InstanceDescription
+        {
+            Name = "Image",
+            NickName = "Img",
+            Description = "Tekla image"
+        };
+        
         public static readonly GH_InstanceDescription Path = new GH_InstanceDescription
         {
             Name = "Path",

@@ -500,6 +500,30 @@ namespace GTDrawingLink.Tools
                     return Result.Ok();
                 }
             }
+            else if (typeOfInput.InheritsFrom(typeof(TSM.ModelObject)))
+            {
+                var value = new List<IGH_Goo>();
+                if (DA.GetDataList(InstanceDescription.Name, value))
+                {
+                    var castedToExpectedType = new List<T>();
+                    foreach (var item in value)
+                    {
+                        if (item is GH_Goo<TSM.ModelObject> ghGoo)
+                            castedToExpectedType.Add(ghGoo.Value as T);
+                        else
+                            castedToExpectedType.Add(item as T);
+                    }
+
+                    if (castedToExpectedType.Any(o => o is null))
+                    {
+                        return Result.Fail($"One of the provided inputs is not type of {typeOfInput.ToShortString()}");
+                    }
+                    _value = castedToExpectedType;
+
+                    _properlySet = true;
+                    return Result.Ok();
+                }
+            }
             else if (typeOfInput == typeof(IGH_GeometricGoo))
             {
                 var value = new List<IGH_GeometricGoo>();

@@ -113,6 +113,8 @@ namespace DrawingLink.UI.GH
 
             var suppressedComponentGuids = GetSuppressedOutputObjects(document.Objects);
 
+            HandleTeklaObjectPipeline(activeObjects);
+
             foreach (var activeObject in activeObjects)
             {
                 if (activeObject is GH_Component component && GetInheritanceHierarchy(activeObject.GetType()).Any(t => _allowedComponentTypes.Contains(t.Name)))
@@ -141,6 +143,34 @@ namespace DrawingLink.UI.GH
             }
 
             return messages;
+        }
+
+        private void HandleTeklaObjectPipeline(List<IGH_ActiveObject> activeObjects)
+        {
+            var teklaObjectPipelines = activeObjects
+                .OfType<GH_Component>()
+                .Where(o => GetInheritanceHierarchy(o.GetType()).Any(t => t.Name == "ObjectCollectorBase")).ToList();
+
+            if (!teklaObjectPipelines.Any())
+                return;
+
+            foreach (var component in teklaObjectPipelines)
+            {
+                var filterParam = component.Params
+                    .Where(p => p.GetType().Name == "SelectionFilterParam")
+                    .FirstOrDefault();
+
+                if (filterParam == null)
+                    continue;
+
+                var methodInfo = filterParam.GetType().GetMethod("RefreshFilterNames");
+                if (methodInfo == null)
+                    continue;
+
+                methodInfo.Invoke(filterParam, null);
+
+                System.Threading.Thread.Sleep(250);
+            }
         }
 
         private static Guid _loopGuids = new("3368FCF5-A321-4B54-944E-36A20DD01ED0");
@@ -598,7 +628,7 @@ namespace DrawingLink.UI.GH
 
                     foreach (IGH_DocumentObject documentObject in innerGroup.Objects())
                     {
-                        tableMapping[documentObject.InstanceGuid] = 
+                        tableMapping[documentObject.InstanceGuid] =
                             new TableColumnInfo(ghGroup.InstanceGuid,
                                                 innerGroup.InstanceGuid,
                                                 int.Parse(nameSubParts[0].Substring(1)) - 1,

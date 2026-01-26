@@ -1,7 +1,12 @@
 ﻿using Grasshopper.Kernel;
 using GTDrawingLink.Tools;
+using GTDrawingLink.Types;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Tekla.Structures.Filtering;
+using Tekla.Structures.TeklaStructuresInternal.Filtering;
 using TSM = Tekla.Structures.Model;
 
 namespace GTDrawingLink.Components.Miscs
@@ -21,6 +26,8 @@ namespace GTDrawingLink.Components.Miscs
                 return;
             }
 
+            filterName = CreateDynamicFilterIfNeeded(filterName);
+
             var filtered = new List<TSM.ModelObject>();
             var pattern = new List<bool>();
 
@@ -35,6 +42,38 @@ namespace GTDrawingLink.Components.Miscs
 
             _command.SetOutputValues(DA, filtered, pattern);
         }
+
+        private string CreateDynamicFilterIfNeeded(string filterName)
+        {
+            var dynamicParser = EstablishParserType(filterName);
+            if (dynamicParser is null)
+                return filterName;
+
+            var errorMessage = string.Empty;
+            var filterExpression = FilterHelper.Parse(filterName, dynamicParser, ref errorMessage, true);
+            if (!string.IsNullOrEmpty(errorMessage))
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, errorMessage);
+
+            filterName = "[TemporaryFilter]";
+            var tempFilterFileName = Path.Combine(Path.Combine(ModelInteractor.ModelPath(), "attributes"), filterName);
+            tempFilterFileName = FilterHelper.CreateFilter(filterExpression, tempFilterFileName, ref errorMessage);
+
+            if (!string.IsNullOrEmpty(errorMessage))
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, errorMessage);
+            
+            return Path.GetFileNameWithoutExtension(tempFilterFileName);
+        }
+
+        private FilterExpressionParserType? EstablishParserType(string filterName)
+        {
+            if (filterName.StartsWith("("))
+                return new FilterExpressionParserType?(FilterExpressionParserType.C);
+            else if (filterName.Contains("\n"))
+                return new FilterExpressionParserType?(FilterExpressionParserType.TEKLA);
+
+            return null;
+        }
+
     }
 
     public class ObjectMatchesToFilterCommand : CommandBase
@@ -49,7 +88,7 @@ namespace GTDrawingLink.Components.Miscs
         internal (List<TSM.ModelObject> ModelObjects, string FilterName) GetInputValues()
         {
             return (_inModelObjects.Value,
-                    _inFilterName.Value);
+                    _inFilterName.Value.Trim());
         }
 
         internal Result SetOutputValues(IGH_DataAccess DA, List<TSM.ModelObject> filteredObjects, List<bool> pattern)
