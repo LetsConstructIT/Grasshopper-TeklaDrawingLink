@@ -918,6 +918,10 @@ namespace GTDrawingLink.Tools
             {
                 typeof(GroupDomainsComponent),
                 "30908FD6-497F-480C-B254-2E3F71672E70"
+            },
+            {
+                typeof(CreateImageComponent),
+                "3B9EE706-C965-4CEE-AC64-B3B0943CB6D1"
             }
         };
 
