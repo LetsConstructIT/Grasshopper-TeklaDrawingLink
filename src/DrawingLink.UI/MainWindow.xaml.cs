@@ -96,7 +96,7 @@ namespace DrawingLink.UI
             property.SetValue(_viewModel, args.Value);
         }
 
-        private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
+        public void ExecuteScript()
         {
             var path = GetFullPath(_viewModel.DefinitionPath);
             if (string.IsNullOrEmpty(path))
@@ -151,6 +151,11 @@ namespace DrawingLink.UI
 
             if (teklaParams.ModelParams.Count > 0)
                 new Tekla.Structures.Model.Model().CommitChanges();
+        }
+
+        private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
+        {
+            ExecuteScript();
         }
 
         private string GetTitle(string definitionPath)

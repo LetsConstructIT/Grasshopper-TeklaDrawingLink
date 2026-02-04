@@ -20,6 +20,8 @@ namespace DrawingLink.UI
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            var startupOptions = StartupOptions.ParseArguments(e.Args);
+
             var rhinoVersions = SetupRhinoFolders();
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
@@ -27,6 +29,13 @@ namespace DrawingLink.UI
             var mainWindow = new MainWindow(mainWindowViewModel, rhinoVersions);
             new System.Windows.Interop.WindowInteropHelper(mainWindow).Owner = Tekla.Structures.Dialog.MainWindow.Frame.Handle;
             mainWindow.Show();
+
+            if (startupOptions.SettingsFilePath != null)
+            {
+                mainWindow.LoadValues(startupOptions.SettingsFilePath);
+                mainWindow.ExecuteScript();
+                mainWindow.Close();
+            }
         }
 
         private List<Rhino.RhinoInfo> SetupRhinoFolders()
