@@ -28,13 +28,21 @@ namespace DrawingLink.UI
             var mainWindowViewModel = new MainWindowViewModel();
             var mainWindow = new MainWindow(mainWindowViewModel, rhinoVersions);
             new System.Windows.Interop.WindowInteropHelper(mainWindow).Owner = Tekla.Structures.Dialog.MainWindow.Frame.Handle;
-            mainWindow.Show();
-
-            if (startupOptions.SettingsFilePath != null)
+            
+            if (string.IsNullOrWhiteSpace(startupOptions.SettingsFilePath))
             {
+                mainWindow.Show();
+            }
+            else
+            {
+                mainWindow.InitalizeRhino();
                 mainWindow.LoadValues(startupOptions.SettingsFilePath);
                 mainWindow.ExecuteScript();
-                mainWindow.Close();
+
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    Application.Current.Shutdown(0);
+                });
             }
         }
 

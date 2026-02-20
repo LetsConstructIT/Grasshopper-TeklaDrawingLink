@@ -65,10 +65,15 @@ namespace DrawingLink.UI
             MessageBox.Show(this, "Restart Grasshopper Application to load new Rhino version");
         }
 
-        private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)
+        public void InitalizeRhino()
         {
             _instance = GrasshopperCaller.GetInstance();
             _loaded = true;
+        }
+
+        private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitalizeRhino();
 
             this.tbLaunchingRhino.Text = "Waiting for definition file ...";
         }
