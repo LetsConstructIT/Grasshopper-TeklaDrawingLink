@@ -1,7 +1,7 @@
 ﻿using System;
 using Tekla.Structures.Dialog.UIControls;
 
-namespace DrawingLink.UI;
+namespace DrawingLink.UI.StartupUtils;
 internal class StartupOptions
 {
     public string? SettingsFilePath { get; }
@@ -37,4 +37,12 @@ internal class StartupOptions
 
         return new StartupOptions(string.Empty);
     }
+}
+
+internal class StartupOptionsDto
+{
+    public string SettingsFilePath { get; set; }
+
+    public static StartupOptionsDto FromDomain(StartupOptions startupOptions)
+        => new StartupOptionsDto() { SettingsFilePath = startupOptions.SettingsFilePath };
 }

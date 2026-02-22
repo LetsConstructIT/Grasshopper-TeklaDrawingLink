@@ -1,8 +1,13 @@
-﻿using System;
+﻿using DrawingLink.UI.StartupUtils;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace DrawingLink.UI
@@ -18,32 +23,118 @@ namespace DrawingLink.UI
             @"C:\Program Files\Rhino 7\Plug-ins\Grasshopper"
         };
 
+        private CancellationTokenSource? _cts;
+        private MainWindow _mainWindow;
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var startupOptions = StartupOptions.ParseArguments(e.Args);
-
             var rhinoVersions = SetupRhinoFolders();
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
+            var teklaVersion = Tekla.Structures.TeklaStructuresInfo.GetCurrentProgramVersion();
+            var startupController = new StartupController(e, teklaVersion);
+            var operationMode = startupController.EstablishOperationMode();
+
+            Log(operationMode.ToString());
+
             var mainWindowViewModel = new MainWindowViewModel();
-            var mainWindow = new MainWindow(mainWindowViewModel, rhinoVersions);
-            new System.Windows.Interop.WindowInteropHelper(mainWindow).Owner = Tekla.Structures.Dialog.MainWindow.Frame.Handle;
-            
-            if (string.IsNullOrWhiteSpace(startupOptions.SettingsFilePath))
+            _mainWindow = new MainWindow(mainWindowViewModel, rhinoVersions);
+            new System.Windows.Interop.WindowInteropHelper(_mainWindow).Owner = Tekla.Structures.Dialog.MainWindow.Frame.Handle;
+
+            var startupOptions = StartupOptions.ParseArguments(e.Args);
+            if (operationMode.HasFlag(AppOperationMode.UI))
             {
-                mainWindow.Show();
+                if (operationMode.HasFlag(AppOperationMode.Server))
+                {
+                    _cts = new CancellationTokenSource();
+                    StartPipeServer(NamedPipeController.GetPipeName(teklaVersion), _cts.Token);
+                }
+
+                _mainWindow.Show();
             }
             else
             {
-                mainWindow.InitalizeRhino();
-                mainWindow.LoadValues(startupOptions.SettingsFilePath);
-                mainWindow.ExecuteScript();
-
-                Application.Current.Dispatcher.InvokeAsync(() =>
+                if (operationMode.HasFlag(AppOperationMode.Client))
                 {
-                    Application.Current.Shutdown(0);
-                });
+                    if (TrySignalExistingInstance(StartupOptionsDto.FromDomain(startupOptions), teklaVersion))
+                    {
+                        Shutdown();
+                        return;
+                    }
+                }
+
+                RunScript(startupOptions.SettingsFilePath);
             }
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            _cts?.Cancel();
+        }
+
+        private void RunScript(string settingsFilePath)
+        {
+            _mainWindow.InitalizeRhino();
+            _mainWindow.LoadValues(settingsFilePath);
+            _mainWindow.ExecuteScript();
+        }
+
+        private static bool TrySignalExistingInstance(StartupOptionsDto startupOptions, string teklaVersion)
+        {
+            try
+            {
+                using var client = new NamedPipeClientStream(".",
+                    NamedPipeController.GetPipeName(teklaVersion), PipeDirection.Out);
+
+                client.Connect(timeout: 2000);
+
+                using var writer = new StreamWriter(client) { AutoFlush = true };
+                writer.Write(JsonConvert.SerializeObject(startupOptions));
+                return true;
+            }
+            catch (TimeoutException)
+            {
+                return false; // No existing instance, this one should become the server
+            }
+        }
+        public void StartPipeServer(string pipeName, CancellationToken ct)
+        {
+            Task.Run(async () =>
+            {
+                while (!ct.IsCancellationRequested)
+                {
+                    using var server = new NamedPipeServerStream(
+                        pipeName,
+                        PipeDirection.In,
+                        NamedPipeServerStream.MaxAllowedServerInstances,
+                        PipeTransmissionMode.Byte,
+                        PipeOptions.Asynchronous);
+
+                    Log($"Pipe server initialized: {pipeName}");
+                    await server.WaitForConnectionAsync(ct);
+
+                    using var reader = new StreamReader(server);
+                    string? message = await reader.ReadToEndAsync();
+
+                    if (!string.IsNullOrEmpty(message))
+                        System.Windows.Application.Current.Dispatcher.Invoke(() => HandleTrigger(message));
+                }
+            }, ct);
+        }
+
+        private void Log(string message)
+        {
+            File.AppendAllText(@"C:\temp\PseudoLog.txt", $"{DateTime.Now}: {message}\n");
+        }
+
+        private void HandleTrigger(string message)
+        {
+            Log("Received message: " + message);
+
+            var startupOptions = JsonConvert.DeserializeObject<StartupOptionsDto>(message);
+            RunScript(startupOptions.SettingsFilePath);
+
+            Log("Handled message: " + message);
         }
 
         private List<Rhino.RhinoInfo> SetupRhinoFolders()

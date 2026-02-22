@@ -254,7 +254,7 @@ namespace DrawingLink.UI
 
         private void ApplicationWindowBase_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _instance.Dispose();
+            _instance?.Dispose();
         }
 
         private void WpfSaveLoad_AttributesLoaded(object sender, EventArgs e)
