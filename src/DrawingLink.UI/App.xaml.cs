@@ -64,6 +64,7 @@ namespace DrawingLink.UI
                 }
 
                 RunScript(startupOptions.SettingsFilePath);
+                Shutdown();
             }
         }
 
