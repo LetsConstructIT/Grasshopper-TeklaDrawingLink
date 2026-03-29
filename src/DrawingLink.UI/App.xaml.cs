@@ -98,6 +98,7 @@ namespace DrawingLink.UI
                 return false; // No existing instance, this one should become the server
             }
         }
+
         public void StartPipeServer(string pipeName, CancellationToken ct)
         {
             Task.Run(async () =>
@@ -118,7 +119,12 @@ namespace DrawingLink.UI
                     string? message = await reader.ReadToEndAsync();
 
                     if (!string.IsNullOrEmpty(message))
-                        System.Windows.Application.Current.Dispatcher.Invoke(() => HandleTrigger(message));
+                    {
+                        System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            HandleTrigger(message);
+                        });
+                    }
                 }
             }, ct);
         }
@@ -133,6 +139,9 @@ namespace DrawingLink.UI
             Log("Received message: " + message);
 
             var startupOptions = JsonConvert.DeserializeObject<StartupOptionsDto>(message);
+
+            _mainWindow.DisplayServerInfo(startupOptions.SettingsFilePath);
+
             RunScript(startupOptions.SettingsFilePath);
 
             Log("Handled message: " + message);

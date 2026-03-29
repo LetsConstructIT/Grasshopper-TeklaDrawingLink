@@ -244,6 +244,7 @@ namespace DrawingLink.UI
                 return;
             }
 
+            DisplayServerInfo(string.Empty);
             _instance.OpenGrasshopperDefinition(path);
         }
 
@@ -261,6 +262,8 @@ namespace DrawingLink.UI
         {
             if (!_loaded)
                 return;
+
+            DisplayServerInfo(string.Empty);
 
             var path = GetFullPath(tbDefinitionPath.Text);
             if (string.IsNullOrEmpty(path))
@@ -282,6 +285,18 @@ namespace DrawingLink.UI
         private void WpfOkCreateCancel_CancelClicked(object sender, EventArgs e)
         {
             Close();
+        }
+
+        internal void DisplayServerInfo(string scriptFullPath)
+        {
+            if (string.IsNullOrEmpty(scriptFullPath))
+            {
+                serverModeInfo.Content = string.Empty;
+                return;
+            }
+
+            var fileName = Path.GetFileName(scriptFullPath);
+            serverModeInfo.Content = $"Completed in the background: {fileName}";
         }
     }
 }
