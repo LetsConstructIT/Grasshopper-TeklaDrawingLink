@@ -131,7 +131,7 @@ namespace DrawingLink.UI
 
         private void Log(string message)
         {
-            File.AppendAllText(@"C:\temp\PseudoLog.txt", $"{DateTime.Now}: {message}\n");
+            //File.AppendAllText(@"C:\temp\PseudoLog.txt", $"{DateTime.Now}: {message}\n");
         }
 
         private void HandleTrigger(string message)
