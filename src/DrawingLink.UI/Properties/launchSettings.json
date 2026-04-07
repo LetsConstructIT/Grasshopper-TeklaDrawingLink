@@ -2,7 +2,7 @@
   "profiles": {
     "DrawingLink.UI": {
       "commandName": "Project",
-      "commandLineArgs": "-f \"Test with space.DrawingLink.UI.MainWindow.xml\""
+      "commandLineArgs": "-f \"Template 5.DrawingLink.UI.MainWindow.xml\""
     }
   }
 }
