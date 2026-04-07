@@ -82,7 +82,7 @@ namespace GTDrawingLink.Components.Exports
             return withExtension;
         }
 
-#if API2022 || API2023 || API2024 || API2025
+#if API2022 || API2023 || API2024 || API2025 || API2026
 
         private string? SearchSettings(string settings)
         {

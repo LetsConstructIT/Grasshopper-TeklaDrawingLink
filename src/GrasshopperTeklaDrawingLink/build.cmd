@@ -8,6 +8,7 @@ msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2022 /t:R
 msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2023 /t:Rebuild
 msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2024 /t:Rebuild
 msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2025 /t:Rebuild
+msbuild GrasshopperTeklaDrawingLink.csproj /t:restore -p:Configuration=2026 /t:Rebuild
 
 for /R .\bin %%f in (*.dll) do copy %%f .\bin\
 

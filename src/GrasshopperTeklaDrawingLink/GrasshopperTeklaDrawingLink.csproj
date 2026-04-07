@@ -11,7 +11,7 @@
     <RootNamespace>GTDrawingLink</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Deterministic>false</Deterministic>
-    <Configurations>Debug;Release;2019;2019i;2020;2021;2022;2023;2024;2025</Configurations>
+    <Configurations>Debug;Release;2019;2019i;2020;2021;2022;2023;2024;2025;2026</Configurations>
     <AssemblyName>$(MSBuildProjectName).$(Configuration)</AssemblyName>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -22,6 +22,13 @@
   </ItemGroup>
   
 <Choose>
+    <When Condition="'$(Configuration)'=='2026'">
+        <ItemGroup>
+            <PackageReference Include="Tekla.Structures.Drawing" Version="2026.0.*">
+                <IncludeAssets>compile;build</IncludeAssets>
+            </PackageReference>
+        </ItemGroup>
+    </When>
     <When Condition="'$(Configuration)'=='2025'">
         <ItemGroup>
 			<PackageReference Include="Tekla.Structures.Drawing" Version="2025.0.*">
@@ -160,6 +167,11 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2025|AnyCPU'">
       <DefineConstants>$(DefineConstants);API2025</DefineConstants>
+      <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2026|AnyCPU'">
+      <DefineConstants>$(DefineConstants);API2026</DefineConstants>
       <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 

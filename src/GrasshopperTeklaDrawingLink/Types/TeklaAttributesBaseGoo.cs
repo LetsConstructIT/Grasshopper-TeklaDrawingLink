@@ -95,7 +95,7 @@ namespace GTDrawingLink.Types
                     outPropertyValues[key] = ValueWithType.String(propertyValue);
                 else if (propType == typeof(bool))
                     outPropertyValues[key] = ValueWithType.Boolean(propertyValue);
-#if API2024 || API2025
+#if API2024 || API2025 || API2026
                 else if (propType == typeof(Tekla.Structures.Drawing.TeklaDrawingColor))
                     outPropertyValues[key] = ValueWithType.Color(((Tekla.Structures.Drawing.TeklaDrawingColor)propertyValue).RGBColor.ToArgb());
 #endif
@@ -155,7 +155,7 @@ namespace GTDrawingLink.Types
                     if (reader.TryGetBoolean(key, ref value))
                         property.SetValue(inputObject, value);
                 }
-#if API2024 || API2025
+#if API2024 || API2025 || API2026
                 else if (propType == typeof(Tekla.Structures.Drawing.TeklaDrawingColor))
                 {
                     var value = 0;
