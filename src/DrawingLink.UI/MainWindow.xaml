@@ -76,6 +76,12 @@
       <local:ParameterViewer x:Name="parameterViewer" />
     </ScrollViewer>
 
+    <Label Grid.Row="2"
+           HorizontalAlignment="Right"
+           VerticalAlignment="Bottom"
+           FontStyle="Italic"
+           x:Name="serverModeInfo" />
+
     <Grid Grid.Row="2"
           x:Name="gridLoading">
       <Grid.RowDefinitions>
@@ -99,7 +105,7 @@
     <UIControls:WpfCreateApplyCancel x:Name="teklaBottomBar"
                                      Grid.Row="3"
                                      CreateClicked="WpfOkCreateCancel_CreateClicked"
-                                     ApplyClicked="WpfOkCreateCancel_ApplyClicked" 
-                                     CancelClicked="WpfOkCreateCancel_CancelClicked"/>
+                                     ApplyClicked="WpfOkCreateCancel_ApplyClicked"
+                                     CancelClicked="WpfOkCreateCancel_CancelClicked" />
   </Grid>
 </tsd:ApplicationWindowBase>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DrawingLink.UI": {
+      "commandName": "Project",
+      "commandLineArgs": "-f \"Adjust bottom level -2000.DrawingLink.UI.MainWindow.xml\""
+    }
+  }
+}

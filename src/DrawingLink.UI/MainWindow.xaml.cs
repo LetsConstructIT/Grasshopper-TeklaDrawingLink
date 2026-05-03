@@ -65,10 +65,15 @@ namespace DrawingLink.UI
             MessageBox.Show(this, "Restart Grasshopper Application to load new Rhino version");
         }
 
-        private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)
+        public void InitalizeRhino()
         {
             _instance = GrasshopperCaller.GetInstance();
             _loaded = true;
+        }
+
+        private void ApplicationWindowBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitalizeRhino();
 
             this.tbLaunchingRhino.Text = "Waiting for definition file ...";
         }
@@ -96,7 +101,7 @@ namespace DrawingLink.UI
             property.SetValue(_viewModel, args.Value);
         }
 
-        private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
+        public void ExecuteScript()
         {
             var path = GetFullPath(_viewModel.DefinitionPath);
             if (string.IsNullOrEmpty(path))
@@ -151,6 +156,11 @@ namespace DrawingLink.UI
 
             if (teklaParams.ModelParams.Count > 0)
                 new Tekla.Structures.Model.Model().CommitChanges();
+        }
+
+        private void WpfOkCreateCancel_CreateClicked(object sender, EventArgs e)
+        {
+            ExecuteScript();
         }
 
         private string GetTitle(string definitionPath)
@@ -234,6 +244,7 @@ namespace DrawingLink.UI
                 return;
             }
 
+            DisplayServerInfo(string.Empty);
             _instance.OpenGrasshopperDefinition(path);
         }
 
@@ -244,13 +255,15 @@ namespace DrawingLink.UI
 
         private void ApplicationWindowBase_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _instance.Dispose();
+            _instance?.Dispose();
         }
 
         private void WpfSaveLoad_AttributesLoaded(object sender, EventArgs e)
         {
             if (!_loaded)
                 return;
+
+            DisplayServerInfo(string.Empty);
 
             var path = GetFullPath(tbDefinitionPath.Text);
             if (string.IsNullOrEmpty(path))
@@ -272,6 +285,18 @@ namespace DrawingLink.UI
         private void WpfOkCreateCancel_CancelClicked(object sender, EventArgs e)
         {
             Close();
+        }
+
+        internal void DisplayServerInfo(string scriptFullPath)
+        {
+            if (string.IsNullOrEmpty(scriptFullPath))
+            {
+                serverModeInfo.Content = string.Empty;
+                return;
+            }
+
+            var fileName = Path.GetFileName(scriptFullPath);
+            serverModeInfo.Content = $"Completed in the background: {fileName}";
         }
     }
 }
