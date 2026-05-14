@@ -46,28 +46,57 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            if (!(DA.GetGooValue<TSD.DatabaseObject>(ParamInfos.Mark) is TSD.MarkBase mark))
+            var inputAsMarkBase = DA.GetGooValue<TSD.DatabaseObject>(ParamInfos.Mark) as TSD.MarkBase;
+            var inputAsWeldMark = DA.GetGooValue<TSD.DatabaseObject>(ParamInfos.Mark) as TSD.WeldMark;
+
+            if (inputAsMarkBase is null && inputAsWeldMark is null)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided input could not be converted to MarkBase");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Provided input could not be converted to MarkBase or WeldMark");
                 return;
             }
 
-            mark.Select();
-            var objectBoundingBox = mark.GetObjectAlignedBoundingBox();
+            if (inputAsMarkBase != null)
+            {
+                var mark = inputAsMarkBase;
 
-            var internalMarks = FindInternalMarks(mark);
-            var sources = FindMarkSource(internalMarks);
+                mark.Select();
+                var objectBoundingBox = mark.GetObjectAlignedBoundingBox();
 
-            DA.SetDataList(ParamInfos.DrawingModelObject.Name, sources.Select(s => new TeklaDatabaseObjectGoo(s)));
-            DA.SetData(ParamInfos.MarkInsertionPoint.Name, mark.InsertionPoint.ToRhino());
-            DA.SetData(ParamInfos.PlacingType.Name, new PlacingBaseGoo(mark.Placing));
-            DA.SetData(ParamInfos.MarkAttributes.Name, new MarkAttributesGoo(internalMarks.First().Attributes));
-            DA.SetData(ParamInfos.MarkType.Name, GetMarkType(mark));
-            DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, mark.GetAxisAlignedBoundingBox().ToRhino());
-            DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
-            DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(mark));
-            DA.SetData(ParamInfos.IsValid.Name, objectBoundingBox.Height > 0.1);
-            DA.SetData(ParamInfos.MarkContent.Name, GetMarkContent(mark.Attributes));
+                var internalMarks = FindInternalMarks(mark);
+                var sources = FindMarkSource(internalMarks);
+
+                DA.SetDataList(ParamInfos.DrawingModelObject.Name, sources.Select(s => new TeklaDatabaseObjectGoo(s)));
+                DA.SetData(ParamInfos.MarkInsertionPoint.Name, mark.InsertionPoint.ToRhino());
+                DA.SetData(ParamInfos.PlacingType.Name, new PlacingBaseGoo(mark.Placing));
+                DA.SetData(ParamInfos.MarkAttributes.Name, new MarkAttributesGoo(internalMarks.First().Attributes));
+                DA.SetData(ParamInfos.MarkType.Name, GetMarkType(mark));
+                DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, mark.GetAxisAlignedBoundingBox().ToRhino());
+                DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
+                DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(mark));
+                DA.SetData(ParamInfos.IsValid.Name, objectBoundingBox.Height > 0.1);
+                DA.SetData(ParamInfos.MarkContent.Name, GetMarkContent(mark.Attributes));
+            }
+            else if (inputAsWeldMark != null)
+            {
+                var mark = inputAsWeldMark;
+
+                mark.Select();
+                var objectBoundingBox = mark.GetObjectAlignedBoundingBox();
+
+                var internalMarks = FindInternalMarks(mark);
+                var sources = FindMarkSource(internalMarks);
+
+                DA.SetDataList(ParamInfos.DrawingModelObject.Name, sources.Select(s => new TeklaDatabaseObjectGoo(s)));
+                DA.SetData(ParamInfos.MarkInsertionPoint.Name, mark.InsertionPoint.ToRhino());
+                //DA.SetData(ParamInfos.PlacingType.Name, new PlacingBaseGoo(mark.Placing));
+                //DA.SetData(ParamInfos.MarkAttributes.Name, new MarkAttributesGoo(internalMarks.First().Attributes));
+                DA.SetData(ParamInfos.MarkType.Name, GetMarkType(mark));
+                DA.SetData(ParamInfos.AxisAlignedBoundingBox.Name, mark.GetAxisAlignedBoundingBox().ToRhino());
+                DA.SetData(ParamInfos.ObjectAlignedBoundingBox.Name, objectBoundingBox.ToRhino());
+                DA.SetData(ParamInfos.LeaderLine.Name, GuessLeaderLine(mark));
+                DA.SetData(ParamInfos.IsValid.Name, objectBoundingBox.Height > 0.1);
+                //DA.SetData(ParamInfos.MarkContent.Name, GetMarkContent(mark.Attributes));
+            }
         }
 
         private List<TSD.Mark> FindInternalMarks(MarkBase mark)
@@ -87,7 +116,21 @@ namespace GTDrawingLink.Components.Annotations
             return internalMarks;
         }
 
-        private List<TSD.ModelObject> FindMarkSource(List<TSD.Mark> marks)
+        private List<WeldMark> FindInternalMarks(WeldMark mark)
+        {
+            var internalMarks = new List<WeldMark>()
+            { 
+                mark
+            };
+
+            var innerMarks = mark.GetRelatedObjects(new Type[] { typeof(WeldMark) });
+            while (innerMarks.MoveNext())
+                internalMarks.Add(innerMarks.Current as WeldMark);
+
+            return internalMarks;
+        }
+
+        private List<TSD.ModelObject> FindMarkSource(IEnumerable<DrawingObject> marks)
         {
             var sourceObjects = new List<TSD.ModelObject>();
             foreach (var mark in marks)
@@ -100,13 +143,15 @@ namespace GTDrawingLink.Components.Annotations
             return sourceObjects;
         }
 
-        private string GetMarkType(MarkBase mark)
+        private string GetMarkType(DrawingObject mark)
         {
             if (mark is MarkSet)
                 return "MarkSet";
-            else if (mark is Mark)
+            else if (mark is WeldMark)
+                return "WeldMark";
+            else if (mark is Mark realMark)
             {
-                if (mark.IsAssociativeNote)
+                if (realMark.IsAssociativeNote)
                     return "AssociativeNote";
                 else
                     return "Mark";
@@ -117,6 +162,16 @@ namespace GTDrawingLink.Components.Annotations
         }
 
         private GH_Curve GuessLeaderLine(MarkBase mark)
+        {
+            var moe = mark.GetObjects(new Type[] { typeof(LeaderLine) });
+            while (moe.MoveNext())
+                if (moe.Current is LeaderLine leaderLine)
+                    return LeaderLineCalculator.GetCurve(leaderLine);
+
+            return new GH_Curve();
+        }
+
+        private GH_Curve GuessLeaderLine(WeldMark mark)
         {
             var moe = mark.GetObjects(new Type[] { typeof(LeaderLine) });
             while (moe.MoveNext())
