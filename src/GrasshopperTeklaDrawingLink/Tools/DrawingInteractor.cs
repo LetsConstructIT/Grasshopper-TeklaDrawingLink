@@ -164,7 +164,19 @@ namespace GTDrawingLink.Tools
             if (objects == null)
                 dos.UnselectAllObjects();
             else
-                dos.SelectObjects(objects, false);
+            {
+                var status = dos.SelectObjects(objects, false);
+                if (!status) // fail-safe when drawing marks are in the selection range (bug in Tekla 2026)
+                {
+                    dos.UnselectAllObjects();
+                    var single = new ArrayList(1) { null };
+                    foreach (var obj in objects)
+                    {
+                        single[0] = obj;
+                        dos.SelectObjects(single, true);
+                    }
+                }
+            }
         }
 
         public static void UnHighlight()
@@ -192,6 +204,9 @@ namespace GTDrawingLink.Tools
             if (HasAnyTrueMarks(drawingObjects))
             {
                 Highlight(drawingObjects);
+
+                if (DrawingHandler.GetDrawingObjectSelector().GetSelected().GetSize() == 0)
+                    return false;
 
                 var macroContent = Macros.DeleteSelection();
                 var macroPath = new LightweightMacroBuilder()
