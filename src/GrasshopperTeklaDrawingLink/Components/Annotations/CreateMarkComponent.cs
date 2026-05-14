@@ -31,7 +31,7 @@ namespace GTDrawingLink.Components.Annotations
                 return null;
             }
 
-            var createdMarks = new List<Mark>();
+            var createdMarks = new List<DrawingObject>();
 
             var count = new int[] { modelObjectsTree.Count(), attributeFiles.Count() }.Max();
             for (int i = 0; i < count; i++)
@@ -83,15 +83,15 @@ namespace GTDrawingLink.Components.Annotations
             return createdMarks;
         }
 
-        private Dictionary<ModelObject, List<Mark>> SearchExistingMarks(List<ModelObject> modelObjects)
+        private Dictionary<ModelObject, List<DrawingObject>> SearchExistingMarks(List<ModelObject> modelObjects)
         {
-            var result = new Dictionary<ModelObject, List<Mark>>();
+            var result = new Dictionary<ModelObject, List<DrawingObject>>();
             foreach (var modelObject in modelObjects)
             {
-                var marks = new List<Mark>();
-                var doe = modelObject.GetRelatedObjects(new Type[] { typeof(Mark) });
+                var marks = new List<DrawingObject>();
+                var doe = modelObject.GetRelatedObjects(new Type[] { typeof(Mark), typeof(WeldMark) });
                 while (doe.MoveNext())
-                    marks.Add((Mark)doe.Current);
+                    marks.Add(doe.Current);
 
                 result[modelObject] = marks;
             }
@@ -99,15 +99,15 @@ namespace GTDrawingLink.Components.Annotations
             return result;
         }
 
-        private IEnumerable<Mark> FindNewMarks(Dictionary<ModelObject, List<Mark>> updatedMarksCollection, Dictionary<ModelObject, List<Mark>> initialMarksCollection)
+        private IEnumerable<DrawingObject> FindNewMarks(Dictionary<ModelObject, List<DrawingObject>> updatedMarksCollection, Dictionary<ModelObject, List<DrawingObject>> initialMarksCollection)
         {
-            var newMarks = new List<Mark>();
+            var newMarks = new List<DrawingObject>();
 
             foreach (var updatedMarksPair in updatedMarksCollection)
             {
                 var initialIds = initialMarksCollection[updatedMarksPair.Key].Select(m => m.GetIdentifier().ID);
 
-                foreach (Mark newMark in updatedMarksPair.Value)
+                foreach (DrawingObject newMark in updatedMarksPair.Value)
                 {
                     var id = newMark.GetIdentifier().ID;
                     if (!initialIds.Contains(id))
@@ -124,7 +124,7 @@ namespace GTDrawingLink.Components.Annotations
         private readonly InputOptionalTreeParam<ModelObject> _inModel = new InputOptionalTreeParam<ModelObject>(ParamInfos.DrawingModelObject);
         private readonly InputListParam<string> _inAttributes = new InputListParam<string>(ParamInfos.MarkAttributesFile);
 
-        private readonly OutputListParam<Mark> _outMark = new OutputListParam<Mark>(ParamInfos.Mark);
+        private readonly OutputListParam<DrawingObject> _outMark = new OutputListParam<DrawingObject>(ParamInfos.Mark);
 
         internal (List<List<ModelObject>> modelObjects, List<string> attributeFiles) GetInputValues(out bool mainInputIsCorrect)
         {
@@ -136,7 +136,7 @@ namespace GTDrawingLink.Components.Annotations
             return result;
         }
 
-        internal Result SetOutputValues(IGH_DataAccess DA, List<Mark> marks)
+        internal Result SetOutputValues(IGH_DataAccess DA, List<DrawingObject> marks)
         {
             _outMark.Value = marks;
 
