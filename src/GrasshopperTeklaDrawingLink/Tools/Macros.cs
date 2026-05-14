@@ -131,7 +131,7 @@ namespace UserMacros {{
             akit.PushButton(""wld_apply"", ""wld_dial"");
             akit.PushButton(""wld_cancel"", ""wld_dial"");
 			
-            akit.Callback(""acmdCreateAppliedMarksSelected"", """", ""View_10 window_1"");			
+            akit.Callback(""acmdAddWeldMark"", """", ""View_10 window_1"");			
         }}
     }}
 }}";
