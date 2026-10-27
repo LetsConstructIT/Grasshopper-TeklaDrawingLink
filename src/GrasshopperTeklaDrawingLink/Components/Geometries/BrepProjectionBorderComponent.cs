@@ -20,6 +20,11 @@ namespace GTDrawingLink.Components.Geometries
             (Brep brep, Plane plane) = _command.GetInputValues();
 
             var mesh = GetMesh(brep);
+            if (mesh.Faces.Count == 0)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The provided brep could not be meshed. Check if the brep is valid.");
+                return;
+            }
 
             var (outer, inners, unionRectangle) = _projectionLogic.CalculateProjection(mesh, plane);
             if (outer is null)
@@ -33,15 +38,50 @@ namespace GTDrawingLink.Components.Geometries
 
         private Mesh GetMesh(Brep brep)
         {
-            var meshParameters = MeshingParameters.QualityRenderMesh;
-            var meshes = Mesh.CreateFromBrep(brep, meshParameters);
+            var mesh = CreateMesh(brep);
 
-            var mesh = new Mesh();
-            foreach (var item in meshes)
-                mesh.Append(item);
-
-            if (!mesh.IsClosed && brep.IsSolid)
+            if (mesh.Faces.Count > 0 && !mesh.IsClosed && brep.IsSolid)
                 mesh.HealNakedEdges(DocumentTolerance() * 100.0);
+
+            return mesh;
+        }
+
+        private Mesh CreateMesh(Brep brep)
+        {
+            // Meshing of the whole brep returns null when any face fails (e.g. small or badly trimmed faces created by cuts/fittings)
+            var meshParameters = new[] { MeshingParameters.QualityRenderMesh, MeshingParameters.Default, MeshingParameters.FastRenderMesh };
+            foreach (var meshParameter in meshParameters)
+            {
+                var mesh = AppendMeshes(Mesh.CreateFromBrep(brep, meshParameter));
+                if (mesh.Faces.Count > 0)
+                    return mesh;
+            }
+
+            // Fallback: mesh face by face and skip the faces which cannot be meshed
+            var faceMesh = new Mesh();
+            foreach (var face in brep.Faces)
+            {
+                var faceBrep = face.DuplicateFace(false);
+                if (faceBrep is null)
+                    continue;
+
+                faceMesh.Append(AppendMeshes(Mesh.CreateFromBrep(faceBrep, MeshingParameters.Default)));
+            }
+
+            return faceMesh;
+        }
+
+        private Mesh AppendMeshes(Mesh[] meshes)
+        {
+            var mesh = new Mesh();
+            if (meshes is null)
+                return mesh;
+
+            foreach (var item in meshes)
+            {
+                if (item != null)
+                    mesh.Append(item);
+            }
 
             return mesh;
         }
@@ -93,7 +133,7 @@ namespace GTDrawingLink.Components.Geometries
         {
             var plane = new Plane(Plane.WorldXY.Origin, new Vector3d(0, 0, -1));
             var outlines = mesh.GetOutlines(plane);
-            if (outlines.Length == 0)
+            if (outlines is null || outlines.Length == 0)
                 return (null, null);
 
             return (outlines.First(), outlines.Skip(1));
