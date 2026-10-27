@@ -221,7 +221,7 @@ namespace GTDrawingLink.Components.Exports
             if (basePoint != Operation.ExportBasePoint.BASE_POINT)
                 return string.Empty;
 
-            var basePoints = ProjectInfo.GetBasePoints().OrderBy(b => b.Name).Select(b => b.Name).ToList();
+            var basePoints = ProjectInfo.GetBasePoints().OrderBy(b => b.Name).Select(b => b.Guid.ToString()).ToList();
             if (reducedIndex < 0 || reducedIndex >= basePoints.Count())
                 return string.Empty;
 
