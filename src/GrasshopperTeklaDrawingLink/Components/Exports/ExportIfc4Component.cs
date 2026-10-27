@@ -18,6 +18,8 @@ namespace GTDrawingLink.Components.Exports
     public class ExportIfc4Component : TeklaExportComponentBase<ExportIfc4Command>
     {
         private const string _settingsExtension = "ifc4export.json";
+        private const string _modelOriginGuid = "0ff713ca-2fe9-497a-9534-92e0f76108a2";
+        private const string _workPlaneGuid = "891b1397-def8-4c01-8a5d-0a1b27594124";
         private ExportMode _mode = ExportMode.Selection;
         public override GH_Exposure Exposure => GH_Exposure.primary;
         protected override Bitmap Icon => Resources.ExportIfc4;
@@ -101,11 +103,10 @@ namespace GTDrawingLink.Components.Exports
         {
             var viewType = GetExportViewType(settings.ExportTypeIndex);
             var propertySets = GetPropertySets(settings.SelectedAdditionalPropertySetName);
-            var basePoint = GetExportBasePoint(settings.BasePointExportIndex);
+            var (basePoint, basePointGuid) = GetExportLocation(settings);
             var exportLayersAs = GetExportLayersAs(settings.SelectedExportLayerAsItem);
             var objectColoring = GetObjectColoring(settings.SelectedObjectColoring);
             var flags = GetExportFlags(settings);
-            var basePointGuid = GetBasePointGuid(basePoint, settings.BasePointExportIndex);
 
             if (_mode == ExportMode.Selection)
                 return Operation.CreateIFC4ExportFromSelected(fullPath,
@@ -150,14 +151,32 @@ namespace GTDrawingLink.Components.Exports
                 return Enumerable.Empty<string>();
         }
 
-        private Operation.ExportBasePoint GetExportBasePoint(int basePointExportIndex)
+        private (Operation.ExportBasePoint basePoint, string basePointGuid) GetExportLocation(ExportSettings settings)
         {
-            return basePointExportIndex switch
-            {
-                0 => Operation.ExportBasePoint.GLOBAL,
-                1 => Operation.ExportBasePoint.WORK_PLANE,
-                _ => Operation.ExportBasePoint.BASE_POINT
-            };
+            var locationGuid = settings.LocationByGuid ?? GetLocationGuidFromIndex(settings.LocationByIndex);
+
+            if (string.Equals(locationGuid, _modelOriginGuid, StringComparison.OrdinalIgnoreCase))
+                return (Operation.ExportBasePoint.GLOBAL, string.Empty);
+
+            if (string.Equals(locationGuid, _workPlaneGuid, StringComparison.OrdinalIgnoreCase))
+                return (Operation.ExportBasePoint.WORK_PLANE, string.Empty);
+
+            var basePoint = ProjectInfo.GetBasePoints()
+                .FirstOrDefault(b => string.Equals(b.Guid.ToString(), locationGuid, StringComparison.OrdinalIgnoreCase));
+            if (basePoint != null)
+                return (Operation.ExportBasePoint.BASE_POINT, basePoint.Guid.ToString());
+
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Base point from export settings was not found in the model. Model origin used instead.");
+            return (Operation.ExportBasePoint.GLOBAL, string.Empty);
+        }
+
+        private string GetLocationGuidFromIndex(int locationByIndex)
+        {
+            // Legacy settings: Model origin, Work plane, then base points in model order
+            var locations = new List<string> { _modelOriginGuid, _workPlaneGuid };
+            locations.AddRange(ProjectInfo.GetBasePoints().Select(b => b.Guid.ToString()));
+
+            return (locationByIndex >= 0 && locationByIndex < locations.Count) ? locations[locationByIndex] : _modelOriginGuid;
         }
 
         private string GetExportLayersAs(string selectedExportLayerAsItem)
@@ -213,19 +232,6 @@ namespace GTDrawingLink.Components.Exports
             var variable = string.Empty;
             TeklaStructuresSettings.GetAdvancedOption("XS_EXPORT_IFC_REBARSET_INDIVIDUAL_BARS", ref variable);
             return variable.ToLower() == "true";
-        }
-
-        private string GetBasePointGuid(Operation.ExportBasePoint basePoint, int basePointExportIndex)
-        {
-            var reducedIndex = basePointExportIndex - 2;
-            if (basePoint != Operation.ExportBasePoint.BASE_POINT)
-                return string.Empty;
-
-            var basePoints = ProjectInfo.GetBasePoints().OrderBy(b => b.Name).Select(b => b.Guid.ToString()).ToList();
-            if (reducedIndex < 0 || reducedIndex >= basePoints.Count())
-                return string.Empty;
-
-            return basePoints[reducedIndex];
         }
 #endif
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
@@ -286,6 +292,7 @@ namespace GTDrawingLink.Components.Exports
             public string DialogType { get; set; }
             public string TargetFileName { get; set; }
             public string Folder { get; set; }
+            public string? LocationByGuid { get; set; }
             public int LocationByIndex { get; set; }
             public int SelectionTypeIndex { get; set; }
             public string SelectedObjectColoring { get; set; }
