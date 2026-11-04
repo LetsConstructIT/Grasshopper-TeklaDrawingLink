@@ -202,8 +202,10 @@ namespace GTDrawingLink.Components.Exports
             if (settings.IsLocationFromOrganizer)
                 flags.IsLocationFromOrganizer = true;
 #if API2023 || API2024 || API2025 || API2026
-            if (settings.BasePointExportIndex == 0)
-                flags.UseIfcMapConversion = true;
+            // Must be set explicitly: Tekla treats an unset (null) value as true,
+            // so leaving it unset would always export IfcMapConversion.
+            // 0 = IfcMapConversion, 1 = IfcSite coordinate system
+            flags.UseIfcMapConversion = settings.BasePointExportIndex == 0;
 #endif
             if (settings.IsFlatBeamsAsPlates)
                 flags.IsFlatBeamsAsPlates = true;
