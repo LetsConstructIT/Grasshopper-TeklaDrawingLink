@@ -19,7 +19,7 @@ namespace GTDrawingLink.Components.Annotations
 
         protected override IEnumerable<DatabaseObject> InsertObjects(IGH_DataAccess DA)
         {
-            (var inputViews, var points, var fileNames, var attributes) = _command.GetInputValues(out bool mainInputIsCorrect);
+            (var inputViews, var points, var fileNames, var attributes, var angles) = _command.GetInputValues(out bool mainInputIsCorrect);
             if (!mainInputIsCorrect)
             {
                 HandleMissingInput();
@@ -33,7 +33,7 @@ namespace GTDrawingLink.Components.Annotations
             }
 
             var views = new ViewCollection<ViewBase>(inputViews);
-            var strategy = GetSolverStrategy(false, points, fileNames, attributes);
+            var strategy = GetSolverStrategy(false, points, fileNames, attributes, angles);
             var inputMode = strategy.Mode;
 
             var outputTree = new GH_Structure<TeklaDatabaseObjectGoo>();
@@ -46,7 +46,8 @@ namespace GTDrawingLink.Components.Annotations
                 var dwgObject = InsertDwgObject(views.Get(path),
                                                 points.Get(i, inputMode),
                                                 fileNames.Get(i, inputMode),
-                                                attributes.Get(i, inputMode));
+                                                attributes.Get(i, inputMode),
+                                                angles.Get(i, inputMode));
 
                 outputObjects.Add(dwgObject);
                 outputTree.Append(new TeklaDatabaseObjectGoo(dwgObject), path);
@@ -61,10 +62,12 @@ namespace GTDrawingLink.Components.Annotations
         private static DwgObject InsertDwgObject(ViewBase view,
                                                  Rhino.Geometry.Point3d point,
                                                  string fileName,
-                                                 EmbeddedObjectAttributes attributes)
+                                                 EmbeddedObjectAttributes attributes,
+                                                 double angle)
         {
             var dwgObject = new DwgObject(view, point.ToTekla(), fileName, attributes);
             dwgObject.Insert();
+            dwgObject.ApplyAngle(angle);
 
             return dwgObject;
         }
@@ -72,19 +75,24 @@ namespace GTDrawingLink.Components.Annotations
 
     public class CreateEmbeddedCommand : CommandBase
     {
+        private const double _defaultAngle = 0;
+
         private readonly InputOptionalListParam<ViewBase> _inView = new InputOptionalListParam<ViewBase>(ParamInfos.View);
         private readonly InputTreePoint _inPoints = new InputTreePoint(ParamInfos.InsertionPoint, isOptional: true);
         private readonly InputTreeString _inFileNames = new InputTreeString(ParamInfos.DwgFileName);
         private readonly InputOptionalTreeParam<EmbeddedObjectAttributes> _inAttributes = new InputOptionalTreeParam<EmbeddedObjectAttributes>(ParamInfos.DwgAttributes);
 
+        private readonly InputTreeNumber _inAngles = new InputTreeNumber(ParamInfos.EmbeddedObjectAngle, isOptional: true);
+
         private readonly OutputTreeParam<DwgObject> _outDwgs = new OutputTreeParam<DwgObject>(ParamInfos.Dwg, 0);
 
-        internal (List<ViewBase> views, TreeData<Rhino.Geometry.Point3d> points, TreeData<string> fileNames, TreeData<EmbeddedObjectAttributes> atrributes) GetInputValues(out bool mainInputIsCorrect)
+        internal (List<ViewBase> views, TreeData<Rhino.Geometry.Point3d> points, TreeData<string> fileNames, TreeData<EmbeddedObjectAttributes> atrributes, TreeData<double> angles) GetInputValues(out bool mainInputIsCorrect)
         {
             var result= (_inView.GetValueFromUserOrNull(),
                     _inPoints.AsTreeData(),
                     _inFileNames.AsTreeData(),
-                    _inAttributes.AsTreeData());
+                    _inAttributes.AsTreeData(),
+                    _inAngles.IsEmpty() ? _inAngles.GetDefault(_defaultAngle) : _inAngles.AsTreeData());
 
             mainInputIsCorrect = result.Item1.HasItems() && result.Item2.HasItems();
 

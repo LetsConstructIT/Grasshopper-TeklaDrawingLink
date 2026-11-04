@@ -613,6 +613,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateEmbeddedObjectComponent),
+                "F5728B58-4CFF-49EF-A74F-C5ED63920750"
+            },
+            {
+                typeof(CreateEmbeddedObjectComponentOLD2),
                 "098B017F-FCD9-4DCE-BE22-BF797072B574"
             },
             {
@@ -921,6 +925,10 @@ namespace GTDrawingLink.Tools
             },
             {
                 typeof(CreateImageComponent),
+                "7E1E65BC-9A96-4047-8E91-889120F354E6"
+            },
+            {
+                typeof(CreateImageComponentOLD),
                 "3B9EE706-C965-4CEE-AC64-B3B0943CB6D1"
             }
         };

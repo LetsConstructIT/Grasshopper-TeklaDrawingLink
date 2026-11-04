@@ -1438,6 +1438,13 @@ namespace GTDrawingLink.Tools
             Description = "Drawing sheet number"
         };
 
+        public static readonly GH_InstanceDescription EmbeddedObjectAngle = new GH_InstanceDescription
+        {
+            Name = "Angle",
+            NickName = "A",
+            Description = "Rotation angle in degrees (default: 0)"
+        };
+
         public static readonly GH_InstanceDescription RotationAngle = new GH_InstanceDescription
         {
             Name = "Angle",

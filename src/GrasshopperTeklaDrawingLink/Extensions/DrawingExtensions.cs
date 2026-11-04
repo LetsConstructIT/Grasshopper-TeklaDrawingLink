@@ -11,6 +11,15 @@ namespace GTDrawingLink.Extensions
 {
     internal static class DrawingExtensions
     {
+        internal static void ApplyAngle(this EmbeddedObjectBase embeddedObject, double angle)
+        {
+            if (Math.Abs(angle) < 1e-6)
+                return;
+
+            embeddedObject.Angle = angle;
+            embeddedObject.Modify();
+        }
+
         internal static int GetDrawingIdentifier(this DatabaseObject drawingObject)
         {
             var identifier = (Tekla.Structures.Identifier)drawingObject.GetPropertyValue("DrawingIdentifier");
