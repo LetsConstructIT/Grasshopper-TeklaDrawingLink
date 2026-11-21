@@ -11,13 +11,18 @@ using System.Linq;
 using Tekla.Structures;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
-using ZeroDep;
 
 namespace GTDrawingLink.Components.Exports
 {
     public class ExportIfc4Component : TeklaExportComponentBase<ExportIfc4Command>
     {
-        private const string _settingsExtension = "ifc4export.json";
+#if API2026
+        // Tekla 2026 merged the IFC2x3 and IFC4 export dialogs and saves their settings as *.ifcexport.json.
+        // Settings saved by earlier versions (*.ifc4export.json) are still accepted.
+        private static readonly string[] _settingsExtensions = { "ifcexport.json", "ifc4export.json" };
+#else
+        private static readonly string[] _settingsExtensions = { "ifc4export.json" };
+#endif
         private const string _modelOriginGuid = "0ff713ca-2fe9-497a-9534-92e0f76108a2";
         private const string _workPlaneGuid = "891b1397-def8-4c01-8a5d-0a1b27594124";
         private ExportMode _mode = ExportMode.Selection;
@@ -53,14 +58,22 @@ namespace GTDrawingLink.Components.Exports
             if (_mode == ExportMode.Selection)
                 ModelInteractor.SelectModelObjects(modelObjects);
 
-            var jsonSettingsPath = SearchSettings(settingsName);
+            var settingsFileNames = GetSettingsFileNames(settingsName, _settingsExtensions);
+            var jsonSettingsPath = SearchSettingsFile(settingsFileNames);
             if (string.IsNullOrEmpty(jsonSettingsPath))
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "IFC4 export settings file was not found.");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, $"IFC4 export settings file was not found. Searched for: {string.Join(", ", settingsFileNames)}");
                 return;
             }
 
-            var exportSettings = Json.Deserialize<ExportSettings>(File.ReadAllText(jsonSettingsPath));
+            var exportSettings = IfcExportSettings.Load(jsonSettingsPath);
+#if API2026
+            if (GetExportVersion(exportSettings) == Operation.IFCExportVersionEnum.IFC2x3)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "These export settings are for IFC2x3. This component exports IFC4 and IFC4.3 only.");
+                return;
+            }
+#endif
 
             var status = ExportIFC(outputPath, exportSettings);
             if (!status)
@@ -85,29 +98,42 @@ namespace GTDrawingLink.Components.Exports
 
 #if API2022 || API2023 || API2024 || API2025 || API2026
 
-        private string? SearchSettings(string settings)
+        private bool ExportIFC(string fullPath, IfcExportSettings settings)
         {
-            if (!settings.EndsWith(_settingsExtension))
-                settings += $".{_settingsExtension}";
-
-            if (File.Exists(settings))
-                return settings;
-
-            var fileInfo = new TeklaStructuresFiles(ModelInteractor.ModelPath())
-                .GetAttributeFile(settings);
-
-            return (fileInfo != null && fileInfo.Exists) ? fileInfo.FullName : null;
-        }
-
-        private bool ExportIFC(string fullPath, ExportSettings settings)
-        {
-            var viewType = GetExportViewType(settings.ExportTypeIndex);
+            var viewType = GetExportViewType(settings);
             var propertySets = GetPropertySets(settings.SelectedAdditionalPropertySetName);
             var (basePoint, basePointGuid) = GetExportLocation(settings);
             var exportLayersAs = GetExportLayersAs(settings.SelectedExportLayerAsItem);
             var objectColoring = GetObjectColoring(settings.SelectedObjectColoring);
             var flags = GetExportFlags(settings);
 
+#if API2026
+            var exportVersion = GetExportVersion(settings);
+            var attributeOverrides = new List<string>();
+
+            if (_mode == ExportMode.Selection)
+                return Operation.CreateIFC4ExportFromSelected(fullPath,
+                                                              viewType,
+                                                              exportVersion,
+                                                              attributeOverrides,
+                                                              propertySets,
+                                                              basePoint,
+                                                              exportLayersAs,
+                                                              objectColoring,
+                                                              flags,
+                                                              basePointGuid);
+            else
+                return Operation.CreateIFC4ExportFromAll(fullPath,
+                                                         viewType,
+                                                         exportVersion,
+                                                         attributeOverrides,
+                                                         propertySets,
+                                                         basePoint,
+                                                         exportLayersAs,
+                                                         objectColoring,
+                                                         flags,
+                                                         basePointGuid);
+#else
             if (_mode == ExportMode.Selection)
                 return Operation.CreateIFC4ExportFromSelected(fullPath,
                                                               viewType,
@@ -126,11 +152,48 @@ namespace GTDrawingLink.Components.Exports
                                                          objectColoring,
                                                          flags,
                                                          basePointGuid);
+#endif
         }
 
-        private Operation.IFCExportViewTypeEnum GetExportViewType(int exportTypeIndex)
+#if API2026
+        private Operation.IFCExportVersionEnum GetExportVersion(IfcExportSettings settings)
         {
-            return exportTypeIndex switch
+            // Settings from earlier versions have no version and are IFC4
+            if (settings.IsExportVersion("IFC2x3"))
+                return Operation.IFCExportVersionEnum.IFC2x3;
+
+            if (settings.IsExportVersion("IFC4.3"))
+                return Operation.IFCExportVersionEnum.IFC43;
+
+            return Operation.IFCExportVersionEnum.IFC4;
+        }
+#endif
+
+        private Operation.IFCExportViewTypeEnum GetExportViewType(IfcExportSettings settings)
+        {
+#if API2026
+            // The Tekla 2026 dialog lists a different set of views for each IFC version
+            if (settings.SelectedExportVersion != null)
+            {
+                if (GetExportVersion(settings) == Operation.IFCExportVersionEnum.IFC43)
+                    return settings.ExportTypeIndex switch
+                    {
+                        1 => Operation.IFCExportViewTypeEnum.DESIGN_TRANSFER_VIEW,
+                        2 => Operation.IFCExportViewTypeEnum.BRIDGE_VIEW,
+                        _ => Operation.IFCExportViewTypeEnum.REFERENCE_VIEW
+                    };
+
+                return settings.ExportTypeIndex switch
+                {
+                    1 => Operation.IFCExportViewTypeEnum.DESIGN_TRANSFER_VIEW,
+                    2 => Operation.IFCExportViewTypeEnum.PRECAST_VIEW,
+                    3 => Operation.IFCExportViewTypeEnum.MEP_REFERENCE_VIEW,
+                    4 => Operation.IFCExportViewTypeEnum.MEP_DESIGN_TRANSFER_VIEW,
+                    _ => Operation.IFCExportViewTypeEnum.REFERENCE_VIEW
+                };
+            }
+#endif
+            return settings.ExportTypeIndex switch
             {
                 1 => Operation.IFCExportViewTypeEnum.DESIGN_TRANSFER_VIEW,
                 5 => Operation.IFCExportViewTypeEnum.BRIDGE_VIEW,
@@ -147,11 +210,16 @@ namespace GTDrawingLink.Components.Exports
             var matchingPSet = allPSets.FirstOrDefault(p => Path.GetFileNameWithoutExtension(p.Name) == selectedAdditionalPropertySetName);
             if (matchingPSet != null)
                 return new string[] { matchingPSet.FullName };
-            else
-                return Enumerable.Empty<string>();
+
+#if API2026
+            // Names in angle brackets are the dialog's "<none>" and "<new>" entries
+            if (!string.IsNullOrEmpty(selectedAdditionalPropertySetName) && !selectedAdditionalPropertySetName.StartsWith("<"))
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, $"Property set '{selectedAdditionalPropertySetName}' from export settings was not found. Exported without it.");
+#endif
+            return Enumerable.Empty<string>();
         }
 
-        private (Operation.ExportBasePoint basePoint, string basePointGuid) GetExportLocation(ExportSettings settings)
+        private (Operation.ExportBasePoint basePoint, string basePointGuid) GetExportLocation(IfcExportSettings settings)
         {
             var locationGuid = settings.LocationByGuid ?? GetLocationGuidFromIndex(settings.LocationByIndex);
 
@@ -196,7 +264,7 @@ namespace GTDrawingLink.Components.Exports
                 return selectedObjectColoring;
         }
 
-        private Operation.IFCExportFlags GetExportFlags(ExportSettings settings)
+        private Operation.IFCExportFlags GetExportFlags(IfcExportSettings settings)
         {
             var flags = new Operation.IFCExportFlags();
             if (settings.IsLocationFromOrganizer)
@@ -213,8 +281,15 @@ namespace GTDrawingLink.Components.Exports
                 flags.IsPoursEnabled = true;
             if (GetAreRebarSetGroupsExportedAsIndividualBars())
                 flags.ExportRebarSetGroupAsIndividualBars = true;
+#if API2026
+            // Tekla 2026 ignores IsAssembliesEnabled; IncludeAssemblyHierarchy replaces it.
+            // Settings from earlier versions only have IsAssembliesEnabled.
+            if (settings.IncludeAssemblyHierarchy ?? settings.IsAssembliesEnabled)
+                flags.IncludeAssemblyHierarchy = true;
+#else
             if (settings.IsAssembliesEnabled)
                 flags.IsAssembliesEnabled = true;
+#endif
             if (settings.IsBoltsEnabled)
                 flags.IsBoltsEnabled = true;
             if (settings.IsWeldsEnabled)
@@ -287,33 +362,6 @@ namespace GTDrawingLink.Components.Exports
         {
             Selection = 0,
             All = 1
-        }
-
-        private class ExportSettings
-        {
-            public string DialogType { get; set; }
-            public string TargetFileName { get; set; }
-            public string Folder { get; set; }
-            public string? LocationByGuid { get; set; }
-            public int LocationByIndex { get; set; }
-            public int SelectionTypeIndex { get; set; }
-            public string SelectedObjectColoring { get; set; }
-            public string SelectedExportLayerAsItem { get; set; }
-            public int ExportTypeIndex { get; set; }
-            public int BasePointExportIndex { get; set; }
-            public int CIPExportListIndex { get; set; }
-            public string SelectedAdditionalPropertySetName { get; set; }
-            public string SelectedExportFormat { get; set; }
-            public int PropertySetsIndex { get; set; }
-            public bool IsFlatBeamsAsPlates { get; set; }
-            public bool IsLocationFromOrganizer { get; set; }
-            public bool IsPoursEnabled { get; set; }
-            public bool IsAssembliesEnabled { get; set; }
-            public bool IsBoltsEnabled { get; set; }
-            public bool IsWeldsEnabled { get; set; }
-            public bool IsGridsEnabled { get; set; }
-            public bool IsRebarsEnabled { get; set; }
-            public bool IsSurfaceTreatmentsAndSurfacesEnabled { get; set; }
         }
     }
 

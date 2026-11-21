@@ -2,7 +2,10 @@
 using GTDrawingLink.Tools;
 using GTDrawingLink.Types;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Tekla.Structures;
 
 namespace GTDrawingLink.Components.Exports
 {
@@ -57,6 +60,36 @@ namespace GTDrawingLink.Components.Exports
             var directoryPath = Path.GetDirectoryName(path);
             if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
                 Directory.CreateDirectory(directoryPath);
+        }
+
+        /// <summary>
+        /// File names to look for: the settings as given when it already ends with one of the extensions, otherwise settings + each extension.
+        /// </summary>
+        protected IEnumerable<string> GetSettingsFileNames(string settings, IEnumerable<string> extensions)
+        {
+            if (extensions.Any(e => settings.EndsWith(e, StringComparison.OrdinalIgnoreCase)))
+                return new[] { settings };
+
+            return extensions.Select(e => $"{settings}.{e}");
+        }
+
+        /// <summary>
+        /// First of the files that exists as a path, or in the model, project, firm or system folders.
+        /// </summary>
+        protected string? SearchSettingsFile(IEnumerable<string> fileNames)
+        {
+            var modelFiles = new TeklaStructuresFiles(ModelInteractor.ModelPath());
+            foreach (var fileName in fileNames)
+            {
+                if (File.Exists(fileName))
+                    return fileName;
+
+                var fileInfo = modelFiles.GetAttributeFile(fileName);
+                if (fileInfo != null && fileInfo.Exists)
+                    return fileInfo.FullName;
+            }
+
+            return null;
         }
     }
 }
